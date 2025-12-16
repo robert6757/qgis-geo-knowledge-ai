@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="/plugins/geo_knowledge_ai">
+    <file>image/help.svg</file>
+    <file>image/removeAll.svg</file>
+    <file>image/list.svg</file>
+    <file>icon.png</file>
+    <file>image/settings.svg</file>
+  </qresource>
+</RCC>

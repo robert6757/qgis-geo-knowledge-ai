@@ -1,0 +1,48 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=Geo Knowledge AI
+qgisMinimumVersion=3.0
+description=Get professional AI guidance for your geospatial projects—from terrain analysis to PyQGIS code generation.
+version=1.0
+author=phoenix-gis
+email=phoenixgis@sina.com
+
+about=This QGIS plugin offers Geo Knowledge AI assistance, providing professional tutorials tailored to your project needs, from terrain and hydrological analysis to projection selection and PyQGIS code generation. It serves as a highly helpful GIS AI assistant.
+
+tracker=https://github.com/robert6757/qgis-geo-knowledge-ai
+repository=https://github.com/robert6757/qgis-geo-knowledge-ai
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog:
+changelog=Version 1.0 2025-12-17
+      * The first version.
+
+# Tags are comma separated with spaces allowed
+tags=assistant, ai, geo
+
+homepage=https://github.com/robert6757/qgis-geo-knowledge-ai
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=
+
+Category of the plugin: Raster, Vector, Database or Web
+# category=
+
+# If the plugin can run on QGIS Server.
+server=False
+
