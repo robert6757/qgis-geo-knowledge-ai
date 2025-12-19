@@ -10,7 +10,7 @@ version=1.0
 author=phoenix-gis
 email=phoenixgis@sina.com
 
-about=This QGIS plugin offers Geo Knowledge AI assistance, providing professional tutorials tailored to your project needs, from terrain and hydrological analysis to projection selection and PyQGIS code generation. It serves as a highly helpful GIS AI assistant.
+about=This QGIS plugin provides Geo Knowledge AI assistance alongside professional tutorials tailored to your project needs. The tutorials cover a range of geospatial tasks, including geoscientific modeling, hydrological analysis, terrain analysis, remote sensing processing, and PyQGIS code generation. It serves as a highly helpful GIS AI assistant.
 
 tracker=https://github.com/robert6757/qgis-geo-knowledge-ai
 repository=https://github.com/robert6757/qgis-geo-knowledge-ai
