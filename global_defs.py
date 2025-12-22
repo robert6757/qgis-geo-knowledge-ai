@@ -20,9 +20,10 @@
  ***************************************************************************/
 """
 
-VERSION = "1.0"
+VERSION = "1.1"
 
 AI_SERVER_DOMAIN = "https://www.phoenix-gis.cn"
 
+USER_ID_TAG = "geo-knowledge-ai/uid"
 USER_EMAIL_TAG = "geo-knowledge-ai/email"
 MULTI_TURN_TAG = "geo-knowledge-ai/multi_turn"

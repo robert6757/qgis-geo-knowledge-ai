@@ -28,7 +28,7 @@ import uuid
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer
+from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsRasterBandStats
 
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
@@ -211,6 +211,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         gSetting = QgsSettings()
 
+        # uid
+        user_id = gSetting.value(USER_ID_TAG, "")
+
         # email
         user_email = gSetting.value(USER_EMAIL_TAG, "")
 
@@ -246,6 +249,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             "chunk_cnt": 5,
             "email": user_email,
             "version": VERSION,
+            "user_id": user_id,
             "chat_id": self.chat_id,
             "lang": lang,
             "workspace": workspace_info
@@ -370,13 +374,17 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                         if hasattr(color_interp, 'name'):
                             band_info["color_interpretation"] = color_interp.name
 
-                        stats = provider.bandStatistics(band)
+                        # In order to shorten time of statistic, use the custom sample size.
+                        customSampleSize = int(max(provider.xSize(), provider.ySize()) / 256)
+                        stats = provider.bandStatistics(band, sampleSize=customSampleSize)
                         if stats:
                             band_info["minimum"] = stats.minimumValue
                             band_info["maximum"] = stats.maximumValue
                             band_info["mean"] = stats.mean
                             band_info["std_dev"] = stats.stdDev
+
                         bands_info.append(band_info)
+
                 layer_info["bands"] = bands_info
 
             layers_info.append(layer_info)

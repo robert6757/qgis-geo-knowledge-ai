@@ -23,6 +23,9 @@
 from qgis.PyQt.QtCore import QSettings, QTranslator, QCoreApplication, Qt
 from qgis.PyQt.QtGui import QIcon
 from qgis.PyQt.QtWidgets import QAction
+from .global_defs import USER_ID_TAG
+import uuid
+from datetime import datetime
 
 # Initialize Qt resources from file resources_rc.py
 # Extend to load root directory.
@@ -57,6 +60,12 @@ class GeoKnowledgeAI:
             self.plugin_dir,
             'i18n',
             'GeoKnowledgeAI_{}.qm'.format(locale))
+
+        # initialize uid
+        if not QSettings().value(USER_ID_TAG):
+            date_str = datetime.now().strftime("%Y%m%d")
+            uid_short = uuid.uuid4().hex[:6]
+            QSettings().setValue(USER_ID_TAG, f"{date_str}-{uid_short}")
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
