@@ -31,7 +31,7 @@ from contextlib import redirect_stdout
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox, QApplication
 from qgis.PyQt.QtCore import pyqtSignal
-from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsRasterBandStats
+from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
@@ -40,6 +40,7 @@ from .global_defs import *
 from .resources_rc import *
 from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
+from .code_execution import CodeExecutionTask
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'geo_knowledge_ai_dockwidget_base.ui'))
@@ -169,67 +170,41 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self._begin_chat()
 
     def handle_click_exec_code(self, code):
-        import qgis.PyQt.QtCore
-        import qgis.PyQt.QtWidgets
-        import qgis.PyQt.QtGui
+        """run python process as a background task"""
+        # create new task
+        task = CodeExecutionTask(
+            description="Executing Python Code",
+            code=code,
+            parent_widget=self,
+            iface=self.iface
+        )
 
-        safe_globals = {
-            'iface': self.iface,
-            'QgsProject': qgis.core.QgsProject,
-            'project': qgis.core.QgsProject.instance(),
-            'print': print,
-        }
+        task.task_finished.connect(self.handle_exec_code_finished)
+        task.task_error.connect(self.handle_exec_code_error)
 
-        # inject common modules.
-        for module in [qgis.core, qgis.gui, qgis.PyQt.QtCore, qgis.PyQt.QtWidgets, qgis.PyQt.QtGui]:
-            safe_globals.update(module.__dict__)
+        QgsApplication.taskManager().addTask(task)
 
-        # build output_buffer
-        output_buffer = io.StringIO()
+        self.iface.messageBar().pushMessage(
+            self.tr("Info"),
+            self.tr("Code execution started in background..."),
+            level=Qgis.Info,
+            duration=3
+        )
 
-        try:
-            # redirect stdout to output_buffer
-            with redirect_stdout(output_buffer):
-                exec(code, safe_globals)
+    def handle_exec_code_finished(self, content):
+        QMessageBox.information(self, self.tr("Success"), content)
 
-            printed_msg = output_buffer.getvalue()
+    def handle_exec_code_error(self, error_type, error):
+        msg_box = QMessageBox(self)
+        msg_box.setIcon(QMessageBox.Critical)
+        msg_box.setWindowTitle(error_type)
+        msg_box.setText(error)
 
-            display_text = self.tr("Code executed successfully!")
-            if printed_msg.strip():
-                display_text += self.tr("\n\n--- Output ---\n") + f"{printed_msg}"
-
-            QMessageBox.information(self, self.tr("Success"), display_text)
-
-        except SyntaxError as e:
-            error_msg = f"{type(e).__name__}: {e.msg} \n Line {e.lineno}: {e.text}"
-
-            msg_box = QMessageBox(self)
-            msg_box.setIcon(QMessageBox.Critical)
-            msg_box.setWindowTitle(self.tr("Syntax Error"))
-            msg_box.setText(self.tr("The code contains syntax errors:\n") + error_msg)
-
-            auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBox.AcceptRole)
-            msg_box.addButton(QMessageBox.Cancel)
-            msg_box.exec()
-            if msg_box.clickedButton() == auto_fix_btn:
-                self.handle_auto_fix_error(error_msg)
-
-        except Exception as e:
-            error_msg = f"{type(e).__name__}: {str(e)}"
-
-            msg_box = QMessageBox(self)
-            msg_box.setIcon(QMessageBox.Critical)
-            msg_box.setWindowTitle(self.tr("Runtime Error"))
-            msg_box.setText(self.tr("An error occurred during execution:\n") + error_msg)
-
-            auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBox.AcceptRole)
-            msg_box.addButton(QMessageBox.Cancel)
-            msg_box.exec()
-            if msg_box.clickedButton() == auto_fix_btn:
-                self.handle_auto_fix_error(error_msg)
-
-        finally:
-            output_buffer.close()
+        auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBox.AcceptRole)
+        msg_box.addButton(QMessageBox.Cancel)
+        msg_box.exec()
+        if msg_box.clickedButton() == auto_fix_btn:
+            self.handle_auto_fix_error(error)
 
     def handle_click_copy_code(self, code):
         clipboard = QApplication.clipboard()
