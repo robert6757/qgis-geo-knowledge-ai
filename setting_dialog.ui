@@ -6,53 +6,44 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>287</height>
+    <width>418</width>
+    <height>322</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Geo Knowledge AI Setting</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_4">
-   <property name="leftMargin">
-    <number>6</number>
-   </property>
-   <property name="topMargin">
-    <number>6</number>
-   </property>
-   <property name="rightMargin">
-    <number>6</number>
-   </property>
-   <property name="bottomMargin">
-    <number>6</number>
-   </property>
-   <property name="verticalSpacing">
-    <number>6</number>
-   </property>
-   <item row="2" column="3">
-    <widget class="QPushButton" name="btnCancel">
-     <property name="text">
-      <string>Cancel</string>
+   <item row="2" column="0" colspan="4">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Chat Mode</string>
      </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="radioButtonNormal">
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="text">
+         <string>Geo Knowledge Q&amp;&amp;A</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QRadioButton" name="radioButtonLongChain">
+        <property name="toolTip">
+         <string>Use chain-of-thought reasoning to generate, debug, and execute code.</string>
+        </property>
+        <property name="text">
+         <string>Generating Code &amp;&amp; Auto-Run</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="2" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>329</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="2" column="0">
+   <item row="3" column="0">
     <widget class="QToolButton" name="btnHelp">
      <property name="toolTip">
       <string>Get Help</string>
@@ -66,7 +57,98 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="5">
+   <item row="3" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>329</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="btnOK">
+     <property name="text">
+      <string>OK</string>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="3">
+    <widget class="QPushButton" name="btnCancel">
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+     <property name="default">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="4">
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Multi-Turn Conversation</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <item row="1" column="0">
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Turn Limit：</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QComboBox" name="cbChatTurn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <item>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>2</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>3</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>The default limit is 1 conversation turns to help keep the discussion on topic.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="4">
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
       <string>High-Speed Channel</string>
@@ -113,74 +195,6 @@
        </layout>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="5">
-    <widget class="QGroupBox" name="groupBox_2">
-     <property name="title">
-      <string>Multi-Turn Conversation</string>
-     </property>
-     <layout class="QGridLayout" name="gridLayout_3">
-      <property name="topMargin">
-       <number>9</number>
-      </property>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>The default limit is 2 conversation turns to help keep the discussion on topic.</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Turn Limit：</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QComboBox" name="cbChatTurn">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <item>
-           <property name="text">
-            <string>1</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>2</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>3</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <widget class="QPushButton" name="btnOK">
-     <property name="text">
-      <string>OK</string>
-     </property>
-     <property name="default">
-      <bool>true</bool>
-     </property>
     </widget>
    </item>
   </layout>

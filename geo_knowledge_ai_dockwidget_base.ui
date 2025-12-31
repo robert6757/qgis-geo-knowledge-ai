@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>308</width>
+    <width>318</width>
     <height>495</height>
    </rect>
   </property>
@@ -35,7 +35,7 @@
     <property name="spacing">
      <number>3</number>
     </property>
-    <item row="1" column="2">
+    <item row="1" column="3">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -48,14 +48,35 @@
       </property>
      </spacer>
     </item>
+    <item row="1" column="0">
+     <widget class="QToolButton" name="btnSetting">
+      <property name="toolTip">
+       <string>Settings</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</iconset>
+      </property>
+     </widget>
+    </item>
     <item row="1" column="4">
+     <widget class="QPushButton" name="btnSendOrTerminate">
+      <property name="text">
+       <string>Send</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="5">
      <widget class="QPushButton" name="btnClear">
       <property name="text">
        <string>Clear</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="5">
+    <item row="0" column="0" colspan="6">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -132,27 +153,6 @@
         </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QPushButton" name="btnSendOrTerminate">
-      <property name="text">
-       <string>Send</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QToolButton" name="btnSetting">
-      <property name="toolTip">
-       <string>Settings</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</iconset>
-      </property>
      </widget>
     </item>
     <item row="1" column="1">

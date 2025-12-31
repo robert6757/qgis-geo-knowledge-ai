@@ -24,9 +24,12 @@ import os
 import time
 import requests
 import uuid
+import traceback
+import io
+from contextlib import redirect_stdout
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox
+from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox, QApplication
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsRasterBandStats
 
@@ -65,6 +68,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.show_setting_dlg.connect(self.handle_click_setting_btn)
         self.chatbot_browser.trigger_feedback.connect(self.handle_click_feedback)
         self.chatbot_browser.trigger_repeat.connect(self.handle_click_repeat)
+        self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
+        self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
 
         # use custom function to deal with "Open Links".
@@ -75,6 +80,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         self.chat_id = None
         self.pre_chat_timestamp = 0
+
+        self.recv_raw_content = ""
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
@@ -91,6 +98,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.plainTextEdit.clear()
         self.chat_id = None
         self.pre_chat_timestamp = 0
+        self.recv_raw_content = ""
 
     def handle_click_setting_btn(self):
         dlg = SettingDialog(self.iface, parent=self)
@@ -118,6 +126,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.pre_process_markdown()
         self.chatbot_browser.append_markdown(history_item["answer"], scroll_to_bottom=False)
         self.chatbot_browser.post_process_markdown(show_feedback=False)
+        self.plainTextEdit.setPlainText(history_item["question"])
 
     def handle_click_feedback(self, star: int):
         if not self.chat_id:
@@ -159,14 +168,88 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # repeat chat.
         self._begin_chat()
 
+    def handle_click_exec_code(self, code):
+        import qgis.PyQt.QtCore
+        import qgis.PyQt.QtWidgets
+        import qgis.PyQt.QtGui
+
+        safe_globals = {
+            'iface': self.iface,
+            'QgsProject': qgis.core.QgsProject,
+            'project': qgis.core.QgsProject.instance(),
+            'print': print,
+        }
+
+        # inject common modules.
+        for module in [qgis.core, qgis.gui, qgis.PyQt.QtCore, qgis.PyQt.QtWidgets, qgis.PyQt.QtGui]:
+            safe_globals.update(module.__dict__)
+
+        # build output_buffer
+        output_buffer = io.StringIO()
+
+        try:
+            # redirect stdout to output_buffer
+            with redirect_stdout(output_buffer):
+                exec(code, safe_globals)
+
+            printed_msg = output_buffer.getvalue()
+
+            display_text = self.tr("Code executed successfully!")
+            if printed_msg.strip():
+                display_text += self.tr("\n\n--- Output ---\n") + f"{printed_msg}"
+
+            QMessageBox.information(self, self.tr("Success"), display_text)
+
+        except SyntaxError as e:
+            error_msg = f"{type(e).__name__}: {e.msg} \n Line {e.lineno}: {e.text}"
+
+            msg_box = QMessageBox(self)
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.setWindowTitle(self.tr("Syntax Error"))
+            msg_box.setText(self.tr("The code contains syntax errors:\n") + error_msg)
+
+            auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBox.AcceptRole)
+            msg_box.addButton(QMessageBox.Cancel)
+            msg_box.exec()
+            if msg_box.clickedButton() == auto_fix_btn:
+                self.handle_auto_fix_error(error_msg)
+
+        except Exception as e:
+            error_msg = f"{type(e).__name__}: {str(e)}"
+
+            msg_box = QMessageBox(self)
+            msg_box.setIcon(QMessageBox.Critical)
+            msg_box.setWindowTitle(self.tr("Runtime Error"))
+            msg_box.setText(self.tr("An error occurred during execution:\n") + error_msg)
+
+            auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBox.AcceptRole)
+            msg_box.addButton(QMessageBox.Cancel)
+            msg_box.exec()
+            if msg_box.clickedButton() == auto_fix_btn:
+                self.handle_auto_fix_error(error_msg)
+
+        finally:
+            output_buffer.close()
+
+    def handle_click_copy_code(self, code):
+        clipboard = QApplication.clipboard()
+        clipboard.setText(code)
+        self.iface.messageBar().pushMessage(self.tr("Code Copied Successfully!"))
+
+    def handle_auto_fix_error(self, error_msg):
+        # set error_msg as user`s question.
+        self.plainTextEdit.setPlainText(error_msg)
+        self._begin_chat()
+
     def on_chunks_info_received(self, content):
         """receive the count of references"""
-        pass
+        self.chatbot_browser.append_markdown(content)
 
     def on_content_received(self, content):
         """receive the streaming message."""
         # append every message to the chatbot browser.
         self.chatbot_browser.append_markdown(content)
+        self.recv_raw_content += content
 
     def on_stream_ended(self, chunk_count):
         self.chatbot_browser.post_process_markdown()
@@ -182,7 +265,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             cur_chat_timestamp,
             self.pre_chat_timestamp,
             self.plainTextEdit.toPlainText(),
-            self.chatbot_browser.get_raw_markdown_content())
+            self.recv_raw_content)
 
         # current chat will be the next previous chat.
         self.pre_chat_timestamp = cur_chat_timestamp
@@ -202,6 +285,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     def _begin_chat(self):
         # In order to  make the markdown render faster, we have to clear the previous markdown content.
         self.chatbot_browser.clear()
+        self.recv_raw_content = ""
 
         # add question in chatbot
         question_str = self.plainTextEdit.toPlainText()
@@ -220,6 +304,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # ui language
         lang = gSetting.value('/locale/userLocale', 'en_US')
 
+        # chat mode
+        chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
+
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
 
@@ -229,7 +316,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         histories = []
         if self.pre_chat_timestamp > 0:
             # retrieve previous messages from the conversation history
-            multi_turn = int(gSetting.value(MULTI_TURN_TAG, "2"))
+            multi_turn = int(gSetting.value(MULTI_TURN_TAG, "1"))
             parent_chat_ts = self.pre_chat_timestamp
             while multi_turn > 0 and parent_chat_ts > 0:
                 pre_history = self.history_manager.retrieve_history(parent_chat_ts)
@@ -244,9 +331,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         request_data = {
             "prompt": question_str,
             "history": [[item['question'], item['answer']] for item in histories],
-            "db_name": "QGIS",
-            "similarity_threshold": 0.5,
-            "chunk_cnt": 5,
             "email": user_email,
             "version": VERSION,
             "user_id": user_id,
@@ -255,7 +339,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             "workspace": workspace_info
         }
 
-        self.chat_worker = StreamChatWorker(request_data)
+        self.chat_worker = StreamChatWorker(request_data, chat_mode)
         self.chat_worker.chunks_info_received.connect(self.on_chunks_info_received)
         self.chat_worker.content_received.connect(self.on_content_received)
         self.chat_worker.stream_ended.connect(self.on_stream_ended)

@@ -33,6 +33,8 @@ class ChatbotBrowser(QTextBrowser):
     show_setting_dlg = pyqtSignal()
     trigger_feedback = pyqtSignal(int)
     trigger_repeat = pyqtSignal()
+    trigger_exec_code = pyqtSignal(str)
+    trigger_copy_code = pyqtSignal(str)
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -58,7 +60,10 @@ class ChatbotBrowser(QTextBrowser):
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
         self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
+        self.exec_code_text = self.tr("\n\n[Execute Code](agent://execute/code) | [Copy Code](agent://execute/copycode)\n\n")
         self.tail_splited_line = "\n\n---------\n\n"
+
+        self.python_code_block = None
     def loadResource(self, type, name):
         """
         Overrides the standard loadResource method to handle network requests for images.
@@ -117,9 +122,13 @@ class ChatbotBrowser(QTextBrowser):
         self.waiting_timer.stop()
 
     def post_process_markdown(self, show_feedback=True):
+
         # add feedback
         if show_feedback:
             self.markdown_content += "\n\n" + self.feedback_text
+
+        # add execute button after the python code block.
+        self.python_code_block, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
 
         self.markdown_content += self.tail_splited_line
 
@@ -182,6 +191,10 @@ class ChatbotBrowser(QTextBrowser):
                 self.trigger_feedback.emit(int(link.path()[1:]))
             elif process_name == "repeat":
                 self.trigger_repeat.emit()
+            elif process_name == "execute" and link.path()[1:] == "code":
+                self.trigger_exec_code.emit(self.python_code_block)
+            elif process_name == "execute" and link.path()[1:] == "copycode":
+                self.trigger_copy_code.emit(self.python_code_block)
             return
 
         # open web browser
@@ -194,14 +207,10 @@ class ChatbotBrowser(QTextBrowser):
         converted_text = re.sub(pattern, r'\n\n![Image](\1)', markdown_text, flags=re.IGNORECASE)
         return converted_text
 
-    def get_raw_markdown_content(self):
+    def get_python_code_block(self) -> str:
         self.content_lock.acquire()
         try:
-            # return the whole content without feedback and tail text.
-            ret_content = self.markdown_content
-            ret_content = ret_content.replace(self.feedback_text, "")
-            ret_content = ret_content.replace(self.tail_splited_line, "")
-            return ret_content
+            return self.python_code_block
         finally:
             self.content_lock.release()
 
@@ -363,3 +372,41 @@ class ChatbotBrowser(QTextBrowser):
             self.scroll_to_bottom()
         else:
             self.verticalScrollBar().setValue(current_scroll_value)
+
+    def _extract_code_and_add_execute_tag_after(self, text: str):
+        """find the largest code block from text, and add executing text."""
+        pattern = r'```(?:python|py)?\s*(.*?)```'
+        matches = re.findall(pattern, text, re.DOTALL)
+
+        if not matches:
+            return None, text
+
+        # find the largest code block
+        max_length = -1
+        longest_code_block = None
+        longest_index = -1
+
+        for i, match in enumerate(matches):
+            code = match.strip()
+            if len(code) > max_length:
+                max_length = len(code)
+                longest_code_block = code
+                longest_index = i
+
+        if not longest_code_block:
+            return None, text
+
+        exec_block = self.exec_code_text
+
+        # locate the code position
+        full_pattern = r'```(?:python|py)?\s*.*?```'
+        all_matches = list(re.finditer(full_pattern, text, re.DOTALL))
+
+        if longest_index >= len(all_matches):
+            return None, text
+
+        target_match = all_matches[longest_index]
+        end_pos = target_match.end()
+        new_text = text[:end_pos] + exec_block + text[end_pos:]
+
+        return longest_code_block, new_text

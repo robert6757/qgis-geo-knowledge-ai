@@ -41,18 +41,26 @@ class StreamChatWorker(QThread):
     # report error signal.
     error_occurred = pyqtSignal(str)
 
-    def __init__(self, request_data):
+    def __init__(self, request_data, chat_mode: int):
         super().__init__()
         self.request_data = request_data
         self.network_manager = QNetworkAccessManager()
         self.reply = None
         self.received_chunks = 0
         self.buffer = ""
+        # 1: geo knowledge Q&A; 2: generate code with long chain thought
+        self.chat_mode = chat_mode
 
     def run(self):
         """execute request"""
         try:
-            url = AI_SERVER_DOMAIN + "/ai/v1/chat/stream"
+            url = AI_SERVER_DOMAIN
+            if self.chat_mode == 1:
+                url += "/ai/v1/chat/stream"
+            elif self.chat_mode == 2:
+                url += "/ai/v1/code/stream"
+            else:
+                raise ValueError(f"Unknown chat mode: {self.chat_mode}")
 
             # create network request.
             request = QNetworkRequest(QUrl(url))
