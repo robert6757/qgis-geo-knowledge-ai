@@ -44,9 +44,14 @@ class CodeExecutionTask(QgsTask):
         try:
             import qgis.core
             import qgis.gui
+            import qgis.processing
             import qgis.PyQt.QtCore
             import qgis.PyQt.QtWidgets
             import qgis.PyQt.QtGui
+            import math
+            import os
+            import re
+            import sys
 
             safe_globals = {
                 'iface': self.iface,
@@ -56,7 +61,9 @@ class CodeExecutionTask(QgsTask):
             }
 
             # inject common modules.
-            for module in [qgis.core, qgis.gui, qgis.PyQt.QtCore, qgis.PyQt.QtWidgets, qgis.PyQt.QtGui]:
+            for module in [qgis, qgis.core, qgis.gui, qgis.processing,
+                           qgis.PyQt.QtCore, qgis.PyQt.QtWidgets, qgis.PyQt.QtGui,
+                           math, os, re, sys]:
                 safe_globals.update(module.__dict__)
 
             output_buffer = io.StringIO()

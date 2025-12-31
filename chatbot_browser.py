@@ -60,7 +60,7 @@ class ChatbotBrowser(QTextBrowser):
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
         self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
-        self.exec_code_text = self.tr("\n\n[Execute Code](agent://execute/code) | [Copy Code](agent://execute/copycode)\n\n")
+        self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code) | [Copy Code](agent://execute/copycode)") + "\n\n"
         self.tail_splited_line = "\n\n---------\n\n"
 
         self.python_code_block = None
@@ -374,39 +374,29 @@ class ChatbotBrowser(QTextBrowser):
             self.verticalScrollBar().setValue(current_scroll_value)
 
     def _extract_code_and_add_execute_tag_after(self, text: str):
-        """find the largest code block from text, and add executing text."""
-        pattern = r'```(?:python|py)?\s*(.*?)```'
-        matches = re.findall(pattern, text, re.DOTALL)
+        """find the largest python code block from text, and add executing text."""
+        pattern = r'```(?:python|py)\s*\n?(.*?)```'
+
+        matches = list(re.finditer(pattern, text, re.DOTALL))
 
         if not matches:
             return None, text
 
-        # find the largest code block
+        # find the largest python code block
         max_length = -1
-        longest_code_block = None
-        longest_index = -1
+        longest_match = None
 
-        for i, match in enumerate(matches):
-            code = match.strip()
+        for match in matches:
+            code = match.group(1).strip()
             if len(code) > max_length:
                 max_length = len(code)
-                longest_code_block = code
-                longest_index = i
+                longest_match = match
 
-        if not longest_code_block:
+        if not longest_match:
             return None, text
 
         exec_block = self.exec_code_text
-
-        # locate the code position
-        full_pattern = r'```(?:python|py)?\s*.*?```'
-        all_matches = list(re.finditer(full_pattern, text, re.DOTALL))
-
-        if longest_index >= len(all_matches):
-            return None, text
-
-        target_match = all_matches[longest_index]
-        end_pos = target_match.end()
+        end_pos = longest_match.end()
         new_text = text[:end_pos] + exec_block + text[end_pos:]
 
-        return longest_code_block, new_text
+        return longest_match.group(1).strip(), new_text
