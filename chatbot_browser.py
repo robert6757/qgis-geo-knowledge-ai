@@ -378,7 +378,7 @@ class ChatbotBrowser(QTextBrowser):
 
         matches = list(re.finditer(pattern, text, re.DOTALL))
         if not matches:
-            return None, text
+            return [], text
 
         ret_code_list = []
         for match in matches:
