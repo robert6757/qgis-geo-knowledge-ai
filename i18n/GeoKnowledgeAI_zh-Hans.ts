@@ -11,20 +11,38 @@
     <message>
         <location filename="../chatbot_browser.py" line="63"/>
         <source>[Execute Code](agent://execute/code) | [Copy Code](agent://execute/copycode)</source>
-        <translation>[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
+        <translation type="obsolete">[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="63"/>
+        <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
+        <translation>[运行代码](agent://execute/code/{index}) | [复制代码](agent://execute/copycode/{index})</translation>
+    </message>
+</context>
+<context>
+    <name>CodeExecution</name>
+    <message>
+        <location filename="../code_execution.py" line="80"/>
+        <source>SyntaxError</source>
+        <translation>语法错误</translation>
+    </message>
+    <message>
+        <location filename="../code_execution.py" line="86"/>
+        <source>RuntimeError</source>
+        <translation>运行错误</translation>
     </message>
 </context>
 <context>
     <name>CodeExecutionTask</name>
     <message>
-        <location filename="../code_execution.py" line="76"/>
+        <location filename="../code_execution.py" line="83"/>
         <source>SyntaxError</source>
-        <translation>语法错误</translation>
+        <translation type="obsolete">语法错误</translation>
     </message>
     <message>
-        <location filename="../code_execution.py" line="82"/>
+        <location filename="../code_execution.py" line="89"/>
         <source>RuntimeError</source>
-        <translation>运行错误</translation>
+        <translation type="obsolete">运行错误</translation>
     </message>
 </context>
 <context>
@@ -122,12 +140,17 @@
     <message>
         <location filename="../setting_dialog.ui" line="39"/>
         <source>Generating Code &amp;&amp; Auto-Run</source>
-        <translation>生成代码 &amp;&amp; 自动运行</translation>
+        <translation type="obsolete">生成代码 &amp;&amp; 自动运行</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="141"/>
         <source>The default limit is 1 conversation turns to help keep the discussion on topic.</source>
         <translation>默认的最大对话轮数为 1。过多的对话轮数可能会导致话题偏离主题。</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="39"/>
+        <source>Chain-of-Thought Reasoning</source>
+        <translation>链式推理</translation>
     </message>
 </context>
 <context>
@@ -151,22 +174,22 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="268"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="259"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="269"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="260"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="325"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="316"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="338"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="329"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
@@ -198,25 +221,25 @@
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="187"/>
         <source>Info</source>
-        <translation>提示</translation>
+        <translation type="obsolete">提示</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="187"/>
         <source>Code execution started in background...</source>
-        <translation>代码执行中...</translation>
+        <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="195"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="186"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="194"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="212"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>

@@ -60,10 +60,10 @@ class ChatbotBrowser(QTextBrowser):
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
         self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
-        self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code) | [Copy Code](agent://execute/copycode)") + "\n\n"
+        self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
         self.tail_splited_line = "\n\n---------\n\n"
 
-        self.python_code_block = None
+        self.python_code_block_list = []
     def loadResource(self, type, name):
         """
         Overrides the standard loadResource method to handle network requests for images.
@@ -120,6 +120,7 @@ class ChatbotBrowser(QTextBrowser):
         self.auto_scroll_to_bottom = True
         self.pending_images.clear()
         self.waiting_timer.stop()
+        self.python_code_block_list.clear()
 
     def post_process_markdown(self, show_feedback=True):
 
@@ -128,7 +129,7 @@ class ChatbotBrowser(QTextBrowser):
             self.markdown_content += "\n\n" + self.feedback_text
 
         # add execute button after the python code block.
-        self.python_code_block, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
+        self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
 
         self.markdown_content += self.tail_splited_line
 
@@ -182,6 +183,8 @@ class ChatbotBrowser(QTextBrowser):
         super().wheelEvent(event)
 
     def handle_click_chatbot_anchor(self, link: QUrl):
+        path = link.path()
+
         if link.scheme() == "agent":
             # use agent to process.
             process_name = link.host()
@@ -191,10 +194,13 @@ class ChatbotBrowser(QTextBrowser):
                 self.trigger_feedback.emit(int(link.path()[1:]))
             elif process_name == "repeat":
                 self.trigger_repeat.emit()
-            elif process_name == "execute" and link.path()[1:] == "code":
-                self.trigger_exec_code.emit(self.python_code_block)
-            elif process_name == "execute" and link.path()[1:] == "copycode":
-                self.trigger_copy_code.emit(self.python_code_block)
+            elif process_name == "execute":
+                if path.startswith("/code/"):
+                    code_index = int(path.split("/")[-1])
+                    self.trigger_exec_code.emit(self.python_code_block_list[code_index-1])
+                elif path.startswith("/copycode/"):
+                    code_index = int(path.split("/")[-1])
+                    self.trigger_copy_code.emit(self.python_code_block_list[code_index-1])
             return
 
         # open web browser
@@ -206,13 +212,6 @@ class ChatbotBrowser(QTextBrowser):
         pattern = r'\[upl-image-preview[^\]]*?url=([^\s\]]+)[^\]]*\]'
         converted_text = re.sub(pattern, r'\n\n![Image](\1)', markdown_text, flags=re.IGNORECASE)
         return converted_text
-
-    def get_python_code_block(self) -> str:
-        self.content_lock.acquire()
-        try:
-            return self.python_code_block
-        finally:
-            self.content_lock.release()
 
     def mousePressEvent(self, event: QMouseEvent):
         # forbid auto scroll to bottom
@@ -378,25 +377,23 @@ class ChatbotBrowser(QTextBrowser):
         pattern = r'```(?:python|py)\s*\n?(.*?)```'
 
         matches = list(re.finditer(pattern, text, re.DOTALL))
-
         if not matches:
             return None, text
 
-        # find the largest python code block
-        max_length = -1
-        longest_match = None
-
+        ret_code_list = []
         for match in matches:
-            code = match.group(1).strip()
-            if len(code) > max_length:
-                max_length = len(code)
-                longest_match = match
+            ret_code_list.append(match.group(1).strip())
 
-        if not longest_match:
-            return None, text
+        # in order to use a correct end_pos, I have to reverse the loop.
+        for i in reversed(range(len(matches))):
+            match = matches[i]
+            end_pos = match.end()
 
-        exec_block = self.exec_code_text
-        end_pos = longest_match.end()
-        new_text = text[:end_pos] + exec_block + text[end_pos:]
+            # generate execution tag.
+            exec_block_with_index = self.exec_code_text.replace("{index}", str(i + 1))
 
-        return longest_match.group(1).strip(), new_text
+            # add block.
+            text = text[:end_pos] + exec_block_with_index + text[end_pos:]
+
+        return ret_code_list, text
+

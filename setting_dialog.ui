@@ -36,7 +36,7 @@
          <string>Use chain-of-thought reasoning to generate, debug, and execute code.</string>
         </property>
         <property name="text">
-         <string>Generating Code &amp;&amp; Auto-Run</string>
+         <string>Chain-of-Thought Reasoning</string>
         </property>
        </widget>
       </item>

@@ -40,7 +40,7 @@ from .global_defs import *
 from .resources_rc import *
 from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
-from .code_execution import CodeExecutionTask
+from .code_execution import CodeExecution
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'geo_knowledge_ai_dockwidget_base.ui'))
@@ -171,25 +171,16 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def handle_click_exec_code(self, code):
         """run python process as a background task"""
-        # create new task
-        task = CodeExecutionTask(
-            description="Executing Python Code",
+        code_exec = CodeExecution(
             code=code,
             parent_widget=self,
             iface=self.iface
         )
 
-        task.task_finished.connect(self.handle_exec_code_finished)
-        task.task_error.connect(self.handle_exec_code_error)
+        code_exec.task_finished.connect(self.handle_exec_code_finished)
+        code_exec.task_error.connect(self.handle_exec_code_error)
 
-        QgsApplication.taskManager().addTask(task)
-
-        self.iface.messageBar().pushMessage(
-            self.tr("Info"),
-            self.tr("Code execution started in background..."),
-            level=Qgis.Info,
-            duration=3
-        )
+        code_exec.run()
 
     def handle_exec_code_finished(self, content):
         QMessageBox.information(self, self.tr("Success"), content)

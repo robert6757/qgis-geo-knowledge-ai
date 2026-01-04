@@ -2,7 +2,7 @@
 """
 /***************************************************************************
                                  Code Execution
-  A QGIS task which provides executing an external code.
+  a class implemented executing an external code.
                               -------------------
         begin                : 2025-12-31
         copyright            : (C) 2025 by phoenix-gis
@@ -20,50 +20,47 @@
  ***************************************************************************/
 """
 
-from qgis.core import QgsTask
-from qgis.PyQt.QtWidgets import QMessageBox
-from qgis.PyQt.QtCore import pyqtSignal
-import traceback
+from qgis.PyQt.QtCore import pyqtSignal, QObject
 import io
+import traceback
 from contextlib import redirect_stdout
 
-class CodeExecutionTask(QgsTask):
+class CodeExecution(QObject):
     """a background task that executes python code，"""
 
     task_finished = pyqtSignal(str)
     task_error = pyqtSignal(str, str)
 
-    def __init__(self, description, code, parent_widget, iface):
-        super().__init__(description, QgsTask.CanCancel)
+    def __init__(self, code, parent_widget, iface):
+        super().__init__(parent_widget)
         self.code = code
         self.parent_widget = parent_widget
         self.iface = iface
 
     def run(self):
-        """run in new thread"""
+        """run this code"""
         try:
-            import qgis.core
-            import qgis.gui
-            import qgis.processing
-            import qgis.PyQt.QtCore
-            import qgis.PyQt.QtWidgets
-            import qgis.PyQt.QtGui
+            import qgis
             import math
-            import os
             import re
+            import types
+            import os
             import sys
 
             safe_globals = {
                 'iface': self.iface,
-                'QgsProject': qgis.core.QgsProject,
                 'project': qgis.core.QgsProject.instance(),
                 'print': print,
+                'math': math,
+                're': re,
+                'os': os,
+                'sys': sys,
+                'processing': qgis.processing,
+                'qgis': qgis,
+                'QtCore': qgis.QtCore
             }
 
-            # inject common modules.
-            for module in [qgis, qgis.core, qgis.gui, qgis.processing,
-                           qgis.PyQt.QtCore, qgis.PyQt.QtWidgets, qgis.PyQt.QtGui,
-                           math, os, re, sys]:
+            for module in [qgis.core]:
                 safe_globals.update(module.__dict__)
 
             output_buffer = io.StringIO()
