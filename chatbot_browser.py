@@ -36,6 +36,8 @@ class ChatbotBrowser(QTextBrowser):
     trigger_exec_code = pyqtSignal(str)
     trigger_copy_code = pyqtSignal(str)
 
+    append_markdown_signal = pyqtSignal(str, bool)
+
     def __init__(self, iface, parent=None):
         super().__init__(parent)
         self.iface = iface
@@ -54,10 +56,9 @@ class ChatbotBrowser(QTextBrowser):
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self._on_image_downloaded)
 
-        # prevent append content in multithread.
-        self.content_lock = Lock()
-
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
+
+        self.append_markdown_signal.connect(self._do_append_markdown)
 
         self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
         self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
@@ -86,34 +87,29 @@ class ChatbotBrowser(QTextBrowser):
         return None
 
     def append_markdown(self, content: str, scroll_to_bottom=True):
-        # acquire lock
-        if not self.content_lock.acquire(blocking=False):
-            # only append to variable without really drawing it.
-            self.markdown_content += content
-            return
+        self.append_markdown_signal.emit(content, scroll_to_bottom)
 
-        try:
-            # save current scroll value.
-            scrollbar = self.verticalScrollBar()
-            current_scroll_value = scrollbar.value()
+    def _do_append_markdown(self, content: str, scroll_to_bottom=True):
 
-            self.markdown_content += content
+        # save current scroll value.
+        scrollbar = self.verticalScrollBar()
+        current_scroll_value = scrollbar.value()
 
-            # clean all html tags
-            self.markdown_content = self.clean_html_tag(self.markdown_content)
+        self.markdown_content += content
 
-            # update markdown content
-            self.setMarkdown(self.markdown_content)
+        # clean all html tags
+        self.markdown_content = self.clean_html_tag(self.markdown_content)
 
-            if scroll_to_bottom and self.auto_scroll_to_bottom:
-                self.scroll_to_bottom()
-            else:
-                # resume scroll bar value and disable auto scrolling to bottom.
-                scrollbar.setValue(current_scroll_value)
-                self.auto_scroll_to_bottom = False
-        finally:
-            # release lock
-            self.content_lock.release()
+        # update markdown content
+        self.setMarkdown(self.markdown_content)
+
+        if scroll_to_bottom and self.auto_scroll_to_bottom:
+            self.scroll_to_bottom()
+        else:
+            # resume scroll bar value and disable auto scrolling to bottom.
+            scrollbar.setValue(current_scroll_value)
+            self.auto_scroll_to_bottom = False
+
 
     def pre_process_markdown(self):
         # resume auto scroll to bottom.

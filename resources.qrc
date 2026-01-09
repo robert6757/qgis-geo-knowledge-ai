@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="/plugins/geo_knowledge_ai">
+    <file>image/infinite.svg</file>
     <file>image/help.svg</file>
     <file>image/removeAll.svg</file>
     <file>image/list.svg</file>

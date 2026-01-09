@@ -26,7 +26,7 @@ import requests
 import webbrowser
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QButtonGroup
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox
 
 from qgis.core import QgsSettings
 
@@ -49,20 +49,10 @@ class SettingDialog(QDialog, FORM_CLASS):
         self.btnApply.clicked.connect(self.handle_click_apply)
         self.btnHelp.clicked.connect(self.handle_click_help)
 
-        self.chat_mode_btn_group = QButtonGroup(self)
-        self.chat_mode_btn_group.addButton(self.radioButtonNormal, 1)
-        self.chat_mode_btn_group.addButton(self.radioButtonLongChain, 2)
-
         gSetting = QgsSettings()
         email = gSetting.value(USER_EMAIL_TAG)
         if email:
             self.lineEdit.setText(email)
-
-        chat_mode = gSetting.value(CHAT_MODE_TAG, "1")
-        if chat_mode == "1":
-            self.radioButtonNormal.setChecked(True)
-        elif chat_mode == "2":
-            self.radioButtonLongChain.setChecked(True)
 
         multi_turn = gSetting.value(MULTI_TURN_TAG, "1")
         self.cbChatTurn.setCurrentText(multi_turn)
@@ -75,9 +65,6 @@ class SettingDialog(QDialog, FORM_CLASS):
         # multi-turn
         chat_turn = self.cbChatTurn.currentText()
         gSetting.setValue(MULTI_TURN_TAG, chat_turn)
-
-        chat_mode = self.chat_mode_btn_group.checkedId()
-        gSetting.setValue(CHAT_MODE_TAG, str(chat_mode))
 
         super().accept()
 

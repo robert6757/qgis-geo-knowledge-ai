@@ -4,7 +4,7 @@
 <context>
     <name>ChatbotBrowser</name>
     <message>
-        <location filename="../chatbot_browser.py" line="62"/>
+        <location filename="../chatbot_browser.py" line="63"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
         <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat)</translation>
     </message>
@@ -14,7 +14,7 @@
         <translation type="obsolete">[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="63"/>
+        <location filename="../chatbot_browser.py" line="64"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[运行代码](agent://execute/code/{index}) | [复制代码](agent://execute/copycode/{index})</translation>
     </message>
@@ -53,42 +53,42 @@
         <translation>Geo Knowledge AI 设置</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="169"/>
+        <location filename="../setting_dialog.ui" line="82"/>
         <source>Apply for high-speed channel. Please enter your email address and click &apos;Apply&apos;. We will contact you via email within 24 hours. </source>
         <translation>申请专用高速通道，请输入您的电子邮箱地址后，点击&quot;申请&quot;按钮。我们将会在24小时内发送邮件给您。请注意查收。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="181"/>
+        <location filename="../setting_dialog.ui" line="94"/>
         <source>E-mail：</source>
         <translation>电子邮件：</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="191"/>
+        <location filename="../setting_dialog.ui" line="104"/>
         <source>Apply</source>
         <translation>申请</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="76"/>
+        <location filename="../setting_dialog.ui" line="44"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="86"/>
+        <location filename="../setting_dialog.ui" line="34"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="49"/>
+        <location filename="../setting_dialog.ui" line="20"/>
         <source>Get Help</source>
         <translation>获得帮助</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="154"/>
+        <location filename="../setting_dialog.ui" line="67"/>
         <source>High-Speed Channel</source>
         <translation>高速通道</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="96"/>
+        <location filename="../setting_dialog.ui" line="116"/>
         <source>Multi-Turn Conversation</source>
         <translation>多轮对话</translation>
     </message>
@@ -98,22 +98,22 @@
         <translation type="obsolete">默认最大对话轮数为2轮。过大的对话轮数会导致话题分散。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="107"/>
+        <location filename="../setting_dialog.ui" line="127"/>
         <source>Turn Limit：</source>
         <translation>对话轮数上限：</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="121"/>
+        <location filename="../setting_dialog.ui" line="141"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="126"/>
+        <location filename="../setting_dialog.ui" line="146"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="131"/>
+        <location filename="../setting_dialog.ui" line="151"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -125,17 +125,17 @@
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
         <source>Chat Mode</source>
-        <translation>对话模式</translation>
+        <translation type="obsolete">对话模式</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="29"/>
         <source>Geo Knowledge Q&amp;&amp;A</source>
-        <translation>地理知识问答</translation>
+        <translation type="obsolete">地理知识问答</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="36"/>
         <source>Use chain-of-thought reasoning to generate, debug, and execute code.</source>
-        <translation>使用长链思考来生成、调试和执行代码。</translation>
+        <translation type="obsolete">使用长链思考来生成、调试和执行代码。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="39"/>
@@ -143,14 +143,14 @@
         <translation type="obsolete">生成代码 &amp;&amp; 自动运行</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="141"/>
+        <location filename="../setting_dialog.ui" line="161"/>
         <source>The default limit is 1 conversation turns to help keep the discussion on topic.</source>
         <translation>默认的最大对话轮数为 1。过多的对话轮数可能会导致话题偏离主题。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="39"/>
         <source>Chain-of-Thought Reasoning</source>
-        <translation>链式推理</translation>
+        <translation type="obsolete">链式推理</translation>
     </message>
 </context>
 <context>
@@ -174,47 +174,47 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="259"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="278"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="260"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="279"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="316"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="335"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="329"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="349"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="146"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="163"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="146"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="163"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="155"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="172"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="150"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="167"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="155"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="172"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -229,17 +229,17 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="186"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="194"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="211"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="220"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
@@ -281,6 +281,11 @@
         <source>History List</source>
         <translation>历史记录</translation>
     </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="175"/>
+        <source>Use chain-of-thought reasoning to generate, debug, and execute code.</source>
+        <translation>使用长链思考来生成、调试和执行代码。</translation>
+    </message>
 </context>
 <context>
     <name>HistoryDialog</name>
@@ -321,42 +326,42 @@
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="102"/>
+        <location filename="../setting_dialog.py" line="89"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="83"/>
         <source>Please enter your email address.</source>
         <translation>请输入您的电子邮箱地址。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="102"/>
+        <location filename="../setting_dialog.py" line="89"/>
         <source>Please enter a valid email address.</source>
         <translation>请输入正确的电子邮箱地址。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="119"/>
+        <location filename="../setting_dialog.py" line="106"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="119"/>
+        <location filename="../setting_dialog.py" line="106"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
         <translation>您的申请已送达，我们将会在24小时内回复您。请稍后查收。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="129"/>
+        <location filename="../setting_dialog.py" line="116"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="111"/>
         <source>Failed to submit your request. Please try again later.</source>
         <translation>无法提交您的申请。请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="129"/>
+        <location filename="../setting_dialog.py" line="116"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>

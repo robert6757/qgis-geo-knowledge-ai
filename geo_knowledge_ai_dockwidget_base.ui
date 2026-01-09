@@ -169,6 +169,26 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="2">
+     <widget class="QToolButton" name="btnCoTStatus">
+      <property name="toolTip">
+       <string>Use chain-of-thought reasoning to generate, debug, and execute code.</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/infinite.svg</normaloff>:/plugins/geo_knowledge_ai/image/infinite.svg</iconset>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>

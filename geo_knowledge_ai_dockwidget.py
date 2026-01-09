@@ -72,6 +72,15 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
         self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
+        self.btnCoTStatus.toggled.connect(self.handle_update_CoT_status)
+
+        # update CoT status.
+        gSetting = QgsSettings()
+        chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
+        if chat_mode == 1:
+            self.btnCoTStatus.setChecked(False)
+        else:
+            self.btnCoTStatus.setChecked(True)
 
         # use custom function to deal with "Open Links".
         self.chatbot_browser.setOpenLinks(False)
@@ -128,6 +137,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.append_markdown(history_item["answer"], scroll_to_bottom=False)
         self.chatbot_browser.post_process_markdown(show_feedback=False)
         self.plainTextEdit.setPlainText(history_item["question"])
+
+    def handle_update_CoT_status(self, checked):
+        gSetting = QgsSettings()
+        if checked:
+            # use CoT chat mode.
+            gSetting.setValue(CHAT_MODE_TAG, "2")
+        else:
+            gSetting.setValue(CHAT_MODE_TAG, "1")
 
     def handle_click_feedback(self, star: int):
         if not self.chat_id:
@@ -224,6 +241,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
+        self.btnCoTStatus.setEnabled(True)
 
         # save to history
         cur_chat_timestamp = int(time.time())
@@ -247,6 +265,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
+        self.btnCoTStatus.setEnabled(True)
 
     def _begin_chat(self):
         # In order to  make the markdown render faster, we have to clear the previous markdown content.
@@ -316,6 +335,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setText(self.tr("Stop"))
         self.btnHistory.setEnabled(False)
         self.btnClear.setEnabled(False)
+        self.btnCoTStatus.setEnabled(False)
 
     def _stop_chat(self):
         if self.chat_worker:
@@ -329,6 +349,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setText(self.tr("Send"))
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
+        self.btnCoTStatus.setEnabled(True)
 
     def _get_workspace_info(self):
         workspace_info = {}
@@ -439,5 +460,13 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
             layers_info.append(layer_info)
         workspace_info["Layers"] = layers_info
+
+        # get Processing Tools
+        processing_tools = []
+        registry = QgsApplication.processingRegistry()
+        providers = registry.providers()
+        for provider in providers:
+            processing_tools.append(provider.name())
+        workspace_info["ProcessingTools"] = processing_tools
 
         return workspace_info
