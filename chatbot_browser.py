@@ -35,6 +35,8 @@ class ChatbotBrowser(QTextBrowser):
     trigger_repeat = pyqtSignal()
     trigger_exec_code = pyqtSignal(str)
     trigger_copy_code = pyqtSignal(str)
+    trigger_exec_processing = pyqtSignal(str)
+    trigger_repeat_with_cot = pyqtSignal()
 
     append_markdown_signal = pyqtSignal(str, bool)
 
@@ -60,8 +62,9 @@ class ChatbotBrowser(QTextBrowser):
 
         self.append_markdown_signal.connect(self._do_append_markdown)
 
-        self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
+        self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)")
         self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
+        self.exec_processing_text = "[{processing_id}](agent://execute/processing/{processing_id})"
         self.tail_splited_line = "\n\n---------\n\n"
 
         self.python_code_block_list = []
@@ -126,6 +129,7 @@ class ChatbotBrowser(QTextBrowser):
 
         # add execute button after the python code block.
         self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
+        _, self.markdown_content = self._extract_processing_and_add_execute_tag(self.markdown_content)
 
         self.markdown_content += self.tail_splited_line
 
@@ -197,6 +201,11 @@ class ChatbotBrowser(QTextBrowser):
                 elif path.startswith("/copycode/"):
                     code_index = int(path.split("/")[-1])
                     self.trigger_copy_code.emit(self.python_code_block_list[code_index-1])
+                elif path.startswith("/processing/"):
+                    processing_id = path.split("/")[-1]
+                    self.trigger_exec_processing.emit(processing_id)
+            elif process_name == "cot":
+                self.trigger_repeat_with_cot.emit()
             return
 
         # open web browser
@@ -392,4 +401,90 @@ class ChatbotBrowser(QTextBrowser):
             text = text[:end_pos] + exec_block_with_index + text[end_pos:]
 
         return ret_code_list, text
+
+    def _extract_processing_and_add_execute_tag(self, text: str):
+        """
+        add executing tag with processing id.
+        ignore the code block area.
+        """
+        # code block
+        code_block_pattern = r'```.*?```'
+
+        # eg. native:buffer
+        colon_string_pattern = r'`[a-zA-Z0-9_-]+:[a-zA-Z0-9_-]+`'
+
+        # find all the code blocks.
+        code_blocks = list(re.finditer(code_block_pattern, text, re.DOTALL))
+
+        ret_string_list = []
+
+        if code_blocks:
+            non_code_positions = []
+
+            current_pos = 0
+            for code_block in sorted(code_blocks, key=lambda x: x.start()):
+                if current_pos < code_block.start():
+                    non_code_positions.extend(range(current_pos, code_block.start()))
+                current_pos = code_block.end()
+
+            # deal with the last block.
+            if current_pos < len(text):
+                non_code_positions.extend(range(current_pos, len(text)))
+
+            for pos in non_code_positions:
+                if pos < len(text):
+                    remaining_text = text[pos:]
+                    match = re.match(colon_string_pattern, remaining_text)
+                    if match:
+                        matched_string = match.group(0)
+                        end_pos = pos + len(matched_string)
+                        if all(p in non_code_positions for p in range(pos, end_pos)):
+                            if matched_string not in ret_string_list:
+                                ret_string_list.append(matched_string)
+
+        else:
+            # find in the whole text.
+            matches = re.findall(colon_string_pattern, text)
+            ret_string_list = list(set(matches))  # 去重
+
+        insert_positions = []
+
+        if not code_blocks:
+            for match in re.finditer(colon_string_pattern, text):
+                insert_positions.append((match.end(), match.group(0)))
+        else:
+            current_pos = 0
+            non_code_ranges = []
+
+            for code_block in sorted(code_blocks, key=lambda x: x.start()):
+                if current_pos < code_block.start():
+                    non_code_ranges.append((current_pos, code_block.start()))
+                current_pos = code_block.end()
+
+            if current_pos < len(text):
+                non_code_ranges.append((current_pos, len(text)))
+
+            for start, end in non_code_ranges:
+                non_code_text = text[start:end]
+                for match in re.finditer(colon_string_pattern, non_code_text):
+                    actual_start = start + match.start()
+                    actual_end = start + match.end()
+                    matched_string = match.group(0)
+                    insert_positions.append((actual_end, matched_string))
+
+        # find processing from end to start.
+        for i, (end_pos, matched_string) in enumerate(sorted(insert_positions, key=lambda x: x[0], reverse=True), 1):
+            # skip some ignored tags.
+            if matched_string.startswith("`EPSG:"):
+                continue
+
+            processing_id = matched_string.replace("`", "")
+
+            # generate executing tag.
+            # eg. [native:buffer](agent://execute/processing/native:buffer)
+            exec_block = self.exec_processing_text.replace("{processing_id}", processing_id)
+
+            text = text[:end_pos-len(matched_string)] + exec_block + text[end_pos:]
+
+        return ret_string_list, text
 

@@ -32,6 +32,7 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox, QApplication
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
+from qgis import processing
 
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
@@ -69,8 +70,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.show_setting_dlg.connect(self.handle_click_setting_btn)
         self.chatbot_browser.trigger_feedback.connect(self.handle_click_feedback)
         self.chatbot_browser.trigger_repeat.connect(self.handle_click_repeat)
+        self.chatbot_browser.trigger_repeat_with_cot.connect(self.handle_click_repeat_with_cot)
         self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
         self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
+        self.chatbot_browser.trigger_exec_processing.connect(self.handle_click_exec_processing)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
         self.btnCoTStatus.toggled.connect(self.handle_update_CoT_status)
 
@@ -186,6 +189,19 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # repeat chat.
         self._begin_chat()
 
+    def handle_click_repeat_with_cot(self):
+        # remove the lasted history.
+        histories = self.history_manager.enum_question()
+        if not histories:
+            return
+
+        # remove the lasted chat.
+        self.pre_chat_timestamp = histories[0].get("pre_timestamp", 0)
+        self.history_manager.remove_history(histories[0].get("timestamp"))
+
+        # repeat chat.
+        self._begin_chat(chat_mode=2)
+
     def handle_click_exec_code(self, code):
         """run python process as a background task"""
         code_exec = CodeExecution(
@@ -223,6 +239,19 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # set error_msg as user`s question.
         self.plainTextEdit.setPlainText(error_msg)
         self._begin_chat()
+
+    def handle_click_exec_processing(self, processing_id):
+        # use metadata of processing to find the real algorithm id.
+        processing_metadata = QgsApplication.processingRegistry().algorithmById(processing_id)
+        if not processing_metadata:
+            self.handle_exec_code_error(self.tr("RuntimeError"), self.tr("Cannot find processing: ") + processing_id)
+            return
+
+        safe_globals = {
+            'processing': processing,
+        }
+        processing_code = f"""processing.execAlgorithmDialog("{processing_metadata.id()}")"""
+        exec(processing_code, safe_globals)
 
     def on_chunks_info_received(self, content):
         """receive the count of references"""
@@ -267,7 +296,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnClear.setEnabled(True)
         self.btnCoTStatus.setEnabled(True)
 
-    def _begin_chat(self):
+    def _begin_chat(self, chat_mode = None):
         # In order to  make the markdown render faster, we have to clear the previous markdown content.
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
@@ -290,7 +319,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         lang = gSetting.value('/locale/userLocale', 'en_US')
 
         # chat mode
-        chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
+        if not chat_mode:
+            # use global setting.
+            chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
 
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
