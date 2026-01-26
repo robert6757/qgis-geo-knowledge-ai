@@ -6,7 +6,7 @@
 name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 description=Get professional AI guidance for your geospatial projects—from terrain analysis to PyQGIS code generation.
-version=1.3
+version=1.4
 author=phoenix-gis
 email=phoenixgis@sina.com
 
@@ -22,7 +22,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.3 2026-01-09
+changelog=Version 1.4 2026-01-26
+      * New Feature: In-chat shortcuts for processing tools.
+      * Version 1.3 2026-01-09
       * Bug fix: occasional crash.
       * Version 1.2 2026-01-04
       * New Feature: Chain-of-Thought chat mode.

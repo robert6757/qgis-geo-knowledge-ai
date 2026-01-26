@@ -6,7 +6,7 @@
     <message>
         <location filename="../chatbot_browser.py" line="63"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
-        <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat)</translation>
+        <translation type="obsolete">以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat)</translation>
     </message>
     <message>
         <location filename="../chatbot_browser.py" line="63"/>
@@ -14,9 +14,14 @@
         <translation type="obsolete">[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="64"/>
+        <location filename="../chatbot_browser.py" line="66"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[运行代码](agent://execute/code/{index}) | [复制代码](agent://execute/copycode/{index})</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="65"/>
+        <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)</source>
+        <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat) | [长链思考](agent://cot/1)</translation>
     </message>
 </context>
 <context>
@@ -174,47 +179,47 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="278"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="307"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="279"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="335"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="366"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="349"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="380"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="163"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="166"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="163"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="166"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="172"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="175"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="167"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="170"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="172"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="175"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -229,19 +234,29 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="219"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="211"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="227"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="220"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="236"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <source>RuntimeError</source>
+        <translation>运行错误</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <source>Cannot find processing: </source>
+        <translation></translation>
     </message>
 </context>
 <context>
