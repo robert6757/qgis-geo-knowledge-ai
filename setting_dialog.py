@@ -54,7 +54,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         if email:
             self.lineEdit.setText(email)
 
-        multi_turn = gSetting.value(MULTI_TURN_TAG, "1")
+        multi_turn = gSetting.value(MULTI_TURN_TAG, "2")
         self.cbChatTurn.setCurrentText(multi_turn)
     def handle_click_ok(self):
         email = self.lineEdit.text()
@@ -72,7 +72,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         super().reject()
 
     def handle_click_help(self):
-        url = "https://www.phoenix-gis.cn/"
+        url = "https://github.com/robert6757/qgis-geo-knowledge-ai"
         webbrowser.open(url)
 
     def handle_click_apply(self):

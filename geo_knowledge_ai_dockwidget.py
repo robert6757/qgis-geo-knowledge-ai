@@ -28,6 +28,7 @@ import traceback
 import io
 from contextlib import redirect_stdout
 
+from PyQt5.QtCore import QStandardPaths
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox, QApplication
 from qgis.PyQt.QtCore import pyqtSignal
@@ -45,6 +46,7 @@ from .code_execution import CodeExecution
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'geo_knowledge_ai_dockwidget_base.ui'))
+
 
 class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     closingPlugin = pyqtSignal()
@@ -74,8 +76,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
         self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
         self.chatbot_browser.trigger_exec_processing.connect(self.handle_click_exec_processing)
+        self.chatbot_browser.trigger_privacy_agree.connect(self.handle_agree_privacy)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
         self.btnCoTStatus.toggled.connect(self.handle_update_CoT_status)
+        self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
 
         # update CoT status.
         gSetting = QgsSettings()
@@ -84,6 +88,18 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.btnCoTStatus.setChecked(False)
         else:
             self.btnCoTStatus.setChecked(True)
+
+        # update screen capture status.
+        capture_screen = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
+        if capture_screen:
+            self.btnScreenCapture.setChecked(True)
+        else:
+            self.btnScreenCapture.setChecked(False)
+
+        # disable the main button in the first start.
+        if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
+            self.btnSendOrTerminate.setEnabled(False)
+            self.btnClear.setEnabled(False)
 
         # use custom function to deal with "Open Links".
         self.chatbot_browser.setOpenLinks(False)
@@ -95,6 +111,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.pre_chat_timestamp = 0
 
         self.recv_raw_content = ""
+
+        # show welcome text
+        self.show_welcome_content()
 
     def closeEvent(self, event):
         self.closingPlugin.emit()
@@ -155,7 +174,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         try:
             # send feedback to server
-            response = requests.post (
+            response = requests.post(
                 AI_SERVER_DOMAIN + "/ai/v1/feedback",
                 json={"chat_id": self.chat_id, "star": star},
                 timeout=2
@@ -263,6 +282,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         processing_code = f"""processing.execAlgorithmDialog("{processing_metadata.id()}")"""
         exec(processing_code, safe_globals)
 
+    def handle_click_screen_capture(self, checked):
+        gSetting = QgsSettings()
+        if checked:
+            # use CoT chat mode.
+            gSetting.setValue(CAPTURE_SCREEN_TAG, 'true')
+        else:
+            gSetting.setValue(CAPTURE_SCREEN_TAG, 'false')
+
     def on_chunks_info_received(self, content):
         """receive the count of references"""
         self.chatbot_browser.append_markdown(content)
@@ -281,6 +308,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
         self.btnCoTStatus.setEnabled(True)
+        self.btnScreenCapture.setEnabled(True)
 
         # save to history
         cur_chat_timestamp = int(time.time())
@@ -305,8 +333,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
         self.btnCoTStatus.setEnabled(True)
+        self.btnScreenCapture.setEnabled(True)
 
-    def _begin_chat(self, chat_mode = None):
+    def _begin_chat(self, chat_mode=None):
         # In order to  make the markdown render faster, we have to clear the previous markdown content.
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
@@ -336,13 +365,19 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
 
+        # capture screen
+        capture_screen_tag = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
+        capture_screen_url = ''
+        if capture_screen_tag:
+            capture_screen_url = self.capture_screen(self.chat_id)
+
         # get qgis basic information in project context.
         workspace_info = self._get_workspace_info()
 
         histories = []
         if self.pre_chat_timestamp > 0:
             # retrieve previous messages from the conversation history
-            multi_turn = int(gSetting.value(MULTI_TURN_TAG, "1"))
+            multi_turn = int(gSetting.value(MULTI_TURN_TAG, "2"))
             parent_chat_ts = self.pre_chat_timestamp
             while multi_turn > 0 and parent_chat_ts > 0:
                 pre_history = self.history_manager.retrieve_history(parent_chat_ts)
@@ -362,7 +397,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             "user_id": user_id,
             "chat_id": self.chat_id,
             "lang": lang,
-            "workspace": workspace_info
+            "workspace": workspace_info,
+            "screenshot_url": capture_screen_url
         }
 
         self.chat_worker = StreamChatWorker(request_data, chat_mode)
@@ -377,6 +413,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(False)
         self.btnClear.setEnabled(False)
         self.btnCoTStatus.setEnabled(False)
+        self.btnScreenCapture.setEnabled(False)
 
     def _stop_chat(self):
         if self.chat_worker:
@@ -391,6 +428,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
         self.btnCoTStatus.setEnabled(True)
+        self.btnScreenCapture.setEnabled(True)
 
     def _get_workspace_info(self):
         workspace_info = {}
@@ -511,3 +549,80 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         workspace_info["ProcessingTools"] = processing_tools
 
         return workspace_info
+
+    def capture_screen(self, chat_id):
+        # 1. save screenshot to temp dir.
+        screenshot_path = os.path.join(
+            QStandardPaths.writableLocation(QStandardPaths.TempLocation),
+            "qgis-screenshot.png"
+        )
+        main_window = self.iface.mainWindow()
+        pixmap = main_window.grab()
+        pixmap.save(screenshot_path)
+
+        # 2. upload to server
+        upload_url = f"{AI_SERVER_DOMAIN}/ai/v1/attachment/image"
+        image_name = os.path.basename(screenshot_path)
+
+        try:
+            with open(screenshot_path, 'rb') as f:
+                image_data = f.read()
+
+            params = {
+                "chat_id": chat_id,
+                "image_name": image_name
+            }
+            headers = {
+                "Content-Type": "image/png"
+            }
+            response = requests.post(
+                upload_url,
+                params=params,
+                data=image_data,
+                headers=headers,
+                timeout=5
+            )
+
+            if response.status_code != 200:
+                return None
+
+            # eg. /ai/v1/attachment/image?image_name=xxx.png
+            return response.text.strip()
+        except requests.exceptions.RequestException as e:
+            self.iface.messageBar().pushMessage(
+                "Failed to upload screenshot",
+                f"Network：{str(e)}",
+                level=Qgis.Critical,
+                duration=5
+            )
+        except Exception as e:
+            self.iface.messageBar().pushMessage(
+                "Failed to upload screenshot",
+                f"{str(e)}",
+                level=Qgis.Critical,
+                duration=5
+            )
+        return None
+
+    def show_welcome_content(self):
+        welcome_str = self.tr("""\n\n### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing tailored professional tutorials that cover a wide range of geospatial tasks, including global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS code generation.\n\nAdditionally, I will guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.\n\n""")
+
+        gSetting = QgsSettings()
+        if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
+            welcome_str += self.tr("""\n\n———\n\n **🔒 Privacy Confirmation**\n\nBefore using this plugin, please read our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n[I have read and agree to the Privacy Notice.](agent://privacy/1)""")
+
+        self.chatbot_browser.append_markdown(welcome_str, False)
+
+    def handle_agree_privacy(self):
+        gSetting = QgsSettings()
+
+        if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
+            # agree the privacy.
+            self.chatbot_browser.append_markdown(self.tr("\n\n———\n\nThank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀"), False)
+            gSetting.setValue(PRIVACY_AGREEMENT_TAG, 'true')
+
+        # enable send button
+        self.btnSendOrTerminate.setEnabled(True)
+        self.btnClear.setEnabled(True)
+
+

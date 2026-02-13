@@ -14,12 +14,12 @@
         <translation type="obsolete">[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="66"/>
+        <location filename="../chatbot_browser.py" line="67"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[运行代码](agent://execute/code/{index}) | [复制代码](agent://execute/copycode/{index})</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="65"/>
+        <location filename="../chatbot_browser.py" line="66"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)</source>
         <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat) | [长链思考](agent://cot/1)</translation>
     </message>
@@ -123,9 +123,9 @@
         <translation>3</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="130"/>
+        <location filename="../setting_dialog.ui" line="161"/>
         <source>The default limit is 2 conversation turns to help keep the discussion on topic.</source>
-        <translation type="obsolete">默认的最大对话轮数为 2。过多的对话轮数可能会导致话题偏离主题。</translation>
+        <translation>默认的最大对话轮数为 2。过多的对话轮数可能会导致话题偏离主题。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
@@ -150,7 +150,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="161"/>
         <source>The default limit is 1 conversation turns to help keep the discussion on topic.</source>
-        <translation>默认的最大对话轮数为 1。过多的对话轮数可能会导致话题偏离主题。</translation>
+        <translation type="obsolete">默认的最大对话轮数为 1。过多的对话轮数可能会导致话题偏离主题。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="39"/>
@@ -179,47 +179,47 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="307"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="346"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="347"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="366"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="380"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="427"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="166"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="185"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="166"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="185"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="175"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="194"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="170"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="189"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="175"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="194"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -234,29 +234,97 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="219"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="227"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="236"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="276"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="276"/>
         <source>Cannot find processing: </source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="608"/>
+        <source>
+
+### Welcome to the Geo Knowledge AI plugin!
+
+**Glad to meet you! 🌍**
+
+I am your GIS AI assistant, providing tailored professional tutorials that cover a wide range of geospatial tasks, including global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS code generation.
+
+Additionally, I will guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.
+
+</source>
+        <translation>
+
+### 欢迎使用 Geo Knowledge AI 插件!
+
+**非常荣幸与你相遇! 🌍**
+
+我是您的 GIS AI 助手，提供量身定制的专业教程，涵盖广泛的地理空间任务，包括全球地理数据发现、地球科学建模、水文和地形分析、遥感处理和 PyQGIS 代码生成。
+
+此外，我还会指导您使用 GDAL、GRASS 和 SAGA 等基本工具，使您的空间分析更加高效和智能。
+
+</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="612"/>
+        <source>
+
+———
+
+ **🔒 Privacy Confirmation**
+
+Before using this plugin, please read and agree to our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+
+[I have read and agree to the Privacy Notice.](agent://privacy/1)</source>
+        <translation type="obsolete">
+
+———
+
+ **🔒 隐私协议**
+
+使用插件前，请阅读Before using this plugin, please read and agree to our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+
+[I have read and agree to the Privacy Notice.](agent://privacy/1)</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="621"/>
+        <source>
+
+———
+
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="612"/>
+        <source>
+
+———
+
+ **🔒 Privacy Confirmation**
+
+Before using this plugin, please read our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+
+[I have read and agree to the Privacy Notice.](agent://privacy/1)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -267,39 +335,44 @@
         <translation>Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="95"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="54"/>
         <source>Chatbot:</source>
         <translation>对话：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="122"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="81"/>
         <source>My Question:</source>
         <translation>问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="54"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="168"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="68"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="161"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="75"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="154"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="161"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="140"/>
         <source>History List</source>
         <translation>历史记录</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="175"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="120"/>
         <source>Use chain-of-thought reasoning to generate, debug, and execute code.</source>
         <translation>使用长链思考来生成、调试和执行代码。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="182"/>
+        <source>Capture QGIS main window to start chat.</source>
+        <translation>捕获 QGIS 主窗口以开始对话。</translation>
     </message>
 </context>
 <context>

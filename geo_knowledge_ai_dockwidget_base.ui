@@ -35,48 +35,7 @@
     <property name="spacing">
      <number>3</number>
     </property>
-    <item row="1" column="3">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>84</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="1" column="0">
-     <widget class="QToolButton" name="btnSetting">
-      <property name="toolTip">
-       <string>Settings</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="4">
-     <widget class="QPushButton" name="btnSendOrTerminate">
-      <property name="text">
-       <string>Send</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="5">
-     <widget class="QPushButton" name="btnClear">
-      <property name="text">
-       <string>Clear</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="6">
+    <item row="0" column="0" colspan="8">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
@@ -155,20 +114,6 @@
       </widget>
      </widget>
     </item>
-    <item row="1" column="1">
-     <widget class="QToolButton" name="btnHistory">
-      <property name="toolTip">
-       <string>History List</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/list.svg</normaloff>:/plugins/geo_knowledge_ai/image/list.svg</iconset>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="2">
      <widget class="QToolButton" name="btnCoTStatus">
       <property name="toolTip">
@@ -188,6 +133,81 @@
        <bool>false</bool>
       </property>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QToolButton" name="btnHistory">
+      <property name="toolTip">
+       <string>History List</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/list.svg</normaloff>:/plugins/geo_knowledge_ai/image/list.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="7">
+     <widget class="QPushButton" name="btnClear">
+      <property name="text">
+       <string>Clear</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="6">
+     <widget class="QPushButton" name="btnSendOrTerminate">
+      <property name="text">
+       <string>Send</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QToolButton" name="btnSetting">
+      <property name="toolTip">
+       <string>Settings</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</normaloff>:/plugins/geo_knowledge_ai/image/settings.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QToolButton" name="btnScreenCapture">
+      <property name="toolTip">
+       <string>Capture QGIS main window to start chat.</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/screencapture2.svg</normaloff>:/plugins/geo_knowledge_ai/image/screencapture2.svg</iconset>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4" colspan="2">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>84</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
     </item>
    </layout>
   </widget>

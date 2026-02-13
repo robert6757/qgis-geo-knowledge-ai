@@ -37,6 +37,7 @@ class ChatbotBrowser(QTextBrowser):
     trigger_copy_code = pyqtSignal(str)
     trigger_exec_processing = pyqtSignal(str)
     trigger_repeat_with_cot = pyqtSignal()
+    trigger_privacy_agree = pyqtSignal()
 
     append_markdown_signal = pyqtSignal(str, bool)
 
@@ -206,6 +207,8 @@ class ChatbotBrowser(QTextBrowser):
                     self.trigger_exec_processing.emit(processing_id)
             elif process_name == "cot":
                 self.trigger_repeat_with_cot.emit()
+            elif process_name == "privacy":
+                self.trigger_privacy_agree.emit()
             return
 
         # open web browser

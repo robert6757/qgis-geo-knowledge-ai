@@ -20,7 +20,7 @@
  ***************************************************************************/
 """
 
-VERSION = "1.4"
+VERSION = "1.5"
 
 AI_SERVER_DOMAIN = "https://www.phoenix-gis.cn"
 
@@ -28,3 +28,5 @@ USER_ID_TAG = "geo-knowledge-ai/uid"
 USER_EMAIL_TAG = "geo-knowledge-ai/email"
 MULTI_TURN_TAG = "geo-knowledge-ai/multi_turn"
 CHAT_MODE_TAG = "geo-knowledge-ai/chat_mode"
+CAPTURE_SCREEN_TAG = "geo-knowledge-ai/capture_screen"
+PRIVACY_AGREEMENT_TAG = "geo-knowledge-ai/privacy_agreement"
