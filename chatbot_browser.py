@@ -69,6 +69,14 @@ class ChatbotBrowser(QTextBrowser):
         self.tail_splited_line = "\n\n---------\n\n"
 
         self.python_code_block_list = []
+
+        # auto flush pending text in 50ms
+        self._content_buffer = ""
+        self._update_timer = QTimer(self)
+        self._update_timer.setInterval(50)
+        self._update_timer.timeout.connect(self._flush_buffer)
+        self._update_timer.start()
+
     def loadResource(self, type, name):
         """
         Overrides the standard loadResource method to handle network requests for images.
@@ -91,9 +99,25 @@ class ChatbotBrowser(QTextBrowser):
         return None
 
     def append_markdown(self, content: str, scroll_to_bottom=True):
-        self.append_markdown_signal.emit(content, scroll_to_bottom)
+        # because self.auto_scroll_to_bottom will be stopped by itself,
+        # so we only assign self.auto_scroll_to_bottom when it is True.
+        if self.auto_scroll_to_bottom:
+            self.auto_scroll_to_bottom = scroll_to_bottom
+        self._content_buffer += content
 
-    def _do_append_markdown(self, content: str, scroll_to_bottom=True):
+    def _flush_buffer(self):
+        """use buffer to draw widget."""
+        if not self._content_buffer:
+            return
+
+        # get and clear buffer.
+        new_text = self._content_buffer
+        self._content_buffer = ""
+
+        # update markdown
+        self._do_append_markdown(new_text)
+
+    def _do_append_markdown(self, content: str):
 
         # save current scroll value.
         scrollbar = self.verticalScrollBar()
@@ -107,13 +131,11 @@ class ChatbotBrowser(QTextBrowser):
         # update markdown content
         self.setMarkdown(self.markdown_content)
 
-        if scroll_to_bottom and self.auto_scroll_to_bottom:
+        if self.auto_scroll_to_bottom:
             self.scroll_to_bottom()
         else:
             # resume scroll bar value and disable auto scrolling to bottom.
             scrollbar.setValue(current_scroll_value)
-            self.auto_scroll_to_bottom = False
-
 
     def pre_process_markdown(self):
         # resume auto scroll to bottom.
@@ -168,6 +190,7 @@ class ChatbotBrowser(QTextBrowser):
 
     def clear(self):
         self.markdown_content = ""
+        self._content_buffer = ""
         self.setMarkdown("")
         self.image_cache.clear()
         self.auto_scroll_to_bottom = True
