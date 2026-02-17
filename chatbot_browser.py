@@ -47,6 +47,7 @@ class ChatbotBrowser(QTextBrowser):
         self.markdown_content = ""
         self.auto_scroll_to_bottom = True
         self.setMouseTracking(True)
+        self.show_feedback = True
 
         # Use a dictionary to cache downloaded images to prevent multiple downloads
         self.image_cache = {}
@@ -61,7 +62,7 @@ class ChatbotBrowser(QTextBrowser):
 
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
-        self.append_markdown_signal.connect(self._do_append_markdown)
+        self.append_markdown_signal.connect(self._append_to_buffer)
 
         self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)")
         self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
@@ -73,7 +74,7 @@ class ChatbotBrowser(QTextBrowser):
         # auto flush pending text in 50ms
         self._content_buffer = ""
         self._update_timer = QTimer(self)
-        self._update_timer.setInterval(50)
+        self._update_timer.setInterval(200)
         self._update_timer.timeout.connect(self._flush_buffer)
         self._update_timer.start()
 
@@ -99,6 +100,9 @@ class ChatbotBrowser(QTextBrowser):
         return None
 
     def append_markdown(self, content: str, scroll_to_bottom=True):
+        self.append_markdown_signal.emit(content, scroll_to_bottom)
+
+    def _append_to_buffer(self, content: str, scroll_to_bottom=True):
         # because self.auto_scroll_to_bottom will be stopped by itself,
         # so we only assign self.auto_scroll_to_bottom when it is True.
         if self.auto_scroll_to_bottom:
@@ -112,10 +116,12 @@ class ChatbotBrowser(QTextBrowser):
 
         # get and clear buffer.
         new_text = self._content_buffer
-        self._content_buffer = ""
 
         # update markdown
         self._do_append_markdown(new_text)
+
+        # clear buffer, waiting for next flushing.
+        self._content_buffer = ""
 
     def _do_append_markdown(self, content: str):
 
@@ -140,29 +146,14 @@ class ChatbotBrowser(QTextBrowser):
     def pre_process_markdown(self):
         # resume auto scroll to bottom.
         self.auto_scroll_to_bottom = True
+        self.show_feedback = True
         self.pending_images.clear()
         self.waiting_timer.stop()
         self.python_code_block_list.clear()
 
     def post_process_markdown(self, show_feedback=True):
-
-        # add feedback
-        if show_feedback:
-            self.markdown_content += "\n\n" + self.feedback_text
-
-        # add execute button after the python code block.
-        self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
-        _, self.markdown_content = self._extract_processing_and_add_execute_tag(self.markdown_content)
-
-        self.markdown_content += self.tail_splited_line
-
-        # deal with upl-image-preview block.
-        self.markdown_content = self.convert_upl_to_markdown_image(self.markdown_content)
-
-        # replace failed image with links.
-        self.markdown_content = self.replace_failed_images_with_links(self.markdown_content)
-
         # wait for finalizing.
+        self.show_feedback = show_feedback
         self.waiting_timer.start(500)
 
         # Check Result!
@@ -388,12 +379,29 @@ class ChatbotBrowser(QTextBrowser):
         self.iface.messageBar().pushMessage(error_msg_display)
 
     def _finalize_markdown_display(self):
-        if len(self.pending_images) > 0:
+        # waiting for all images has been loaded, and all the buffer has been flushed to self.markdown_content
+        if len(self.pending_images) > 0 or len(self._content_buffer) > 0:
             return
 
-        current_scroll_value = self.verticalScrollBar().value()
-
         self.waiting_timer.stop()
+
+        # add feedback
+        if self.show_feedback:
+            self.markdown_content += "\n\n" + self.feedback_text
+
+        # add execute button after the python code block.
+        self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
+        _, self.markdown_content = self._extract_processing_and_add_execute_tag(self.markdown_content)
+
+        self.markdown_content += self.tail_splited_line
+
+        # deal with upl-image-preview block.
+        self.markdown_content = self.convert_upl_to_markdown_image(self.markdown_content)
+
+        # replace failed image with links.
+        self.markdown_content = self.replace_failed_images_with_links(self.markdown_content)
+
+        current_scroll_value = self.verticalScrollBar().value()
 
         # finally update markdown
         self.setMarkdown(self.markdown_content)

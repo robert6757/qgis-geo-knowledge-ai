@@ -310,8 +310,12 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
-        <translation type="unfinished"></translation>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+        <translation>
+
+———
+
+感谢您选择 Geo Knowledge AI! 万事俱备，开启您的 GIS 之旅吧! 🚀</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="612"/>
@@ -324,7 +328,15 @@ Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin you
 Before using this plugin, please read our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 [I have read and agree to the Privacy Notice.](agent://privacy/1)</source>
-        <translation type="unfinished"></translation>
+        <translation>
+
+———
+
+ **🔒 隐私协议**
+
+使用插件前，请阅读[隐私协议](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+
+[我已经阅读并同意隐私协议](agent://privacy/1)</translation>
     </message>
 </context>
 <context>
