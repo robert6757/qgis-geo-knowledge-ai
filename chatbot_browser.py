@@ -21,12 +21,38 @@
 
 import webbrowser
 import re
-from threading import Lock
+import queue
+import threading
 
-from PyQt5.QtCore import QByteArray, Qt, QUrl, pyqtSignal, QTimer
+from PyQt5.QtCore import QByteArray, Qt, QUrl, pyqtSignal, QTimer, QThread
 from PyQt5.QtGui import QTextDocument, QImage, QMouseEvent
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
 from PyQt5.QtWidgets import QTextBrowser
+
+
+class ConsumerThread(QThread):
+    data_received = pyqtSignal(str)
+    finished = pyqtSignal()
+
+    def __init__(self, queue, stop_event):
+        super().__init__()
+        self.queue = queue
+        self.stop_event = stop_event
+
+    def run(self):
+        while not self.stop_event.is_set():
+            try:
+                # check stop event in 0.5s.
+                data = self.queue.get(timeout=0.5)
+            except queue.Empty:
+                continue
+            if data is None:
+                break
+
+            # emit signal to GUI thread.
+            self.data_received.emit(data)
+            self.queue.task_done()
+        self.finished.emit()
 
 
 class ChatbotBrowser(QTextBrowser):
@@ -39,8 +65,6 @@ class ChatbotBrowser(QTextBrowser):
     trigger_repeat_with_cot = pyqtSignal()
     trigger_privacy_agree = pyqtSignal()
 
-    append_markdown_signal = pyqtSignal(str, bool)
-
     def __init__(self, iface, parent=None):
         super().__init__(parent)
         self.iface = iface
@@ -49,34 +73,33 @@ class ChatbotBrowser(QTextBrowser):
         self.setMouseTracking(True)
         self.show_feedback = True
 
+        # drawing queue
+        self.drawing_queue = queue.Queue()
+        self.stop_event = threading.Event()
+
+        self.drawing_consumer = ConsumerThread(self.drawing_queue, self.stop_event)
+        self.drawing_consumer.data_received.connect(self._do_append_markdown)
+        self.drawing_consumer.finished.connect(self._on_consumer_finished)
+
         # Use a dictionary to cache downloaded images to prevent multiple downloads
         self.image_cache = {}
 
         # pending loading parameters.
         self.pending_images = set()
-        self.waiting_timer = QTimer(self)
-        self.waiting_timer.timeout.connect(self._finalize_markdown_display)
 
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self._on_image_downloaded)
 
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
-        self.append_markdown_signal.connect(self._append_to_buffer)
-
-        self.feedback_text = self.tr("Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)")
-        self.exec_code_text = "\n\n" + self.tr("[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
+        self.feedback_text = self.tr(
+            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)")
+        self.exec_code_text = "\n\n" + self.tr(
+            "[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
         self.exec_processing_text = "[{processing_id}](agent://execute/processing/{processing_id})"
         self.tail_splited_line = "\n\n---------\n\n"
 
         self.python_code_block_list = []
-
-        # auto flush pending text in 50ms
-        self._content_buffer = ""
-        self._update_timer = QTimer(self)
-        self._update_timer.setInterval(200)
-        self._update_timer.timeout.connect(self._flush_buffer)
-        self._update_timer.start()
 
     def loadResource(self, type, name):
         """
@@ -99,31 +122,21 @@ class ChatbotBrowser(QTextBrowser):
         # Do not load unknown format of resource.
         return None
 
-    def append_markdown(self, content: str, scroll_to_bottom=True):
-        self.append_markdown_signal.emit(content, scroll_to_bottom)
-
-    def _append_to_buffer(self, content: str, scroll_to_bottom=True):
+    def append_markdown(self, content: str, scroll_to_bottom=True, in_gui_thread=False):
         # because self.auto_scroll_to_bottom will be stopped by itself,
         # so we only assign self.auto_scroll_to_bottom when it is True.
         if self.auto_scroll_to_bottom:
             self.auto_scroll_to_bottom = scroll_to_bottom
-        self._content_buffer += content
 
-    def _flush_buffer(self):
-        """use buffer to draw widget."""
-        if not self._content_buffer:
-            return
-
-        # get and clear buffer.
-        new_text = self._content_buffer
-
-        # update markdown
-        self._do_append_markdown(new_text)
-
-        # clear buffer, waiting for next flushing.
-        self._content_buffer = ""
+        if in_gui_thread:
+            self._do_append_markdown(content)
+        else:
+            # add to consumer queue.
+            self.drawing_queue.put(content)
 
     def _do_append_markdown(self, content: str):
+
+        # self.iface.messageBar().pushMessage(content)
 
         # save current scroll value.
         scrollbar = self.verticalScrollBar()
@@ -147,14 +160,17 @@ class ChatbotBrowser(QTextBrowser):
         # resume auto scroll to bottom.
         self.auto_scroll_to_bottom = True
         self.show_feedback = True
+        self.markdown_content = ""
+        self.setMarkdown("")
         self.pending_images.clear()
-        self.waiting_timer.stop()
         self.python_code_block_list.clear()
+        self.stop_event.clear()
+        self.drawing_consumer.start()
 
     def post_process_markdown(self, show_feedback=True):
-        # wait for finalizing.
+        self.drawing_queue.put(None)
+        self.drawing_consumer.wait()
         self.show_feedback = show_feedback
-        self.waiting_timer.start(500)
 
         # Check Result!
         # self.iface.messageBar().pushMessage(self.markdown_content)
@@ -181,12 +197,12 @@ class ChatbotBrowser(QTextBrowser):
 
     def clear(self):
         self.markdown_content = ""
-        self._content_buffer = ""
         self.setMarkdown("")
         self.image_cache.clear()
         self.auto_scroll_to_bottom = True
         self.pending_images.clear()
-        self.waiting_timer.stop()
+        self.stop_event.set()
+        self.drawing_consumer.wait()
 
     def scroll_to_bottom(self):
         scrollbar = self.verticalScrollBar()
@@ -212,10 +228,10 @@ class ChatbotBrowser(QTextBrowser):
             elif process_name == "execute":
                 if path.startswith("/code/"):
                     code_index = int(path.split("/")[-1])
-                    self.trigger_exec_code.emit(self.python_code_block_list[code_index-1])
+                    self.trigger_exec_code.emit(self.python_code_block_list[code_index - 1])
                 elif path.startswith("/copycode/"):
                     code_index = int(path.split("/")[-1])
-                    self.trigger_copy_code.emit(self.python_code_block_list[code_index-1])
+                    self.trigger_copy_code.emit(self.python_code_block_list[code_index - 1])
                 elif path.startswith("/processing/"):
                     processing_id = path.split("/")[-1]
                     self.trigger_exec_processing.emit(processing_id)
@@ -378,19 +394,23 @@ class ChatbotBrowser(QTextBrowser):
         error_msg_display = f"Error loading image: {url_string}: {error_msg}"
         self.iface.messageBar().pushMessage(error_msg_display)
 
-    def _finalize_markdown_display(self):
-        # waiting for all images has been loaded, and all the buffer has been flushed to self.markdown_content
-        if len(self.pending_images) > 0 or len(self._content_buffer) > 0:
-            return
+    def _on_consumer_finished(self):
+        # waiting for all Qt events have been finished.
+        QTimer.singleShot(500, self._finalize_markdown_display)
 
-        self.waiting_timer.stop()
+    def _finalize_markdown_display(self):
+        # waiting for all images has been loaded
+        if len(self.pending_images) > 0:
+            QTimer.singleShot(100, self._finalize_markdown_display)
+            return
 
         # add feedback
         if self.show_feedback:
             self.markdown_content += "\n\n" + self.feedback_text
 
         # add execute button after the python code block.
-        self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(self.markdown_content)
+        self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(
+            self.markdown_content)
         _, self.markdown_content = self._extract_processing_and_add_execute_tag(self.markdown_content)
 
         self.markdown_content += self.tail_splited_line
@@ -518,7 +538,6 @@ class ChatbotBrowser(QTextBrowser):
             # eg. [native:buffer](agent://execute/processing/native:buffer)
             exec_block = self.exec_processing_text.replace("{processing_id}", processing_id)
 
-            text = text[:end_pos-len(matched_string)] + exec_block + text[end_pos:]
+            text = text[:end_pos - len(matched_string)] + exec_block + text[end_pos:]
 
         return ret_string_list, text
-

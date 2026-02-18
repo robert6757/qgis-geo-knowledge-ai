@@ -156,7 +156,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chat_id = None
         self.pre_chat_timestamp = history_item.get("timestamp", 0)
         self.chatbot_browser.pre_process_markdown()
-        self.chatbot_browser.append_markdown(history_item["answer"], scroll_to_bottom=False)
+        self.chatbot_browser.append_markdown(history_item["answer"])
         self.chatbot_browser.post_process_markdown(show_feedback=False)
         self.plainTextEdit.setPlainText(history_item["question"])
 
@@ -611,14 +611,17 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
             welcome_str += self.tr("""\n\n———\n\n **🔒 Privacy Confirmation**\n\nBefore using this plugin, please read our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n[I have read and agree to the Privacy Notice.](agent://privacy/1)""")
 
-        self.chatbot_browser.append_markdown(welcome_str, False)
+        self.chatbot_browser.append_markdown(welcome_str, True, in_gui_thread=True)
 
     def handle_agree_privacy(self):
         gSetting = QgsSettings()
 
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
             # agree the privacy.
-            self.chatbot_browser.append_markdown(self.tr("\n\n———\n\nThank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀"), False)
+            self.chatbot_browser.append_markdown(self.tr("\n\n———\n\nThank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀"),
+                                                 in_gui_thread=True)
+            # force to scroll to bottom.
+            self.chatbot_browser.scroll_to_bottom()
             gSetting.setValue(PRIVACY_AGREEMENT_TAG, 'true')
 
         # enable send button
