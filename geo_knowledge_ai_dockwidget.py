@@ -420,6 +420,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.btnSendOrTerminate.setEnabled(False)
             self.chat_worker.exit()
             self.chat_worker.wait(3000)
+            self.chat_worker.deleteLater()
 
         self.chatbot_browser.post_process_markdown()
         self.btnSendOrTerminate.setEnabled(True)
@@ -602,6 +603,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                 level=Qgis.Critical,
                 duration=5
             )
+        finally:
+            # remove screenshot image.
+            if os.path.exists(screenshot_path):
+                os.remove(screenshot_path)
         return None
 
     def show_welcome_content(self):

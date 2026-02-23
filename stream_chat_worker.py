@@ -44,15 +44,18 @@ class StreamChatWorker(QThread):
     def __init__(self, request_data, chat_mode: int):
         super().__init__()
         self.request_data = request_data
-        self.network_manager = QNetworkAccessManager()
         self.reply = None
         self.received_chunks = 0
         self.buffer = ""
         # 1: geo knowledge Q&A; 2: generate code with long chain thought
         self.chat_mode = chat_mode
+        self.network_manager = None
 
     def run(self):
         """execute request"""
+
+        self.network_manager = QNetworkAccessManager()
+
         try:
             url = AI_SERVER_DOMAIN
             if self.chat_mode == 1:
@@ -72,9 +75,9 @@ class StreamChatWorker(QThread):
             self.reply = self.network_manager.post(request, json_data)
 
             # connect read slots.
-            self.reply.readyRead.connect(self.on_ready_read)
-            self.reply.finished.connect(self.on_finished)
-            self.reply.errorOccurred.connect(self.on_error)
+            self.reply.readyRead.connect(self.on_ready_read, type=Qt.DirectConnection)
+            self.reply.finished.connect(self.on_finished, type=Qt.DirectConnection)
+            self.reply.errorOccurred.connect(self.on_error, type=Qt.DirectConnection)
 
             # keep event loop until finish.
             self.exec_()
@@ -84,8 +87,16 @@ class StreamChatWorker(QThread):
 
     def on_ready_read(self):
         """deal with raw content"""
-        if self.reply:
-            data = self.reply.readAll().data().decode('utf-8')
+        if not self.reply or not self.reply.isOpen():
+            return
+
+        try:
+            # read raw content and convert to string.
+            raw_data = self.reply.readAll()
+            if raw_data.isEmpty():
+                return
+
+            data = bytes(raw_data).decode('utf-8')
             self.buffer += data
 
             # read every line.
@@ -96,6 +107,9 @@ class StreamChatWorker(QThread):
                 line = line.strip()
                 if line:
                     self.process_line(line)
+
+        except Exception as e:
+            print(f"Read error: {e}")
 
     def process_line(self, line):
         """deal with every line"""
@@ -127,7 +141,12 @@ class StreamChatWorker(QThread):
     def on_finished(self):
         """request finished"""
         if self.reply:
+            self.reply.finished.disconnect()
             self.reply.deleteLater()
+            self.reply = None
+        if self.network_manager:
+            self.network_manager.deleteLater()
+            self.network_manager = None
         self.quit()
 
     def on_error(self, error):

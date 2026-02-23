@@ -23,35 +23,74 @@ import webbrowser
 import re
 import queue
 import threading
+import time
 
 from PyQt5.QtCore import QByteArray, Qt, QUrl, pyqtSignal, QTimer, QThread
 from PyQt5.QtGui import QTextDocument, QImage, QMouseEvent
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
 from PyQt5.QtWidgets import QTextBrowser
 
-
 class ConsumerThread(QThread):
     data_received = pyqtSignal(str)
     finished = pyqtSignal()
 
-    def __init__(self, queue, stop_event):
+    def __init__(self, queue, stop_event, interval_ms=100):
         super().__init__()
         self.queue = queue
         self.stop_event = stop_event
+        self.interval = interval_ms / 1000.0
+        self.batch_data = [] # save cache data.
+        self.last_emit_time = time.time()  # the last time for emitting.
 
     def run(self):
         while not self.stop_event.is_set():
             try:
-                # check stop event in 0.5s.
-                data = self.queue.get(timeout=0.5)
+                item = self.queue.get(timeout=0.1)
             except queue.Empty:
+                self._check_and_emit()
                 continue
-            if data is None:
+
+            if item is None:
                 break
 
-            # emit signal to GUI thread.
-            self.data_received.emit(data)
+            self.batch_data.append(item)
             self.queue.task_done()
+
+            # do pending items.
+            while True:
+                try:
+                    more = self.queue.get_nowait()
+                    if more is None:
+                        self._flush_and_finish()
+                        return
+                    self.batch_data.append(more)
+                    self.queue.task_done()
+                except queue.Empty:
+                    break
+
+            self._check_and_emit()
+
+        # clear all before exit.
+        self._check_and_emit(force=True)
+        self.finished.emit()
+
+    def _check_and_emit(self, force=False):
+        """check time, emit data_received signal"""
+        if not self.batch_data:
+            return
+
+        current_time = time.time()
+        if force or (current_time - self.last_emit_time >= self.interval):
+            # time for emit, and wait for next time.
+            self.data_received.emit(''.join(self.batch_data))
+            self.batch_data.clear()
+            self.last_emit_time = current_time
+
+    def _flush_and_finish(self):
+        if self.batch_data:
+            self.data_received.emit(''.join(self.batch_data))
+            self.batch_data.clear()
+        self.queue.task_done()
         self.finished.emit()
 
 
@@ -86,9 +125,8 @@ class ChatbotBrowser(QTextBrowser):
 
         # pending loading parameters.
         self.pending_images = set()
-
-        self.network_manager = QNetworkAccessManager(self)
-        self.network_manager.finished.connect(self._on_image_downloaded)
+        self.img_loading_network = QNetworkAccessManager(self)
+        self.img_loading_network.finished.connect(self._on_image_downloaded)
 
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
@@ -100,6 +138,8 @@ class ChatbotBrowser(QTextBrowser):
         self.tail_splited_line = "\n\n---------\n\n"
 
         self.python_code_block_list = []
+
+        # self.temp_file_path = f'd:/output/geo_knowledge_ai_output_{time.time()}.txt'
 
     def loadResource(self, type, name):
         """
@@ -116,7 +156,6 @@ class ChatbotBrowser(QTextBrowser):
                 return None
 
             self._download_image_async(url_string)
-
             return None
 
         # Do not load unknown format of resource.
@@ -133,6 +172,10 @@ class ChatbotBrowser(QTextBrowser):
         else:
             # add to consumer queue.
             self.drawing_queue.put(content)
+
+        # debug. save to temp file.
+        # with open(self.temp_file_path, 'a', encoding='utf-8') as f:
+        #     f.write(content)
 
     def _do_append_markdown(self, content: str):
 
@@ -167,10 +210,12 @@ class ChatbotBrowser(QTextBrowser):
         self.stop_event.clear()
         self.drawing_consumer.start()
 
+        # self.temp_file_path = f'd:/output/geo_knowledge_ai_output_{time.time()}.txt'
+
     def post_process_markdown(self, show_feedback=True):
+        self.show_feedback = show_feedback
         self.drawing_queue.put(None)
         self.drawing_consumer.wait()
-        self.show_feedback = show_feedback
 
         # Check Result!
         # self.iface.messageBar().pushMessage(self.markdown_content)
@@ -193,7 +238,13 @@ class ChatbotBrowser(QTextBrowser):
         return re.sub(pattern, replace_match, markdown_text)
 
     def clean_html_tag(self, markdown_text):
-        return re.sub(r'<\/?[a-zA-Z][^>]*>', '', markdown_text)
+        # wellknown HTML tag.
+        html_tags = r'div|span|p|a|br|hr|img|table|tr|td|th|ul|ol|li|b|i|u|header|footer|section|canvas|svg'
+
+        # remove these tags.
+        pattern = rf'</?(?:{html_tags})\b[^>]*>'
+
+        return re.sub(pattern, '', markdown_text)
 
     def clear(self):
         self.markdown_content = ""
@@ -343,10 +394,9 @@ class ChatbotBrowser(QTextBrowser):
 
         self.pending_images.add(url_string)
 
-        # build request
         request = QNetworkRequest(QUrl(url_string))
-        request.setTransferTimeout(1000)
-        self.network_manager.get(request)
+        request.setTransferTimeout(3000)
+        self.img_loading_network.get(request)
 
     def _on_image_downloaded(self, reply):
         """deal with downloaded image."""
@@ -401,7 +451,7 @@ class ChatbotBrowser(QTextBrowser):
     def _finalize_markdown_display(self):
         # waiting for all images has been loaded
         if len(self.pending_images) > 0:
-            QTimer.singleShot(100, self._finalize_markdown_display)
+            QTimer.singleShot(500, self._finalize_markdown_display)
             return
 
         # add feedback
