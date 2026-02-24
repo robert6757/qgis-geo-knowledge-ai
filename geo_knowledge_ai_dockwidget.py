@@ -76,7 +76,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
         self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
         self.chatbot_browser.trigger_exec_processing.connect(self.handle_click_exec_processing)
-        self.chatbot_browser.trigger_privacy_agree.connect(self.handle_agree_privacy)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
         self.btnCoTStatus.toggled.connect(self.handle_update_CoT_status)
         self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
@@ -95,11 +94,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.btnScreenCapture.setChecked(True)
         else:
             self.btnScreenCapture.setChecked(False)
-
-        # disable the main button in the first start.
-        if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
-            self.btnSendOrTerminate.setEnabled(False)
-            self.btnClear.setEnabled(False)
 
         # use custom function to deal with "Open Links".
         self.chatbot_browser.setOpenLinks(False)
@@ -120,6 +114,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         event.accept()
 
     def handle_click_send_or_terminate_btn(self):
+        # auto agree with the privacy notice when starting the conversation.
+        gSetting = QgsSettings()
+        gSetting.setValue(PRIVACY_AGREEMENT_TAG, 'true')
+
         if self.btn_send_or_terminate_tag == 0:
             self._begin_chat()
         elif self.btn_send_or_terminate_tag == 1:
@@ -614,23 +612,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
-            welcome_str += self.tr("""\n\n———\n\n **🔒 Privacy Confirmation**\n\nBefore using this plugin, please read our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n[I have read and agree to the Privacy Notice.](agent://privacy/1)""")
+            welcome_str += self.tr("""\n\n———\n\n **First-Time Use**\n\nPlease enter your question in the input box below and click the **Send** button to start the conversation.\n\nTo get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.\n\nWhen generating code, enable the Chain-of-Thought ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) switch to get a more accurate answer.\n\nBy asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n""")
 
         self.chatbot_browser.append_markdown(welcome_str, True, in_gui_thread=True)
-
-    def handle_agree_privacy(self):
-        gSetting = QgsSettings()
-
-        if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
-            # agree the privacy.
-            self.chatbot_browser.append_markdown(self.tr("\n\n———\n\nThank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀"),
-                                                 in_gui_thread=True)
-            # force to scroll to bottom.
-            self.chatbot_browser.scroll_to_bottom()
-            gSetting.setValue(PRIVACY_AGREEMENT_TAG, 'true')
-
-        # enable send button
-        self.btnSendOrTerminate.setEnabled(True)
-        self.btnClear.setEnabled(True)
 
 

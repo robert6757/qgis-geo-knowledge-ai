@@ -14,14 +14,14 @@
         <translation type="obsolete">[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="67"/>
+        <location filename="../chatbot_browser.py" line="134"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[运行代码](agent://execute/code/{index}) | [复制代码](agent://execute/copycode/{index})</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="66"/>
+        <location filename="../chatbot_browser.py" line="132"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)</source>
-        <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat) | [长链思考](agent://cot/1)</translation>
+        <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat) | [链式思考](agent://cot/1)</translation>
     </message>
 </context>
 <context>
@@ -179,47 +179,47 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="346"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="344"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="347"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="410"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="427"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="426"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="185"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="183"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="185"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="183"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="194"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="192"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="189"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="187"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="194"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="192"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -234,32 +234,32 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="236"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="244"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="253"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="276"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="274"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="276"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="274"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="608"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="611"/>
         <source>
 
 ### Welcome to the Geo Knowledge AI plugin!
@@ -311,7 +311,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 ———
 
 Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
-        <translation>
+        <translation type="obsolete">
 
 ———
 
@@ -328,7 +328,7 @@ Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begi
 Before using this plugin, please read our [Privacy Notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 [I have read and agree to the Privacy Notice.](agent://privacy/1)</source>
-        <translation>
+        <translation type="obsolete">
 
 ———
 
@@ -337,6 +337,39 @@ Before using this plugin, please read our [Privacy Notice](https://github.com/ro
 使用插件前，请阅读[隐私协议](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 [我已经阅读并同意隐私协议](agent://privacy/1)</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="615"/>
+        <source>
+
+———
+
+ **First-Time Use**
+
+Please enter your question in the input box below and click the **Send** button to start the conversation.
+
+To get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.
+
+When generating code, enable the Chain-of-Thought ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) switch to get a more accurate answer.
+
+By asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+
+</source>
+        <translation>
+
+———
+
+ **首次使用**
+
+请在下方输入框中输入您的问题，然后点击**发送**按钮开始对话。
+
+为了更全面地了解您的问题，请启用屏幕截图 ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg)。
+
+生成代码时，请启用链式思考 ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) 以获得更准确的答案。
+
+提问即表示您已阅读并同意[隐私政策](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md)。
+
+</translation>
     </message>
 </context>
 <context>
@@ -469,7 +502,7 @@ Before using this plugin, please read our [Privacy Notice](https://github.com/ro
 <context>
     <name>StreamChatWorker</name>
     <message>
-        <location filename="../stream_chat_worker.py" line="83"/>
+        <location filename="../stream_chat_worker.py" line="86"/>
         <source>Network Error:</source>
         <translation>网络错误：</translation>
     </message>

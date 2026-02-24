@@ -102,7 +102,6 @@ class ChatbotBrowser(QTextBrowser):
     trigger_copy_code = pyqtSignal(str)
     trigger_exec_processing = pyqtSignal(str)
     trigger_repeat_with_cot = pyqtSignal()
-    trigger_privacy_agree = pyqtSignal()
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -157,6 +156,10 @@ class ChatbotBrowser(QTextBrowser):
 
             self._download_image_async(url_string)
             return None
+        elif type == QTextDocument.ImageResource and name.scheme() in ('qtres'):
+            res_path = name.toString().replace("qtres://", ":")
+            res_image = QImage(res_path)
+            return res_image.scaled(16, 16, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
 
         # Do not load unknown format of resource.
         return None
@@ -288,8 +291,6 @@ class ChatbotBrowser(QTextBrowser):
                     self.trigger_exec_processing.emit(processing_id)
             elif process_name == "cot":
                 self.trigger_repeat_with_cot.emit()
-            elif process_name == "privacy":
-                self.trigger_privacy_agree.emit()
             return
 
         # open web browser
@@ -315,7 +316,7 @@ class ChatbotBrowser(QTextBrowser):
                     image_format = char_format.toImageFormat()
                     if image_format.isValid():
                         image_name = image_format.name()
-                        if image_name:
+                        if image_name and not image_name.startswith("qtres://"):
                             # If clicked on an image, handle it
                             self._handle_image_click(image_name)
                             return
@@ -344,7 +345,7 @@ class ChatbotBrowser(QTextBrowser):
                         image_format = char_format.toImageFormat()
                         if image_format.isValid():
                             image_name = image_format.name()
-                            if image_name:
+                            if image_name and not image_name.startswith("qtres://"):
                                 # use hand cursor on image.
                                 self.viewport().setCursor(Qt.PointingHandCursor)
                                 super().mouseMoveEvent(event)
