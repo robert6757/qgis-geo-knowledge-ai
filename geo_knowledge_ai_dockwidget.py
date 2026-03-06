@@ -323,6 +323,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         """deal with errors"""
         # show errors in chatbot.
         self.chatbot_browser.append_markdown(error_msg)
+        self.chatbot_browser.post_process_markdown()
 
         # resume button status.
         self.btn_send_or_terminate_tag = 0

@@ -134,9 +134,9 @@ class StreamChatWorker(QThread):
                         self.stream_ended.emit(self.received_chunks)
 
             except json.JSONDecodeError as e:
-                self.error_occurred.emit(f"JSON Error: {str(e)} - Data: {line}")
+                print(f"JSON Error: {str(e)} - Data: {line}")
             except Exception as e:
-                self.error_occurred.emit(f"Error: {str(e)}")
+                print(f"Error: {str(e)}")
 
     def on_finished(self):
         """request finished"""

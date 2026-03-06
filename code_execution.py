@@ -62,6 +62,7 @@ class CodeExecution(QObject):
 
             for module in [qgis.core]:
                 safe_globals.update(module.__dict__)
+            safe_globals['__name__'] = '__main__'
 
             output_buffer = io.StringIO()
 
