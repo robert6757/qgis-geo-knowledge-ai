@@ -26,11 +26,11 @@ import requests
 import webbrowser
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDialog, QMessageBox
 
 from qgis.core import QgsSettings
 
 from .global_defs import *
+from .compat import *
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'setting_dialog.ui'))
@@ -82,13 +82,13 @@ class SettingDialog(QDialog, FORM_CLASS):
         if not email:
             QMessageBox.warning(self, self.tr("Warning"),
                                 self.tr("Please enter your email address."),
-                                QMessageBox.Ok)
+                                QMessageBoxOK)
             return
 
         if "@" not in email or "." not in email:
             QMessageBox.warning(self, self.tr("Warning"),
                                 self.tr("Please enter a valid email address."),
-                                QMessageBox.Ok)
+                                QMessageBoxOK)
             return
 
         try:
@@ -106,13 +106,13 @@ class SettingDialog(QDialog, FORM_CLASS):
                 QMessageBox.information(self, self.tr("Tip"),
                                         self.tr(
                                             "Your request has been received. We'll get back to you by email within 24 hours. Please check your inbox later."),
-                                        QMessageBox.Ok)
+                                        QMessageBoxOK)
             else:
                 QMessageBox.warning(self, self.tr("Error"),
                                     self.tr("Failed to submit your request. Please try again later."),
-                                    QMessageBox.Ok)
+                                    QMessageBoxOK)
 
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, self.tr("Error"),
                                  self.tr("Network error. Please check your connection and try again."),
-                                 QMessageBox.Ok)
+                                 QMessageBoxOK)

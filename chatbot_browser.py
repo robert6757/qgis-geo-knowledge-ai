@@ -25,10 +25,11 @@ import queue
 import threading
 import time
 
-from PyQt5.QtCore import QByteArray, Qt, QUrl, pyqtSignal, QTimer, QThread
-from PyQt5.QtGui import QTextDocument, QImage, QMouseEvent
-from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
-from PyQt5.QtWidgets import QTextBrowser
+from qgis.PyQt.QtCore import QUrl, pyqtSignal, QTimer, QThread
+from qgis.PyQt.QtGui import QImage, QMouseEvent
+from qgis.PyQt.QtNetwork import QNetworkAccessManager
+from qgis.PyQt.QtWidgets import QTextBrowser
+from .compat import *
 
 class ConsumerThread(QThread):
     data_received = pyqtSignal(str)
@@ -144,7 +145,7 @@ class ChatbotBrowser(QTextBrowser):
         """
         Overrides the standard loadResource method to handle network requests for images.
         """
-        if type == QTextDocument.ImageResource and name.scheme() in ('http', 'https'):
+        if type == ImageResource and name.scheme() in ('http', 'https'):
             url_string = name.toString()
             # Check if the image is already in the cache
             if url_string in self.image_cache:
@@ -156,10 +157,10 @@ class ChatbotBrowser(QTextBrowser):
 
             self._download_image_async(url_string)
             return None
-        elif type == QTextDocument.ImageResource and name.scheme() in ('qtres'):
+        elif type == ImageResource and name.scheme() in ('qtres'):
             res_path = name.toString().replace("qtres://", ":")
             res_image = QImage(res_path)
-            return res_image.scaled(16, 16, Qt.IgnoreAspectRatio, Qt.SmoothTransformation)
+            return res_image.scaled(16, 16, IgnoreAspectRatio, SmoothTransformation)
 
         # Do not load unknown format of resource.
         return None
@@ -334,7 +335,7 @@ class ChatbotBrowser(QTextBrowser):
 
         if anchor:
             # use hand cursor on hyperlink text.
-            self.viewport().setCursor(Qt.PointingHandCursor)
+            self.viewport().setCursor(PointingHandCursor)
         else:
             # whether moving on image.
             try:
@@ -347,7 +348,7 @@ class ChatbotBrowser(QTextBrowser):
                             image_name = image_format.name()
                             if image_name and not image_name.startswith("qtres://"):
                                 # use hand cursor on image.
-                                self.viewport().setCursor(Qt.PointingHandCursor)
+                                self.viewport().setCursor(PointingHandCursor)
                                 super().mouseMoveEvent(event)
                                 return
             except Exception as e:
@@ -355,7 +356,7 @@ class ChatbotBrowser(QTextBrowser):
                 self.iface.messageBar().pushMessage(error_msg)
 
             # use default cursor.
-            self.viewport().setCursor(Qt.ArrowCursor)
+            self.viewport().setCursor(ArrowCursor)
 
         super().mouseMoveEvent(event)
 
@@ -409,7 +410,7 @@ class ChatbotBrowser(QTextBrowser):
 
         # deal with errors.
         error = reply.error()
-        if error != QNetworkReply.NoError:
+        if error != NoError:
             self._handle_download_error(url_string, reply.errorString())
             reply.deleteLater()
             return
@@ -428,7 +429,7 @@ class ChatbotBrowser(QTextBrowser):
         # shrink the large image
         available_width = self.size().width()
         if image.width() > available_width:
-            scaled_image = image.scaledToWidth(available_width, Qt.SmoothTransformation)
+            scaled_image = image.scaledToWidth(available_width, SmoothTransformation)
         else:
             scaled_image = image
 

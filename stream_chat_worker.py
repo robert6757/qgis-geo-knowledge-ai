@@ -21,11 +21,11 @@
 """
 
 import json
-from PyQt5.QtCore import QThread, pyqtSignal, Qt, QTimer
-from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
-from PyQt5.QtCore import QUrl
+from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl
+from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .global_defs import *
+from .compat import *
 
 class StreamChatWorker(QThread):
 
@@ -67,7 +67,7 @@ class StreamChatWorker(QThread):
 
             # create network request.
             request = QNetworkRequest(QUrl(url))
-            request.setHeader(QNetworkRequest.ContentTypeHeader, "application/json")
+            request.setHeader(ContentTypeHeader, "application/json")
             request.setRawHeader(b"Accept", b"text/event-stream")
 
             # send post reqeust.
@@ -75,12 +75,12 @@ class StreamChatWorker(QThread):
             self.reply = self.network_manager.post(request, json_data)
 
             # connect read slots.
-            self.reply.readyRead.connect(self.on_ready_read, type=Qt.DirectConnection)
-            self.reply.finished.connect(self.on_finished, type=Qt.DirectConnection)
-            self.reply.errorOccurred.connect(self.on_error, type=Qt.DirectConnection)
+            self.reply.readyRead.connect(self.on_ready_read, type=DirectConnection)
+            self.reply.finished.connect(self.on_finished, type=DirectConnection)
+            self.reply.errorOccurred.connect(self.on_error, type=DirectConnection)
 
             # keep event loop until finish.
-            self.exec_()
+            self.exec()
 
         except Exception as e:
             self.error_occurred.emit(self.tr("Network Error:") + str(e))

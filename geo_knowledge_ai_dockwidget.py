@@ -26,11 +26,9 @@ import requests
 import uuid
 import traceback
 import io
-from contextlib import redirect_stdout
 
-from PyQt5.QtCore import QStandardPaths
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QDialog, QMessageBox, QApplication
+from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QApplication
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
@@ -39,14 +37,13 @@ from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
 from .setting_dialog import SettingDialog
 from .global_defs import *
-from .resources_rc import *
 from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
 from .code_execution import CodeExecution
+from .compat import *
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'geo_knowledge_ai_dockwidget_base.ui'))
-
 
 class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     closingPlugin = pyqtSignal()
@@ -140,7 +137,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         dlg = HistoryDialog(self.history_manager)
         dlg.setModal(True)
         dlg.show()
-        if dlg.exec() != QDialog.Accepted:
+        if dlg.exec() != Accepted:
             return
 
         # retrieve history content
@@ -182,16 +179,16 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             if response.status_code == 200:
                 QMessageBox.information(self, self.tr("Tip"),
                                         self.tr("Thank you for your feedback."),
-                                        QMessageBox.Ok)
+                                        QMessageBoxOK)
             else:
                 QMessageBox.warning(self, self.tr("Error"),
                                     self.tr("Failed to submit your feedback. Please try again later."),
-                                    QMessageBox.Ok)
+                                    QMessageBoxOK)
 
         except requests.exceptions.RequestException as e:
             QMessageBox.critical(self, self.tr("Error"),
                                  self.tr("Network error. Please check your connection and try again."),
-                                 QMessageBox.Ok)
+                                 QMessageBoxOK)
 
     def handle_click_repeat(self):
         # remove the lasted history.
@@ -237,12 +234,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def handle_exec_code_error(self, error_type, error):
         msg_box = QMessageBox(self)
-        msg_box.setIcon(QMessageBox.Critical)
+        msg_box.setIcon(QMessageBoxCritical)
         msg_box.setWindowTitle(error_type)
         msg_box.setText(error)
 
-        auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBox.AcceptRole)
-        msg_box.addButton(QMessageBox.Cancel)
+        auto_fix_btn = msg_box.addButton(self.tr("Auto-Fix"), QMessageBoxAcceptRole)
+        msg_box.addButton(QMessageBoxCancel)
         msg_box.exec()
         if msg_box.clickedButton() == auto_fix_btn:
             self.handle_auto_fix_error(error)
@@ -553,7 +550,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     def capture_screen(self, chat_id):
         # 1. save screenshot to temp dir.
         screenshot_path = os.path.join(
-            QStandardPaths.writableLocation(QStandardPaths.TempLocation),
+            QStandardPaths.writableLocation(TempLocation),
             "qgis-screenshot.png"
         )
         main_window = self.iface.mainWindow()

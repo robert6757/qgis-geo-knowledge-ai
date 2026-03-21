@@ -22,7 +22,7 @@
 
 import json
 import os
-from PyQt5.QtCore import QStandardPaths
+from .compat import *
 
 class HistoryManager:
 
@@ -95,5 +95,5 @@ class HistoryManager:
             pass
     def __get_history_file_path(self):
         """get the history file path"""
-        temp_dir = QStandardPaths.writableLocation(QStandardPaths.TempLocation)
+        temp_dir = QStandardPaths.writableLocation(TempLocation)
         return os.path.join(temp_dir, "qgis-geo-knowledge-ai-plugin.dat")

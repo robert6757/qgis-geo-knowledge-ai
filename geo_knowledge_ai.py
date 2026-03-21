@@ -26,13 +26,18 @@ from qgis.PyQt.QtWidgets import QAction
 from .global_defs import USER_ID_TAG
 import uuid
 from datetime import datetime
+from .compat import *
 
 # Initialize Qt resources from file resources_rc.py
 # Extend to load root directory.
 import sys
 import os.path
 sys.path.append(os.path.dirname(__file__))
-from .resources_rc import *
+
+if IS_QT5:
+    from .resources_rc import *
+if IS_QT6:
+    from .resources_rc_qt6 import *
 
 # Import the code for the DockWidget
 from .geo_knowledge_ai_dockwidget import GeoKnowledgeAIDockWidget
@@ -229,7 +234,7 @@ class GeoKnowledgeAI:
             self.dockwidget.closingPlugin.connect(self.onClosePlugin)
 
             # add the dockwidget
-            self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
+            self.iface.addDockWidget(RightDockWidgetArea, self.dockwidget)
 
         if is_show:
             self.dockwidget.show()

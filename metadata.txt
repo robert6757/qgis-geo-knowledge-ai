@@ -5,8 +5,9 @@
 [general]
 name=Geo Knowledge AI
 qgisMinimumVersion=3.0
+qgisMaximumVersion=4.99
 description=Get professional AI guidance for your geospatial projects, ranging from global geodata discovery to PyQGIS code generation.
-version=1.7
+version=1.8
 author=phoenix-gis
 email=phoenixgis@sina.com
 
@@ -22,7 +23,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.7 2026-03-06
+changelog=Version 1.8 2026-03-21
+      * New Feature: Compatible with both Qt5 and Qt6.
+      Version 1.7 2026-03-06
       * Bug fix: PyQGIS executing environment.
       Version 1.6 2026-02-24
       * New Feature: Add first-time use instructions and a privacy notice.

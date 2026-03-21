@@ -23,8 +23,8 @@
 import os
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import Qt
-from qgis.PyQt.QtWidgets import QDialog, QListWidgetItem, QMessageBox
+from qgis.PyQt.QtWidgets import QListWidgetItem
+from .compat import *
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'history_dialog.ui'))
@@ -47,7 +47,7 @@ class HistoryDialog(QDialog, FORM_CLASS):
         for question_item in self.manager.enum_question():
             list_item = QListWidgetItem()
             list_item.setText(question_item["question"])
-            list_item.setData(Qt.UserRole, question_item["timestamp"])
+            list_item.setData(UserRole, question_item["timestamp"])
             self.listWidget.addItem(list_item)
 
     def get_selected_history_timestamp(self):
@@ -56,7 +56,7 @@ class HistoryDialog(QDialog, FORM_CLASS):
     def handle_open_clicked(self):
         selected_items = self.listWidget.selectedItems()
         if len(selected_items) > 0:
-            self.selected_timestamp = selected_items[0].data(Qt.UserRole)
+            self.selected_timestamp = selected_items[0].data(UserRole)
 
         super().accept()
 
@@ -65,7 +65,7 @@ class HistoryDialog(QDialog, FORM_CLASS):
         super().close()
 
     def handle_clear_clicked(self):
-        if QMessageBox.Yes != QMessageBox.question(self, self.tr("Delete All Chat History"),
+        if QMessageBoxYes != QMessageBox.question(self, self.tr("Delete All Chat History"),
                                                    self.tr("Are you sure you want to delete all chat history?")):
             return
 
@@ -76,5 +76,5 @@ class HistoryDialog(QDialog, FORM_CLASS):
         if list_item is None:
             return
 
-        self.selected_timestamp = list_item.data(Qt.UserRole)
+        self.selected_timestamp = list_item.data(UserRole)
         super().accept()
