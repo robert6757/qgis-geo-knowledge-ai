@@ -54,7 +54,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         if email:
             self.lineEdit.setText(email)
 
-        multi_turn = gSetting.value(MULTI_TURN_TAG, "2")
+        multi_turn = gSetting.value(MULTI_TURN_TAG, "3")
         self.cbChatTurn.setCurrentText(multi_turn)
     def handle_click_ok(self):
         email = self.lineEdit.text()

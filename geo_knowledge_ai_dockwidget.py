@@ -69,21 +69,17 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.show_setting_dlg.connect(self.handle_click_setting_btn)
         self.chatbot_browser.trigger_feedback.connect(self.handle_click_feedback)
         self.chatbot_browser.trigger_repeat.connect(self.handle_click_repeat)
-        self.chatbot_browser.trigger_repeat_with_cot.connect(self.handle_click_repeat_with_cot)
         self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
         self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
         self.chatbot_browser.trigger_exec_processing.connect(self.handle_click_exec_processing)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
-        self.btnCoTStatus.toggled.connect(self.handle_update_CoT_status)
         self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
+        self.cbSwitchMode.currentIndexChanged.connect(self.handle_update_chat_mode)
 
-        # update CoT status.
+        # update chat mode combobox
         gSetting = QgsSettings()
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
-        if chat_mode == 1:
-            self.btnCoTStatus.setChecked(False)
-        else:
-            self.btnCoTStatus.setChecked(True)
+        self.cbSwitchMode.setCurrentIndex(chat_mode-1)
 
         # update screen capture status.
         capture_screen = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
@@ -155,13 +151,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.post_process_markdown(show_feedback=False)
         self.plainTextEdit.setPlainText(history_item["question"])
 
-    def handle_update_CoT_status(self, checked):
+    def handle_update_chat_mode(self, index):
         gSetting = QgsSettings()
-        if checked:
-            # use CoT chat mode.
-            gSetting.setValue(CHAT_MODE_TAG, "2")
-        else:
-            gSetting.setValue(CHAT_MODE_TAG, "1")
+        # chat mode: 1:Q&A 2:Search 3:Generating Code
+        gSetting.setValue(CHAT_MODE_TAG, str(index + 1))
 
     def handle_click_feedback(self, star: int):
         if not self.chat_id:
@@ -202,19 +195,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # repeat chat.
         self._begin_chat()
-
-    def handle_click_repeat_with_cot(self):
-        # remove the lasted history.
-        histories = self.history_manager.enum_question()
-        if not histories:
-            return
-
-        # remove the lasted chat.
-        self.pre_chat_timestamp = histories[0].get("pre_timestamp", 0)
-        self.history_manager.remove_history(histories[0].get("timestamp"))
-
-        # repeat chat.
-        self._begin_chat(chat_mode=2)
 
     def handle_click_exec_code(self, code):
         """run python process as a background task"""
@@ -302,8 +282,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnCoTStatus.setEnabled(True)
         self.btnScreenCapture.setEnabled(True)
+        self.cbSwitchMode.setEnabled(True)
 
         # save to history
         cur_chat_timestamp = int(time.time())
@@ -328,10 +308,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnCoTStatus.setEnabled(True)
         self.btnScreenCapture.setEnabled(True)
+        self.cbSwitchMode.setEnabled(True)
 
-    def _begin_chat(self, chat_mode=None):
+    def _begin_chat(self):
         # In order to  make the markdown render faster, we have to clear the previous markdown content.
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
@@ -354,9 +334,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         lang = gSetting.value('/locale/userLocale', 'en_US')
 
         # chat mode
-        if not chat_mode:
-            # use global setting.
-            chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
+        chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
 
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
@@ -373,7 +351,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         histories = []
         if self.pre_chat_timestamp > 0:
             # retrieve previous messages from the conversation history
-            multi_turn = int(gSetting.value(MULTI_TURN_TAG, "2"))
+            multi_turn = int(gSetting.value(MULTI_TURN_TAG, "3"))
             parent_chat_ts = self.pre_chat_timestamp
             while multi_turn > 0 and parent_chat_ts > 0:
                 pre_history = self.history_manager.retrieve_history(parent_chat_ts)
@@ -408,8 +386,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setText(self.tr("Stop"))
         self.btnHistory.setEnabled(False)
         self.btnClear.setEnabled(False)
-        self.btnCoTStatus.setEnabled(False)
         self.btnScreenCapture.setEnabled(False)
+        self.cbSwitchMode.setEnabled(False)
 
     def _stop_chat(self):
         if self.chat_worker:
@@ -424,8 +402,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setText(self.tr("Send"))
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnCoTStatus.setEnabled(True)
         self.btnScreenCapture.setEnabled(True)
+        self.cbSwitchMode.setEnabled(True)
 
     def _get_workspace_info(self):
         workspace_info = {}
@@ -606,11 +584,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         return None
 
     def show_welcome_content(self):
-        welcome_str = self.tr("""\n\n### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing tailored professional tutorials that cover a wide range of geospatial tasks, including global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS code generation.\n\nAdditionally, I will guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.\n\n""")
+        welcome_str = self.tr("""### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing three agents: **knowledge Q&A agent**, **data search agent**, and **code generation agent**.\n\n Our knowledge database contains global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.\n\nAdditionally, I will guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.""")
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
-            welcome_str += self.tr("""\n\n———\n\n **First-Time Use**\n\nPlease enter your question in the input box below and click the **Send** button to start the conversation.\n\nTo get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.\n\nWhen generating code, enable the Chain-of-Thought ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) switch to get a more accurate answer.\n\nBy asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n""")
+            welcome_str += self.tr("""\n\n———\n\n **First-Time Use**\n\nPlease enter your question in the input box below and click the **Send** button to start the conversation.\n\nTo get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.\n\n\nBy asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n""")
 
         self.chatbot_browser.append_markdown(welcome_str, True, in_gui_thread=True)
 

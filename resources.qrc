@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/plugins/geo_knowledge_ai">
+    <file>image/clear.svg</file>
+    <file>image/send.svg</file>
     <file>image/screencapture2.svg</file>
     <file>image/infinite.svg</file>
     <file>image/help.svg</file>

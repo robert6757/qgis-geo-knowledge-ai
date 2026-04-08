@@ -61,6 +61,8 @@ class StreamChatWorker(QThread):
             if self.chat_mode == 1:
                 url += "/ai/v1/chat/stream"
             elif self.chat_mode == 2:
+                url += "/ai/v1/discovery/stream"
+            elif self.chat_mode == 3:
                 url += "/ai/v1/code/stream"
             else:
                 raise ValueError(f"Unknown chat mode: {self.chat_mode}")

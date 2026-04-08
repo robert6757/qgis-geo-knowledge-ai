@@ -6,12 +6,12 @@
 name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
-description=Get professional AI guidance for your geospatial projects, ranging from global geodata discovery to PyQGIS code generation.
-version=1.8
+description=Provides three AI agents for knowledge Q&A, data search, and code generation.
+version=1.9
 author=phoenix-gis
 email=phoenixgis@sina.com
 
-about=This QGIS plugin provides Geo Knowledge AI assistance alongside professional tutorials tailored to your specific project needs. The tutorials cover a wide range of geospatial tasks, including global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS code generation. Furthermore, it offers guidance on essential tools such as GDAL, GRASS, and SAGA, making it a highly effective GIS AI assistant.
+about=This plugin integrates three specialized AI agents: Knowledge Q&A, Data Search, and Code Generation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
 
  Fully supporting multiple languages—including English, français, italiano, Deutsch, español, 中文, русский, svenska, Nederlands, português, čeština, eesti, Indonesia, norsk bokmål, slovenščina, українська, polski, română, 日本語, العربية, Türkçe, magyar, 한국어.
 
@@ -23,7 +23,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.8 2026-03-21
+changelog=Version 1.9 2026-04-09
+      * New Feature: Provides three AI agents for knowledge Q&A, data search, and code generation.
+      Version 1.8 2026-03-21
       * New Feature: Compatible with both Qt5 and Qt6.
       Version 1.7 2026-03-06
       * Bug fix: PyQGIS executing environment.

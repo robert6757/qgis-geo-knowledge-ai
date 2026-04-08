@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>318</width>
+    <width>346</width>
     <height>495</height>
    </rect>
   </property>
@@ -35,6 +35,31 @@
     <property name="spacing">
      <number>3</number>
     </property>
+    <item row="1" column="5">
+     <widget class="QComboBox" name="cbSwitchMode">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <item>
+       <property name="text">
+        <string>Knowledge Q&amp;A</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Data Search</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Code Generation</string>
+       </property>
+      </item>
+     </widget>
+    </item>
     <item row="0" column="0" colspan="8">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
@@ -114,23 +139,23 @@
       </widget>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QToolButton" name="btnCoTStatus">
+    <item row="1" column="7">
+     <widget class="QPushButton" name="btnClear">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="toolTip">
-       <string>Use chain-of-thought reasoning to generate, debug, and execute code.</string>
+       <string>Clear Chatbot and Question</string>
       </property>
       <property name="text">
-       <string/>
+       <string>Clear</string>
       </property>
       <property name="icon">
        <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/infinite.svg</normaloff>:/plugins/geo_knowledge_ai/image/infinite.svg</iconset>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
+        <normaloff>:/plugins/geo_knowledge_ai/image/clear.svg</normaloff>:/plugins/geo_knowledge_ai/image/clear.svg</iconset>
       </property>
      </widget>
     </item>
@@ -148,20 +173,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="7">
-     <widget class="QPushButton" name="btnClear">
-      <property name="text">
-       <string>Clear</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="6">
-     <widget class="QPushButton" name="btnSendOrTerminate">
-      <property name="text">
-       <string>Send</string>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QToolButton" name="btnSetting">
       <property name="toolTip">
@@ -176,7 +187,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
+    <item row="1" column="2">
      <widget class="QToolButton" name="btnScreenCapture">
       <property name="toolTip">
        <string>Capture QGIS main window to start chat.</string>
@@ -196,7 +207,27 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="4" colspan="2">
+    <item row="1" column="6">
+     <widget class="QPushButton" name="btnSendOrTerminate">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Send</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/send.svg</normaloff>:/plugins/geo_knowledge_ai/image/send.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3" colspan="2">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>

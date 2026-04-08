@@ -102,7 +102,6 @@ class ChatbotBrowser(QTextBrowser):
     trigger_exec_code = pyqtSignal(str)
     trigger_copy_code = pyqtSignal(str)
     trigger_exec_processing = pyqtSignal(str)
-    trigger_repeat_with_cot = pyqtSignal()
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -131,7 +130,7 @@ class ChatbotBrowser(QTextBrowser):
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
         self.feedback_text = self.tr(
-            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)")
+            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
         self.exec_code_text = "\n\n" + self.tr(
             "[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
         self.exec_processing_text = "[{processing_id}](agent://execute/processing/{processing_id})"
@@ -290,8 +289,6 @@ class ChatbotBrowser(QTextBrowser):
                 elif path.startswith("/processing/"):
                     processing_id = path.split("/")[-1]
                     self.trigger_exec_processing.emit(processing_id)
-            elif process_name == "cot":
-                self.trigger_repeat_with_cot.emit()
             return
 
         # open web browser

@@ -151,6 +151,16 @@
             <string>3</string>
            </property>
           </item>
+          <item>
+           <property name="text">
+            <string>4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -158,7 +168,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>The default limit is 2 conversation turns to help keep the discussion on topic.</string>
+         <string>The default limit is 3 conversation turns to help keep the discussion on topic.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
