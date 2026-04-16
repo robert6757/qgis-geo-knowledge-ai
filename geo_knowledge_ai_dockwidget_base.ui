@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>346</width>
+    <width>358</width>
     <height>495</height>
    </rect>
   </property>
@@ -56,6 +56,11 @@
       <item>
        <property name="text">
         <string>Code Generation</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Complex Task Orchestration</string>
        </property>
       </item>
      </widget>

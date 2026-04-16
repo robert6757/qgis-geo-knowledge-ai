@@ -21,6 +21,7 @@
 """
 
 import json
+from qgis.core import Qgis
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
@@ -64,6 +65,8 @@ class StreamChatWorker(QThread):
                 url += "/ai/v1/discovery/stream"
             elif self.chat_mode == 3:
                 url += "/ai/v1/code/stream"
+            elif self.chat_mode == 4:
+                url += "/ai/v1/orch/decompose"
             else:
                 raise ValueError(f"Unknown chat mode: {self.chat_mode}")
 
@@ -77,7 +80,10 @@ class StreamChatWorker(QThread):
             self.reply = self.network_manager.post(request, json_data)
 
             # connect read slots.
-            self.reply.readyRead.connect(self.on_ready_read, type=DirectConnection)
+            if self.chat_mode == 4:
+                self.reply.readyRead.connect(self.on_ready_read_all, type=DirectConnection)
+            else:
+                self.reply.readyRead.connect(self.on_ready_read_stream, type=DirectConnection)
             self.reply.finished.connect(self.on_finished, type=DirectConnection)
             self.reply.errorOccurred.connect(self.on_error, type=DirectConnection)
 
@@ -87,7 +93,7 @@ class StreamChatWorker(QThread):
         except Exception as e:
             self.error_occurred.emit(self.tr("Network Error:") + str(e))
 
-    def on_ready_read(self):
+    def on_ready_read_stream(self):
         """deal with raw content"""
         if not self.reply or not self.reply.isOpen():
             return
@@ -112,6 +118,28 @@ class StreamChatWorker(QThread):
 
         except Exception as e:
             print(f"Read error: {e}")
+
+    def on_ready_read_all(self):
+        """deal with raw content"""
+        if not self.reply or not self.reply.isOpen():
+            return
+
+        try:
+            # read raw content and convert to string.
+            raw_data = self.reply.readAll()
+            if raw_data.isEmpty():
+                return
+
+            data = bytes(raw_data).decode('utf-8')
+            if not data.startswith('data: '):
+                return
+
+            self.content_received.emit(data[len('data: '):])
+
+        except Exception as e:
+            print(f"Read error: {e}")
+        finally:
+            self.stream_ended.emit(1)
 
     def process_line(self, line):
         """deal with every line"""

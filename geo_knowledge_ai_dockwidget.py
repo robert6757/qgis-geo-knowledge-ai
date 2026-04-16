@@ -153,7 +153,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def handle_update_chat_mode(self, index):
         gSetting = QgsSettings()
-        # chat mode: 1:Q&A 2:Search 3:Generating Code
+        # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Complex Task Orchestration
         gSetting.setValue(CHAT_MODE_TAG, str(index + 1))
 
     def handle_click_feedback(self, star: int):
