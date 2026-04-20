@@ -22,7 +22,8 @@
 
 VERSION = "1.9"
 
-AI_SERVER_DOMAIN = "https://www.phoenix-gis.cn"
+# AI_SERVER_DOMAIN = "https://www.phoenix-gis.cn"
+AI_SERVER_DOMAIN = "http://127.0.0.1:8000"
 
 USER_ID_TAG = "geo-knowledge-ai/uid"
 USER_EMAIL_TAG = "geo-knowledge-ai/email"

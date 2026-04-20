@@ -33,6 +33,7 @@ from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
 
+from .orch_manager import CTOrchManager, TaskPlan
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
 from .setting_dialog import SettingDialog
@@ -98,6 +99,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.pre_chat_timestamp = 0
 
         self.recv_raw_content = ""
+        self.question_str = ""
+
+        # For Complex Task Orchestration.
+        self.orch_manager = None
 
         # show welcome text
         self.show_welcome_content()
@@ -275,6 +280,20 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.append_markdown(content)
         self.recv_raw_content += content
 
+    def on_orch_decompose_received(self, task_plan: TaskPlan):
+        """receive the orch message"""
+        content = self.tr("**Decompose Task:**\n\n")
+        for idx, subtask in enumerate(task_plan.sub_tasks):
+            content += f"{idx + 1}.{subtask.name}"
+            content += "\n\n"
+
+        # add command text.
+        # content += "[Step Subtask](agent://orch/substask/step) | [Run All Subtasks](agent://orch/substask/runall)"
+        self.chatbot_browser.append_markdown(content)
+
+    def on_report_subtask_stream_received(self, content):
+        self.chatbot_browser.append_markdown(content)
+
     def on_stream_ended(self, chunk_count):
         self.chatbot_browser.post_process_markdown()
         self.btn_send_or_terminate_tag = 0
@@ -290,7 +309,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.history_manager.put_history(
             cur_chat_timestamp,
             self.pre_chat_timestamp,
-            self.plainTextEdit.toPlainText(),
+            self.question_str,
             self.recv_raw_content)
 
         # current chat will be the next previous chat.
@@ -317,9 +336,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.recv_raw_content = ""
 
         # add question in chatbot
-        question_str = self.plainTextEdit.toPlainText()
+        self.question_str = self.plainTextEdit.toPlainText()
         self.chatbot_browser.pre_process_markdown()
-        self.chatbot_browser.append_markdown(self.tr("**Question:") + question_str + "**\n\n")
+        self.chatbot_browser.append_markdown(self.tr("**Question:") + self.question_str + "**\n\n")
         self.chatbot_browser.append_markdown(self.tr("**Answer:") + "**\n\n")
 
         gSetting = QgsSettings()
@@ -364,7 +383,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # prepare request body.
         request_data = {
-            "prompt": question_str,
+            "prompt": self.question_str,
             "history": [[item['question'], item['answer']] for item in histories],
             "email": user_email,
             "version": VERSION,
@@ -375,12 +394,19 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             "screenshot_url": capture_screen_url
         }
 
-        self.chat_worker = StreamChatWorker(request_data, chat_mode)
-        self.chat_worker.chunks_info_received.connect(self.on_chunks_info_received)
-        self.chat_worker.content_received.connect(self.on_content_received)
-        self.chat_worker.stream_ended.connect(self.on_stream_ended)
-        self.chat_worker.error_occurred.connect(self.on_error_occurred)
-        self.chat_worker.start()
+        if chat_mode == 4:
+            self.orch_manager = CTOrchManager(request_data)
+            self.orch_manager.orch_decompose_finished.connect(self.on_orch_decompose_received)
+            self.orch_manager.report_subtask_stream.connect(self.on_report_subtask_stream_received)
+            self.orch_manager.error_occurred.connect(self.on_error_occurred)
+            self.orch_manager.start()
+        else:
+            self.chat_worker = StreamChatWorker(request_data, chat_mode)
+            self.chat_worker.chunks_info_received.connect(self.on_chunks_info_received)
+            self.chat_worker.content_received.connect(self.on_content_received)
+            self.chat_worker.stream_ended.connect(self.on_stream_ended)
+            self.chat_worker.error_occurred.connect(self.on_error_occurred)
+            self.chat_worker.start()
 
         self.btn_send_or_terminate_tag = 1
         self.btnSendOrTerminate.setText(self.tr("Stop"))

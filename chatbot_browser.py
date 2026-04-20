@@ -102,6 +102,8 @@ class ChatbotBrowser(QTextBrowser):
     trigger_exec_code = pyqtSignal(str)
     trigger_copy_code = pyqtSignal(str)
     trigger_exec_processing = pyqtSignal(str)
+    trigger_orch_subtask_step = pyqtSignal()
+    trigger_orch_subtask_automate = pyqtSignal()
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -289,6 +291,11 @@ class ChatbotBrowser(QTextBrowser):
                 elif path.startswith("/processing/"):
                     processing_id = path.split("/")[-1]
                     self.trigger_exec_processing.emit(processing_id)
+            elif process_name == "orch":
+                if path.startswith("/substask/step"):
+                    self.trigger_orch_subtask_step.emit()
+                elif path.startswith("/substask/run"):
+                    self.trigger_orch_subtask_automate.emit()
             return
 
         # open web browser

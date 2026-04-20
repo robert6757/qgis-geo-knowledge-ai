@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
-                                 Stream Chat Worker
- This is subclass of QThread which support stream chat.
+                                 Network for Orchestration
+ This is subclass of QThread which support network for orchestration.
                               -------------------
-        begin                : 2025-10-01
-        copyright            : (C) 2025 by phoenix-gis
+        begin                : 2026-04-17
+        copyright            : (C) 2026 by phoenix-gis
         email                : phoenixgis@sina.com
         website              : phoenix-gis.cn
  ***************************************************************************/
@@ -21,36 +21,29 @@
 """
 
 import json
-from qgis.core import Qgis
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .global_defs import *
 from .compat import *
 
-class StreamChatWorker(QThread):
+class CTOrchNetwork(QThread):
 
     # defines signals.
-    # receive chunk signal.
-    chunk_received = pyqtSignal(dict)
-    # receive references signal.
-    chunks_info_received = pyqtSignal(str)
     # receive content signal.
     content_received = pyqtSignal(str)
-    # receive stop flag signal, the parameter is the count of chunks.
-    stream_ended = pyqtSignal(int)
     # report error signal.
     error_occurred = pyqtSignal(str)
 
-    def __init__(self, request_data, chat_mode: int):
+    def __init__(self, request_data, orch_type: int):
         super().__init__()
         self.request_data = request_data
         self.reply = None
         self.received_chunks = 0
         self.buffer = ""
-        # 1: geo knowledge Q&A; 2: discovery; 3: generate code.
-        self.chat_mode = chat_mode
         self.network_manager = None
+        # 1: decompose task 2:tool calls 3:conclusion 0: unknown
+        self.orch_type = orch_type
 
     def run(self):
         """execute request"""
@@ -59,14 +52,14 @@ class StreamChatWorker(QThread):
 
         try:
             url = AI_SERVER_DOMAIN
-            if self.chat_mode == 1:
-                url += "/ai/v1/chat/stream"
-            elif self.chat_mode == 2:
-                url += "/ai/v1/discovery/stream"
-            elif self.chat_mode == 3:
-                url += "/ai/v1/code/stream"
+            if self.orch_type == 1:
+                url += "/ai/v1/orch/decompose"
+            elif self.orch_type == 2:
+                url += "/ai/v1/orch/tools"
+            elif self.orch_type == 3:
+                url += "/ai/v1/orch/conclusion"
             else:
-                raise ValueError(f"Unknown chat mode: {self.chat_mode}")
+                raise ValueError(f"Unknown orch_type: {self.orch_type}")
 
             # create network request.
             request = QNetworkRequest(QUrl(url))
@@ -78,7 +71,7 @@ class StreamChatWorker(QThread):
             self.reply = self.network_manager.post(request, json_data)
 
             # connect read slots.
-            self.reply.readyRead.connect(self.on_ready_read_stream, type=DirectConnection)
+            self.reply.readyRead.connect(self.on_ready_read, type=DirectConnection)
             self.reply.finished.connect(self.on_finished, type=DirectConnection)
             self.reply.errorOccurred.connect(self.on_error, type=DirectConnection)
 
@@ -88,7 +81,7 @@ class StreamChatWorker(QThread):
         except Exception as e:
             self.error_occurred.emit(self.tr("Network Error:") + str(e))
 
-    def on_ready_read_stream(self):
+    def on_ready_read(self):
         """deal with raw content"""
         if not self.reply or not self.reply.isOpen():
             return
@@ -100,46 +93,13 @@ class StreamChatWorker(QThread):
                 return
 
             data = bytes(raw_data).decode('utf-8')
-            self.buffer += data
+            if not data.startswith('data: '):
+                return
 
-            # read every line.
-            lines = self.buffer.split('\n')
-            self.buffer = lines[-1]  # contain the last line.
-
-            for line in lines[:-1]:
-                line = line.strip()
-                if line:
-                    self.process_line(line)
+            self.content_received.emit(data[len('data: '):])
 
         except Exception as e:
             print(f"Read error: {e}")
-
-    def process_line(self, line):
-        """deal with every line"""
-        if line.startswith('data: '):
-            try:
-                # remove 'data:'
-                json_str = line[6:]
-                if json_str.strip():
-                    event_data = json.loads(json_str)
-                    event_type = event_data.get('type')
-                    content = event_data.get('content', '')
-
-                    # emit signals.
-                    self.chunk_received.emit(event_data)
-
-                    if event_type == 'chunks':
-                        self.chunks_info_received.emit(content)
-                    elif event_type == 'content':
-                        self.received_chunks += 1
-                        self.content_received.emit(content)
-                    elif event_type == 'end':
-                        self.stream_ended.emit(self.received_chunks)
-
-            except json.JSONDecodeError as e:
-                print(f"JSON Error: {str(e)} - Data: {line}")
-            except Exception as e:
-                print(f"Error: {str(e)}")
 
     def on_finished(self):
         """request finished"""
