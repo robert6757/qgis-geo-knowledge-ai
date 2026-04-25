@@ -292,9 +292,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.append_markdown(content)
 
     def on_report_subtask_stream_received(self, content):
-        self.chatbot_browser.append_markdown(content)
+        self.chatbot_browser.append_markdown(content + "\n\n")
 
-    def on_stream_ended(self, chunk_count):
+    def on_stream_ended_with_tail(self, tail_content: str):
+        content = self.tr("**Summary of tasks:**\n\n") + tail_content
+        self.chatbot_browser.append_markdown(content)
+        self.on_stream_ended()
+
+    def on_stream_ended(self):
         self.chatbot_browser.post_process_markdown()
         self.btn_send_or_terminate_tag = 0
         self.btnSendOrTerminate.setText(self.tr("Send"))
@@ -314,6 +319,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # current chat will be the next previous chat.
         self.pre_chat_timestamp = cur_chat_timestamp
+
+    def on_warning_occurred(self, warning_msg):
+        warning_msg += "\n\n"
+        self.chatbot_browser.append_markdown(warning_msg)
 
     def on_error_occurred(self, error_msg):
         """deal with errors"""
@@ -398,7 +407,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_manager = CTOrchManager(request_data)
             self.orch_manager.orch_decompose_finished.connect(self.on_orch_decompose_received)
             self.orch_manager.report_subtask_stream.connect(self.on_report_subtask_stream_received)
+            self.orch_manager.finish_all_orchestration.connect(self.on_stream_ended_with_tail)
             self.orch_manager.error_occurred.connect(self.on_error_occurred)
+            self.orch_manager.warning_occurred.connect(self.on_warning_occurred)
             self.orch_manager.start()
         else:
             self.chat_worker = StreamChatWorker(request_data, chat_mode)
@@ -421,6 +432,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.chat_worker.exit()
             self.chat_worker.wait(3000)
             self.chat_worker.deleteLater()
+            self.chat_worker = None
+
+        if self.orch_manager:
+            self.btnSendOrTerminate.setEnabled(False)
+            self.orch_manager.stop()
+            self.chat_worker.wait(5000)
+            self.chat_worker.deleteLater()
+            self.orch_manager = None
 
         self.chatbot_browser.post_process_markdown()
         self.btnSendOrTerminate.setEnabled(True)

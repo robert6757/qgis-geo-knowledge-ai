@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>358</width>
+    <width>424</width>
     <height>495</height>
    </rect>
   </property>
@@ -133,7 +133,7 @@
            </size>
           </property>
           <property name="plainText">
-           <string/>
+           <string>获取北京、上海天气</string>
           </property>
           <property name="textInteractionFlags">
            <set>Qt::TextEditorInteraction</set>

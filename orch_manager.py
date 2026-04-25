@@ -70,66 +70,64 @@ class CTOrchManager(QThread):
     orch_decompose_finished = pyqtSignal(TaskPlan)
     # report error signal.
     error_occurred = pyqtSignal(str)
+    # report warning signal.
+    warning_occurred = pyqtSignal(str)
     # report subtask stream
     report_subtask_stream = pyqtSignal(str)
+    # finish all orchestration.
+    finish_all_orchestration = pyqtSignal(str)
 
     def __init__(self, request):
         super().__init__()
 
+        self._stop_flag = False
         self.request = request
         self.prompt = ""
-        self.task_plan = {}
         self.sub_task_results: Dict[str, str] = {}
 
-        self.executing_tool_calls = []
-        self.executing_tool_content = ''
-
         self.network_manager = QNetworkAccessManager()
+
+        # put supported tools
+        self.request["tools"] = orch_support_tools()
 
     def run(self):
         # 1.decompose task
         decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
-        decompose_subthread.content_received.connect(self.on_received_task_plan)
-        decompose_subthread.error_occurred.connect(self.on_error_occurred)
+        decompose_subthread.error_occurred.connect(self.on_network_error_occurred)
         decompose_subthread.start()
-
-        # 2.run all task by order.
         decompose_subthread.wait()
-        self.__run_all_subtask()
 
-    def on_received_task_plan(self, content: str):
-        self.task_plan = self.__parse_task_plan(content)
-        self.orch_decompose_finished.emit(self.task_plan)
-
-    def on_received_subtask_stream(self, content: str):
-        json_response = json.loads(content)
-        message_data = json_response.get("message", {})
-        content = message_data.get("content", "")
-        tool_calls_str = message_data.get("tool_calls", '')
-
-        self.executing_tool_calls = self.__parse_tool_calls_from_content(tool_calls_str)
-        self.executing_tool_content = content
-
-        self.report_subtask_stream.emit(content)
-
-    def on_error_occurred(self, error: str):
-        self.error_occurred.emit(error)
-
-    def __run_all_subtask(self):
-        if not self.task_plan:
-            self.error_occurred.emit(self.tr("Invalid task plan."))
+        task_plan = self.__parse_task_plan(decompose_subthread.get_raw_response())
+        if not task_plan:
+            self.error_occurred.emit(self.tr("Invalid Task plan!"))
+            self._stop_flag = True
             return
 
-        self.report_subtask_stream.emit(self.tr("Start executing the task plan..."))
+        self.orch_decompose_finished.emit(task_plan)
 
-        execution_order = self.task_plan.execution_order
+        # 2.run all subtask
+        self.__run_all_subtask(task_plan)
+
+        # 3.conclude result
+        self.__finalize_result()
+
+    def stop(self):
+        self._stop_flag = True
+
+    def __run_all_subtask(self, task_plan: TaskPlan):
+        if self._stop_flag:
+            return
+
+        self.report_subtask_stream.emit(self.tr("**Start executing the task plan:**"))
+
+        execution_order = task_plan.execution_order
 
         for task_id in execution_order:
             # find next subtask.
-            sub_task = next((st for st in self.task_plan.sub_tasks if st.id == task_id), None)
+            sub_task = next((st for st in task_plan.sub_tasks if st.id == task_id), None)
             if not sub_task:
                 error_str = self.tr("[WARNING] Subtask [{}] not found, skip.").format(task_id)
-                self.error_occurred.emit(error_str)
+                self.warning_occurred.emit(error_str)
                 continue
 
             # Check if all dependencies have been completed.
@@ -138,10 +136,28 @@ class CTOrchManager(QThread):
                 error_str = (self.tr(
                     "[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.")
                              .format(unmet_deps, sub_task.id))
-                self.error_occurred.emit(error_str)
+                self.warning_occurred.emit(error_str)
 
             # execute the subtask.
             self.__execute_sub_task(sub_task)
+
+    def on_received_subtask_stream(self, content: str):
+        # self.report_subtask_stream.emit(content)
+        pass
+
+    def on_network_error_occurred(self, error: str):
+        self.error_occurred.emit(error)
+        self._stop_flag = True
+
+    def on_received_conclusion(self, conclusion: str):
+        try:
+            conclusion_json = json.loads(conclusion)
+            message_data = conclusion_json.get("message", {})
+        except Exception as e:
+            self.error_occurred.emit(str(e))
+            self._stop_flag = True
+
+        self.finish_all_orchestration.emit(message_data.get("content", ""))
 
     def __execute_sub_task(self, sub_task: SubTask) -> str:
         """
@@ -153,11 +169,10 @@ class CTOrchManager(QThread):
         Returns:
             result of subtask
         """
-        self.report_subtask_stream.emit(self.tr("Start executing the subtask:") + sub_task.name)
+        if self._stop_flag:
+            return ""
 
-        # clear old variable.
-        self.executing_tool_calls = []
-        self.executing_tool_content = ""
+        self.report_subtask_stream.emit(self.tr("Start executing the subtask:") + sub_task.name)
 
         # Build the context (containing the results of completed subtasks).
         context = self.__build_context(exclude_task_id=sub_task.id)
@@ -181,7 +196,8 @@ class CTOrchManager(QThread):
                 final_result = final_content
 
             # Check if the task is completed
-            if self.__check_task_completion(sub_task, final_result):
+            is_completed, error_msg = self.__check_subtask_completion(sub_task, final_result)
+            if is_completed:
                 sub_task.status = TaskStatus.COMPLETED
                 sub_task.result = final_result
                 self.sub_task_results[sub_task.id] = final_result
@@ -189,53 +205,76 @@ class CTOrchManager(QThread):
                 self.report_subtask_stream.emit(report_str)
             else:
                 sub_task.status = TaskStatus.FAILED
-                sub_task.result = f"The execution result did not meet expectations: {final_result}"
-                report_str = self.tr("[Failure] The execution result of subtask [{}] did not meet expectations.").format(sub_task.name)
-                self.error_occurred.emit(report_str)
+                sub_task.result = f"The execution result did not meet expectations: {final_result}."
+                report_str = self.tr("[Failure] The execution result of subtask [{}] did not meet expectations. {}").format(sub_task.name, error_msg)
+                self.report_subtask_stream.emit(report_str)
         else:
             sub_task.status = TaskStatus.FAILED
             sub_task.result = result.get("error", "Unknown error")
             report_str = self.tr(
                 "[Failure] Subtask [{}] failed to execute: [{}]").format(sub_task.name, sub_task.result)
-            self.error_occurred.emit(report_str)
+            self.report_subtask_stream.emit(report_str)
 
         return sub_task.result
 
     def __chat_with_tools_stream(self, message: str, context: str = "") -> Dict[str, Any]:
-            tool_names = orch_support_tools()
-
             # Build a message containing context information
+            if self._stop_flag:
+                return {
+                    "content": "",
+                    "tool_results": [],
+                    "success": False,
+                    "error": ""
+                }
+
             content = message
             if context:
                 content = f"{context}\n\nCurrent task: {message}"
+            content += self.tr("If the current task has been completed, please exit.")
 
             all_tool_response = ""
             all_tool_results = []
             max_tool_iterations = 5
             try:
-                history = []
+                tool_call_results = []
                 for iteration in range(max_tool_iterations):
                     # use raw request to build the subtask request.
                     sub_task_request = copy.deepcopy(self.request)
-                    sub_task_request["tools"] = tool_names
                     sub_task_request["prompt"] = content
-                    sub_task_request["history"] = history
+                    sub_task_request["tool_call_results"] = tool_call_results
 
-                    subtask_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=1)
+                    subtask_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=2)
                     subtask_subthread.content_received.connect(self.on_received_subtask_stream)
-                    subtask_subthread.error_occurred.connect(self.on_error_occurred)
+                    subtask_subthread.error_occurred.connect(self.on_network_error_occurred)
                     subtask_subthread.start()
                     subtask_subthread.wait()
+                    subtask_response_json_str = subtask_subthread.get_raw_response()
+                    if not subtask_response_json_str:
+                        break
 
-                    if len(self.executing_tool_calls) == 0:
+                    subtask_response_json = json.loads(subtask_response_json_str)
+                    message_data = subtask_response_json.get("message", {})
+
+                    executing_tool_calls = message_data.get("tool_calls") or []
+                    executing_tool_content = message_data.get("content", "")
+
+                    # FIXME.
+                    # self.report_subtask_stream.emit(json.dumps(executing_tool_calls))
+                    if len(executing_tool_calls) == 0:
                         # Nothing to do, finish the subtask.
                         break
 
-                    all_tool_response += self.executing_tool_content
-                    for tool_call in self.executing_tool_calls:
+                    all_tool_response += executing_tool_content
+                    for tool_call in executing_tool_calls:
                         func = tool_call.get("function", {})
                         tool_name = func.get("name", "")
                         arguments = func.get("arguments", {})
+                        if isinstance(arguments, str):
+                            # maybe the arguments is string, not json object.
+                            try:
+                                arguments = json.loads(arguments)
+                            except json.JSONDecodeError:
+                                arguments = {}
 
                         tool_result = orch_execute_tool(tool_name, arguments)
 
@@ -246,7 +285,10 @@ class CTOrchManager(QThread):
                         })
 
                         # remember the result of tools.
-                        history.append(f"Tool ID: {tool_call.get('id', '')}\n\n Tool execution result:\n{tool_result}")
+                        tool_call_history = []
+                        tool_call_history.append(tool_call)
+                        tool_call_history.append(tool_result)
+                        tool_call_results.append(tool_call_history)
 
                 return {
                     "content": all_tool_response,
@@ -262,39 +304,47 @@ class CTOrchManager(QThread):
                     "error": str(e)
                 }
 
-    def __check_task_completion(self, sub_task: SubTask, result: str) -> bool:
-        """
-        判断子任务是否完成
+    def __check_subtask_completion(self, sub_task: SubTask, result: str) -> (bool, str):
+        if self._stop_flag:
+            return False, ''
 
-        Args:
-            sub_task: 子任务对象
-            result: 执行结果
-
-        Returns:
-            True 表示完成，False 表示需要重新执行或调整
-        """
-        # 简单判断：如果结果不为空且没有错误信息，则认为完成
         if not result or result.strip() == "":
-            return False
+            return False, ''
 
-        error_keywords = ["错误", "error", "失败", "failed", "无法", "不能"]
-        for keyword in error_keywords:
-            if keyword in result.lower():
-                # 进一步判断是否真的是错误
-                if "计算错误" in result or "请求错误" in result:
-                    return False
+        evaluate_request = copy.deepcopy(self.request)
+        evaluate_request["prompt"] = sub_task.description
+        evaluate_request["history"] = [[result]]
 
-        return True
+        evaluate_subthread = CTOrchNetwork(request_data=evaluate_request, orch_type=3)
+        evaluate_subthread.error_occurred.connect(self.on_network_error_occurred)
+        evaluate_subthread.start()
+        evaluate_subthread.wait()
+
+        evaluate_result = evaluate_subthread.get_raw_response()
+        if not evaluate_result:
+            return False, ''
+
+        evaluate_json = json.loads(evaluate_result)
+        message_data = evaluate_json.get("message", {})
+        content = message_data.get("content", "")
+        # If an [ERROR] message appears, the process is considered a failure.
+        if "[ERROR]" in content:
+            return False, content
+
+        if "[COMPLETED]" in content:
+            return True, ''
+
+        return False, content
 
     def __build_context(self, exclude_task_id: str = None) -> str:
         """
-        构建上下文信息，包含已完成子任务的结果
+        Build context information, including the results of completed subtasks.
 
         Args:
-            exclude_task_id: 要排除的子任务 ID（当前正在执行的任务）
+            exclude_task_id: Subtask IDs to exclude (currently executing tasks)
 
         Returns:
-            格式化的上下文字符串
+            context string
         """
         if not self.sub_task_results:
             return ""
@@ -385,3 +435,28 @@ class CTOrchManager(QThread):
 
         return tool_calls
 
+    def __finalize_result(self):
+        """
+        Integrate the results of all subtasks to generate the final answer.
+        """
+        if self._stop_flag:
+            return
+
+        if not self.sub_task_results:
+            self.error_occurred.emit(self.tr("Error: No subtask execution result."))
+            self._stop_flag = True
+            return
+
+        sub_task_request = copy.deepcopy(self.request)
+
+        # put result of subtask as history.
+        subtask_results = []
+        for task_id, result in self.sub_task_results.items():
+            subtask_results.append([f"[{task_id}]: {result}]"])
+        sub_task_request["history"] = subtask_results
+
+        finalize_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=4)
+        finalize_subthread.content_received.connect(self.on_received_conclusion)
+        finalize_subthread.error_occurred.connect(self.on_network_error_occurred)
+        finalize_subthread.start()
+        finalize_subthread.wait()

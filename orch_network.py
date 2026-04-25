@@ -39,11 +39,11 @@ class CTOrchNetwork(QThread):
         super().__init__()
         self.request_data = request_data
         self.reply = None
-        self.received_chunks = 0
         self.buffer = ""
         self.network_manager = None
         # 1: decompose task 2:tool calls 3:conclusion 0: unknown
         self.orch_type = orch_type
+        self.response_data = None
 
     def run(self):
         """execute request"""
@@ -55,8 +55,10 @@ class CTOrchNetwork(QThread):
             if self.orch_type == 1:
                 url += "/ai/v1/orch/decompose"
             elif self.orch_type == 2:
-                url += "/ai/v1/orch/tools"
+                url += "/ai/v1/orch/tool/call"
             elif self.orch_type == 3:
+                url += "/ai/v1/orch/tool/evaluate"
+            elif self.orch_type == 4:
                 url += "/ai/v1/orch/conclusion"
             else:
                 raise ValueError(f"Unknown orch_type: {self.orch_type}")
@@ -81,6 +83,10 @@ class CTOrchNetwork(QThread):
         except Exception as e:
             self.error_occurred.emit(self.tr("Network Error:") + str(e))
 
+    def get_raw_response(self):
+        # To avoid untimely synchronization of signal slot data
+        return self.response_data
+
     def on_ready_read(self):
         """deal with raw content"""
         if not self.reply or not self.reply.isOpen():
@@ -96,7 +102,8 @@ class CTOrchNetwork(QThread):
             if not data.startswith('data: '):
                 return
 
-            self.content_received.emit(data[len('data: '):])
+            self.response_data = data[len('data: '):]
+            self.content_received.emit(self.response_data)
 
         except Exception as e:
             print(f"Read error: {e}")
