@@ -29,11 +29,11 @@ from enum import Enum
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
 
-from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl, QObject
+from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .compat import *
-from .orch_tools import orch_support_tools, orch_execute_tool
+from .orch_tools import SUPPORTED_TOOLS, OrchToolExecutor
 from .orch_network import CTOrchNetwork
 from .global_defs import *
 
@@ -77,7 +77,7 @@ class CTOrchManager(QThread):
     # finish all orchestration.
     finish_all_orchestration = pyqtSignal(str)
 
-    def __init__(self, request):
+    def __init__(self, iface, request):
         super().__init__()
 
         self._stop_flag = False
@@ -87,8 +87,9 @@ class CTOrchManager(QThread):
 
         self.network_manager = QNetworkAccessManager()
 
-        # put supported tools
-        self.request["tools"] = orch_support_tools()
+        # Tool Executor.
+        self.request["tools"] = SUPPORTED_TOOLS
+        self.tool_executor = OrchToolExecutor(iface)
 
     def run(self):
         # 1.decompose task
@@ -230,9 +231,8 @@ class CTOrchManager(QThread):
             content = message
             if context:
                 content = f"{context}\n\nCurrent task: {message}"
-            content += self.tr("If the current task has been completed, please exit.")
 
-            all_tool_response = ""
+            tool_response = ""
             all_tool_results = []
             max_tool_iterations = 5
             try:
@@ -264,7 +264,7 @@ class CTOrchManager(QThread):
                         # Nothing to do, finish the subtask.
                         break
 
-                    all_tool_response += executing_tool_content
+                    tool_response = executing_tool_content
                     for tool_call in executing_tool_calls:
                         func = tool_call.get("function", {})
                         tool_name = func.get("name", "")
@@ -276,8 +276,21 @@ class CTOrchManager(QThread):
                             except json.JSONDecodeError:
                                 arguments = {}
 
-                        tool_result = orch_execute_tool(tool_name, arguments)
+                        result_container = {"result": None}
+                        def on_completed(result):
+                            result_container["result"] = result
+                        def on_error(error):
+                            result_container["result"] = error
 
+                        self.tool_executor.execution_completed.connect(on_completed, Qt.QueuedConnection)
+                        self.tool_executor.execution_error.connect(on_error, Qt.QueuedConnection)
+                        self.tool_executor.execute_requested.emit(tool_name, arguments)
+
+                        # Waiting for execution to complete
+                        while result_container["result"] is None:
+                            QCoreApplication.processEvents()
+
+                        tool_result = result_container["result"]
                         all_tool_results.append({
                             "tool_name": tool_name,
                             "arguments": arguments,
@@ -291,7 +304,7 @@ class CTOrchManager(QThread):
                         tool_call_results.append(tool_call_history)
 
                 return {
-                    "content": all_tool_response,
+                    "content": tool_response,
                     "tool_results": all_tool_results,
                     "success": True
                 }

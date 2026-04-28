@@ -19,66 +19,240 @@
  *                                                                         *
  ***************************************************************************/
 """
+import os
+import json
+from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest
 
-def orch_support_tools():
-    return ["get_weather", "get_current_time", "calculate_expression", "calculate_random", "get_timestamp"]
+from .code_execution import CodeExecution
 
-def orch_execute_tool(tool_name: str, arguments: dict) -> str:
-    """
-    Execute orchestration tool in GUI thread.
+SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
+                   "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code"]
 
-    Args:
-        tool_name: tool name
-        arguments: tool arguments
+class OrchToolExecutor(QObject):
+    """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
 
-    Returns:
-        execute tool result.
-    """
+    execute_requested = pyqtSignal(str, dict)  # tool_name, arguments
+    execution_completed = pyqtSignal(str)  # result
+    execution_error = pyqtSignal(str)  # error message
 
-    # FIXME.
-    # must be in GUI thread
+    def __init__(self, iface, parent=None):
+        super().__init__(parent)
+        self.iface = iface
+        self.execute_requested.connect(self._on_execute_requested, Qt.QueuedConnection)
 
-    if tool_name == "get_weather":
-        city = arguments.get("city", "未知城市")
-        weather_data = {
-            "北京": {"temp": 25, "condition": "晴", "humidity": 45},
-            "上海": {"temp": 28, "condition": "多云", "humidity": 65},
-            "广州": {"temp": 32, "condition": "小雨", "humidity": 80},
-            "深圳": {"temp": 30, "condition": "晴", "humidity": 70},
-        }
-        data = weather_data.get(city, {"temp": 26, "condition": "晴", "humidity": 50})
-        return f"{city}当前天气：{data['condition']}，温度：{data['temp']}°C，湿度：{data['humidity']}%"
-
-    elif tool_name == "get_current_time":
-        city = arguments.get("city", "未知城市")
-        from datetime import datetime
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        return f"{city}当前时间：{current_time}"
-
-    elif tool_name == "calculate_expression":
-        expression = arguments.get("expression", "")
+    def _on_execute_requested(self, tool_name: str, arguments: dict):
+        """Slot functions: Execute tools in the GUI thread."""
         try:
-            result = eval(expression, {"__builtins__": {}}, {"sqrt": lambda x: x ** 0.5})
-            return f"计算结果：{expression} = {result}"
+            result = self._execute_tool_impl(tool_name, arguments)
+            self.execution_completed.emit(result)
         except Exception as e:
-            return f"计算错误：{e}"
+            self.execution_error.emit(str(e))
 
-    elif tool_name == "calculate_random":
-        seed = arguments.get("seed", 0)
-        count = arguments.get("count", 1)
-        seed = int(seed)
-        count = int(count)
-        import random
-        random.seed(seed)
-        if count <= 1:
-            random_result = random.random()
+    def _execute_tool_impl(self, tool_name: str, arguments: dict) -> str:
+        """
+            Execute orchestration tool in GUI thread.
+
+            Args:
+                tool_name: tool name
+                arguments: tool arguments
+
+            Returns:
+                execute tool result.
+            """
+        if tool_name == "qgis_add_vector_layer":
+            # Add a vector layer to the project
+            path = arguments.get("path", "")
+            name = arguments.get("name", "")
+            provider = arguments.get("provider", "ogr")
+            if not name:
+                name = os.path.basename(path)
+
+            # Create the layer
+            layer = QgsVectorLayer(path, name, provider)
+
+            if not layer.isValid():
+                raise Exception(f"Layer is not valid: {path}")
+
+            # Add to project
+            QgsProject.instance().addMapLayer(layer)
+
+            return json.dumps({
+                "id": layer.id(),
+                "name": layer.name(),
+                "type": self._get_layer_type(layer),
+                "feature_count": layer.featureCount()
+            }, ensure_ascii=False)
+
+        elif tool_name == "qgis_add_raster_layer":
+            # Add a raster layer to the project
+            path = arguments.get("path", "")
+            name = arguments.get("name", "")
+            provider = arguments.get("provider", "ogr")
+            if not name:
+                name = os.path.basename(path)
+
+            # Create the layer
+            layer = QgsRasterLayer(path, name, provider)
+
+            if not layer.isValid():
+                raise Exception(f"Layer is not valid: {path}")
+
+            # Add to project
+            QgsProject.instance().addMapLayer(layer)
+
+            return json.dumps({
+                "id": layer.id(),
+                "name": layer.name(),
+                "type": "raster",
+                "width": layer.width(),
+                "height": layer.height()
+            }, ensure_ascii=False)
+
+        elif tool_name == "qgis_get_layers":
+            # Get all layers in the project
+            project = QgsProject.instance()
+            layers = []
+
+            for layer_id, layer in project.mapLayers().items():
+                layer_info = {
+                    "id": layer_id,
+                    "name": layer.name(),
+                    "type": self._get_layer_type(layer),
+                    "visible": project.layerTreeRoot().findLayer(layer_id).isVisible()
+                }
+
+                # Add type-specific information
+                if layer.type() == QgsMapLayer.VectorLayer:
+                    layer_info.update({
+                        "feature_count": layer.featureCount(),
+                        "geometry_type": layer.geometryType()
+                    })
+                elif layer.type() == QgsMapLayer.RasterLayer:
+                    layer_info.update({
+                        "width": layer.width(),
+                        "height": layer.height()
+                    })
+
+                layers.append(layer_info)
+
+            return json.dumps(layers, ensure_ascii=False)
+
+        elif tool_name == "qgis_zoom_to_layer":
+            # Zoom to a layer's extent
+            layer_id = arguments.get("layer_id", "")
+            if not layer_id:
+                raise Exception({"error_msg": "No layer id provided"})
+
+            project = QgsProject.instance()
+
+            if layer_id in project.mapLayers():
+                layer = project.mapLayer(layer_id)
+                self.iface.setActiveLayer(layer)
+                self.iface.zoomToActiveLayer()
+                return json.dumps({"zoomed_to": layer_id}, ensure_ascii=False)
+            else:
+                raise Exception({"error_msg": f"Layer {layer_id} is not found"})
+
+        elif tool_name == "qgis_remove_layer":
+            # Remove a layer from the project
+            layer_id = arguments.get("layer_id", "")
+            if not layer_id:
+                raise Exception({"error_msg": "No layer id provided"})
+
+            project = QgsProject.instance()
+
+            if layer_id in project.mapLayers():
+                project.removeMapLayer(layer_id)
+                return json.dumps({"removed": layer_id}, ensure_ascii=False)
+            else:
+                raise Exception({"error_msg": f"Layer {layer_id} is not found"})
+
+        elif tool_name == "qgis_query_features_from_vector_layer":
+            # Use a query statement to query vector layer features.
+            layer_id = arguments.get("layer_id", "")
+            statement = arguments.get("statement", "")
+            if not layer_id:
+                raise Exception({"error_msg": "No layer id provided"})
+
+            project = QgsProject.instance()
+
+            if layer_id in project.mapLayers():
+                layer = project.mapLayer(layer_id)
+
+                if layer.type() != QgsMapLayer.VectorLayer:
+                    raise Exception(f"Layer is not a vector layer: {layer_id}")
+
+                features = []
+                request = QgsFeatureRequest()
+                if statement:
+                    request.setFilterExpression(statement)
+                for i, feature in enumerate(layer.getFeatures(request)):
+                    # Extract attributes
+                    attrs = {}
+                    for field in layer.fields():
+                        attrs[field.name()] = feature.attribute(field.name())
+
+                    # Extract geometry if available
+                    geom = None
+                    if feature.hasGeometry():
+                        geom = {
+                            "type": feature.geometry().type(),
+                            "wkt": feature.geometry().asWkt(precision=4)
+                        }
+
+                    features.append({
+                        "id": feature.id(),
+                        "attributes": attrs,
+                        "geometry": geom
+                    })
+
+                return json.dumps({
+                    "layer_id": layer_id,
+                    "feature_count": layer.featureCount(),
+                    "features": features,
+                    "fields": [field.name() for field in layer.fields()]
+                }, ensure_ascii=False)
+            else:
+                raise Exception({"error_msg": f"Layer {layer_id} is not found"})
+
+        elif tool_name == "qgis_execute_code":
+            code = arguments.get("code", "")
+            code_exec = CodeExecution(
+                code=code,
+                parent_widget=self,
+                iface=self.iface
+            )
+
+            result_container = {"result": None, "error_msg": None}
+
+            def on_finish(execution_result):
+                result_container["result"] = execution_result
+            def on_error(error_type, error_msg):
+                result_container["error_type"] = error_type
+                result_container["error_msg"] = error_msg
+
+            code_exec.task_finished.connect(on_finish)
+            code_exec.task_error.connect(on_error)
+
+            code_exec.run()
+
+            while result_container["result"] is None and result_container["error_msg"] is None:
+                QCoreApplication.processEvents()
+
+            if result_container["error_msg"] is not None:
+                raise Exception({"error_msg": result_container["error_msg"]})
+
+            return json.dumps({"result": result_container["result"]}, ensure_ascii=False)
+
         else:
-            random_result = [random.random() for _ in range(count)]
-        return f"计算结果：{random_result}"
+            raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
 
-    elif tool_name == "get_timestamp":
-        import time
-        return f"时间戳：{time.time()}"
-
-    else:
-        return f"未知工具：{tool_name}"
+    def _get_layer_type(self, layer):
+        """Helper to get layer type as string"""
+        if layer.type() == QgsMapLayer.VectorLayer:
+            return f"vector_{layer.geometryType()}"
+        elif layer.type() == QgsMapLayer.RasterLayer:
+            return "raster"
+        else:
+            return str(layer.type())

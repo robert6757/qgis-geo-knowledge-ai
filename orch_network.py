@@ -69,7 +69,7 @@ class CTOrchNetwork(QThread):
             request.setRawHeader(b"Accept", b"text/event-stream")
 
             # send post reqeust.
-            json_data = json.dumps(self.request_data).encode('utf-8')
+            json_data = json.dumps(self.request_data, ensure_ascii=False).encode('utf-8')
             self.reply = self.network_manager.post(request, json_data)
 
             # connect read slots.

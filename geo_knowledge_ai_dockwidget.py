@@ -404,7 +404,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         }
 
         if chat_mode == 4:
-            self.orch_manager = CTOrchManager(request_data)
+            self.orch_manager = CTOrchManager(self.iface, request_data)
             self.orch_manager.orch_decompose_finished.connect(self.on_orch_decompose_received)
             self.orch_manager.report_subtask_stream.connect(self.on_report_subtask_stream_received)
             self.orch_manager.finish_all_orchestration.connect(self.on_stream_ended_with_tail)
