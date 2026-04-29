@@ -245,22 +245,21 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # try to find C++(native) and Python(qgis) processing.
         if not processing_metadata and processing_id.startswith("native:"):
-            processing_id = processing_id.replace("native:", "qgis:")
-            processing_metadata = QgsApplication.processingRegistry().algorithmById(processing_id)
+            _processing_id = processing_id.replace("native:", "qgis:")
+            processing_metadata = QgsApplication.processingRegistry().algorithmById(_processing_id)
         if not processing_metadata and processing_id.startswith("qgis:"):
-            processing_id = processing_id.replace("qgis:", "native:")
-            processing_metadata = QgsApplication.processingRegistry().algorithmById(processing_id)
+            _processing_id = processing_id.replace("qgis:", "native:")
+            processing_metadata = QgsApplication.processingRegistry().algorithmById(_processing_id)
+        if not processing_metadata and processing_id.startswith("saga:"):
+            _processing_id = processing_id.replace("saga:", "sagang:")
+            processing_metadata = QgsApplication.processingRegistry().algorithmById(_processing_id)
 
         # Fail to find any processing.
         if not processing_metadata:
             self.handle_exec_code_error(self.tr("RuntimeError"), self.tr("Cannot find processing: ") + processing_id)
             return
 
-        safe_globals = {
-            'processing': processing,
-        }
-        processing_code = f"""processing.execAlgorithmDialog("{processing_metadata.id()}")"""
-        exec(processing_code, safe_globals)
+        processing.execAlgorithmDialog(processing_metadata.id())
 
     def handle_click_screen_capture(self, checked):
         gSetting = QgsSettings()
@@ -290,13 +289,18 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # add command text.
         # content += "[Step Subtask](agent://orch/substask/step) | [Run All Subtasks](agent://orch/substask/runall)"
         self.chatbot_browser.append_markdown(content)
+        self.recv_raw_content += content
 
     def on_report_subtask_stream_received(self, content):
-        self.chatbot_browser.append_markdown(content + "\n\n")
+        content += "\n\n"
+        self.chatbot_browser.append_markdown(content)
+        self.recv_raw_content += content
 
     def on_stream_ended_with_tail(self, tail_content: str):
         content = self.tr("**Summary of tasks:**\n\n") + tail_content
         self.chatbot_browser.append_markdown(content)
+        self.recv_raw_content += content
+
         self.on_stream_ended()
 
     def on_stream_ended(self):
@@ -436,9 +440,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         if self.orch_manager:
             self.btnSendOrTerminate.setEnabled(False)
+            self.orch_manager.orch_decompose_finished.disconnect(self.on_orch_decompose_received)
+            self.orch_manager.report_subtask_stream.disconnect(self.on_report_subtask_stream_received)
+            self.orch_manager.finish_all_orchestration.disconnect(self.on_stream_ended_with_tail)
+            self.orch_manager.error_occurred.disconnect(self.on_error_occurred)
+            self.orch_manager.warning_occurred.disconnect(self.on_warning_occurred)
+
+            # When a stop event is triggered, the thread will exit automatically.
             self.orch_manager.stop()
-            self.chat_worker.wait(5000)
-            self.chat_worker.deleteLater()
             self.orch_manager = None
 
         self.chatbot_browser.post_process_markdown()

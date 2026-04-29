@@ -22,12 +22,14 @@
 import os
 import json
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
-from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback
+from qgis import processing
 
 from .code_execution import CodeExecution
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
-                   "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code"]
+                   "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
+                   "qgis_execute_algorithm"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -217,6 +219,7 @@ class OrchToolExecutor(QObject):
                 raise Exception({"error_msg": f"Layer {layer_id} is not found"})
 
         elif tool_name == "qgis_execute_code":
+            # Execute PyQGIS code
             code = arguments.get("code", "")
             code_exec = CodeExecution(
                 code=code,
@@ -245,6 +248,38 @@ class OrchToolExecutor(QObject):
 
             return json.dumps({"result": result_container["result"]}, ensure_ascii=False)
 
+        elif tool_name == "qgis_execute_algorithm":
+            # Execution Algorithm Tools
+            algo_id = arguments.get("algo_id", "")
+            algo_parameters = arguments.get("algo_parameters", "{}")
+            algo_parameters_obj = json.loads(algo_parameters)
+
+            # use metadata of processing to find the real algorithm id.
+            processing_metadata = QgsApplication.processingRegistry().algorithmById(algo_id)
+
+            # try to find C++(native) and Python(qgis) processing.
+            if not processing_metadata and algo_id.startswith("native:"):
+                _algo_id = algo_id.replace("native:", "qgis:")
+                processing_metadata = QgsApplication.processingRegistry().algorithmById(_algo_id)
+            if not processing_metadata and algo_id.startswith("qgis:"):
+                _algo_id = algo_id.replace("qgis:", "native:")
+                processing_metadata = QgsApplication.processingRegistry().algorithmById(_algo_id)
+            if not processing_metadata and algo_id.startswith("saga:"):
+                _algo_id = algo_id.replace("saga:", "sagang:")
+                processing_metadata = QgsApplication.processingRegistry().algorithmById(_algo_id)
+
+            # Fail to find any processing.
+            if not processing_metadata:
+                raise Exception({"error_msg": f"Cannot find algorithm: {algo_id}"})
+
+            feedback = QgsProcessingFeedback()
+            result = processing.run(processing_metadata.id(), algo_parameters_obj, feedback=feedback)
+
+            if not result:
+                raise Exception({"error_msg": f"Failed to execute algorithm: {processing_metadata.id()}"})
+
+            return json.dumps({"result": result, "feedback": feedback.textLog()}, ensure_ascii=False)
+
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
 
@@ -256,3 +291,13 @@ class OrchToolExecutor(QObject):
             return "raster"
         else:
             return str(layer.type())
+
+    def test_tool(self):
+        tool_result = ""
+        try:
+            tool_result = self._execute_tool_impl(
+                "qgis_execute_algorithm",
+                {"algo_id": "gdal:contour","algo_parameters": '{"INPUT":"D:/output/111青川30米高程_投影.tif","BAND":1,"INTERVAL":500,"FIELD_NAME":"ELEV","CREATE_3D":false,"IGNORE_NODATA":false,"NODATA":null,"OFFSET":0,"EXTRA":"","OUTPUT":"TEMPORARY_OUTPUT"}'})
+        except Exception as e:
+            self.execution_error.emit(str(e))
+        return tool_result

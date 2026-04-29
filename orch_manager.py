@@ -92,6 +92,11 @@ class CTOrchManager(QThread):
         self.tool_executor = OrchToolExecutor(iface)
 
     def run(self):
+        # FIXME
+        # result = self.tool_executor.test_tool()
+        # self.error_occurred.emit(result)
+        # return
+
         # 1.decompose task
         decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
         decompose_subthread.error_occurred.connect(self.on_network_error_occurred)
@@ -258,13 +263,11 @@ class CTOrchManager(QThread):
                     executing_tool_calls = message_data.get("tool_calls") or []
                     executing_tool_content = message_data.get("content", "")
 
-                    # FIXME.
-                    # self.report_subtask_stream.emit(json.dumps(executing_tool_calls))
+                    tool_response = executing_tool_content
                     if len(executing_tool_calls) == 0:
                         # Nothing to do, finish the subtask.
                         break
 
-                    tool_response = executing_tool_content
                     for tool_call in executing_tool_calls:
                         func = tool_call.get("function", {})
                         tool_name = func.get("name", "")
