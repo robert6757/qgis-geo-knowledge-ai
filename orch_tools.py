@@ -292,12 +292,12 @@ class OrchToolExecutor(QObject):
         else:
             return str(layer.type())
 
-    def test_tool(self):
-        tool_result = ""
-        try:
-            tool_result = self._execute_tool_impl(
-                "qgis_execute_algorithm",
-                {"algo_id": "gdal:contour","algo_parameters": '{"INPUT":"D:/output/111青川30米高程_投影.tif","BAND":1,"INTERVAL":500,"FIELD_NAME":"ELEV","CREATE_3D":false,"IGNORE_NODATA":false,"NODATA":null,"OFFSET":0,"EXTRA":"","OUTPUT":"TEMPORARY_OUTPUT"}'})
-        except Exception as e:
-            self.execution_error.emit(str(e))
-        return tool_result
+    # def test_tool(self):
+    #     tool_result = ""
+    #     try:
+    #         tool_result = self._execute_tool_impl(
+    #             "qgis_execute_algorithm",
+    #             {"algo_id": "gdal:contour","algo_parameters": '{"INPUT":"D:/output/1.tif","BAND":1,"INTERVAL":500,"FIELD_NAME":"ELEV","CREATE_3D":false,"IGNORE_NODATA":false,"NODATA":null,"OFFSET":0,"EXTRA":"","OUTPUT":"TEMPORARY_OUTPUT"}'})
+    #     except Exception as e:
+    #         self.execution_error.emit(str(e))
+    #     return tool_result

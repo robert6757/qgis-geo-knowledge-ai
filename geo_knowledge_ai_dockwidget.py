@@ -33,7 +33,7 @@ from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
 
-from .orch_manager import CTOrchManager, TaskPlan
+from .orch_manager import CTOrchManager, TaskPlan, SubTask
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
 from .setting_dialog import SettingDialog
@@ -42,6 +42,7 @@ from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
 from .code_execution import CodeExecution
 from .compat import *
+from .subtask_dialog import SubtaskDialog
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'geo_knowledge_ai_dockwidget_base.ui'))
@@ -73,6 +74,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.trigger_exec_code.connect(self.handle_click_exec_code)
         self.chatbot_browser.trigger_copy_code.connect(self.handle_click_copy_code)
         self.chatbot_browser.trigger_exec_processing.connect(self.handle_click_exec_processing)
+        self.chatbot_browser.trigger_orch_subtask_automate.connect(self.handle_click_exec_subtask_automate)
+        self.chatbot_browser.trigger_orch_subtask_step.connect(self.handle_click_exec_subtask_step)
+        self.chatbot_browser.trigger_orch_subtask_continue.connect(self.handle_click_exec_subtask_continue)
+        self.chatbot_browser.trigger_orch_subtask_repeat.connect(self.handle_click_exec_subtask_repeat)
+        self.chatbot_browser.trigger_orch_subtask_modify.connect(self.handle_click_exec_subtask_modify)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
         self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
         self.cbSwitchMode.currentIndexChanged.connect(self.handle_update_chat_mode)
@@ -103,6 +109,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # For Complex Task Orchestration.
         self.orch_manager = None
+        self.orch_task_plan = None
+        self.orch_current_subtask = None
 
         # show welcome text
         self.show_welcome_content()
@@ -261,6 +269,63 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         processing.execAlgorithmDialog(processing_metadata.id())
 
+    def handle_click_exec_subtask_automate(self):
+        if not self.orch_manager:
+            return
+        self.orch_manager.automate_task_plan()
+
+    def handle_click_exec_subtask_step(self):
+        if not self.orch_manager:
+            return
+        self.orch_manager.step_task_plan()
+
+    def handle_click_exec_subtask_continue(self, subtask_id):
+        if not self.orch_manager:
+            return
+
+        if self.orch_current_subtask and subtask_id != self.orch_current_subtask.id:
+            QMessageBox.warning(self, self.tr("Error"),
+                                self.tr("Only the current subtask can be continued."),
+                                QMessageBoxOK)
+            return
+
+        self.orch_manager.next_sub_task()
+
+    def handle_click_exec_subtask_repeat(self, subtask_id):
+        if not self.orch_manager:
+            return
+        if self.orch_current_subtask and subtask_id != self.orch_current_subtask.id:
+            QMessageBox.warning(self, self.tr("Error"),
+                                self.tr("Only the current subtask can be repeated."),
+                                QMessageBoxOK)
+            return
+
+        self.orch_manager.repeat_sub_task()
+
+    def handle_click_exec_subtask_modify(self, subtask_id):
+        if not self.orch_manager or not self.orch_task_plan:
+            return
+
+        # Find subtask.
+        sub_task = next((st for st in self.orch_task_plan.sub_tasks if st.id == subtask_id), None)
+        if not sub_task:
+            return
+
+        # show Subtask Detail Dialog.
+        dlg = SubtaskDialog(sub_task, self.orch_current_subtask)
+        dlg.setModal(True)
+        dlg.show()
+        if dlg.exec() != Accepted:
+            return
+
+        if self.orch_current_subtask and subtask_id != self.orch_current_subtask.id:
+            QMessageBox.warning(self, self.tr("Error"),
+                                self.tr("Only the current subtask can be modified."),
+                                QMessageBoxOK)
+            return
+
+        self.orch_manager.repeat_sub_task(dlg.get_modified_prompt())
+
     def handle_click_screen_capture(self, checked):
         gSetting = QgsSettings()
         if checked:
@@ -281,15 +346,27 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def on_orch_decompose_received(self, task_plan: TaskPlan):
         """receive the orch message"""
-        content = self.tr("**Decompose Task:**\n\n")
+        content = self.tr("**Task Plan:**\n\n")
         for idx, subtask in enumerate(task_plan.sub_tasks):
             content += f"{idx + 1}.{subtask.name}"
             content += "\n\n"
-
-        # add command text.
-        # content += "[Step Subtask](agent://orch/substask/step) | [Run All Subtasks](agent://orch/substask/runall)"
-        self.chatbot_browser.append_markdown(content)
         self.recv_raw_content += content
+
+        # add extra command text.
+        content += self.tr("[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)")
+        content += "\n\n"
+        self.chatbot_browser.append_markdown(content)
+
+        self.orch_task_plan = task_plan
+
+    def on_orch_finish_subtask_received(self, subtask: SubTask):
+        """receive the subtask finished message"""
+        content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Modify](agent://orch/substask/modify/{subtask_id})")
+        content += "\n\n"
+        content = content.replace("{subtask_id}", subtask.id)
+        self.chatbot_browser.append_markdown(content)
+
+        self.orch_current_subtask = subtask
 
     def on_report_subtask_stream_received(self, content):
         content += "\n\n"
@@ -408,8 +485,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         }
 
         if chat_mode == 4:
+            self.orch_current_subtask = None
+            self.orch_task_plan = None
             self.orch_manager = CTOrchManager(self.iface, request_data)
             self.orch_manager.orch_decompose_finished.connect(self.on_orch_decompose_received)
+            self.orch_manager.orch_subtask_finished.connect(self.on_orch_finish_subtask_received)
             self.orch_manager.report_subtask_stream.connect(self.on_report_subtask_stream_received)
             self.orch_manager.finish_all_orchestration.connect(self.on_stream_ended_with_tail)
             self.orch_manager.error_occurred.connect(self.on_error_occurred)
@@ -441,6 +521,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if self.orch_manager:
             self.btnSendOrTerminate.setEnabled(False)
             self.orch_manager.orch_decompose_finished.disconnect(self.on_orch_decompose_received)
+            self.orch_manager.orch_subtask_finished.disconnect(self.on_orch_finish_subtask_received)
             self.orch_manager.report_subtask_stream.disconnect(self.on_report_subtask_stream_received)
             self.orch_manager.finish_all_orchestration.disconnect(self.on_stream_ended_with_tail)
             self.orch_manager.error_occurred.disconnect(self.on_error_occurred)
@@ -449,6 +530,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             # When a stop event is triggered, the thread will exit automatically.
             self.orch_manager.stop()
             self.orch_manager = None
+            self.orch_current_subtask = None
+            self.orch_task_plan = None
 
         self.chatbot_browser.post_process_markdown()
         self.btnSendOrTerminate.setEnabled(True)

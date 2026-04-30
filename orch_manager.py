@@ -29,7 +29,7 @@ from enum import Enum
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
 
-from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication
+from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication, QSemaphore
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .compat import *
@@ -37,13 +37,12 @@ from .orch_tools import SUPPORTED_TOOLS, OrchToolExecutor
 from .orch_network import CTOrchNetwork
 from .global_defs import *
 
-
 class TaskStatus(Enum):
     """Enum representing task status."""
-    PENDING = "pending"
-    RUNNING = "running"
-    COMPLETED = "completed"
-    FAILED = "failed"
+    PENDING = "Pending"
+    RUNNING = "Running"
+    COMPLETED = "Completed"
+    FAILED = "Failed"
 
 @dataclass
 class SubTask:
@@ -68,6 +67,8 @@ class CTOrchManager(QThread):
 
     # finish decomposing signal
     orch_decompose_finished = pyqtSignal(TaskPlan)
+    # finish one subtask signal
+    orch_subtask_finished = pyqtSignal(SubTask)
     # report error signal.
     error_occurred = pyqtSignal(str)
     # report warning signal.
@@ -84,12 +85,22 @@ class CTOrchManager(QThread):
         self.request = request
         self.prompt = ""
         self.sub_task_results: Dict[str, str] = {}
+        # 0: automate 1: step
+        self.task_plan_execute_type = 0
+        # 0: next subtask 1: repeat current subtask
+        self.sub_task_execute_type = 0
+        # modified subtask prompt
+        self.modified_sub_task_prompt = ""
 
         self.network_manager = QNetworkAccessManager()
 
         # Tool Executor.
         self.request["tools"] = SUPPORTED_TOOLS
         self.tool_executor = OrchToolExecutor(iface)
+
+        # Execution semaphore for controlling subtask execution start.
+        self._execution_semaphore = QSemaphore(0)
+        self._subtask_execution_semaphore = QSemaphore(0)
 
     def run(self):
         # FIXME
@@ -111,8 +122,14 @@ class CTOrchManager(QThread):
 
         self.orch_decompose_finished.emit(task_plan)
 
+        # Wait for execution semaphore to start subtask execution.
+        self._execution_semaphore.acquire()
+
         # 2.run all subtask
-        self.__run_all_subtask(task_plan)
+        if self.task_plan_execute_type == 0:
+            self.__run_all_subtask(task_plan)
+        elif self.task_plan_execute_type == 1:
+            self.__step_all_subtask(task_plan)
 
         # 3.conclude result
         self.__finalize_result()
@@ -120,11 +137,52 @@ class CTOrchManager(QThread):
     def stop(self):
         self._stop_flag = True
 
+        # Release semaphore to unblock execution.
+        while self._execution_semaphore.tryAcquire():
+            pass
+        self._execution_semaphore.release()
+
+        while self._subtask_execution_semaphore.tryAcquire():
+            pass
+        self._subtask_execution_semaphore.release()
+
+    def automate_task_plan(self):
+        self.task_plan_execute_type = 0
+
+        # Release semaphore to trigger subtask execution.
+        self._execution_semaphore.release()
+
+    def step_task_plan(self):
+        self.task_plan_execute_type = 1
+
+        # Release semaphore to trigger subtask execution.
+        self._execution_semaphore.release()
+
+    def next_sub_task(self):
+        self.sub_task_execute_type = 0
+
+        # Drain any extra semaphores to prevent accumulation from repeated clicks
+        while self._subtask_execution_semaphore.tryAcquire():
+            pass
+        # Release semaphore to trigger next subtask execution.
+        self._subtask_execution_semaphore.release()
+
+    def repeat_sub_task(self, modified_prompt: str = None):
+        if modified_prompt:
+            self.modified_sub_task_prompt = modified_prompt
+        self.sub_task_execute_type = 1
+
+        # Drain any extra semaphores to prevent accumulation from repeated clicks
+        while self._subtask_execution_semaphore.tryAcquire():
+            pass
+        # Release semaphore to trigger next subtask execution.
+        self._subtask_execution_semaphore.release()
+
     def __run_all_subtask(self, task_plan: TaskPlan):
         if self._stop_flag:
             return
 
-        self.report_subtask_stream.emit(self.tr("**Start executing the task plan:**"))
+        self.report_subtask_stream.emit(self.tr("**Start automated execution of the task plan**"))
 
         execution_order = task_plan.execution_order
 
@@ -146,6 +204,57 @@ class CTOrchManager(QThread):
 
             # execute the subtask.
             self.__execute_sub_task(sub_task)
+
+    def __step_all_subtask(self, task_plan: TaskPlan):
+        if self._stop_flag:
+            return
+
+        self.report_subtask_stream.emit(self.tr("**Start step-by-step execution of the task plan:**"))
+
+        execution_order = task_plan.execution_order
+
+        for sub_task_id in execution_order:
+            if self._stop_flag:
+                break
+
+            # find next subtask.
+            sub_task = next((st for st in task_plan.sub_tasks if st.id == sub_task_id), None)
+            if not sub_task:
+                error_str = self.tr("[WARNING] Subtask [{}] not found, skip.").format(sub_task_id)
+                self.warning_occurred.emit(error_str)
+                continue
+
+            # Check if all dependencies have been completed.
+            unmet_deps = [dep for dep in sub_task.dependencies if dep not in self.sub_task_results]
+            if unmet_deps:
+                error_str = (self.tr(
+                    "[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.")
+                             .format(unmet_deps, sub_task.id))
+                self.warning_occurred.emit(error_str)
+
+            # execute the subtask.
+            self.__execute_sub_task(sub_task)
+
+            self.orch_subtask_finished.emit(sub_task)
+
+            # Wait for execution semaphore to start next subtask execution.
+            self._subtask_execution_semaphore.acquire()
+
+            if self.sub_task_execute_type == 1:
+                # Reset the execute type
+                self.sub_task_execute_type = 0
+                # Remove the result of the current subtask to allow re-execution
+                if sub_task_id in self.sub_task_results:
+                    del self.sub_task_results[sub_task_id]
+                # Insert the current subtask id back into execution_order after current position
+                current_index = execution_order.index(sub_task_id)
+                execution_order.insert(current_index + 1, sub_task_id)
+                # Reset subtask status to pending
+                sub_task.status = TaskStatus.PENDING
+                sub_task.result = ""
+                # the description can be changed by user when waiting self._subtask_execution_semaphore.
+                if self.modified_sub_task_prompt:
+                    sub_task.description = self.modified_sub_task_prompt
 
     def on_received_subtask_stream(self, content: str):
         # self.report_subtask_stream.emit(content)
@@ -398,19 +507,7 @@ class CTOrchManager(QThread):
                 execution_order=plan_data.get("execution_order", [st.id for st in sub_tasks])
             )
         except Exception as e:
-            # Fail to split the complex task. Create a default subtask.
-            default_task = SubTask(
-                id="task_1",
-                name="Run Task",
-                description=self.prompt,
-                dependencies=[]
-            )
-            task_plan = TaskPlan(
-                original_task=self.prompt,
-                sub_tasks=[default_task],
-                execution_order=["task_1"]
-            )
-            return task_plan
+            return None
 
         return task_plan
 

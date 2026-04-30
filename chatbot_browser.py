@@ -104,6 +104,9 @@ class ChatbotBrowser(QTextBrowser):
     trigger_exec_processing = pyqtSignal(str)
     trigger_orch_subtask_step = pyqtSignal()
     trigger_orch_subtask_automate = pyqtSignal()
+    trigger_orch_subtask_continue = pyqtSignal(str)
+    trigger_orch_subtask_repeat = pyqtSignal(str)
+    trigger_orch_subtask_modify = pyqtSignal(str)
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -213,6 +216,9 @@ class ChatbotBrowser(QTextBrowser):
         self.pending_images.clear()
         self.python_code_block_list.clear()
         self.stop_event.clear()
+        while not self.drawing_queue.empty():
+            # clear drawing queue.
+            self.drawing_queue.get_nowait()
         self.drawing_consumer.start()
 
         # self.temp_file_path = f'd:/output/geo_knowledge_ai_output_{time.time()}.txt'
@@ -294,8 +300,17 @@ class ChatbotBrowser(QTextBrowser):
             elif process_name == "orch":
                 if path.startswith("/substask/step"):
                     self.trigger_orch_subtask_step.emit()
-                elif path.startswith("/substask/run"):
+                elif path.startswith("/substask/automate"):
                     self.trigger_orch_subtask_automate.emit()
+                elif path.startswith("/substask/continue"):
+                    subtask_id = path.split("/")[-1]
+                    self.trigger_orch_subtask_continue.emit(subtask_id)
+                elif path.startswith("/substask/repeat"):
+                    subtask_id = path.split("/")[-1]
+                    self.trigger_orch_subtask_repeat.emit(subtask_id)
+                elif path.startswith("/substask/modify"):
+                    subtask_id = path.split("/")[-1]
+                    self.trigger_orch_subtask_modify.emit(subtask_id)
             return
 
         # open web browser
