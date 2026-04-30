@@ -359,6 +359,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         self.orch_task_plan = task_plan
 
+    def on_orch_start_subtask_received(self, subtask: SubTask):
+        """update current subtask."""
+        self.orch_current_subtask = subtask
+
     def on_orch_finish_subtask_received(self, subtask: SubTask):
         """receive the subtask finished message"""
         content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Modify](agent://orch/substask/modify/{subtask_id})")
@@ -366,19 +370,15 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         content = content.replace("{subtask_id}", subtask.id)
         self.chatbot_browser.append_markdown(content)
 
-        self.orch_current_subtask = subtask
-
     def on_report_subtask_stream_received(self, content):
         content += "\n\n"
         self.chatbot_browser.append_markdown(content)
         self.recv_raw_content += content
 
-    def on_stream_ended_with_tail(self, tail_content: str):
-        content = self.tr("**Summary of tasks:**\n\n") + tail_content
+    def on_report_conclusion_stream_received(self, content):
+        content += "\n\n"
         self.chatbot_browser.append_markdown(content)
         self.recv_raw_content += content
-
-        self.on_stream_ended()
 
     def on_stream_ended(self):
         self.chatbot_browser.post_process_markdown()
@@ -489,9 +489,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_task_plan = None
             self.orch_manager = CTOrchManager(self.iface, request_data)
             self.orch_manager.orch_decompose_finished.connect(self.on_orch_decompose_received)
+            self.orch_manager.orch_subtask_started.connect(self.on_orch_start_subtask_received)
             self.orch_manager.orch_subtask_finished.connect(self.on_orch_finish_subtask_received)
             self.orch_manager.report_subtask_stream.connect(self.on_report_subtask_stream_received)
-            self.orch_manager.finish_all_orchestration.connect(self.on_stream_ended_with_tail)
+            self.orch_manager.report_conclusion_stream.connect(self.on_report_conclusion_stream_received)
+            self.orch_manager.finish_all_orchestration.connect(self.on_stream_ended)
             self.orch_manager.error_occurred.connect(self.on_error_occurred)
             self.orch_manager.warning_occurred.connect(self.on_warning_occurred)
             self.orch_manager.start()
@@ -521,9 +523,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if self.orch_manager:
             self.btnSendOrTerminate.setEnabled(False)
             self.orch_manager.orch_decompose_finished.disconnect(self.on_orch_decompose_received)
+            self.orch_manager.orch_subtask_started.disconnect(self.on_orch_start_subtask_received)
             self.orch_manager.orch_subtask_finished.disconnect(self.on_orch_finish_subtask_received)
             self.orch_manager.report_subtask_stream.disconnect(self.on_report_subtask_stream_received)
-            self.orch_manager.finish_all_orchestration.disconnect(self.on_stream_ended_with_tail)
+            self.orch_manager.report_conclusion_stream.disconnect(self.on_report_conclusion_stream_received)
+            self.orch_manager.finish_all_orchestration.disconnect(self.on_stream_ended)
             self.orch_manager.error_occurred.disconnect(self.on_error_occurred)
             self.orch_manager.warning_occurred.disconnect(self.on_warning_occurred)
 

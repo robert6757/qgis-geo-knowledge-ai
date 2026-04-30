@@ -67,6 +67,8 @@ class CTOrchManager(QThread):
 
     # finish decomposing signal
     orch_decompose_finished = pyqtSignal(TaskPlan)
+    # start one subtask signal
+    orch_subtask_started = pyqtSignal(SubTask)
     # finish one subtask signal
     orch_subtask_finished = pyqtSignal(SubTask)
     # report error signal.
@@ -75,8 +77,10 @@ class CTOrchManager(QThread):
     warning_occurred = pyqtSignal(str)
     # report subtask stream
     report_subtask_stream = pyqtSignal(str)
+    # report conclusion stream
+    report_conclusion_stream = pyqtSignal(str)
     # finish all orchestration.
-    finish_all_orchestration = pyqtSignal(str)
+    finish_all_orchestration = pyqtSignal()
 
     def __init__(self, iface, request):
         super().__init__()
@@ -182,7 +186,7 @@ class CTOrchManager(QThread):
         if self._stop_flag:
             return
 
-        self.report_subtask_stream.emit(self.tr("**Start automated execution of the task plan**"))
+        self.report_subtask_stream.emit(self.tr("**Start automated execution of the task plan:**"))
 
         execution_order = task_plan.execution_order
 
@@ -232,6 +236,8 @@ class CTOrchManager(QThread):
                              .format(unmet_deps, sub_task.id))
                 self.warning_occurred.emit(error_str)
 
+            self.orch_subtask_started.emit(sub_task)
+
             # execute the subtask.
             self.__execute_sub_task(sub_task)
 
@@ -272,7 +278,7 @@ class CTOrchManager(QThread):
             self.error_occurred.emit(str(e))
             self._stop_flag = True
 
-        self.finish_all_orchestration.emit(message_data.get("content", ""))
+        self.report_conclusion_stream.emit(message_data.get("content", ""))
 
     def __execute_sub_task(self, sub_task: SubTask) -> str:
         """
@@ -560,6 +566,8 @@ class CTOrchManager(QThread):
             self._stop_flag = True
             return
 
+        self.report_conclusion_stream.emit(self.tr("**Summary of tasks:**"))
+
         sub_task_request = copy.deepcopy(self.request)
 
         # put result of subtask as history.
@@ -573,3 +581,5 @@ class CTOrchManager(QThread):
         finalize_subthread.error_occurred.connect(self.on_network_error_occurred)
         finalize_subthread.start()
         finalize_subthread.wait()
+
+        self.finish_all_orchestration.emit()

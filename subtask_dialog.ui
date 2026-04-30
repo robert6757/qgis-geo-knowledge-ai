@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Subtask Modify</string>
+   <string>Modify Subtask</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
@@ -132,7 +132,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Result:</string>
+      <string>Output:</string>
      </property>
     </widget>
    </item>
