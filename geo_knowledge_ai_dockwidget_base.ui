@@ -60,7 +60,7 @@
       </item>
       <item>
        <property name="text">
-        <string>Complex Task Orchestration</string>
+        <string>Workflow Automation</string>
        </property>
       </item>
      </widget>
@@ -133,7 +133,7 @@
            </size>
           </property>
           <property name="plainText">
-           <string>获取北京、上海天气</string>
+           <string/>
           </property>
           <property name="textInteractionFlags">
            <set>Qt::TextEditorInteraction</set>

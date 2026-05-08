@@ -106,7 +106,7 @@ class ChatbotBrowser(QTextBrowser):
     trigger_orch_subtask_automate = pyqtSignal()
     trigger_orch_subtask_continue = pyqtSignal(str)
     trigger_orch_subtask_repeat = pyqtSignal(str)
-    trigger_orch_subtask_modify = pyqtSignal(str)
+    trigger_orch_subtask_detail = pyqtSignal(str)
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -308,9 +308,9 @@ class ChatbotBrowser(QTextBrowser):
                 elif path.startswith("/substask/repeat"):
                     subtask_id = path.split("/")[-1]
                     self.trigger_orch_subtask_repeat.emit(subtask_id)
-                elif path.startswith("/substask/modify"):
+                elif path.startswith("/substask/detail"):
                     subtask_id = path.split("/")[-1]
-                    self.trigger_orch_subtask_modify.emit(subtask_id)
+                    self.trigger_orch_subtask_detail.emit(subtask_id)
             return
 
         # open web browser

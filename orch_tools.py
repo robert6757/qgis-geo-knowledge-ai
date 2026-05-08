@@ -21,6 +21,7 @@
 """
 import os
 import json
+from urllib.parse import quote
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback
 from qgis import processing
@@ -29,7 +30,7 @@ from .code_execution import CodeExecution
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
-                   "qgis_execute_algorithm"]
+                   "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -279,6 +280,61 @@ class OrchToolExecutor(QObject):
                 raise Exception({"error_msg": f"Failed to execute algorithm: {processing_metadata.id()}"})
 
             return json.dumps({"result": result, "feedback": feedback.textLog()}, ensure_ascii=False)
+        elif tool_name == "qgis_add_osm_layer":
+            # Add OSM XYZ tile layer to project
+            name = arguments.get("name", "OpenStreetMap")
+            url = "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+
+            # QGIS XYZ Layer URI Format
+            uri = f"type=xyz&url={url}&zmax=19&zmin=0"
+
+            layer = QgsRasterLayer(uri, name, "wms")
+
+            if not layer.isValid():
+                raise Exception({"error_msg": f"Failed to create OSM layer"})
+
+            QgsProject.instance().addMapLayer(layer)
+
+            return json.dumps({
+                "layer_id": layer.id(),
+                "layer_name": layer.name(),
+                "layer_type": "raster",
+                "layer_width": layer.width(),
+                "layer_height": layer.height()
+            }, ensure_ascii=False)
+
+        elif tool_name == "qgis_add_google_layer":
+            layer_type = arguments.get("layer_type", "m")
+            name = arguments.get("name", "")
+
+            layer_type_names = {
+                "m": "Roadmap",
+                "t": "Topographic Map",
+                "p": "Topographic Map with Labels",
+                "s": "Satellite Map",
+                "y": "Satellite Map with Labels",
+                "h": "Only Labels",
+            }
+            if not name:
+                name = layer_type_names.get(layer_type, f"Google ({layer_type})")
+
+            tile_url = f"https://mt0.google.com/vt?lyrs%3D{layer_type}%26x%3D{{x}}%26y%3D{{y}}%26z%3D{{z}}"
+            uri = f"type=xyz&url={tile_url}%26zmax%3D19%26zmin%3D0"
+
+            layer = QgsRasterLayer(uri, name, "wms")
+
+            if not layer.isValid():
+                raise Exception({"error_msg": f"Failed to create Google layer with type: {layer_type}"})
+
+            QgsProject.instance().addMapLayer(layer)
+
+            return json.dumps({
+                "layer_id": layer.id(),
+                "layer_name": layer.name(),
+                "layer_type": "raster",
+                "layer_width": layer.width(),
+                "layer_height": layer.height()
+            }, ensure_ascii=False)
 
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})

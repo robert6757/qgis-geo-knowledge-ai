@@ -65,6 +65,8 @@ class TaskPlan:
 
 class CTOrchManager(QThread):
 
+    # report decomposing stream
+    report_decompose_stream = pyqtSignal(str)
     # finish decomposing signal
     orch_decompose_finished = pyqtSignal(TaskPlan)
     # start one subtask signal
@@ -111,6 +113,8 @@ class CTOrchManager(QThread):
         # result = self.tool_executor.test_tool()
         # self.error_occurred.emit(result)
         # return
+
+        self.report_decompose_stream.emit(self.tr("**Task Plan:**"))
 
         # 1.decompose task
         decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
