@@ -114,7 +114,7 @@ class CTOrchManager(QThread):
         # self.error_occurred.emit(result)
         # return
 
-        self.report_decompose_stream.emit(self.tr("**Task Plan:**"))
+        self.report_decompose_stream.emit(self.tr("**Generating task plan:**"))
 
         # 1.decompose task
         decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
@@ -122,11 +122,14 @@ class CTOrchManager(QThread):
         decompose_subthread.start()
         decompose_subthread.wait()
 
-        task_plan = self.__parse_task_plan(decompose_subthread.get_raw_response())
+        task_plan, user_info = self.__parse_task_plan(decompose_subthread.get_raw_response())
         if not task_plan:
             self.error_occurred.emit(self.tr("Invalid Task plan!"))
             self._stop_flag = True
             return
+
+        if user_info and user_info["remaining_vip_ticket"]:
+            self.report_decompose_stream.emit(self.tr("VIP requests remaining: ")+ str(user_info["remaining_vip_ticket"]))
 
         self.orch_decompose_finished.emit(task_plan)
 
@@ -183,7 +186,7 @@ class CTOrchManager(QThread):
         # Drain any extra semaphores to prevent accumulation from repeated clicks
         while self._subtask_execution_semaphore.tryAcquire():
             pass
-        # Release semaphore to trigger next subtask execution.
+        # Release semaphore to trigger repeat subtask execution.
         self._subtask_execution_semaphore.release()
 
     def __run_all_subtask(self, task_plan: TaskPlan):
@@ -492,7 +495,7 @@ class CTOrchManager(QThread):
 
         return "\n".join(context_parts)
 
-    def __parse_task_plan(self, plan_json_str: str) -> TaskPlan:
+    def __parse_task_plan(self, plan_json_str: str) -> (TaskPlan, json):
         try:
             json_match = re.search(r'\{[\s\S]*\}', plan_json_str)
             if json_match:
@@ -517,9 +520,9 @@ class CTOrchManager(QThread):
                 execution_order=plan_data.get("execution_order", [st.id for st in sub_tasks])
             )
         except Exception as e:
-            return None
+            return None, None
 
-        return task_plan
+        return task_plan, plan_data.get("user_info")
 
     def __parse_tool_calls_from_content(self, content: str) -> list:
         tool_calls = []

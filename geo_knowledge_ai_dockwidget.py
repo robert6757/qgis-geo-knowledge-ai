@@ -384,6 +384,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnClear.setEnabled(True)
         self.btnScreenCapture.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
+        self.orch_current_subtask = None
 
         # save to history
         cur_chat_timestamp = int(time.time())
