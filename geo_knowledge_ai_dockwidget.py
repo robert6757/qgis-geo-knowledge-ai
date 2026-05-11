@@ -723,7 +723,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         return None
 
     def show_welcome_content(self):
-        welcome_str = self.tr("""### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing three agents: **knowledge Q&A agent**, **data search agent**, and **code generation agent**.\n\n Our knowledge database contains global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.\n\nAdditionally, I will guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.""")
+        welcome_str = self.tr("""### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing four agents: **Knowledge Q&A**, **Data Search**, **Code Generation**, and **Workflow Automation**.\n\n Our knowledge base covers global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.\n\nAdditionally, I can guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.\n\nTip: **Workflow Automation** can handle complex tasks either fully automatically or step-by-step. We suggest backing up your data and QGIS projects before running a workflow.""")
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":

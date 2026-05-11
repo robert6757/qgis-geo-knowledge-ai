@@ -6,12 +6,12 @@
 name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
-description=Expert AI agents for global data discovery, geoscientific analysis, and PyQGIS code generation.
-version=1.9
+description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
+version=1.10
 author=phoenix-gis
 email=phoenixgis@sina.com
 
-about=This plugin integrates three specialized AI agents: Knowledge Q&A, Data Search, and Code Generation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
+about=This plugin integrates four specialized AI agents for Knowledge Q&A, Data Search, Code Generation, and Workflow Automation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
 
  Fully supporting multiple languages—including English, français, italiano, Deutsch, español, 中文, русский, svenska, Nederlands, português, čeština, eesti, Indonesia, norsk bokmål, slovenščina, українська, polski, română, 日本語, العربية, Türkçe, magyar, 한국어.
 
@@ -23,7 +23,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.9 2026-04-09
+changelog=Version 1.10 2026-05-12
+      * New Feature: Support for workflow automation.
+      Version 1.9 2026-04-09
       * New Feature: Provides three AI agents for knowledge Q&A, data search, and code generation.
       Version 1.8 2026-03-21
       * New Feature: Compatible with both Qt5 and Qt6.
@@ -46,7 +48,7 @@ changelog=Version 1.9 2026-04-09
       * The first version.
 
 # Tags are comma separated with spaces allowed
-tags=assistant, ai, geo
+tags=assistant, ai, geo, agent
 
 homepage=https://github.com/robert6757/qgis-geo-knowledge-ai
 category=Plugins

@@ -39,32 +39,32 @@
         <translation>**开始单步执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="303"/>
+        <location filename="../orch_manager.py" line="302"/>
         <source>Start executing the subtask:</source>
         <translation>开始执行子任务：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="332"/>
+        <location filename="../orch_manager.py" line="331"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[已完成] 子任务 [{}] 执行成功。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="337"/>
+        <location filename="../orch_manager.py" line="336"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[失败] 子任务 [{}] 的执行结果未达到预期。{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="342"/>
+        <location filename="../orch_manager.py" line="341"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[失败] 子任务 [{}] 执行失败：[{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="572"/>
+        <location filename="../orch_manager.py" line="571"/>
         <source>Error: No subtask execution result.</source>
         <translation>错误：未找到子任务执行结果。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="576"/>
+        <location filename="../orch_manager.py" line="575"/>
         <source>**Summary of tasks:**</source>
         <translation>**任务总结：**</translation>
     </message>
@@ -528,7 +528,7 @@ I am your GIS AI assistant, providing three agents: **knowledge Q&amp;A agent**,
  Our knowledge database contains global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.
 
 Additionally, I will guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.</source>
-        <translation>
+        <translation type="obsolete">
 
 ### 欢迎使用 Geo Knowledge AI 插件!
 
@@ -566,6 +566,33 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <location filename="../geo_knowledge_ai_dockwidget.py" line="373"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [重做](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
+        <source>### Welcome to the Geo Knowledge AI plugin!
+
+**Glad to meet you! 🌍**
+
+I am your GIS AI assistant, providing four agents: **Knowledge Q&amp;A**, **Data Search**, **Code Generation**, and **Workflow Automation**.
+
+ Our knowledge base covers global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.
+
+Additionally, I can guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.
+
+Tip: **Workflow Automation** can handle complex tasks either fully automatically or step-by-step. We suggest backing up your data and QGIS projects before running a workflow.</source>
+        <translation>
+
+### 欢迎使用 Geo Knowledge AI 插件!
+
+**非常荣幸与你相遇! 🌍**
+
+我是您的 GIS AI 助手，提供量身定制的专业教程，共涵盖四种智能体：知识问答、数据检索、代码生成和自动化工作流。
+
+我们的知识库包含全球地理数据探索、地球科学建模、水文和地形分析、遥感处理和 PyQGIS 文档。
+
+此外，我还会指导您使用 GDAL、GRASS 和 SAGA 等基本工具，使您的空间分析更加高效和智能。
+
+提示：自动化工作流支持全自动运行或单步处理两种方式。我们建议您在运行工作流之前备份数据和 QGIS 项目。</translation>
     </message>
 </context>
 <context>

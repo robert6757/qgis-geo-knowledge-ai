@@ -20,7 +20,7 @@
  ***************************************************************************/
 """
 
-VERSION = "1.9"
+VERSION = "1.10"
 
 # AI_SERVER_DOMAIN = "https://www.phoenix-gis.cn"
 AI_SERVER_DOMAIN = "http://127.0.0.1:8000"
