@@ -281,11 +281,10 @@ class CTOrchManager(QThread):
         try:
             conclusion_json = json.loads(conclusion)
             message_data = conclusion_json.get("message", {})
+            self.report_conclusion_stream.emit(message_data.get("content", ""))
         except Exception as e:
             self.error_occurred.emit(str(e))
             self._stop_flag = True
-
-        self.report_conclusion_stream.emit(message_data.get("content", ""))
 
     def __execute_sub_task(self, sub_task: SubTask) -> str:
         """
@@ -495,7 +494,7 @@ class CTOrchManager(QThread):
 
         return "\n".join(context_parts)
 
-    def __parse_task_plan(self, plan_json_str: str) -> (TaskPlan, json):
+    def __parse_task_plan(self, plan_json_str: str) -> (TaskPlan, dict):
         try:
             json_match = re.search(r'\{[\s\S]*\}', plan_json_str)
             if json_match:
@@ -580,7 +579,7 @@ class CTOrchManager(QThread):
         # put result of subtask as history.
         subtask_results = []
         for task_id, result in self.sub_task_results.items():
-            subtask_results.append([f"[{task_id}]: {result}]"])
+            subtask_results.append([f"[{task_id}]: {result}"])
         sub_task_request["history"] = subtask_results
 
         finalize_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=4)

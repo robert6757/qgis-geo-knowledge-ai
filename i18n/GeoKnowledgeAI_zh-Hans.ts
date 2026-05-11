@@ -2,9 +2,85 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh">
 <context>
+    <name>CTOrchManager</name>
+    <message>
+        <location filename="../orch_manager.py" line="117"/>
+        <source>**Generating task plan:**</source>
+        <translation>**正在生成任务计划：**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="127"/>
+        <source>Invalid Task plan!</source>
+        <translation>无效的任务计划！</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="132"/>
+        <source>VIP requests remaining: </source>
+        <translation>剩余 VIP 请求：</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="196"/>
+        <source>**Start automated execution of the task plan:**</source>
+        <translation>**开始全自动执行任务计划：**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="234"/>
+        <source>[WARNING] Subtask [{}] not found, skip.</source>
+        <translation>[警告] 跳过未找到子任务 [{}]。</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="241"/>
+        <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
+        <translation>[警告]子任务 [{}] 的依赖项 [{}] 不完整。尝试继续执行。</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="223"/>
+        <source>**Start step-by-step execution of the task plan:**</source>
+        <translation>**开始单步执行任务计划：**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="303"/>
+        <source>Start executing the subtask:</source>
+        <translation>开始执行子任务：</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="332"/>
+        <source>[Completed] Subtask [{}] executed successfully.</source>
+        <translation>[已完成] 子任务 [{}] 执行成功。</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="337"/>
+        <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
+        <translation>[失败] 子任务 [{}] 的执行结果未达到预期。{}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="342"/>
+        <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
+        <translation>[失败] 子任务 [{}] 执行失败：[{}]</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="572"/>
+        <source>Error: No subtask execution result.</source>
+        <translation>错误：未找到子任务执行结果。</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="576"/>
+        <source>**Summary of tasks:**</source>
+        <translation>**任务总结：**</translation>
+    </message>
+</context>
+<context>
+    <name>CTOrchNetwork</name>
+    <message>
+        <location filename="../orch_network.py" line="84"/>
+        <source>Network Error:</source>
+        <translation>网络错误：</translation>
+    </message>
+</context>
+<context>
     <name>ChatbotBrowser</name>
     <message>
-        <location filename="../chatbot_browser.py" line="132"/>
+        <location filename="../chatbot_browser.py" line="137"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
         <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat)</translation>
     </message>
@@ -14,7 +90,7 @@
         <translation type="obsolete">[运行代码](agent://execute/code) | [复制代码](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="134"/>
+        <location filename="../chatbot_browser.py" line="139"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[运行代码](agent://execute/code/{index}) | [复制代码](agent://execute/copycode/{index})</translation>
     </message>
@@ -194,47 +270,47 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="322"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="427"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="323"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="428"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="386"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="506"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="402"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="541"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="173"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="186"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="173"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="186"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="182"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="298"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="177"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="190"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="182"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="195"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -249,27 +325,27 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="213"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="226"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="221"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="234"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="230"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="243"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="251"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="267"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="251"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="267"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -412,7 +488,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="591"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="730"/>
         <source>
 
 ———
@@ -442,7 +518,7 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -466,6 +542,31 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 
 </translation>
     </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <source>Only the current subtask can be continued.</source>
+        <translation>只能对当前子任务执行[继续]。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="322"/>
+        <source>Only the current subtask can be repeated.</source>
+        <translation>只能对当前子任务执行[重试]。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="322"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="361"/>
+        <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
+        <translation>[单步执行](agent://orch/substask/step) | [全自动执行](agent://orch/substask/automate)</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="373"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [重做](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
 </context>
 <context>
     <name>GeoKnowledgeAIDockWidgetBase</name>
@@ -475,32 +576,32 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <translation>Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="79"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="84"/>
         <source>Chatbot:</source>
         <translation>对话：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="106"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="111"/>
         <source>My Question:</source>
         <translation>问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="179"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="184"/>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="222"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="227"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="154"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="159"/>
         <source>Clear</source>
         <translation>清除</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="165"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="170"/>
         <source>History List</source>
         <translation>历史记录</translation>
     </message>
@@ -510,7 +611,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <translation type="obsolete">使用长链思考来生成、调试和执行代码。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="193"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="198"/>
         <source>Capture QGIS main window to start chat.</source>
         <translation>捕获 QGIS 主窗口以开始对话。</translation>
     </message>
@@ -530,7 +631,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <translation type="obsolete">代码生成</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="151"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="156"/>
         <source>Clear Chatbot and Question</source>
         <translation>清空对话和问题</translation>
     </message>
@@ -548,6 +649,11 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="58"/>
         <source>Code Generation</source>
         <translation>代码生成</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="63"/>
+        <source>Workflow Automation</source>
+        <translation>自动化工作流</translation>
     </message>
 </context>
 <context>
@@ -584,6 +690,44 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <location filename="../history_dialog.ui" line="62"/>
         <source>Remove All History</source>
         <translation>删除所有历史对话记录</translation>
+    </message>
+</context>
+<context>
+    <name>OrchSubTaskDlg</name>
+    <message>
+        <location filename="../subtask_dialog.ui" line="14"/>
+        <source>Subtask Detail</source>
+        <translation>子任务详情</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="26"/>
+        <source>Name：</source>
+        <translation>名称：</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="46"/>
+        <source>Status:</source>
+        <translation>状态：</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="59"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="72"/>
+        <source>Prompt:</source>
+        <translation>提示词：</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="115"/>
+        <source>Repeat</source>
+        <translation>重做</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="135"/>
+        <source>Output:</source>
+        <translation>输出：</translation>
     </message>
 </context>
 <context>
@@ -632,7 +776,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 <context>
     <name>StreamChatWorker</name>
     <message>
-        <location filename="../stream_chat_worker.py" line="88"/>
+        <location filename="../stream_chat_worker.py" line="89"/>
         <source>Network Error:</source>
         <translation>网络错误：</translation>
     </message>

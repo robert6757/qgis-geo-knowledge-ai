@@ -199,12 +199,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     def handle_click_repeat(self):
         # remove the lasted history.
         histories = self.history_manager.enum_question()
-        if not histories:
-            return
-
-        # remove the lasted chat.
-        self.pre_chat_timestamp = histories[0].get("pre_timestamp", 0)
-        self.history_manager.remove_history(histories[0].get("timestamp"))
+        if histories:
+            # remove the lasted chat.
+            self.pre_chat_timestamp = histories[0].get("pre_timestamp", 0)
+            self.history_manager.remove_history(histories[0].get("timestamp"))
+        else:
+            self.pre_chat_timestamp = 0
 
         # repeat chat.
         self._begin_chat()
