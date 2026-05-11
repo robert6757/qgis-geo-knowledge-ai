@@ -23,7 +23,7 @@ import os
 import json
 from urllib.parse import quote
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
-from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree
 from qgis import processing
 
 from .code_execution import CodeExecution
@@ -68,6 +68,8 @@ class OrchToolExecutor(QObject):
             path = arguments.get("path", "")
             name = arguments.get("name", "")
             provider = arguments.get("provider", "ogr")
+            # Specify the position to insert (e.g., -1 for the bottom, 0 for the top, 1 for the second position, and so on).
+            position = arguments.get("position", 0)
             if not name:
                 name = os.path.basename(path)
 
@@ -77,8 +79,11 @@ class OrchToolExecutor(QObject):
             if not layer.isValid():
                 raise Exception(f"Layer is not valid: {path}")
 
-            # Add to project
-            QgsProject.instance().addMapLayer(layer)
+            QgsProject.instance().addMapLayer(layer, False)
+
+            # Add the layer to the specified position.
+            root = QgsProject.instance().layerTreeRoot()
+            root.insertLayer(position, layer)
 
             return json.dumps({
                 "id": layer.id(),
@@ -92,6 +97,8 @@ class OrchToolExecutor(QObject):
             path = arguments.get("path", "")
             name = arguments.get("name", "")
             provider = arguments.get("provider", "ogr")
+            # Specify the position to insert (e.g., -1 for the bottom, 0 for the top, 1 for the second position, and so on).
+            position = arguments.get("position", 0)
             if not name:
                 name = os.path.basename(path)
 
@@ -102,7 +109,11 @@ class OrchToolExecutor(QObject):
                 raise Exception(f"Layer is not valid: {path}")
 
             # Add to project
-            QgsProject.instance().addMapLayer(layer)
+            QgsProject.instance().addMapLayer(layer, False)
+
+            # Add the layer to the specified position.
+            root = QgsProject.instance().layerTreeRoot()
+            root.insertLayer(position, layer)
 
             return json.dumps({
                 "id": layer.id(),
@@ -293,7 +304,11 @@ class OrchToolExecutor(QObject):
             if not layer.isValid():
                 raise Exception({"error_msg": f"Failed to create OSM layer"})
 
-            QgsProject.instance().addMapLayer(layer)
+            QgsProject.instance().addMapLayer(layer, False)
+
+            root = QgsProject.instance().layerTreeRoot()
+            # add layer to the bottom
+            root.insertLayer(-1, layer)
 
             return json.dumps({
                 "layer_id": layer.id(),
@@ -326,7 +341,11 @@ class OrchToolExecutor(QObject):
             if not layer.isValid():
                 raise Exception({"error_msg": f"Failed to create Google layer with type: {layer_type}"})
 
-            QgsProject.instance().addMapLayer(layer)
+            QgsProject.instance().addMapLayer(layer, False)
+
+            root = QgsProject.instance().layerTreeRoot()
+            # add layer to the bottom
+            root.insertLayer(-1, layer)
 
             return json.dumps({
                 "layer_id": layer.id(),
