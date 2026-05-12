@@ -395,7 +395,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnScreenCapture.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
         self.orch_current_subtask = None
 
@@ -426,7 +425,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnScreenCapture.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
 
     def _begin_chat(self):
@@ -519,7 +517,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setText(self.tr("Stop"))
         self.btnHistory.setEnabled(False)
         self.btnClear.setEnabled(False)
-        self.btnScreenCapture.setEnabled(False)
         self.cbSwitchMode.setEnabled(False)
 
     def _stop_chat(self):
@@ -554,7 +551,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setText(self.tr("Send"))
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnScreenCapture.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
 
     def _get_workspace_info(self):
