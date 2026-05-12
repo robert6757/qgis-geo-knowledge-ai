@@ -198,6 +198,9 @@ class CTOrchManager(QThread):
         execution_order = task_plan.execution_order
 
         for task_id in execution_order:
+            if self._stop_flag:
+                break
+
             # find next subtask.
             sub_task = next((st for st in task_plan.sub_tasks if st.id == task_id), None)
             if not sub_task:
