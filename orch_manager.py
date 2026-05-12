@@ -375,7 +375,8 @@ class CTOrchManager(QThread):
                     subtask_subthread.start()
                     subtask_subthread.wait()
                     subtask_response_json_str = subtask_subthread.get_raw_response()
-                    if not subtask_response_json_str:
+
+                    if self._stop_flag or not subtask_response_json_str:
                         break
 
                     subtask_response_json = json.loads(subtask_response_json_str)
