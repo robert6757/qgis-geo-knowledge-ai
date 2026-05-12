@@ -39,11 +39,11 @@ class CTOrchNetwork(QThread):
         super().__init__()
         self.request_data = request_data
         self.reply = None
-        self.buffer = ""
         self.network_manager = None
         # 1: decompose task 2:tool calls 3:conclusion 0: unknown
         self.orch_type = orch_type
         self.response_data = None
+        self.buffer = bytearray()
 
     def run(self):
         """execute request"""
@@ -93,24 +93,29 @@ class CTOrchNetwork(QThread):
             return
 
         try:
-            # read raw content and convert to string.
             raw_data = self.reply.readAll()
             if raw_data.isEmpty():
                 return
 
-            data = bytes(raw_data).decode('utf-8')
-            if not data.startswith('data: '):
-                self.buffer += data
-                return
-
-            self.response_data = data[len('data: '):]
-            self.content_received.emit(self.response_data)
+            # DO NOT decode, only perform byte-level accumulation,
+            self.buffer.extend(bytes(raw_data))
 
         except Exception as e:
             print(f"Read error: {e}")
 
     def on_finished(self):
-        """request finished"""
+        """request finished - The final analysis will be provided here."""
+        if self.buffer:
+            try:
+                full_str = self.buffer.decode('utf-8')
+                if full_str.startswith('data: '):
+                    self.response_data = full_str[len('data: '):]
+                else:
+                    self.response_data = full_str
+                self.content_received.emit(self.response_data)
+            except Exception as e:
+                print(f"Parse error: {e}")
+
         if self.reply:
             self.reply.finished.disconnect()
             self.reply.deleteLater()

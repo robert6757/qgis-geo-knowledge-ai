@@ -87,6 +87,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
         self.cbSwitchMode.setCurrentIndex(chat_mode-1)
+        if chat_mode == 1:
+            # the screen capture supported only in Knowledge Q&A
+            self.btnScreenCapture.setEnabled(True)
+        else:
+            self.btnScreenCapture.setEnabled(False)
 
         # update screen capture status.
         capture_screen = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
@@ -165,9 +170,17 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.plainTextEdit.setPlainText(history_item["question"])
 
     def handle_update_chat_mode(self, index):
+        # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Workflow Automation
+        chat_mode = index + 1
+
         gSetting = QgsSettings()
-        # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Complex Task Orchestration
-        gSetting.setValue(CHAT_MODE_TAG, str(index + 1))
+        gSetting.setValue(CHAT_MODE_TAG, str(chat_mode))
+
+        if chat_mode == 1:
+            # the screen capture supported only in Knowledge Q&A
+            self.btnScreenCapture.setEnabled(True)
+        else:
+            self.btnScreenCapture.setEnabled(False)
 
     def handle_click_feedback(self, star: int):
         if not self.chat_id:
