@@ -270,47 +270,47 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="427"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="440"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="428"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="441"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="506"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="519"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="541"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="554"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="186"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="199"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="186"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="199"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="298"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="311"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="190"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="195"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="208"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -325,27 +325,27 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="226"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="239"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="234"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="243"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="256"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="267"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="280"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="267"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="280"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -488,7 +488,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="730"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="743"/>
         <source>
 
 ———
@@ -543,32 +543,32 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="300"/>
         <source>Only the current subtask can be continued.</source>
         <translation>只能对当前子任务执行[继续]。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="322"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="335"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>只能对当前子任务执行[重试]。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="322"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="335"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="361"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="374"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[单步执行](agent://orch/substask/step) | [全自动执行](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="373"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="386"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [重做](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="739"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -660,7 +660,7 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="156"/>
         <source>Clear Chatbot and Question</source>
-        <translation>清空对话和问题</translation>
+        <translation type="obsolete">清空对话和问题</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="219"/>
@@ -681,6 +681,11 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="63"/>
         <source>Workflow Automation</source>
         <translation>自动化工作流</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="156"/>
+        <source>Clear chatbot and start a new conversation.</source>
+        <translation>清空对话窗口并开启新对话。</translation>
     </message>
 </context>
 <context>

@@ -154,6 +154,9 @@ class StreamChatWorker(QThread):
 
     def on_error(self, error):
         """report error"""
-        error_msg = f"Error: {self.reply.errorString()}"
+        # try to get error message from buffer.
+        error_msg = self.buffer
+        if not error_msg:
+            error_msg = self.reply.errorString()
         self.error_occurred.emit(error_msg)
         self.quit()

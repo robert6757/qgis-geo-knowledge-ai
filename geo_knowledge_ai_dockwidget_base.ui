@@ -153,7 +153,7 @@
        </sizepolicy>
       </property>
       <property name="toolTip">
-       <string>Clear Chatbot and Question</string>
+       <string>Clear chatbot and start a new conversation.</string>
       </property>
       <property name="text">
        <string>Clear</string>
