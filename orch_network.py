@@ -128,8 +128,9 @@ class CTOrchNetwork(QThread):
     def on_error(self, error):
         """report error"""
         # try to get error message from buffer.
-        error_msg = self.response_data
-        if not error_msg:
+        if self.buffer:
+            error_msg = self.buffer.decode('utf-8')
+        else:
             error_msg = self.reply.errorString()
         self.error_occurred.emit(error_msg)
         self.quit()
