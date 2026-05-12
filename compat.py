@@ -49,6 +49,7 @@ if IS_QT5:
     SmoothTransformation = Qt.SmoothTransformation
     IgnoreAspectRatio = Qt.IgnoreAspectRatio
     ImageResource = QTextDocument.ImageResource
+    QueuedConnection = Qt.QueuedConnection
 
 if IS_QT6:
     RightDockWidgetArea = Qt.DockWidgetArea.RightDockWidgetArea
@@ -68,3 +69,4 @@ if IS_QT6:
     SmoothTransformation = Qt.TransformationMode.SmoothTransformation
     IgnoreAspectRatio = Qt.AspectRatioMode.IgnoreAspectRatio
     ImageResource = QTextDocument.ResourceType.ImageResource
+    QueuedConnection = Qt.ConnectionType.QueuedConnection

@@ -21,11 +21,11 @@
 """
 import os
 import json
-from urllib.parse import quote
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree
 from qgis import processing
 
+from .compat import *
 from .code_execution import CodeExecution
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
@@ -42,7 +42,7 @@ class OrchToolExecutor(QObject):
     def __init__(self, iface, parent=None):
         super().__init__(parent)
         self.iface = iface
-        self.execute_requested.connect(self._on_execute_requested, Qt.QueuedConnection)
+        self.execute_requested.connect(self._on_execute_requested, QueuedConnection)
 
     def _on_execute_requested(self, tool_name: str, arguments: dict):
         """Slot functions: Execute tools in the GUI thread."""

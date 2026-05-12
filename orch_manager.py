@@ -406,8 +406,8 @@ class CTOrchManager(QThread):
                         def on_error(error):
                             result_container["result"] = error
 
-                        self.tool_executor.execution_completed.connect(on_completed, Qt.QueuedConnection)
-                        self.tool_executor.execution_error.connect(on_error, Qt.QueuedConnection)
+                        self.tool_executor.execution_completed.connect(on_completed, QueuedConnection)
+                        self.tool_executor.execution_error.connect(on_error, QueuedConnection)
                         self.tool_executor.execute_requested.emit(tool_name, arguments)
 
                         # Waiting for execution to complete
