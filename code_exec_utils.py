@@ -21,9 +21,10 @@
 """
 import os
 import sys
-import urllib.request
 
-from qgis.PyQt.QtCore import QCoreApplication
+from qgis.core import QgsBlockingNetworkRequest
+from qgis.PyQt.QtCore import QCoreApplication, QUrl
+from qgis.PyQt.QtNetwork import QNetworkRequest
 from qgis.PyQt.QtWidgets import QMessageBox, QWidget
 from global_defs import *
 
@@ -76,7 +77,16 @@ def ensure_code_execution(parent_widget: QWidget = None):
     target_path = os.path.join(plugin_dir, "code_execution.py")
 
     try:
-        urllib.request.urlretrieve(url, target_path)
+        q_request = QNetworkRequest(QUrl(url))
+        q_nw = QgsBlockingNetworkRequest()
+        err_code = q_nw.get(q_request)
+        q_reply = q_nw.reply()
+        if err_code == QgsBlockingNetworkRequest.NoError and q_reply:
+            content = q_reply.content()
+            with open(target_path, 'wb') as f:
+                f.write(content.data())
+        else:
+            raise Exception(f"QgsBlockingNetworkRequest failed with error code: {err_code}")
 
         # Clear any cached import of this module
         for mod_name in list(sys.modules.keys()):
