@@ -83,6 +83,8 @@ class CTOrchManager(QThread):
     report_conclusion_stream = pyqtSignal(str)
     # finish all orchestration.
     finish_all_orchestration = pyqtSignal()
+    # trigger code execution assurance.
+    ensure_code_execution = pyqtSignal()
 
     def __init__(self, iface, request):
         super().__init__()
@@ -97,6 +99,8 @@ class CTOrchManager(QThread):
         self.sub_task_execute_type = 0
         # modified subtask prompt
         self.modified_sub_task_prompt = ""
+        # CodeExecution in postprocess.
+        self.code_execution = None
 
         self.network_manager = QNetworkAccessManager()
 
@@ -107,6 +111,7 @@ class CTOrchManager(QThread):
         # Execution semaphore for controlling subtask execution start.
         self._execution_semaphore = QSemaphore(0)
         self._subtask_execution_semaphore = QSemaphore(0)
+        self._ensure_code_exec_semaphore = QSemaphore(0)
 
     def run(self):
         # FIXME
@@ -135,6 +140,15 @@ class CTOrchManager(QThread):
 
         # Wait for execution semaphore to start subtask execution.
         self._execution_semaphore.acquire()
+
+        # make sure CodeExecution is valid.
+        self.ensure_code_execution.emit()
+        self._ensure_code_exec_semaphore.acquire()
+
+        if self.code_execution is None:
+            self.error_occurred.emit(self.tr("Task cannot continue because the code execution module is unavailable!"))
+            self._stop_flag = True
+            return
 
         # 2.run all subtask
         if self.task_plan_execute_type == 0:
@@ -188,6 +202,10 @@ class CTOrchManager(QThread):
             pass
         # Release semaphore to trigger repeat subtask execution.
         self._subtask_execution_semaphore.release()
+
+    def finish_ensure_code_execution(self, code_execution):
+        self.code_execution = code_execution
+        self._ensure_code_exec_semaphore.release()
 
     def __run_all_subtask(self, task_plan: TaskPlan):
         if self._stop_flag:

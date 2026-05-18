@@ -28,7 +28,7 @@ import traceback
 import io
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QApplication
+from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QApplication, QMessageBox
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
@@ -40,8 +40,9 @@ from .setting_dialog import SettingDialog
 from .global_defs import *
 from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
-from .code_execution import CodeExecution
 from .compat import *
+from .code_exec_utils import ensure_code_execution
+
 from .subtask_dialog import SubtaskDialog
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -224,6 +225,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def handle_click_exec_code(self, code):
         """run python process as a background task"""
+        CodeExecution = ensure_code_execution(parent_widget=self)
+        if CodeExecution is None:
+            return
+
         code_exec = CodeExecution(
             code=code,
             parent_widget=self,
@@ -338,6 +343,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             return
 
         self.orch_manager.repeat_sub_task(dlg.get_modified_prompt())
+
+    def handle_ensure_code_execution(self):
+        if not self.orch_manager or not self.orch_task_plan:
+            return
+        code_execution = ensure_code_execution(parent_widget=self)
+        self.orch_manager.finish_ensure_code_execution(code_execution)
 
     def handle_click_screen_capture(self, checked):
         gSetting = QgsSettings()
@@ -504,6 +515,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_manager.finish_all_orchestration.connect(self.on_stream_ended)
             self.orch_manager.error_occurred.connect(self.on_error_occurred)
             self.orch_manager.warning_occurred.connect(self.on_warning_occurred)
+            self.orch_manager.ensure_code_execution.connect(self.handle_ensure_code_execution)
             self.orch_manager.start()
         else:
             self.chat_worker = StreamChatWorker(request_data, chat_mode)
@@ -538,6 +550,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_manager.finish_all_orchestration.disconnect(self.on_stream_ended)
             self.orch_manager.error_occurred.disconnect(self.on_error_occurred)
             self.orch_manager.warning_occurred.disconnect(self.on_warning_occurred)
+            self.orch_manager.ensure_code_execution.disconnect(self.handle_ensure_code_execution)
 
             # When a stop event is triggered, the thread will exit automatically.
             self.orch_manager.stop()

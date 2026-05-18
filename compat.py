@@ -50,6 +50,9 @@ if IS_QT5:
     IgnoreAspectRatio = Qt.IgnoreAspectRatio
     ImageResource = QTextDocument.ImageResource
     QueuedConnection = Qt.QueuedConnection
+    QMessageBoxQuestion = QMessageBox.Question
+    QMessageBoxYesRole = QMessageBox.YesRole
+    QMessageBoxNoRole = QMessageBox.NoRole
 
 if IS_QT6:
     RightDockWidgetArea = Qt.DockWidgetArea.RightDockWidgetArea
@@ -70,3 +73,6 @@ if IS_QT6:
     IgnoreAspectRatio = Qt.AspectRatioMode.IgnoreAspectRatio
     ImageResource = QTextDocument.ResourceType.ImageResource
     QueuedConnection = Qt.ConnectionType.QueuedConnection
+    QMessageBoxQuestion = QMessageBox.Icon.Question
+    QMessageBoxYesRole = QMessageBox.ButtonRole.YesRole
+    QMessageBoxNoRole = QMessageBox.ButtonRole.NoRole

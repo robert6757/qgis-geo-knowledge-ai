@@ -4,69 +4,74 @@
 <context>
     <name>CTOrchManager</name>
     <message>
-        <location filename="../orch_manager.py" line="117"/>
+        <location filename="../orch_manager.py" line="122"/>
         <source>**Generating task plan:**</source>
         <translation>**正在生成任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="127"/>
+        <location filename="../orch_manager.py" line="132"/>
         <source>Invalid Task plan!</source>
         <translation>无效的任务计划！</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="132"/>
+        <location filename="../orch_manager.py" line="137"/>
         <source>VIP requests remaining: </source>
         <translation>剩余 VIP 请求：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="196"/>
+        <location filename="../orch_manager.py" line="214"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**开始全自动执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="234"/>
+        <location filename="../orch_manager.py" line="255"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[警告] 跳过未找到子任务 [{}]。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="241"/>
+        <location filename="../orch_manager.py" line="262"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[警告]子任务 [{}] 的依赖项 [{}] 不完整。尝试继续执行。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="223"/>
+        <location filename="../orch_manager.py" line="244"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**开始单步执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="302"/>
+        <location filename="../orch_manager.py" line="323"/>
         <source>Start executing the subtask:</source>
         <translation>开始执行子任务：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="331"/>
+        <location filename="../orch_manager.py" line="352"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[已完成] 子任务 [{}] 执行成功。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="336"/>
+        <location filename="../orch_manager.py" line="357"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[失败] 子任务 [{}] 的执行结果未达到预期。{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="341"/>
+        <location filename="../orch_manager.py" line="362"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[失败] 子任务 [{}] 执行失败：[{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="571"/>
+        <location filename="../orch_manager.py" line="593"/>
         <source>Error: No subtask execution result.</source>
         <translation>错误：未找到子任务执行结果。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="575"/>
+        <location filename="../orch_manager.py" line="597"/>
         <source>**Summary of tasks:**</source>
         <translation>**任务总结：**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="149"/>
+        <source>Task cannot continue because the code execution module is unavailable!</source>
+        <translation>由于代码执行模块不可用，任务无法继续！</translation>
     </message>
 </context>
 <context>
@@ -103,27 +108,14 @@
 <context>
     <name>CodeExecution</name>
     <message>
-        <location filename="../code_execution.py" line="81"/>
+        <location filename="../11code_execution.py" line="81"/>
         <source>SyntaxError</source>
         <translation>语法错误</translation>
     </message>
     <message>
-        <location filename="../code_execution.py" line="87"/>
+        <location filename="../11code_execution.py" line="87"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
-    </message>
-</context>
-<context>
-    <name>CodeExecutionTask</name>
-    <message>
-        <location filename="../code_execution.py" line="83"/>
-        <source>SyntaxError</source>
-        <translation type="obsolete">语法错误</translation>
-    </message>
-    <message>
-        <location filename="../code_execution.py" line="89"/>
-        <source>RuntimeError</source>
-        <translation type="obsolete">运行错误</translation>
     </message>
 </context>
 <context>
@@ -270,47 +262,75 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="440"/>
+        <location filename="../code_exec_utils.py" line="62"/>
+        <source>In order to enhance running safety, QGIS disallows automatically running external code (e.g., LLM-generated real-time code).
+
+If you want to execute code automatically, please press &quot;Yes&quot;. The Geo Knowledge AI plugin will download the execution module to start the automated process.
+
+CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not completely reliable. Please check it carefully. We suggest you back up your data and QGIS project before executing code.</source>
+        <translation>为了提高运行安全性，QGIS 禁止自动运行外部代码（例如，由AI生成的实时代码）。
+
+如果您希望自动执行代码，请点击“是”。Geo Knowledge AI 插件将下载执行模块以启动自动化流程。
+
+注意：尽管我们对AI生成的代码有严格限制，但生成的代码并非完全可靠。请仔细检查。我们建议您在执行代码前备份数据和 QGIS 项目。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../code_exec_utils.py" line="63"/>
+        <source>Yes</source>
+        <translation>是</translation>
+    </message>
+    <message>
+        <location filename="../code_exec_utils.py" line="64"/>
+        <source>No</source>
+        <translation>否</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="449"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="441"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="519"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="529"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="554"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="564"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="199"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="200"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="199"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="200"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="311"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="316"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="204"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="208"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="209"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -325,27 +345,27 @@
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="239"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="244"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="252"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="256"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="261"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="280"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="285"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="280"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="285"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -488,7 +508,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="743"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="752"/>
         <source>
 
 ———
@@ -543,32 +563,27 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="300"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="305"/>
         <source>Only the current subtask can be continued.</source>
         <translation>只能对当前子任务执行[继续]。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="335"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>只能对当前子任务执行[重试]。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="335"/>
-        <source>Warning</source>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="374"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="385"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[单步执行](agent://orch/substask/step) | [全自动执行](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="386"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [重做](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="739"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="748"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -593,6 +608,16 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
 此外，我还会指导您使用 GDAL、GRASS 和 SAGA 等基本工具，使您的空间分析更加高效和智能。
 
 提示：自动化工作流支持全自动运行或单步处理两种方式。我们建议您在运行工作流之前备份数据和 QGIS 项目。</translation>
+    </message>
+    <message>
+        <location filename="../code_exec_utils.py" line="86"/>
+        <source>Failed to load the downloaded code execution module</source>
+        <translation>代码执行模块加载失败</translation>
+    </message>
+    <message>
+        <location filename="../code_exec_utils.py" line="92"/>
+        <source>Failed to download code execution module: {}</source>
+        <translation>代码执行模块下载失败：{}</translation>
     </message>
 </context>
 <context>

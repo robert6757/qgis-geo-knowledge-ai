@@ -25,8 +25,8 @@ from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree
 from qgis import processing
 
+from .code_exec_utils import get_code_execution_class
 from .compat import *
-from .code_execution import CodeExecution
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
@@ -232,6 +232,10 @@ class OrchToolExecutor(QObject):
 
         elif tool_name == "qgis_execute_code":
             # Execute PyQGIS code
+            CodeExecution = get_code_execution_class()
+            if CodeExecution is None:
+                raise Exception({"error_msg": "Code execution module is not available"})
+
             code = arguments.get("code", "")
             code_exec = CodeExecution(
                 code=code,
