@@ -85,10 +85,13 @@ class CTOrchManager(QThread):
     finish_all_orchestration = pyqtSignal()
     # trigger code execution assurance.
     ensure_code_execution = pyqtSignal()
+    # report thinking stream
+    report_thinking_stream = pyqtSignal(str)
 
     def __init__(self, iface, request):
         super().__init__()
 
+        self.iface = iface
         self._stop_flag = False
         self.request = request
         self.prompt = ""
@@ -119,17 +122,18 @@ class CTOrchManager(QThread):
         # self.error_occurred.emit(result)
         # return
 
-        self.report_decompose_stream.emit(self.tr("**Generating task plan:**"))
-
         # 1.decompose task
+        self.report_decompose_stream.emit(self.tr("**Thinking...**"))
+
         decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
         decompose_subthread.error_occurred.connect(self.on_network_error_occurred)
+        decompose_subthread.thinking_received.connect(self.on_received_thinking_stream)
         decompose_subthread.start()
         decompose_subthread.wait()
 
         task_plan, user_info = self.__parse_task_plan(decompose_subthread.get_raw_response())
         if not task_plan:
-            self.error_occurred.emit(self.tr("Invalid Task plan!"))
+            self.error_occurred.emit("\n\n" + self.tr("Invalid Task plan!"))
             self._stop_flag = True
             return
 
@@ -306,6 +310,9 @@ class CTOrchManager(QThread):
         except Exception as e:
             self.error_occurred.emit(str(e))
             self._stop_flag = True
+
+    def on_received_thinking_stream(self, content: str):
+        self.report_thinking_stream.emit(content)
 
     def __execute_sub_task(self, sub_task: SubTask) -> str:
         """

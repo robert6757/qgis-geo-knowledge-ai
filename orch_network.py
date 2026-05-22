@@ -30,6 +30,8 @@ from .compat import *
 class CTOrchNetwork(QThread):
 
     # defines signals.
+    # thinking content signal.
+    thinking_received = pyqtSignal(str)
     # receive content signal.
     content_received = pyqtSignal(str)
     # report error signal.
@@ -42,8 +44,9 @@ class CTOrchNetwork(QThread):
         self.network_manager = None
         # 1: decompose task 2:tool calls 3:conclusion 0: unknown
         self.orch_type = orch_type
-        self.response_data = None
         self.buffer = bytearray()
+        # Store the final complete response separately from the intermediate buffer.
+        self._final_response = ""
 
     def run(self):
         """execute request"""
@@ -84,11 +87,10 @@ class CTOrchNetwork(QThread):
             self.error_occurred.emit(self.tr("Network Error:") + str(e))
 
     def get_raw_response(self):
-        # To avoid untimely synchronization of signal slot data
-        return self.response_data
+        return self._final_response
 
     def on_ready_read(self):
-        """deal with raw content"""
+        """deal with raw content - parse SSE events in real-time."""
         if not self.reply or not self.reply.isOpen():
             return
 
@@ -97,8 +99,44 @@ class CTOrchNetwork(QThread):
             if raw_data.isEmpty():
                 return
 
-            # DO NOT decode, only perform byte-level accumulation,
             self.buffer.extend(bytes(raw_data))
+
+            # Try to decode buffer into string for SSE parsing
+            full_str = self.buffer.decode('utf-8')
+            # SSE events are separated by double newlines
+            parts = full_str.split('\n\n')
+
+            # The last part may be incomplete; keep it in the buffer for next read
+            if not full_str.endswith('\n\n'):
+                self.buffer = parts[-1].encode('utf-8')
+                # Process all complete events (all parts except the last incomplete one)
+                complete_events = parts[:-1]
+            else:
+                self.buffer = bytearray()
+                complete_events = parts
+
+            for event_str in complete_events:
+                event_str = event_str.strip()
+                if not event_str:
+                    continue
+                # Remove "data: " prefix
+                if event_str.startswith('data: '):
+                    data_str = event_str[len('data: '):]
+                else:
+                    data_str = event_str
+                try:
+                    data_json = json.loads(data_str)
+                    # Only emit thinking_received for thinking type
+                    if data_json.get('type') == 'thinking':
+                        thinking_content = data_json.get('content', '')
+                        self.thinking_received.emit(thinking_content)
+                    else:
+                        # Non-thinking data: save to final response AND emit content_received.
+                        self._final_response = data_str
+                        self.content_received.emit(data_str)
+                except json.JSONDecodeError:
+                    # Not a JSON event, skip
+                    pass
 
         except Exception as e:
             print(f"Read error: {e}")
@@ -109,10 +147,11 @@ class CTOrchNetwork(QThread):
             try:
                 full_str = self.buffer.decode('utf-8')
                 if full_str.startswith('data: '):
-                    self.response_data = full_str[len('data: '):]
+                    response_data = full_str[len('data: '):]
                 else:
-                    self.response_data = full_str
-                self.content_received.emit(self.response_data)
+                    response_data = full_str
+                self._final_response = response_data
+                self.content_received.emit(response_data)
             except Exception as e:
                 print(f"Parse error: {e}")
 

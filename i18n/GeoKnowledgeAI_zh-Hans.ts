@@ -6,78 +6,83 @@
     <message>
         <location filename="../orch_manager.py" line="122"/>
         <source>**Generating task plan:**</source>
-        <translation>**正在生成任务计划：**</translation>
+        <translation type="obsolete">**正在生成任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="132"/>
+        <location filename="../orch_manager.py" line="136"/>
         <source>Invalid Task plan!</source>
         <translation>无效的任务计划！</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="137"/>
+        <location filename="../orch_manager.py" line="141"/>
         <source>VIP requests remaining: </source>
         <translation>剩余 VIP 请求：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="214"/>
+        <location filename="../orch_manager.py" line="218"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**开始全自动执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="255"/>
+        <location filename="../orch_manager.py" line="259"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[警告] 跳过未找到子任务 [{}]。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="262"/>
+        <location filename="../orch_manager.py" line="266"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
-        <translation>[警告]子任务 [{}] 的依赖项 [{}] 不完整。尝试继续执行。</translation>
+        <translation>[警告]子任务 [{1}] 所依赖的任务 [{0}] 未完成。请尝试继续执行。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="244"/>
+        <location filename="../orch_manager.py" line="248"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**开始单步执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="323"/>
+        <location filename="../orch_manager.py" line="330"/>
         <source>Start executing the subtask:</source>
         <translation>开始执行子任务：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="359"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[已完成] 子任务 [{}] 执行成功。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="357"/>
+        <location filename="../orch_manager.py" line="364"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[失败] 子任务 [{}] 的执行结果未达到预期。{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="362"/>
+        <location filename="../orch_manager.py" line="369"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[失败] 子任务 [{}] 执行失败：[{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="593"/>
+        <location filename="../orch_manager.py" line="600"/>
         <source>Error: No subtask execution result.</source>
         <translation>错误：未找到子任务执行结果。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="597"/>
+        <location filename="../orch_manager.py" line="604"/>
         <source>**Summary of tasks:**</source>
         <translation>**任务总结：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="149"/>
+        <location filename="../orch_manager.py" line="153"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>由于代码执行模块不可用，任务无法继续！</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="126"/>
+        <source>**Thinking...**</source>
+        <translation>**思考中...**</translation>
     </message>
 </context>
 <context>
     <name>CTOrchNetwork</name>
     <message>
-        <location filename="../orch_network.py" line="84"/>
+        <location filename="../orch_network.py" line="87"/>
         <source>Network Error:</source>
         <translation>网络错误：</translation>
     </message>
@@ -108,12 +113,12 @@
 <context>
     <name>CodeExecution</name>
     <message>
-        <location filename="../11code_execution.py" line="81"/>
+        <location filename="../code_execution.py" line="81"/>
         <source>SyntaxError</source>
         <translation>语法错误</translation>
     </message>
     <message>
-        <location filename="../11code_execution.py" line="87"/>
+        <location filename="../code_execution.py" line="87"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
@@ -262,7 +267,7 @@
 <context>
     <name>GeoKnowledgeAIDockWidget</name>
     <message>
-        <location filename="../code_exec_utils.py" line="62"/>
+        <location filename="../code_exec_utils.py" line="65"/>
         <source>In order to enhance running safety, QGIS disallows automatically running external code (e.g., LLM-generated real-time code).
 
 If you want to execute code automatically, please press &quot;Yes&quot;. The Geo Knowledge AI plugin will download the execution module to start the automated process.
@@ -280,12 +285,12 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../code_exec_utils.py" line="63"/>
+        <location filename="../code_exec_utils.py" line="66"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../code_exec_utils.py" line="64"/>
+        <location filename="../code_exec_utils.py" line="67"/>
         <source>No</source>
         <translation>否</translation>
     </message>
@@ -300,12 +305,12 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="529"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="530"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="564"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="566"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
@@ -508,7 +513,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="752"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="754"/>
         <source>
 
 ———
@@ -583,7 +588,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [重做](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="748"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="750"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -610,14 +615,24 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
 提示：自动化工作流支持全自动运行或单步处理两种方式。我们建议您在运行工作流之前备份数据和 QGIS 项目。</translation>
     </message>
     <message>
-        <location filename="../code_exec_utils.py" line="86"/>
+        <location filename="../code_exec_utils.py" line="98"/>
         <source>Failed to load the downloaded code execution module</source>
         <translation>代码执行模块加载失败</translation>
     </message>
     <message>
-        <location filename="../code_exec_utils.py" line="92"/>
+        <location filename="../code_exec_utils.py" line="104"/>
         <source>Failed to download code execution module: {}</source>
         <translation>代码执行模块下载失败：{}</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="378"/>
+        <source>**Generating task plan:**</source>
+        <translation type="obsolete">**正在生成任务计划：**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="378"/>
+        <source>**Task plan:**</source>
+        <translation>**任务计划:**</translation>
     </message>
 </context>
 <context>

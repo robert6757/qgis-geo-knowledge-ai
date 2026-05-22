@@ -375,15 +375,15 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def on_orch_decompose_received(self, task_plan: TaskPlan):
         """receive the orch message"""
-        content = ""
+        task_plan_text = "\n\n" + self.tr("**Task plan:**") + "\n\n"
         for idx, subtask in enumerate(task_plan.sub_tasks):
-            content += f"{idx + 1}.{subtask.name}"
-            content += "\n\n"
-        self.recv_raw_content += content
+            task_plan_text += f"{idx + 1}.{subtask.name}"
+            task_plan_text += "\n\n"
+        self.recv_raw_content += task_plan_text
 
         # add extra command text.
-        content += self.tr("[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)")
-        content += "\n\n"
+        command_text = self.tr("[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)")
+        content = f"{task_plan_text}{command_text}\n\n"
         self.chatbot_browser.append_markdown(content)
 
         self.orch_task_plan = task_plan
@@ -516,6 +516,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_manager.error_occurred.connect(self.on_error_occurred)
             self.orch_manager.warning_occurred.connect(self.on_warning_occurred)
             self.orch_manager.ensure_code_execution.connect(self.handle_ensure_code_execution)
+            self.orch_manager.report_thinking_stream.connect(self.on_content_received)
             self.orch_manager.start()
         else:
             self.chat_worker = StreamChatWorker(request_data, chat_mode)
@@ -551,6 +552,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_manager.error_occurred.disconnect(self.on_error_occurred)
             self.orch_manager.warning_occurred.disconnect(self.on_warning_occurred)
             self.orch_manager.ensure_code_execution.disconnect(self.handle_ensure_code_execution)
+            self.orch_manager.report_thinking_stream.disconnect(self.on_content_received)
 
             # When a stop event is triggered, the thread will exit automatically.
             self.orch_manager.stop()

@@ -61,7 +61,7 @@ def ensure_code_execution(parent_widget: QWidget = None):
     # Ask user whether to download
     msg_box = QMessageBox(parent_widget)
     msg_box.setIcon(QMessageBoxQuestion)
-    msg_box.setWindowTitle(QCoreApplication.translate("GeoKnowledgeAIDockWidget","Warning"))
+    msg_box.setWindowTitle("Geo Knowledge AI")
     msg_box.setText(QCoreApplication.translate("GeoKnowledgeAIDockWidget", """In order to enhance running safety, QGIS disallows automatically running external code (e.g., LLM-generated real-time code).\n\nIf you want to execute code automatically, please press "Yes". The Geo Knowledge AI plugin will download the execution module to start the automated process.\n\nCAUTION: Despite our STRICT restrictions on LLMs, the generated code is not completely reliable. Please check it carefully. We suggest you back up your data and QGIS project before executing code."""))
     yes_btn = msg_box.addButton(QCoreApplication.translate("GeoKnowledgeAIDockWidget","Yes"), QMessageBoxYesRole)
     msg_box.addButton(QCoreApplication.translate("GeoKnowledgeAIDockWidget","No"), QMessageBoxNoRole)

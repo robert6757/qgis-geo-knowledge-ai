@@ -300,14 +300,22 @@ class ChatbotBrowser(QTextBrowser):
             elif process_name == "orch":
                 if path.startswith("/substask/step"):
                     self.trigger_orch_subtask_step.emit()
+                    self.auto_scroll_to_bottom = True
+                    self.scroll_to_bottom()
                 elif path.startswith("/substask/automate"):
                     self.trigger_orch_subtask_automate.emit()
+                    self.auto_scroll_to_bottom = True
+                    self.scroll_to_bottom()
                 elif path.startswith("/substask/continue"):
                     subtask_id = path.split("/")[-1]
                     self.trigger_orch_subtask_continue.emit(subtask_id)
+                    self.auto_scroll_to_bottom = True
+                    self.scroll_to_bottom()
                 elif path.startswith("/substask/repeat"):
                     subtask_id = path.split("/")[-1]
                     self.trigger_orch_subtask_repeat.emit(subtask_id)
+                    self.auto_scroll_to_bottom = True
+                    self.scroll_to_bottom()
                 elif path.startswith("/substask/detail"):
                     subtask_id = path.split("/")[-1]
                     self.trigger_orch_subtask_detail.emit(subtask_id)
