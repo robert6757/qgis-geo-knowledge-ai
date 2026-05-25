@@ -22,7 +22,7 @@
 import os
 import json
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
-from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree, QgsRasterBandStats, QgsPointXY
 from qgis import processing
 
 from .code_exec_utils import get_code_execution_class
@@ -30,7 +30,8 @@ from .compat import *
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
-                   "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer"]
+                   "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
+                   "qgis_query_raster_values_by_bbox"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -358,6 +359,165 @@ class OrchToolExecutor(QObject):
                 "layer_width": layer.width(),
                 "layer_height": layer.height()
             }, ensure_ascii=False)
+
+        elif tool_name == "qgis_query_raster_values_by_bbox":
+            # Query raster layer values by bounding box (minX, minY, maxX, maxY) and band number
+            layer_id = arguments.get("layer_id", "")
+            if not layer_id:
+                raise Exception({"error_msg": "No layer id provided"})
+
+            min_x = arguments.get("minX", None)
+            min_y = arguments.get("minY", None)
+            max_x = arguments.get("maxX", None)
+            max_y = arguments.get("maxY", None)
+            band = arguments.get("band", 1)
+
+            if min_x is None or min_y is None or max_x is None or max_y is None:
+                raise Exception({"error_msg": "No minX/minY/maxX/maxY coordinates provided"})
+
+            project = QgsProject.instance()
+
+            if layer_id not in project.mapLayers():
+                raise Exception({"error_msg": f"Layer {layer_id} is not found"})
+
+            layer = project.mapLayer(layer_id)
+
+            if layer.type() != QgsMapLayer.RasterLayer:
+                raise Exception({"error_msg": f"Layer is not a raster layer: {layer_id}"})
+
+            # Get the data provider
+            provider = layer.dataProvider()
+            if provider is None:
+                raise Exception({"error_msg": "Failed to get data provider from raster layer"})
+
+            # Calculate pixel coordinates from geographic coordinates
+            pixel_size_x = layer.rasterUnitsPerPixelX()
+            pixel_size_y = layer.rasterUnitsPerPixelY()
+            extent = layer.extent()
+
+            col_start = int((min_x - extent.xMinimum()) / pixel_size_x)
+            col_end = int((max_x - extent.xMinimum()) / pixel_size_x)
+            row_start = int((extent.yMaximum() - max_y) / pixel_size_y)
+            row_end = int((extent.yMaximum() - min_y) / pixel_size_y)
+
+            # Ensure col_start <= col_end and row_start <= row_end
+            if col_start > col_end:
+                col_start, col_end = col_end, col_start
+            if row_start > row_end:
+                row_start, row_end = row_end, row_start
+
+            # Clamp to raster dimensions
+            if col_start < 0:
+                col_start = 0
+            if row_start < 0:
+                row_start = 0
+            if col_end >= layer.width():
+                col_end = layer.width() - 1
+            if row_end >= layer.height():
+                row_end = layer.height() - 1
+
+            n_cols = col_end - col_start + 1
+            n_rows = row_end - row_start + 1
+
+            if n_cols <= 0 or n_rows <= 0:
+                raise Exception({"error_msg": "Query extent is completely outside raster extent"})
+
+            # Read block data using QgsRasterDataProvider.block()
+            block = provider.block(int(band), layer.extent(), layer.width(), layer.height())
+
+            if block is None or not block.isValid():
+                raise Exception({"error_msg": "Failed to read raster block"})
+
+            max_pixels = 10000
+            total_pixels = n_cols * n_rows
+            downsampled = False
+            original_n_cols = n_cols
+            original_n_rows = n_rows
+
+            if total_pixels <= max_pixels:
+                # Raw extraction - pixel count within limits
+                values = []
+                for row in range(row_start, row_end + 1):
+                    row_values = []
+                    for col in range(col_start, col_end + 1):
+                        val = block.value(row, col)
+                        if val is None:
+                            row_values.append(None)
+                        else:
+                            row_values.append(float(val))
+                    values.append(row_values)
+            else:
+                # Downsample to fit within max_pixels
+                downsampled = True
+                scale = (max_pixels / total_pixels) ** 0.5
+                new_n_cols = max(1, int(n_cols * scale))
+                new_n_rows = max(1, int(n_rows * scale))
+
+                step_x = n_cols / new_n_cols
+                step_y = n_rows / new_n_rows
+
+                values = []
+                for out_row in range(new_n_rows):
+                    row_values = []
+                    src_row_start = row_start + int(out_row * step_y)
+                    src_row_end = row_start + int((out_row + 1) * step_y)
+                    if src_row_end > row_end + 1:
+                        src_row_end = row_end + 1
+                    if src_row_start >= src_row_end:
+                        src_row_start = src_row_end - 1
+
+                    for out_col in range(new_n_cols):
+                        src_col_start = col_start + int(out_col * step_x)
+                        src_col_end = col_start + int((out_col + 1) * step_x)
+                        if src_col_end > col_end + 1:
+                            src_col_end = col_end + 1
+                        if src_col_start >= src_col_end:
+                            src_col_start = src_col_end - 1
+
+                        # Block Averaging
+                        total = 0.0
+                        count = 0
+                        for r in range(src_row_start, src_row_end):
+                            for c in range(src_col_start, src_col_end):
+                                val = block.value(r, c)
+                                if val is not None:
+                                    total += float(val)
+                                    count += 1
+                        if count > 0:
+                            row_values.append(round(total / count, 6))
+                        else:
+                            row_values.append(None)
+                    values.append(row_values)
+
+                n_cols = new_n_cols
+                n_rows = new_n_rows
+
+            result = {
+                "layer_id": layer_id,
+                "extent": {
+                    "minX": min_x,
+                    "minY": min_y,
+                    "maxX": max_x,
+                    "maxY": max_y
+                },
+                "band": int(band),
+                "pixel_range": {
+                    "col_start": col_start,
+                    "col_end": col_end,
+                    "row_start": row_start,
+                    "row_end": row_end
+                },
+                "n_cols": n_cols,
+                "n_rows": n_rows,
+                "values": values
+            }
+
+            if downsampled:
+                result["downsampled"] = True
+                result["original_n_cols"] = original_n_cols
+                result["original_n_rows"] = original_n_rows
+
+            return json.dumps(result, ensure_ascii=False)
 
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
