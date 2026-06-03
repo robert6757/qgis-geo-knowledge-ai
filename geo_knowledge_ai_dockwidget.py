@@ -683,7 +683,13 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         registry = QgsApplication.processingRegistry()
         providers = registry.providers()
         for provider in providers:
-            processing_tools.append(provider.name())
+            algorithm_ids = []
+            for algorithm in provider.algorithms():
+                algorithm_ids.append(algorithm.id())
+            processing_tools.append({
+                'name': provider.name(),
+                'algorithms': algorithm_ids
+            })
         workspace_info["ProcessingTools"] = processing_tools
 
         return workspace_info
