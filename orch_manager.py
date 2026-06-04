@@ -382,10 +382,6 @@ class CTOrchManager(QThread):
                     "error": ""
                 }
 
-            content = message
-            if context:
-                content = f"{context}\n\nCurrent task: {message}"
-
             tool_response = ""
             all_tool_results = []
             max_tool_iterations = 5
@@ -394,7 +390,8 @@ class CTOrchManager(QThread):
                 for iteration in range(max_tool_iterations):
                     # use raw request to build the subtask request.
                     sub_task_request = copy.deepcopy(self.request)
-                    sub_task_request["prompt"] = content
+                    sub_task_request["prompt"] = message
+                    sub_task_request["context"] = context
                     sub_task_request["tool_call_results"] = tool_call_results
 
                     subtask_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=2)
