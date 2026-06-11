@@ -116,6 +116,9 @@ class CTOrchManager(QThread):
         self._subtask_execution_semaphore = QSemaphore(0)
         self._ensure_code_exec_semaphore = QSemaphore(0)
 
+        # Track the currently running CTOrchNetwork subthread for abort support.
+        self._current_subthread = None
+
     def run(self):
         # FIXME
         # result = self.tool_executor.test_tool()
@@ -128,8 +131,10 @@ class CTOrchManager(QThread):
         decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
         decompose_subthread.error_occurred.connect(self.on_network_error_occurred)
         decompose_subthread.thinking_received.connect(self.on_received_thinking_stream)
+        self._current_subthread = decompose_subthread
         decompose_subthread.start()
         decompose_subthread.wait()
+        self._current_subthread = None
 
         task_plan, user_info = self.__parse_task_plan(decompose_subthread.get_raw_response())
         if not task_plan:
@@ -165,6 +170,11 @@ class CTOrchManager(QThread):
 
     def stop(self):
         self._stop_flag = True
+
+        # Abort the currently running CTOrchNetwork subthread to immediately close the LLM connection.
+        if self._current_subthread is not None:
+            self._current_subthread.abort()
+            self._current_subthread = None
 
         # Release semaphore to unblock execution.
         while self._execution_semaphore.tryAcquire():
@@ -384,7 +394,7 @@ class CTOrchManager(QThread):
 
             tool_response = ""
             all_tool_results = []
-            max_tool_iterations = 5
+            max_tool_iterations = 12
             try:
                 tool_call_results = []
                 for iteration in range(max_tool_iterations):
@@ -397,8 +407,10 @@ class CTOrchManager(QThread):
                     subtask_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=2)
                     subtask_subthread.content_received.connect(self.on_received_subtask_stream)
                     subtask_subthread.error_occurred.connect(self.on_network_error_occurred)
+                    self._current_subthread = subtask_subthread
                     subtask_subthread.start()
                     subtask_subthread.wait()
+                    self._current_subthread = None
                     subtask_response_json_str = subtask_subthread.get_raw_response()
 
                     if self._stop_flag or not subtask_response_json_str:
@@ -480,8 +492,10 @@ class CTOrchManager(QThread):
 
         evaluate_subthread = CTOrchNetwork(request_data=evaluate_request, orch_type=3)
         evaluate_subthread.error_occurred.connect(self.on_network_error_occurred)
+        self._current_subthread = evaluate_subthread
         evaluate_subthread.start()
         evaluate_subthread.wait()
+        self._current_subthread = None
 
         evaluate_result = evaluate_subthread.get_raw_response()
         if not evaluate_result:
@@ -611,7 +625,9 @@ class CTOrchManager(QThread):
         finalize_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=4)
         finalize_subthread.content_received.connect(self.on_received_conclusion)
         finalize_subthread.error_occurred.connect(self.on_network_error_occurred)
+        self._current_subthread = finalize_subthread
         finalize_subthread.start()
         finalize_subthread.wait()
+        self._current_subthread = None
 
         self.finish_all_orchestration.emit()

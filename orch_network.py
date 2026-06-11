@@ -36,6 +36,8 @@ class CTOrchNetwork(QThread):
     content_received = pyqtSignal(str)
     # report error signal.
     error_occurred = pyqtSignal(str)
+    # private abort signal.
+    _abort_network = pyqtSignal()
 
     def __init__(self, request_data, orch_type: int):
         super().__init__()
@@ -47,6 +49,7 @@ class CTOrchNetwork(QThread):
         self.buffer = bytearray()
         # Store the final complete response separately from the intermediate buffer.
         self._final_response = ""
+        self._abort_network.connect(self._do_abort, type=DirectConnection)
 
     def run(self):
         """execute request"""
@@ -88,6 +91,14 @@ class CTOrchNetwork(QThread):
 
     def get_raw_response(self):
         return self._final_response
+
+    def abort(self):
+        self._abort_network.emit()
+
+    def _do_abort(self):
+        """Abort the current network request and quit the event loop."""
+        if self.reply.isRunning():
+            self.reply.abort()
 
     def on_ready_read(self):
         """deal with raw content - parse SSE events in real-time."""

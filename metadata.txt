@@ -7,7 +7,7 @@ name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
-version=1.16
+version=1.17
 author=phoenix-gis
 email=phoenixgis@sina.com
 
@@ -23,7 +23,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.16 2026-06-04
+changelog=Version 1.17 2026-06-11
+      * Update: Optimize orchestration progress.
+      Version 1.16 2026-06-04
       * Update: Modify context description in orchestration.
       Version 1.15 2026-06-03
       * Update: QGIS environment reading.
