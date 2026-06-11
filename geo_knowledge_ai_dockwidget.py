@@ -469,7 +469,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # capture screen
         capture_screen_tag = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
         capture_screen_url = ''
-        if capture_screen_tag:
+        if chat_mode == 1 and capture_screen_tag:
+            # screen image only in knowledge Q&A.
             capture_screen_url = self.capture_screen(self.chat_id)
 
         # get qgis basic information in project context.
