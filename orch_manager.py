@@ -365,7 +365,8 @@ class CTOrchManager(QThread):
             if is_completed:
                 sub_task.status = TaskStatus.COMPLETED
                 sub_task.result = final_result
-                self.sub_task_results[sub_task.id] = final_result
+                # To improve the focus of subtasks, only final_content is added here.
+                self.sub_task_results[sub_task.id] = final_content
                 report_str = self.tr("[Completed] Subtask [{}] executed successfully.").format(sub_task.name)
                 self.report_subtask_stream.emit(report_str)
             else:
@@ -394,7 +395,7 @@ class CTOrchManager(QThread):
 
             tool_response = ""
             all_tool_results = []
-            max_tool_iterations = 12
+            max_tool_iterations = 20
             try:
                 tool_call_results = []
                 for iteration in range(max_tool_iterations):
@@ -439,10 +440,11 @@ class CTOrchManager(QThread):
                                 arguments = {}
 
                         result_container = {"result": None}
-                        def on_completed(result):
-                            result_container["result"] = result
-                        def on_error(error):
-                            result_container["result"] = error
+                        def on_completed(result, rc=result_container):
+                            rc["result"] = result
+
+                        def on_error(error, rc=result_container):
+                            rc["result"] = error
 
                         self.tool_executor.execution_completed.connect(on_completed, QueuedConnection)
                         self.tool_executor.execution_error.connect(on_error, QueuedConnection)
@@ -451,6 +453,9 @@ class CTOrchManager(QThread):
                         # Waiting for execution to complete
                         while result_container["result"] is None:
                             QCoreApplication.processEvents()
+
+                        self.tool_executor.execution_completed.disconnect(on_completed)
+                        self.tool_executor.execution_error.disconnect(on_error)
 
                         tool_result = result_container["result"]
                         all_tool_results.append({

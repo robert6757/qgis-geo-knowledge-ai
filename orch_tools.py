@@ -19,9 +19,11 @@
  *                                                                         *
  ***************************************************************************/
 """
+import sys
+import io
 import os
 import json
-from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication
+from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree, QgsRasterBandStats, QgsPointXY
 from qgis import processing
 
@@ -31,7 +33,7 @@ from .compat import *
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
-                   "qgis_query_raster_values_by_bbox"]
+                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -187,6 +189,7 @@ class OrchToolExecutor(QObject):
             # Use a query statement to query vector layer features.
             layer_id = arguments.get("layer_id", "")
             statement = arguments.get("statement", "")
+            max_feature_count = arguments.get("max_feature_count", 0)
             if not layer_id:
                 raise Exception({"error_msg": "No layer id provided"})
 
@@ -202,11 +205,13 @@ class OrchToolExecutor(QObject):
                 request = QgsFeatureRequest()
                 if statement:
                     request.setFilterExpression(statement)
+                if max_feature_count > 0:
+                    request.setMaxFeatures(max_feature_count)
                 for i, feature in enumerate(layer.getFeatures(request)):
                     # Extract attributes
                     attrs = {}
                     for field in layer.fields():
-                        attrs[field.name()] = feature.attribute(field.name())
+                        attrs[field.name()] = self._convert_qvariant(feature.attribute(field.name()))
 
                     # Extract geometry if available
                     geom = None
@@ -217,14 +222,14 @@ class OrchToolExecutor(QObject):
                         }
 
                     features.append({
-                        "id": feature.id(),
+                        "id": self._convert_qvariant(feature.id()),
                         "attributes": attrs,
                         "geometry": geom
                     })
 
                 return json.dumps({
                     "layer_id": layer_id,
-                    "feature_count": layer.featureCount(),
+                    "layer_feature_count": layer.featureCount(),
                     "features": features,
                     "fields": [field.name() for field in layer.fields()]
                 }, ensure_ascii=False)
@@ -295,7 +300,25 @@ class OrchToolExecutor(QObject):
             if not result:
                 raise Exception({"error_msg": f"Failed to execute algorithm: {processing_metadata.id()}"})
 
-            return json.dumps({"result": result, "feedback": feedback.textLog()}, ensure_ascii=False)
+            serializable_result = {}
+            for key, value in result.items():
+                if isinstance(value, QgsMapLayer):
+                    # If the output is a layer object (e.g., a memory layer), extract the layer's basic properties.
+                    serializable_result[key] = {
+                        "layer_id": value.id(),
+                        "name": value.name(),
+                        "type": self._get_layer_type(value)
+                    }
+                    QgsProject.instance().addMapLayer(value, False)
+                    QgsProject.instance().layerTreeRoot().insertLayer(0, value)
+                else:
+                    try:
+                        json.dumps(value)
+                        serializable_result[key] = value
+                    except TypeError:
+                        serializable_result[key] = str(value)
+
+            return json.dumps({"result": serializable_result, "feedback": feedback.textLog()}, ensure_ascii=False)
         elif tool_name == "qgis_add_osm_layer":
             # Add OSM XYZ tile layer to project
             name = arguments.get("name", "OpenStreetMap")
@@ -359,6 +382,24 @@ class OrchToolExecutor(QObject):
                 "layer_width": layer.width(),
                 "layer_height": layer.height()
             }, ensure_ascii=False)
+
+        elif tool_name == "qgis_get_algorithm_help":
+            # Get help information for one or more processing algorithms in batch.
+            alg_ids_json = arguments.get("alg_ids", "[]")
+            alg_ids = json.loads(alg_ids_json)
+            if not alg_ids:
+                raise Exception({"error_msg": "No algorithm IDs provided"})
+
+            help_results = {}
+            for alg_id in alg_ids:
+                old_stdout = sys.stdout
+                sys.stdout = io.StringIO()
+                try:
+                    processing.algorithmHelp(alg_id)
+                    help_results[alg_id] = sys.stdout.getvalue()
+                finally:
+                    sys.stdout = old_stdout
+            return json.dumps(help_results, ensure_ascii=False)
 
         elif tool_name == "qgis_query_raster_values_by_bbox":
             # Query raster layer values by bounding box (minX, minY, maxX, maxY) and band number
@@ -521,6 +562,18 @@ class OrchToolExecutor(QObject):
 
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
+
+    @staticmethod
+    def _convert_qvariant(value):
+        """Convert QVariant to JSON-serializable native Python types."""
+        if isinstance(value, QVariant):
+            if value.isNull():
+                return None
+            value = value.value()
+        # Recursively process potentially nested QVariants.
+        if isinstance(value, QVariant):
+            return OrchToolExecutor._convert_qvariant(value)
+        return value
 
     def _get_layer_type(self, layer):
         """Helper to get layer type as string"""
