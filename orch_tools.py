@@ -132,11 +132,12 @@ class OrchToolExecutor(QObject):
             layers = []
 
             for layer_id, layer in project.mapLayers().items():
+                layer_tree_node = project.layerTreeRoot().findLayer(layer_id)
                 layer_info = {
                     "id": layer_id,
                     "name": layer.name(),
                     "type": self._get_layer_type(layer),
-                    "visible": project.layerTreeRoot().findLayer(layer_id).isVisible()
+                    "visible": layer_tree_node.isVisible() if layer_tree_node else False
                 }
 
                 # Add type-specific information
