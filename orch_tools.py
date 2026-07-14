@@ -24,7 +24,7 @@ import io
 import os
 import json
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant, QStandardPaths
-from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree, QgsRasterBandStats, QgsPointXY
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle
 from qgis import processing
 
 from .code_exec_utils import get_code_execution_class
@@ -34,7 +34,7 @@ from .orch_tools_osm import OverpassTool
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
-                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_query_osm_objects"]
+                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_query_and_show_osm_objects"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -563,7 +563,7 @@ class OrchToolExecutor(QObject):
 
             return json.dumps(result, ensure_ascii=False)
 
-        elif tool_name == "qgis_query_osm_objects":
+        elif tool_name == "qgis_query_and_show_osm_objects":
             # Query OSM objects using Overpass API
             key = arguments.get("key", "")
             if not key:
@@ -576,6 +576,7 @@ class OrchToolExecutor(QObject):
                 osm_types = json.loads(osm_types)
                 
             around_distance = arguments.get("around_distance")
+            bbox = arguments.get("bbox")
             base_url = arguments.get("base_url", 'https://overpass-api.de/api/')
             
             # Generate output file path
@@ -586,6 +587,7 @@ class OrchToolExecutor(QObject):
                 key=key,
                 value=value,
                 area=area,
+                bbox=bbox,
                 osm_types=osm_types,
                 around_distance=around_distance,
                 output_path=output_path,
@@ -593,9 +595,14 @@ class OrchToolExecutor(QObject):
             )
 
             if not success:
-                raise Exception({"error_msg": "Overpass API query failed or returned invalid results."})
+                raise Exception({"error_msg": "Overpass API query failed."})
             
-            self.overpass_tool.load_osm_json_to_map(output_path)
+            success_load = self.overpass_tool.load_osm_json_to_map(output_path, f"OSM_{key}_{value}")
+            if not success_load:
+                raise Exception({"error_msg": "Failed to load OSM data to map."})
+            
+            result = {"status": "success", "message": "OSM data successfully loaded to map."}
+            return json.dumps(result, ensure_ascii=False)
 
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
@@ -621,12 +628,12 @@ class OrchToolExecutor(QObject):
         else:
             return str(layer.type())
 
-    def test_tool(self):
-        tool_result = ""
-        try:
-            tool_result = self._execute_tool_impl(
-                "qgis_query_osm_objects",
-                {"key": "natural", "value": "water", "area": "London", "osm_types": ["node","way","relation"]})
-        except Exception as e:
-            self.execution_error.emit(str(e))
-        return tool_result
+    # def test_tool(self):
+    #     tool_result = ""
+    #     try:
+    #         tool_result = self._execute_tool_impl(
+    #             "qgis_query_and_show_osm_objects",
+    #             {"key": "natural", "value": "water", "area": "Beijing", "osm_types": ["node","way","relation"], "bbox": [116.17942, 39.803, 116.23773,39.855]})
+    #     except Exception as e:
+    #         self.execution_error.emit(str(e))
+    #     return tool_result
