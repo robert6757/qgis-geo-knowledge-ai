@@ -536,8 +536,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     def _stop_chat(self):
         if self.chat_worker:
             self.btnSendOrTerminate.setEnabled(False)
-            self.chat_worker.exit()
-            self.chat_worker.wait(3000)
+            self.chat_worker.chunks_info_received.disconnect(self.on_chunks_info_received)
+            self.chat_worker.content_received.disconnect(self.on_content_received)
+            self.chat_worker.stream_ended.disconnect(self.on_stream_ended)
+            self.chat_worker.error_occurred.disconnect(self.on_error_occurred)
+            self.chat_worker.abort()
+            if not self.chat_worker.wait(5000):
+                self.chat_worker.terminate()
+                self.chat_worker.wait()
             self.chat_worker.deleteLater()
             self.chat_worker = None
 
@@ -568,6 +574,18 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
+
+        # save to history
+        if self.recv_raw_content.strip():
+            cur_chat_timestamp = int(time.time())
+            self.history_manager.put_history(
+                cur_chat_timestamp,
+                self.pre_chat_timestamp,
+                self.question_str,
+                self.recv_raw_content)
+
+            # current chat will be the next previous chat.
+            self.pre_chat_timestamp = cur_chat_timestamp
 
     def _get_workspace_info(self):
         workspace_info = {}

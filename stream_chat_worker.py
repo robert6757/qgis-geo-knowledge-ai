@@ -154,9 +154,21 @@ class StreamChatWorker(QThread):
 
     def on_error(self, error):
         """report error"""
+        if self.reply:
+            self.reply.readyRead.disconnect()
+            self.reply.finished.disconnect()
+            self.reply.errorOccurred.disconnect()
+
         # try to get error message from buffer.
         error_msg = self.buffer
         if not error_msg:
             error_msg = self.reply.errorString()
         self.error_occurred.emit(error_msg)
         self.quit()
+
+    def abort(self):
+        """Securely abort network requests and exit the event loop."""
+        if self.reply and self.reply.isRunning():
+            self.reply.abort()
+        else:
+            self.quit()
