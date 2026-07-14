@@ -23,17 +23,18 @@ import sys
 import io
 import os
 import json
-from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
+from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant, QStandardPaths
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsLayerTree, QgsRasterBandStats, QgsPointXY
 from qgis import processing
 
 from .code_exec_utils import get_code_execution_class
 from .compat import *
+from .orch_tools_osm import OverpassTool
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
-                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help"]
+                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_query_osm_objects"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -45,6 +46,7 @@ class OrchToolExecutor(QObject):
     def __init__(self, iface, parent=None):
         super().__init__(parent)
         self.iface = iface
+        self.overpass_tool = OverpassTool()
         self.execute_requested.connect(self._on_execute_requested, QueuedConnection)
 
     def _on_execute_requested(self, tool_name: str, arguments: dict):
@@ -561,6 +563,40 @@ class OrchToolExecutor(QObject):
 
             return json.dumps(result, ensure_ascii=False)
 
+        elif tool_name == "qgis_query_osm_objects":
+            # Query OSM objects using Overpass API
+            key = arguments.get("key", "")
+            if not key:
+                raise Exception({"error_msg": "OSM key is required"})
+            
+            value = arguments.get("value")
+            area = arguments.get("area")
+            osm_types = arguments.get("osm_types")
+            if isinstance(osm_types, str):
+                osm_types = json.loads(osm_types)
+                
+            around_distance = arguments.get("around_distance")
+            base_url = arguments.get("base_url", 'https://overpass-api.de/api/')
+            
+            # Generate output file path
+            temp_dir = QStandardPaths.writableLocation(QStandardPaths.TempLocation)
+            output_path = os.path.join(temp_dir, "qgis-geo-knowledge-ai-osm-query.json")
+            
+            success = self.overpass_tool.query_osm_objects(
+                key=key,
+                value=value,
+                area=area,
+                osm_types=osm_types,
+                around_distance=around_distance,
+                output_path=output_path,
+                base_url=base_url
+            )
+
+            if not success:
+                raise Exception({"error_msg": "Overpass API query failed or returned invalid results."})
+            
+            self.overpass_tool.load_osm_json_to_map(output_path)
+
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
 
@@ -585,12 +621,12 @@ class OrchToolExecutor(QObject):
         else:
             return str(layer.type())
 
-    # def test_tool(self):
-    #     tool_result = ""
-    #     try:
-    #         tool_result = self._execute_tool_impl(
-    #             "qgis_execute_algorithm",
-    #             {"algo_id": "gdal:contour","algo_parameters": '{"INPUT":"D:/output/1.tif","BAND":1,"INTERVAL":500,"FIELD_NAME":"ELEV","CREATE_3D":false,"IGNORE_NODATA":false,"NODATA":null,"OFFSET":0,"EXTRA":"","OUTPUT":"TEMPORARY_OUTPUT"}'})
-    #     except Exception as e:
-    #         self.execution_error.emit(str(e))
-    #     return tool_result
+    def test_tool(self):
+        tool_result = ""
+        try:
+            tool_result = self._execute_tool_impl(
+                "qgis_query_osm_objects",
+                {"key": "highway", "value": "motorway", "area": "London", "osm_types": ["node","way"]})
+        except Exception as e:
+            self.execution_error.emit(str(e))
+        return tool_result

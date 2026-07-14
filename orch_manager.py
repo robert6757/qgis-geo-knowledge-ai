@@ -120,11 +120,6 @@ class CTOrchManager(QThread):
         self._current_subthread = None
 
     def run(self):
-        # FIXME
-        # result = self.tool_executor.test_tool()
-        # self.error_occurred.emit(result)
-        # return
-
         # 1.decompose task
         self.report_decompose_stream.emit(self.tr("**Thinking...**"))
 

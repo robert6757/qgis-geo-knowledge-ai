@@ -443,6 +443,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
 
+        # ONLY for test.
+        from .orch_tools import OrchToolExecutor
+        tool_executor = OrchToolExecutor(self.iface)
+        self.chatbot_browser.append_markdown(tool_executor.test_tool())
+        return
+
         # add question in chatbot
         self.question_str = self.plainTextEdit.toPlainText()
         self.chatbot_browser.pre_process_markdown()
