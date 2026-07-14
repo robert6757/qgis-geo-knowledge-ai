@@ -140,12 +140,12 @@ class OverpassTool:
 
     def load_osm_json_to_map(self, json_path: str, layer_name: str = "OSM Results") -> bool:
         """
-        Read OSM JSON results and display them as a vector layer on the map.
-        Supports both nodes (Points) and ways (LineStrings).
+        Read OSM JSON results and display them as vector layers on the map.
+        Supports nodes (Point), ways (LineString), and relations (Multipolygon).
         
         :param json_path: Path to the JSON file containing Overpass results.
-        :param layer_name: Name of the layer to be created.
-        :return: True if the layer was successfully created and added, False otherwise.
+        :param layer_name: Base name of the layers to be created.
+        :return: True if at least one layer was successfully created, False otherwise.
         """
         try:
             if not os.path.exists(json_path):
@@ -158,77 +158,91 @@ class OverpassTool:
             if not elements:
                 return False
 
-            # 1. Determine the dominant geometry type to create the layer
-            # If any 'way' is present, we use LineString as it's typically the desired result for ways
-            has_ways = any(el.get('type') == 'way' for el in elements)
-            geom_type = "LineString" if has_ways else "Point"
-            
-            # 2. Determine all unique keys in tags to define fields
+            # 1. Separate elements by type
+            nodes = [el for el in elements if el.get('type') == 'node']
+            ways = [el for el in elements if el.get('type') == 'way']
+            relations = [el for el in elements if el.get('type') == 'relation']
+
+            # 2. Determine all unique keys in tags for a common attribute set
             all_tag_keys = set()
             for el in elements:
-                tags = el.get('tags', {})
-                all_tag_keys.update(tags.keys())
-            
+                all_tag_keys.update(el.get('tags', {}).keys())
             sorted_keys = sorted(list(all_tag_keys))
 
-            # 3. Create a memory layer
-            layer = QgsVectorLayer(f"{geom_type}?crs=EPSG:4326", layer_name, "memory")
-            if not layer.isValid():
+            def create_layer(geom_type, suffix, element_list):
+                if not element_list:
+                    return False
+                
+                name = f"{layer_name} - {suffix}"
+                layer = QgsVectorLayer(f"{geom_type}?crs=EPSG:4326", name, "memory")
+                if not layer.isValid():
+                    return False
+                
+                provider = layer.dataProvider()
+                fields = [QgsField(key, QVariant.String) for key in sorted_keys]
+                provider.addAttributes(fields)
+                layer.updateFields()
+
+                features = []
+                for el in element_list:
+                    feat = QgsFeature()
+                    geom = None
+                    el_type = el.get('type')
+
+                    if el_type == 'node':
+                        lon, lat = el.get('lon'), el.get('lat')
+                        if lon is not None and lat is not None:
+                            geom = QgsGeometry.fromPointXY(QgsPointXY(lon, lat))
+                    
+                    elif el_type == 'way':
+                        geometry_data = el.get('geometry')
+                        if geometry_data and isinstance(geometry_data, list):
+                            points = [QgsPoint(p['lon'], p['lat']) for p in geometry_data if 'lon' in p and 'lat' in p]
+                            if points:
+                                geom = QgsGeometry.fromPolyline(points)
+                    
+                    elif el_type == 'relation':
+                        # For relations (multipolygons), build geometry from member ways using WKT
+                        members = el.get('members', [])
+                        rings_wkt = []
+                        for m in members:
+                            if m.get('type') == 'way':
+                                m_geom = m.get('geometry')
+                                if m_geom and isinstance(m_geom, list):
+                                    # Format points as 'lon lat'
+                                    pts = [f"{p['lon']} {p['lat']}" for p in m_geom if 'lon' in p and 'lat' in p]
+                                    if pts:
+                                        # Ensure the ring is closed for WKT Polygon
+                                        if pts[0] != pts[-1]:
+                                            pts.append(pts[0])
+                                        rings_wkt.append(f"({', '.join(pts)})")
+                        
+                        if rings_wkt:
+                            # Construct WKT: POLYGON((outer), (inner1), (inner2)...)
+                            wkt = f"POLYGON({', '.join(rings_wkt)})"
+                            geom = QgsGeometry.fromWkt(wkt)
+                    if geom:
+                        feat.setGeometry(geom)
+                    else:
+                        continue
+                    
+                    tags = el.get('tags', {})
+                    feat.setAttributes([tags.get(key, "") for key in sorted_keys])
+                    features.append(feat)
+
+                if features:
+                    provider.addFeatures(features)
+                    layer.updateExtents()
+                    QgsProject.instance().addMapLayer(layer)
+                    return True
                 return False
 
-            # 4. Define fields
-            provider = layer.dataProvider()
-            fields = []
-            for key in sorted_keys:
-                fields.append(QgsField(key, QVariant.String))
+            # Create the three layers
+            success_nodes = create_layer("Point", "Nodes", nodes)
+            success_ways = create_layer("LineString", "Ways", ways)
+            success_rels = create_layer("Multipolygon", "Relations", relations)
             
-            provider.addAttributes(fields)
-            layer.updateFields()
-
-            # 5. Create features and add to layer
-            features = []
-            for el in elements:
-                feat = QgsFeature()
-                el_type = el.get('type')
-                
-                # Geometry construction
-                geom = None
-                if el_type == 'node':
-                    lon = el.get('lon')
-                    lat = el.get('lat')
-                    if lon is not None and lat is not None:
-                        geom = QgsGeometry.fromPointXY(QgsPointXY(lon, lat))
-                elif el_type == 'way':
-                    # Overpass 'out geom' returns a 'geometry' field: [{"lat": ..., "lon": ...}, ...]
-                    geometry_data = el.get('geometry')
-                    if geometry_data and isinstance(geometry_data, list):
-                        points = [QgsPoint(p['lon'], p['lat']) for p in geometry_data if 'lon' in p and 'lat' in p]
-                        if points:
-                            geom = QgsGeometry.fromPolyline(points)
-                
-                if geom:
-                    feat.setGeometry(geom)
-                else:
-                    # Skip features without geometry to avoid adding empty features to the layer
-                    continue
-                
-                # Attributes: tags
-                tags = el.get('tags', {})
-                attrs = [tags.get(key, "") for key in sorted_keys]
-                feat.setAttributes(attrs)
-                
-                features.append(feat)
-
-            if not features:
-                return False
-
-            provider.addFeatures(features)
-            layer.updateExtents()
-
-            # 6. Add layer to the project
-            QgsProject.instance().addMapLayer(layer)
-            
-            return True
+            return success_nodes or success_ways or success_rels
 
         except Exception as e:
             print(f"Error loading OSM JSON to map: {e}")

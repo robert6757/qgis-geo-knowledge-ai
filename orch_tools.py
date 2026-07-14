@@ -626,7 +626,7 @@ class OrchToolExecutor(QObject):
         try:
             tool_result = self._execute_tool_impl(
                 "qgis_query_osm_objects",
-                {"key": "highway", "value": "motorway", "area": "London", "osm_types": ["node","way"]})
+                {"key": "natural", "value": "water", "area": "London", "osm_types": ["node","way","relation"]})
         except Exception as e:
             self.execution_error.emit(str(e))
         return tool_result
