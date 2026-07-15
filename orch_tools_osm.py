@@ -46,7 +46,7 @@ class OverpassTool:
             around_distance: Optional[int] = None,
             output_path: str = "",
             base_url: str = 'https://overpass-api.de/api/'
-    ) -> bool:
+    ):
         """
         Query OSM objects based on key/value and location.
 
@@ -58,7 +58,6 @@ class OverpassTool:
         :param around_distance: Distance in meters for 'around' queries (optional).
         :param output_path: Path to save the query results.
         :param base_url: Base URL of the Overpass API.
-        :return: True if query was successful and file saved, False otherwise.
         """
         try:
             # 1. Generate the OQL Query
@@ -94,13 +93,12 @@ class OverpassTool:
                     content = f.read()
                     # If file is empty or contains HTML error page, consider it failed
                     if not content or '<html' in content.lower() or '<!doctype' in content.lower():
-                        return False
-                    return True
+                        raise RuntimeError("The downloaded OSM data is empty or contains an HTML error page.")
             else:
-                return False
+                raise FileNotFoundError(f"Query result file not found at {output_path}")
 
         except Exception as e:
-            return False
+            raise e
 
     def _generate_oql(self, key: str, value: Optional[str], area: Optional[str],
                        bbox: Optional[List[float]], osm_types: Optional[List[str]],
@@ -108,7 +106,7 @@ class OverpassTool:
         """Internal helper to generate a simple Overpass QL string."""
 
         # Header: JSON output and timeout
-        query = '[out:json][timeout:30];\n'
+        query = '[out:json][timeout:60];\n'
 
         # Handle Area
         area_id = None
@@ -146,25 +144,24 @@ class OverpassTool:
 
         return query
 
-    def load_osm_json_to_map(self, json_path: str, layer_name: str = "OSM Results") -> bool:
+    def load_osm_json_to_map(self, json_path: str, layer_name: str = "OSM Results"):
         """
         Read OSM JSON results and display them as vector layers on the map.
         Supports nodes (Point), ways (LineString), and relations (Multipolygon).
 
         :param json_path: Path to the JSON file containing Overpass results.
         :param layer_name: Base name of the layers to be created.
-        :return: True if at least one layer was successfully created, False otherwise.
         """
         try:
             if not os.path.exists(json_path):
-                return False
+                raise FileNotFoundError(f"OSM JSON file not found: {json_path}")
 
             with open(json_path, 'r', encoding='utf8') as f:
                 data = json.load(f)
 
             elements = data.get('elements', [])
             if not elements:
-                return False
+                raise ValueError("No OSM elements found in the JSON file.")
 
             # 1. Separate elements by type
             nodes = [el for el in elements if el.get('type') == 'node']
@@ -177,7 +174,7 @@ class OverpassTool:
                 all_tag_keys.update(el.get('tags', {}).keys())
             sorted_keys = sorted(list(all_tag_keys))
 
-            def create_layer(geom_type, suffix, element_list):
+            def create_layer(geom_type, element_list) -> bool:
                 if not element_list:
                     return False
 
@@ -237,19 +234,22 @@ class OverpassTool:
                     feat.setAttributes([tags.get(key, "") for key in sorted_keys])
                     features.append(feat)
 
-                if features:
-                    provider.addFeatures(features)
-                    layer.updateExtents()
-                    QgsProject.instance().addMapLayer(layer)
-                    return True
-                return False
+                if not features:
+                    return False
+
+                # add layer to project.
+                provider.addFeatures(features)
+                layer.updateExtents()
+                QgsProject.instance().addMapLayer(layer)
+                return True
 
             # Create the three layers
-            success_nodes = create_layer("Point", "Nodes", nodes)
-            success_ways = create_layer("LineString", "Ways", ways)
-            success_rels = create_layer("Multipolygon", "Relations", relations)
+            point_layer_success = create_layer("Point", nodes)
+            line_layer_success = create_layer("LineString", ways)
+            polygon_layer_success = create_layer("Multipolygon", relations)
 
-            return success_nodes or success_ways or success_rels
+            if not (point_layer_success or line_layer_success or polygon_layer_success):
+                raise Exception("Failed to create any OSM layers: Point, LineString, and Multipolygon all failed.")
 
         except Exception as e:
-            return False
+            raise e

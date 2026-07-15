@@ -583,23 +583,20 @@ class OrchToolExecutor(QObject):
             temp_dir = QStandardPaths.writableLocation(QStandardPaths.TempLocation)
             output_path = os.path.join(temp_dir, "qgis-geo-knowledge-ai-osm-query.json")
             
-            success = self.overpass_tool.query_osm_objects(
-                key=key,
-                value=value,
-                area=area,
-                bbox=bbox,
-                osm_types=osm_types,
-                around_distance=around_distance,
-                output_path=output_path,
-                base_url=base_url
-            )
-
-            if not success:
-                raise Exception({"error_msg": "Overpass API query failed."})
-            
-            success_load = self.overpass_tool.load_osm_json_to_map(output_path, f"OSM_{key}_{value}")
-            if not success_load:
-                raise Exception({"error_msg": "Failed to load OSM data to map."})
+            try:
+                self.overpass_tool.query_osm_objects(
+                    key=key,
+                    value=value,
+                    area=area,
+                    bbox=bbox,
+                    osm_types=osm_types,
+                    around_distance=around_distance,
+                    output_path=output_path,
+                    base_url=base_url
+                )
+                self.overpass_tool.load_osm_json_to_map(output_path, f"OSM_{key}_{value}")
+            except Exception as e:
+                raise Exception({"error_msg": str(e)})
             
             result = {"status": "success", "message": "OSM data successfully loaded to map."}
             return json.dumps(result, ensure_ascii=False)
