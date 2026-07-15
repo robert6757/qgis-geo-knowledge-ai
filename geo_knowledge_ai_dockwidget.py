@@ -336,13 +336,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if dlg.exec() != Accepted:
             return
 
-        if self.orch_current_subtask and subtask_id != self.orch_current_subtask.id:
-            QMessageBox.warning(self, self.tr("Warning"),
-                                self.tr("Only the current subtask can be repeated."),
-                                QMessageBoxOK)
-            return
-
-        self.orch_manager.repeat_sub_task(dlg.get_modified_prompt())
+        # update the prompt of subtask.
+        sub_task.description = dlg.get_modified_prompt()
 
     def handle_ensure_code_execution(self):
         if not self.orch_manager or not self.orch_task_plan:
@@ -377,7 +372,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         """receive the orch message"""
         task_plan_text = "\n\n" + self.tr("**Task plan:**") + "\n\n"
         for idx, subtask in enumerate(task_plan.sub_tasks):
-            task_plan_text += f"{idx + 1}.{subtask.name}"
+            task_plan_text += f"[{idx + 1}.{subtask.name}](agent://orch/substask/detail/{subtask.id})"
             task_plan_text += "\n\n"
         self.recv_raw_content += task_plan_text
 

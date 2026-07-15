@@ -38,7 +38,7 @@ class SubtaskDialog(QDialog, FORM_CLASS):
         super(SubtaskDialog, self).__init__(parent)
         self.setupUi(self)
 
-        self.btnRepeat.clicked.connect(self.handle_click_repeat)
+        self.btnOK.clicked.connect(self.handle_click_ok)
         self.btnCancel.clicked.connect(self.handle_click_cancel)
 
         self.modified_prompt = subtask.description
@@ -50,9 +50,9 @@ class SubtaskDialog(QDialog, FORM_CLASS):
         self.textEditPrompt.setText(subtask.description)
 
         if current_subtask and subtask.id != current_subtask.id:
-            self.btnRepeat.setEnabled(False)
+            self.btnOK.setEnabled(False)
 
-    def handle_click_repeat(self):
+    def handle_click_ok(self):
         self.modified_prompt = self.textEditPrompt.toPlainText()
         super().accept()
 

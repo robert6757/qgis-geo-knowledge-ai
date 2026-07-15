@@ -100,8 +100,6 @@ class CTOrchManager(QThread):
         self.task_plan_execute_type = 0
         # 0: next subtask 1: repeat current subtask
         self.sub_task_execute_type = 0
-        # modified subtask prompt
-        self.modified_sub_task_prompt = ""
         # CodeExecution in postprocess.
         self.code_execution = None
 
@@ -201,9 +199,7 @@ class CTOrchManager(QThread):
         # Release semaphore to trigger next subtask execution.
         self._subtask_execution_semaphore.release()
 
-    def repeat_sub_task(self, modified_prompt: str = None):
-        if modified_prompt:
-            self.modified_sub_task_prompt = modified_prompt
+    def repeat_sub_task(self):
         self.sub_task_execute_type = 1
 
         # Drain any extra semaphores to prevent accumulation from repeated clicks
@@ -295,9 +291,6 @@ class CTOrchManager(QThread):
                 # Reset subtask status to pending
                 sub_task.status = TaskStatus.PENDING
                 sub_task.result = ""
-                # the description can be changed by user when waiting self._subtask_execution_semaphore.
-                if self.modified_sub_task_prompt:
-                    sub_task.description = self.modified_sub_task_prompt
 
     def on_received_subtask_stream(self, content: str):
         # self.report_subtask_stream.emit(content)
