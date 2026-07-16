@@ -9,72 +9,72 @@
         <translation type="obsolete">**Génération du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="136"/>
+        <location filename="../orch_manager.py" line="134"/>
         <source>Invalid Task plan!</source>
         <translation>Plan de tâches invalide !</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="141"/>
+        <location filename="../orch_manager.py" line="139"/>
         <source>VIP requests remaining: </source>
         <translation>Requêtes VIP restantes :</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="218"/>
+        <location filename="../orch_manager.py" line="219"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Exécution automatique du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="259"/>
+        <location filename="../orch_manager.py" line="260"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ATTENTION] Sous-tâche [{}] introuvable, ignorée.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="267"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ATTENTION] La dépendance [{}] de la sous-tâche [{}] est incomplète. Tentative de poursuite.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="248"/>
+        <location filename="../orch_manager.py" line="249"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Exécution pas à pas du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="330"/>
+        <location filename="../orch_manager.py" line="328"/>
         <source>Start executing the subtask:</source>
         <translation>Début de l&apos;exécution de la sous-tâche :</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="359"/>
+        <location filename="../orch_manager.py" line="358"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Terminé] Sous-tâche [{}] exécutée avec succès.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="364"/>
+        <location filename="../orch_manager.py" line="363"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Échec] Le résultat de la sous-tâche [{}] n&apos;a pas répondu aux attentes. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="369"/>
+        <location filename="../orch_manager.py" line="368"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Échec] Échec de l&apos;exécution de la sous-tâche [{}] : [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="600"/>
+        <location filename="../orch_manager.py" line="604"/>
         <source>Error: No subtask execution result.</source>
         <translation>Erreur : aucun résultat d&apos;exécution de sous-tâche.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="604"/>
+        <location filename="../orch_manager.py" line="608"/>
         <source>**Summary of tasks:**</source>
         <translation>Résumé des tâches :</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="153"/>
+        <location filename="../orch_manager.py" line="151"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>La tâche ne peut pas continuer car le module d&apos;exécution de code n&apos;est pas disponible !</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="126"/>
+        <location filename="../orch_manager.py" line="122"/>
         <source>**Thinking...**</source>
         <translation>**Réflexion en cours...**</translation>
     </message>
@@ -82,7 +82,7 @@
 <context>
     <name>CTOrchNetwork</name>
     <message>
-        <location filename="../orch_network.py" line="87"/>
+        <location filename="../orch_network.py" line="90"/>
         <source>Network Error:</source>
         <translation>Erreur réseau :</translation>
     </message>
@@ -131,42 +131,42 @@
         <translation>Paramètres de Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="82"/>
+        <location filename="../setting_dialog.ui" line="35"/>
         <source>Apply for high-speed channel. Please enter your email address and click &apos;Apply&apos;. We will contact you via email within 24 hours. </source>
         <translation>Pour demander l&apos;accès à la voie rapide, veuillez saisir votre adresse e-mail et cliquer sur « Demander ». Nous vous contacterons par e-mail dans les 24 heures.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="94"/>
+        <location filename="../setting_dialog.ui" line="47"/>
         <source>E-mail：</source>
         <translation>E-mail :</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="104"/>
+        <location filename="../setting_dialog.ui" line="57"/>
         <source>Apply</source>
         <translation>Demander</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="44"/>
+        <location filename="../setting_dialog.ui" line="210"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="34"/>
+        <location filename="../setting_dialog.ui" line="220"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="20"/>
+        <location filename="../setting_dialog.ui" line="183"/>
         <source>Get Help</source>
         <translation>Obtenir de l&apos;aide</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="67"/>
+        <location filename="../setting_dialog.ui" line="20"/>
         <source>High-Speed Channel</source>
         <translation>Voie rapide</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="116"/>
+        <location filename="../setting_dialog.ui" line="69"/>
         <source>Multi-Turn Conversation</source>
         <translation>Conversation multi-tours</translation>
     </message>
@@ -176,22 +176,22 @@
         <translation type="obsolete">Le nombre maximal de tours par défaut est 2. Un nombre trop élevé peut entraîner une perte de concentration sur le sujet.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="127"/>
+        <location filename="../setting_dialog.ui" line="80"/>
         <source>Turn Limit：</source>
         <translation>Limite de tours :</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="141"/>
+        <location filename="../setting_dialog.ui" line="94"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="146"/>
+        <location filename="../setting_dialog.ui" line="99"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="151"/>
+        <location filename="../setting_dialog.ui" line="104"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -231,19 +231,39 @@
         <translation type="obsolete">Raisonnement en chaîne</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="156"/>
+        <location filename="../setting_dialog.ui" line="109"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="161"/>
+        <location filename="../setting_dialog.ui" line="114"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="124"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>La limite par défaut est de 3 tours pour aider à rester concentré sur le sujet.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="137"/>
+        <source>Temporary Folder</source>
+        <translation>Dossier Temporaire</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="143"/>
+        <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
+        <translation>Les dossiers temporaires sont utilisés pour stocker des fichiers intermédiaires pendant le processus de téléchargement ou d&apos;analyse des données.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="155"/>
+        <source>Path:</source>
+        <translation>Chemin :</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="171"/>
+        <source>...</source>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -282,7 +302,7 @@ ATTENTION : Malgré nos restrictions strictes sur l&apos;IA, le code généré n
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
         <source>Warning</source>
-        <translation>Avertissement</translation>
+        <translation type="obsolete">Avertissement</translation>
     </message>
     <message>
         <location filename="../code_exec_utils.py" line="66"/>
@@ -295,47 +315,47 @@ ATTENTION : Malgré nos restrictions strictes sur l&apos;IA, le code généré n
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="449"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="452"/>
         <source>**Question:</source>
         <translation>**Question :</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="453"/>
         <source>**Answer:</source>
         <translation>**Réponse :</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="530"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="542"/>
         <source>Stop</source>
         <translation>Arrêter</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="566"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="584"/>
         <source>Send</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="200"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
         <source>Tip</source>
         <translation>Astuce</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="200"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
         <source>Thank you for your feedback.</source>
         <translation>Merci pour votre retour !</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="316"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="204"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="206"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Échec de l&apos;envoi de votre avis. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="209"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="211"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Erreur réseau : veuillez vérifier votre connexion et réessayer.</translation>
     </message>
@@ -350,27 +370,27 @@ ATTENTION : Malgré nos restrictions strictes sur l&apos;IA, le code généré n
         <translation type="obsolete">Exécution du code en arrière-plan...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="244"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
         <source>Success</source>
         <translation>Succès</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="252"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="254"/>
         <source>Auto-Fix</source>
         <translation>Correction automatique</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="261"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="263"/>
         <source>Code Copied Successfully!</source>
         <translation>Code copié avec succès !</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="285"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
         <source>RuntimeError</source>
         <translation>Erreur d&apos;exécution</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="285"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -510,7 +530,7 @@ De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et 
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="754"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="790"/>
         <source>
 
 ———
@@ -564,27 +584,27 @@ De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et 
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="305"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="307"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Seule la sous-tâche actuelle peut être poursuivie.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Seule la sous-tâche actuelle peut être répétée.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="385"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="382"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Pas à pas](agent://orch/substask/step) | [Tout automatiser](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="394"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Continuer](agent://orch/substask/continue/{subtask_id}) | [Répéter](agent://orch/substask/repeat/{subtask_id}) | [Détail](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="750"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="786"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -626,7 +646,7 @@ Astuce : L&apos;automatisation de workflows peut gérer des tâches complexes de
         <translation type="obsolete">**Génération du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="378"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="375"/>
         <source>**Task plan:**</source>
         <translation>**Plan de tâches :**</translation>
     </message>
@@ -768,77 +788,97 @@ Astuce : L&apos;automatisation de workflows peut gérer des tâches complexes de
         <translation>Détail de la sous-tâche</translation>
     </message>
     <message>
-        <location filename="../subtask_dialog.ui" line="26"/>
+        <location filename="../subtask_dialog.ui" line="124"/>
         <source>Name：</source>
         <translation>Nom :</translation>
     </message>
     <message>
-        <location filename="../subtask_dialog.ui" line="46"/>
+        <location filename="../subtask_dialog.ui" line="111"/>
         <source>Status:</source>
         <translation>Statut :</translation>
     </message>
     <message>
-        <location filename="../subtask_dialog.ui" line="59"/>
+        <location filename="../subtask_dialog.ui" line="46"/>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../subtask_dialog.ui" line="72"/>
+        <location filename="../subtask_dialog.ui" line="82"/>
         <source>Prompt:</source>
         <translation>Invite :</translation>
     </message>
     <message>
         <location filename="../subtask_dialog.ui" line="115"/>
         <source>Repeat</source>
-        <translation>Répéter</translation>
+        <translation type="obsolete">Répéter</translation>
     </message>
     <message>
-        <location filename="../subtask_dialog.ui" line="135"/>
+        <location filename="../subtask_dialog.ui" line="98"/>
         <source>Output:</source>
         <translation>Sortie :</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="26"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="79"/>
+        <source>The prompt can be modified. Click OK after confirming.</source>
+        <translation>L&apos;invite peut être modifiée. Cliquez sur OK après confirmation.</translation>
+    </message>
+    <message>
+        <location filename="../subtask_dialog.ui" line="53"/>
+        <source>Note:</source>
+        <translation>Note :</translation>
     </message>
 </context>
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="89"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Warning</source>
         <translation>Avertissement</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="83"/>
+        <location filename="../setting_dialog.py" line="91"/>
         <source>Please enter your email address.</source>
         <translation>Veuillez saisir votre adresse e-mail.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="89"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Please enter a valid email address.</source>
         <translation>Veuillez saisir une adresse e-mail valide.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="106"/>
+        <location filename="../setting_dialog.py" line="114"/>
         <source>Tip</source>
         <translation>Astuce</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="106"/>
+        <location filename="../setting_dialog.py" line="114"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
         <translation>Votre demande a été reçue. Nous vous répondrons par e-mail dans les 24 heures. Veuillez vérifier votre boîte de réception.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="116"/>
+        <location filename="../setting_dialog.py" line="124"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="111"/>
+        <location filename="../setting_dialog.py" line="119"/>
         <source>Failed to submit your request. Please try again later.</source>
         <translation>Échec de la soumission de votre demande. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="116"/>
+        <location filename="../setting_dialog.py" line="124"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Erreur réseau : veuillez vérifier votre connexion et réessayer.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="132"/>
+        <source>Select Temporary Folder</source>
+        <translation>Sélectionner le dossier temporaire</translation>
     </message>
 </context>
 <context>
