@@ -464,6 +464,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # chat mode
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
 
+        # temp folder
+        temp_folder = gSetting.value(TEMP_FOLDER_TAG, QStandardPaths.writableLocation(TempLocation))
+
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
 
@@ -476,6 +479,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # get qgis basic information in project context.
         workspace_info = self._get_workspace_info()
+
+        # Set a temporary directory for the workspace
+        workspace_info["TempFolder"] = temp_folder
 
         histories = []
         if self.pre_chat_timestamp > 0:

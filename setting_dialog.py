@@ -26,6 +26,7 @@ import requests
 import webbrowser
 
 from qgis.PyQt import uic
+from qgis.PyQt.QtWidgets import QFileDialog
 
 from qgis.core import QgsSettings
 
@@ -48,19 +49,26 @@ class SettingDialog(QDialog, FORM_CLASS):
         self.btnCancel.clicked.connect(self.handle_click_cancel)
         self.btnApply.clicked.connect(self.handle_click_apply)
         self.btnHelp.clicked.connect(self.handle_click_help)
+        self.btnSelFolder.clicked.connect(self.handle_click_select_folder)
 
         gSetting = QgsSettings()
         email = gSetting.value(USER_EMAIL_TAG)
         if email:
             self.lineEdit.setText(email)
 
+        temp_folder = gSetting.value(TEMP_FOLDER_TAG)
+        if temp_folder:
+            self.lineEditTempFolderPath.setText(temp_folder)
+
         multi_turn = gSetting.value(MULTI_TURN_TAG, "3")
         self.cbChatTurn.setCurrentText(multi_turn)
     def handle_click_ok(self):
         email = self.lineEdit.text()
+        temp_folder = self.lineEditTempFolderPath.text()
 
         gSetting = QgsSettings()
         gSetting.setValue(USER_EMAIL_TAG, email)
+        gSetting.setValue(TEMP_FOLDER_TAG, temp_folder)
 
         # multi-turn
         chat_turn = self.cbChatTurn.currentText()
@@ -116,3 +124,16 @@ class SettingDialog(QDialog, FORM_CLASS):
             QMessageBox.critical(self, self.tr("Error"),
                                  self.tr("Network error. Please check your connection and try again."),
                                  QMessageBoxOK)
+
+    def handle_click_select_folder(self):
+        # Get the current path from lineEdit as starting directory
+        initial_path = self.lineEditTempFolderPath.text()
+
+        temp_folder_path = QFileDialog.getExistingDirectory(
+            self, 
+            self.tr("Select Temporary Folder"), 
+            initial_path
+        )
+        if not temp_folder_path:
+            return
+        self.lineEditTempFolderPath.setText(temp_folder_path)
