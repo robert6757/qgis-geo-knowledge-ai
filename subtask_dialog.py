@@ -33,7 +33,7 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(
 
 class SubtaskDialog(QDialog, FORM_CLASS):
 
-    def __init__(self, subtask: SubTask, current_subtask, parent=None):
+    def __init__(self, subtask: SubTask, parent=None):
         """Constructor."""
         super(SubtaskDialog, self).__init__(parent)
         self.setupUi(self)
@@ -48,9 +48,6 @@ class SubtaskDialog(QDialog, FORM_CLASS):
         self.lineEditStatus.setText(subtask.status.value)
         self.textEditResult.setText(subtask.result)
         self.textEditPrompt.setText(subtask.description)
-
-        if current_subtask and subtask.id != current_subtask.id:
-            self.btnOK.setEnabled(False)
 
     def handle_click_ok(self):
         self.modified_prompt = self.textEditPrompt.toPlainText()

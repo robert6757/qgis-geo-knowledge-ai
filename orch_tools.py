@@ -30,11 +30,13 @@ from qgis import processing
 from .code_exec_utils import get_code_execution_class
 from .compat import *
 from .orch_tools_osm import OverpassTool
+from .orch_tools_qml import QmlStyleTool
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
-                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_query_and_show_osm_objects"]
+                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_query_and_show_osm_objects",
+                   "qgis_get_qml_template"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -47,6 +49,7 @@ class OrchToolExecutor(QObject):
         super().__init__(parent)
         self.iface = iface
         self.overpass_tool = OverpassTool()
+        self.qml_tool = QmlStyleTool()
         self.execute_requested.connect(self._on_execute_requested, QueuedConnection)
 
     def _on_execute_requested(self, tool_name: str, arguments: dict):
@@ -388,8 +391,9 @@ class OrchToolExecutor(QObject):
 
         elif tool_name == "qgis_get_algorithm_help":
             # Get help information for one or more processing algorithms in batch.
-            alg_ids_json = arguments.get("alg_ids", "[]")
-            alg_ids = json.loads(alg_ids_json)
+            alg_ids_json = arguments.get("alg_ids", [])
+            alg_ids = alg_ids_json
+
             if not alg_ids:
                 raise Exception({"error_msg": "No algorithm IDs provided"})
 
@@ -599,6 +603,15 @@ class OrchToolExecutor(QObject):
                 raise Exception({"error_msg": str(e)})
             
             result = {"status": "success", "message": "OSM data successfully loaded to map."}
+            return json.dumps(result, ensure_ascii=False)
+
+        elif tool_name == "qgis_get_qml_template":
+            style_type = arguments.get("style_type")
+            try:
+                template = self.qml_tool.get_qml_template(style_type)
+                result = {"status": "success", "template": template}
+            except Exception as e:
+                raise Exception({"error_msg": str(e)})
             return json.dumps(result, ensure_ascii=False)
 
         else:

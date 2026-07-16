@@ -330,7 +330,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             return
 
         # show Subtask Detail Dialog.
-        dlg = SubtaskDialog(sub_task, self.orch_current_subtask)
+        dlg = SubtaskDialog(sub_task)
         dlg.setModal(True)
         dlg.show()
         if dlg.exec() != Accepted:
