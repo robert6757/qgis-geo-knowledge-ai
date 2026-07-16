@@ -584,7 +584,7 @@ class OrchToolExecutor(QObject):
             base_url = arguments.get("base_url", 'https://overpass-api.de/api/')
             
             # Generate output file path
-            temp_dir = QStandardPaths.writableLocation(QStandardPaths.TempLocation)
+            temp_dir = QStandardPaths.writableLocation(TempLocation)
             output_path = os.path.join(temp_dir, "qgis-geo-knowledge-ai-osm-query.json")
             
             try:

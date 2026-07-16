@@ -164,6 +164,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.clear()
         self.plainTextEdit.clear()
         self.chat_id = None
+        self.orch_task_plan = None
+        self.orch_current_subtask = None
         self.pre_chat_timestamp = history_item.get("timestamp", 0)
         self.chatbot_browser.pre_process_markdown()
         self.chatbot_browser.append_markdown(history_item["answer"])
@@ -465,7 +467,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
 
         # temp folder
-        temp_folder = gSetting.value(TEMP_FOLDER_TAG, QStandardPaths.writableLocation(TempLocation))
+        temp_folder = gSetting.value(TEMP_FOLDER_TAG, "")
+        if not temp_folder:
+            temp_folder = QStandardPaths.writableLocation(TempLocation)
 
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
