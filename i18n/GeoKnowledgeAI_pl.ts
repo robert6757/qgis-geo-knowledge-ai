@@ -253,7 +253,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="143"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>Foldery tymczasowe są wykorzystywane do przechowywania plików tymczasowych podczas procesu pobierania lub analizy danych.</translation>
+        <translation>Foldery tymczasowe są wykorzystywane do przechowywania plików pośrednich podczas procesu pobierania lub analizy danych.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="155"/>

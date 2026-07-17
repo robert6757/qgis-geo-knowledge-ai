@@ -253,7 +253,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="143"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>临时文件夹用于在数据下载或分析过程中存储中间文件。</translation>
+        <translation>临时文件夹用于存放数据下载或分析过程中产生的中间文件。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="155"/>
@@ -829,12 +829,12 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../subtask_dialog.ui" line="79"/>
         <source>The prompt can be modified. Click OK after confirming.</source>
-        <translation>可以修改提示词。确认后请点击确定。</translation>
+        <translation>可以修改提示词，确认后请点击确定按钮。</translation>
     </message>
     <message>
         <location filename="../subtask_dialog.ui" line="53"/>
         <source>Note:</source>
-        <translation>注：</translation>
+        <translation>提示：</translation>
     </message>
 </context>
 <context>

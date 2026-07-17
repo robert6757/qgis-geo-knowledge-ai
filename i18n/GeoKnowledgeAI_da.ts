@@ -253,7 +253,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="143"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>Midlertidige mapper bruges til at gemme midlertidige filer under datadownload- eller analyseprocessen.</translation>
+        <translation>Midlertidige mapper bruges til at gemme mellemfiler under datadownload- eller analyseprocessen.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="155"/>
