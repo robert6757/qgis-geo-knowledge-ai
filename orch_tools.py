@@ -345,11 +345,11 @@ class OrchToolExecutor(QObject):
             root.insertLayer(-1, layer)
 
             return json.dumps({
+                "status": "success",
+                "message": "OpenStreetMap layer successfully loaded to map.",
                 "layer_id": layer.id(),
                 "layer_name": layer.name(),
-                "layer_type": "raster",
-                "layer_width": layer.width(),
-                "layer_height": layer.height()
+                "layer_type": "raster"
             }, ensure_ascii=False)
 
         elif tool_name == "qgis_add_google_layer":
@@ -382,11 +382,11 @@ class OrchToolExecutor(QObject):
             root.insertLayer(-1, layer)
 
             return json.dumps({
+                "status": "success",
+                "message": "Google layer successfully loaded to map.",
                 "layer_id": layer.id(),
                 "layer_name": layer.name(),
-                "layer_type": "raster",
-                "layer_width": layer.width(),
-                "layer_height": layer.height()
+                "layer_type": "raster"
             }, ensure_ascii=False)
 
         elif tool_name == "qgis_get_algorithm_help":
