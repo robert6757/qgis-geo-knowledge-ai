@@ -146,12 +146,12 @@ class OrchToolExecutor(QObject):
                 }
 
                 # Add type-specific information
-                if layer.type() == QgsMapLayer.VectorLayer:
+                if layer.type() == QgsMapLayer.LayerType.VectorLayer:
                     layer_info.update({
                         "feature_count": layer.featureCount(),
                         "geometry_type": layer.geometryType()
                     })
-                elif layer.type() == QgsMapLayer.RasterLayer:
+                elif layer.type() == QgsMapLayer.LayerType.RasterLayer:
                     layer_info.update({
                         "width": layer.width(),
                         "height": layer.height()
@@ -204,7 +204,7 @@ class OrchToolExecutor(QObject):
             if layer_id in project.mapLayers():
                 layer = project.mapLayer(layer_id)
 
-                if layer.type() != QgsMapLayer.VectorLayer:
+                if layer.type() != QgsMapLayer.LayerType.VectorLayer:
                     raise Exception(f"Layer is not a vector layer: {layer_id}")
 
                 features = []
@@ -460,7 +460,7 @@ class OrchToolExecutor(QObject):
 
             layer = project.mapLayer(layer_id)
 
-            if layer.type() != QgsMapLayer.RasterLayer:
+            if layer.type() != QgsMapLayer.LayerType.RasterLayer:
                 raise Exception({"error_msg": f"Layer is not a raster layer: {layer_id}"})
 
             # Get the data provider
@@ -661,9 +661,9 @@ class OrchToolExecutor(QObject):
 
     def _get_layer_type(self, layer):
         """Helper to get layer type as string"""
-        if layer.type() == QgsMapLayer.VectorLayer:
+        if layer.type() == QgsMapLayer.LayerType.VectorLayer:
             return f"vector_{layer.geometryType()}"
-        elif layer.type() == QgsMapLayer.RasterLayer:
+        elif layer.type() == QgsMapLayer.LayerType.RasterLayer:
             return "raster"
         else:
             return str(layer.type())

@@ -7,7 +7,7 @@ name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
-version=1.19
+version=1.20
 author=phoenix-gis
 email=phoenixgis@sina.com
 
@@ -23,7 +23,7 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.19 2026-07-21
+changelog=Version 1.20 2026-07-21
       * New Feature: Added Workflow capabilities for OSM loading.
       * New Feature: Added Workflow Vision capabilities.
       * New Feature: Added Workflow sub-task modification capabilities.

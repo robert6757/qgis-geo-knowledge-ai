@@ -81,7 +81,7 @@ def ensure_code_execution(parent_widget: QWidget = None):
         q_nw = QgsBlockingNetworkRequest()
         err_code = q_nw.get(q_request)
         q_reply = q_nw.reply()
-        if err_code == QgsBlockingNetworkRequest.NoError and q_reply:
+        if err_code == QgsBlockingNetworkRequest.ErrorCode.NoError and q_reply:
             content = q_reply.content()
             with open(target_path, 'wb') as f:
                 f.write(content.data())

@@ -637,7 +637,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             layer_info["CRSAuthId"] = f"{crs.authid()}"
 
             # get fields data in vector data.
-            if layer.type() == QgsMapLayer.VectorLayer:
+            if layer.type() == QgsMapLayer.LayerType.VectorLayer:
                 fields_info = []
                 fields = layer.fields()
                 for field in fields:
@@ -651,7 +651,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                 layer_info["fields"] = fields_info
 
             # get bands data in raster data.
-            elif layer.type() == QgsMapLayer.RasterLayer:
+            elif layer.type() == QgsMapLayer.LayerType.RasterLayer:
                 bands_info = []
                 provider = layer.dataProvider()
                 if provider:
@@ -766,14 +766,14 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.iface.messageBar().pushMessage(
                 "Failed to upload screenshot",
                 f"Network：{str(e)}",
-                level=Qgis.Critical,
+                level=Qgis.MessageLevel.Critical,
                 duration=5
             )
         except Exception as e:
             self.iface.messageBar().pushMessage(
                 "Failed to upload screenshot",
                 f"{str(e)}",
-                level=Qgis.Critical,
+                level=Qgis.MessageLevel.Critical,
                 duration=5
             )
         finally:
