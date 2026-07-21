@@ -35,8 +35,8 @@ from .orch_tools_qml import QmlStyleTool
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
-                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_query_and_show_osm_objects",
-                   "qgis_get_qml_template"]
+                   "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
+                   "qgis_query_and_show_osm_objects", "qgis_get_qml_template"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -212,7 +212,7 @@ class OrchToolExecutor(QObject):
                 if statement:
                     request.setFilterExpression(statement)
                 if max_feature_count > 0:
-                    request.setMaxFeatures(max_feature_count)
+                    request.setLimit(max_feature_count)
                 for i, feature in enumerate(layer.getFeatures(request)):
                     # Extract attributes
                     attrs = {}
@@ -404,6 +404,36 @@ class OrchToolExecutor(QObject):
                 try:
                     processing.algorithmHelp(alg_id)
                     help_results[alg_id] = sys.stdout.getvalue()
+                finally:
+                    sys.stdout = old_stdout
+            return json.dumps(help_results, ensure_ascii=False)
+
+        elif tool_name == "qgis_get_pyqgis_class_help":
+            # Get help information for one or more PyQGIS classes in batch.
+            class_names = arguments.get("class_names", [])
+            if not class_names:
+                raise Exception({"error_msg": "No PyQGIS class names provided"})
+
+            import qgis.core, qgis.gui, qgis.analysis
+            namespaces = [qgis.core, qgis.gui, qgis.analysis, sys.modules.get("__main__", {})]
+
+            help_results = {}
+            for class_name in class_names:
+                cls_obj = None
+                for ns in namespaces:
+                    if hasattr(ns, class_name):
+                        cls_obj = getattr(ns, class_name)
+                        break
+                
+                if cls_obj is None:
+                    help_results[class_name] = f"Class {class_name} not found in PyQGIS namespaces."
+                    continue
+
+                old_stdout = sys.stdout
+                sys.stdout = io.StringIO()
+                try:
+                    help(cls_obj)
+                    help_results[class_name] = sys.stdout.getvalue()
                 finally:
                     sys.stdout = old_stdout
             return json.dumps(help_results, ensure_ascii=False)
@@ -642,8 +672,8 @@ class OrchToolExecutor(QObject):
     #     tool_result = ""
     #     try:
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_query_and_show_osm_objects",
-    #             {"key": "natural", "value": "water", "area": "Beijing", "osm_types": ["node","way","relation"], "bbox": [116.17942, 39.803, 116.23773,39.855]})
+    #             "qgis_get_pyqgis_class_help",
+    #             {"class_names": ['QgsGraduatedSymbolRenderer']})
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
     #     return tool_result

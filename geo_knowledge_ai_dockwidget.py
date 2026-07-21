@@ -88,7 +88,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
         self.cbSwitchMode.setCurrentIndex(chat_mode-1)
-        if chat_mode == 1:
+        if chat_mode == 1 or chat_mode == 4:
             # the screen capture supported only in Knowledge Q&A
             self.btnScreenCapture.setEnabled(True)
         else:
@@ -179,8 +179,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         gSetting.setValue(CHAT_MODE_TAG, str(chat_mode))
 
-        if chat_mode == 1:
-            # the screen capture supported only in Knowledge Q&A
+        if chat_mode == 1 or chat_mode == 4:
+            # the screen capture supported only in Knowledge Q&A and Workflow.
             self.btnScreenCapture.setEnabled(True)
         else:
             self.btnScreenCapture.setEnabled(False)
@@ -477,7 +477,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # capture screen
         capture_screen_tag = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
         capture_screen_url = ''
-        if chat_mode == 1 and capture_screen_tag:
+        if (chat_mode == 1 or chat_mode == 4) and capture_screen_tag:
             # screen image only in knowledge Q&A.
             capture_screen_url = self.capture_screen(self.chat_id)
 

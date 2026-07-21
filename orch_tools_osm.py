@@ -95,7 +95,7 @@ class OverpassTool:
                     if not content or '<html' in content.lower() or '<!doctype' in content.lower():
                         raise RuntimeError("The downloaded OSM data is empty or contains an HTML error page.")
             else:
-                raise FileNotFoundError(f"Query result file not found at {output_path}")
+                raise FileNotFoundError("Query result file not found. This might be because the Overpass API timed out or the query is too large. Please try again or consider adjusting parameters such as osm_types or the search area.")
 
         except Exception as e:
             raise e
@@ -161,7 +161,7 @@ class OverpassTool:
 
             elements = data.get('elements', [])
             if not elements:
-                raise ValueError("No OSM elements found in the JSON file.")
+                raise ValueError("No OSM elements found in the JSON file. This might be because the query result is empty. Please consider adjusting parameters such as osm_types, the search area, or the tag keys and values.")
 
             # 1. Separate elements by type
             nodes = [el for el in elements if el.get('type') == 'node']
