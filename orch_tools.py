@@ -24,7 +24,7 @@ import io
 import os
 import json
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant, QStandardPaths
-from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle, QgsLayerTreeLayer
 from qgis import processing
 
 from .code_exec_utils import get_code_execution_class
@@ -36,7 +36,7 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
-                   "qgis_query_and_show_osm_objects", "qgis_get_qml_template"]
+                   "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -643,6 +643,56 @@ class OrchToolExecutor(QObject):
             except Exception as e:
                 raise Exception({"error_msg": str(e)})
             return json.dumps(result, ensure_ascii=False)
+
+        elif tool_name == "qgis_reorder_layers":
+            # Reorder layers in the project's layer tree root.
+            # layer_ids: list of layer ids in the desired top-to-bottom order.
+            layer_ids = arguments.get("layer_ids", [])
+            if not layer_ids:
+                raise Exception({"error_msg": "No layer_ids provided"})
+
+            project = QgsProject.instance()
+            root = project.layerTreeRoot()
+
+            # Collect nodes for the requested layer ids (only direct children of root).
+            nodes_to_move = []
+            skipped_ids = []
+            for layer_id in layer_ids:
+                node = root.findLayer(layer_id)
+                if node:
+                    nodes_to_move.append((node, node.clone()))
+                else:
+                    skipped_ids.append(layer_id)
+
+            if not nodes_to_move:
+                raise Exception({"error_msg": f"None of the layer_ids were found: {layer_ids}"})
+
+            # Insert clones at the top in reverse order so the final order matches layer_ids.
+            for original_node, cloned_node in reversed(nodes_to_move):
+                root.insertChildNode(0, cloned_node)
+
+            # Remove original nodes after all clones are in place.
+            for original_node, _ in nodes_to_move:
+                root.removeChildNode(original_node)
+
+            # Build the current top-to-bottom layer order.
+            current_order = []
+            for child in root.children():
+                if isinstance(child, QgsLayerTreeLayer):
+                    current_order.append(child.layerId())
+
+            moved_count = len(nodes_to_move)
+            message = f"Reordered {moved_count} layer(s)."
+            if skipped_ids:
+                message += f" Skipped layer ids: {skipped_ids}."
+
+            return json.dumps({
+                "status": "success",
+                "message": message,
+                "moved_count": moved_count,
+                "skipped_ids": skipped_ids,
+                "layer_order": current_order
+            }, ensure_ascii=False)
 
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
