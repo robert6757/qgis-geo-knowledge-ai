@@ -25,6 +25,7 @@ import os
 import re
 import uuid
 import copy
+import requests
 from enum import Enum
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
@@ -43,6 +44,7 @@ class TaskStatus(Enum):
     RUNNING = "Running"
     COMPLETED = "Completed"
     FAILED = "Failed"
+    REFINED = "Refined"
 
 @dataclass
 class SubTask:
@@ -93,6 +95,7 @@ class CTOrchManager(QThread):
 
         self.iface = iface
         self._stop_flag = False
+        self._capture_screen_flag = True if request["screenshot_url"] else False
         self.request = request
         self.prompt = ""
         self.sub_task_results: Dict[str, str] = {}
@@ -136,7 +139,7 @@ class CTOrchManager(QThread):
             return
 
         if user_info and user_info["remaining_vip_ticket"]:
-            self.report_decompose_stream.emit(self.tr("VIP requests remaining: ")+ str(user_info["remaining_vip_ticket"]))
+            self.report_decompose_stream.emit(self.tr("\n\nVIP requests remaining: ")+ str(user_info["remaining_vip_ticket"]))
 
         self.orch_decompose_finished.emit(task_plan)
 
@@ -239,8 +242,24 @@ class CTOrchManager(QThread):
                              .format(unmet_deps, sub_task.id))
                 self.warning_occurred.emit(error_str)
 
-            # execute the subtask.
-            self.__execute_sub_task(sub_task)
+            # execute the subtask with an iterative refinement loop
+            attempts = 0
+            max_refine_attempts = 3
+            current_feedback = None
+            
+            while attempts < max_refine_attempts:
+                status, feedback = self.__execute_sub_task(sub_task, feedback=current_feedback)
+                
+                if status == TaskStatus.COMPLETED:
+                    break
+                elif status == TaskStatus.REFINED:
+                    attempts += 1
+                    current_feedback = feedback
+                    self.report_subtask_stream.emit(self.tr(f"Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})"))
+                else: # FAILED or other
+                    break
+
+
 
     def __step_all_subtask(self, task_plan: TaskPlan):
         if self._stop_flag:
@@ -312,18 +331,19 @@ class CTOrchManager(QThread):
     def on_received_thinking_stream(self, content: str):
         self.report_thinking_stream.emit(content)
 
-    def __execute_sub_task(self, sub_task: SubTask) -> str:
+    def __execute_sub_task(self, sub_task: SubTask, feedback: str = None) -> (TaskStatus, str):
         """
         execute single subtask
 
         Args:
             sub_task: object of subtask
+            feedback: optional feedback from evaluator for refinement
 
         Returns:
-            result of subtask
+            (status, status_msg)
         """
         if self._stop_flag:
-            return ""
+            return TaskStatus.FAILED, ""
 
         self.report_subtask_stream.emit(self.tr("Start executing the subtask:") + sub_task.name)
 
@@ -333,7 +353,8 @@ class CTOrchManager(QThread):
         # Execute subtask
         result = self.__chat_with_tools_stream(
             message=sub_task.description,
-            context=context
+            context=context,
+            feedback=feedback
         )
 
         if result.get("success"):
@@ -349,29 +370,37 @@ class CTOrchManager(QThread):
                 final_result = final_content
 
             # Check if the task is completed
-            is_completed, error_msg = self.__check_subtask_completion(sub_task, final_result)
-            if is_completed:
+            completed_status, status_msg = self.__check_subtask_completion(sub_task, final_result)
+            if completed_status == '[COMPLETED]':
                 sub_task.status = TaskStatus.COMPLETED
                 sub_task.result = final_result
                 # To improve the focus of subtasks, only final_content is added here.
                 self.sub_task_results[sub_task.id] = final_content
                 report_str = self.tr("[Completed] Subtask [{}] executed successfully.").format(sub_task.name)
                 self.report_subtask_stream.emit(report_str)
+                return TaskStatus.COMPLETED, ""
+            elif completed_status == '[REFINED]':
+                sub_task.status = TaskStatus.REFINED
+                sub_task.result = final_result
+                self.sub_task_results[sub_task.id] = final_content
+                report_str = self.tr("[Refined] Subtask [{}] needs further adjustment: {}").format(sub_task.name, status_msg)
+                self.report_subtask_stream.emit(report_str)
+                return TaskStatus.REFINED, status_msg
             else:
                 sub_task.status = TaskStatus.FAILED
                 sub_task.result = f"The execution result did not meet expectations: {final_result}."
-                report_str = self.tr("[Failure] The execution result of subtask [{}] did not meet expectations. {}").format(sub_task.name, error_msg)
+                report_str = self.tr("[Failure] The execution result of subtask [{}] did not meet expectations. {}").format(sub_task.name, status_msg)
                 self.report_subtask_stream.emit(report_str)
+                return TaskStatus.FAILED, status_msg
         else:
             sub_task.status = TaskStatus.FAILED
             sub_task.result = result.get("error", "Unknown error")
             report_str = self.tr(
                 "[Failure] Subtask [{}] failed to execute: [{}]").format(sub_task.name, sub_task.result)
             self.report_subtask_stream.emit(report_str)
+            return TaskStatus.FAILED, result.get("error", "")
 
-        return sub_task.result
-
-    def __chat_with_tools_stream(self, message: str, context: str = "") -> Dict[str, Any]:
+    def __chat_with_tools_stream(self, message: str, context: str = "", feedback: str = None) -> Dict[str, Any]:
             # Build a message containing context information
             if self._stop_flag:
                 return {
@@ -389,7 +418,12 @@ class CTOrchManager(QThread):
                 for iteration in range(max_tool_iterations):
                     # use raw request to build the subtask request.
                     sub_task_request = copy.deepcopy(self.request)
-                    sub_task_request["prompt"] = message
+                    
+                    prompt = message
+                    if feedback:
+                        prompt = f"Notice: The previous attempt needs optimization. Please refine the result based on the following feedback:\n{feedback}\n\nOriginal task objective: {message}"
+                    
+                    sub_task_request["prompt"] = prompt
                     sub_task_request["context"] = context
                     sub_task_request["tool_call_results"] = tool_call_results
 
@@ -472,16 +506,65 @@ class CTOrchManager(QThread):
                     "error": str(e)
                 }
 
-    def __check_subtask_completion(self, sub_task: SubTask, result: str) -> (bool, str):
+    def __capture_canvas_screen(self, chat_id):
+        """Capture only the map canvas and upload to server."""
+        try:
+            # 1. save screenshot to temp dir.
+            screenshot_path = os.path.join(
+                QStandardPaths.writableLocation(QStandardPaths.TempLocation),
+                f"qgis-canvas-screenshot-{uuid.uuid4().hex}.png"
+            )
+            pixmap = self.iface.mapCanvas().grab()
+            pixmap.save(screenshot_path)
+
+            # 2. upload to server
+            upload_url = f"{AI_SERVER_DOMAIN}/ai/v1/attachment/image"
+            image_name = os.path.basename(screenshot_path)
+
+            with open(screenshot_path, 'rb') as f:
+                image_data = f.read()
+
+            params = {
+                "chat_id": chat_id,
+                "image_name": image_name
+            }
+            headers = {
+                "Content-Type": "image/png"
+            }
+            response = requests.post(
+                upload_url,
+                params=params,
+                data=image_data,
+                headers=headers,
+                timeout=5
+            )
+
+            if response.status_code == 200:
+                return response.text.strip()
+        except Exception as e:
+            # Silently fail or log the error, as this is an auxiliary capture for evaluation
+            print(f"Failed to capture canvas screen: {str(e)}")
+        finally:
+            if 'screenshot_path' in locals() and os.path.exists(screenshot_path):
+                os.remove(screenshot_path)
+        return None
+
+    def __check_subtask_completion(self, sub_task: SubTask, result: str) -> (str, str):
         if self._stop_flag:
-            return False, ''
+            return '[ERROR]', ''
 
         if not result or result.strip() == "":
-            return False, ''
+            return '[ERROR]', ''
 
         evaluate_request = copy.deepcopy(self.request)
         evaluate_request["prompt"] = sub_task.description
         evaluate_request["history"] = [[result]]
+
+        if self._capture_screen_flag:
+            chat_id = self.request.get("chat_id", "")
+            capture_url = self.__capture_canvas_screen(chat_id)
+            if capture_url:
+                evaluate_request["screenshot_url"] = capture_url
 
         evaluate_subthread = CTOrchNetwork(request_data=evaluate_request, orch_type=3)
         evaluate_subthread.error_occurred.connect(self.on_network_error_occurred)
@@ -492,19 +575,24 @@ class CTOrchManager(QThread):
 
         evaluate_result = evaluate_subthread.get_raw_response()
         if not evaluate_result:
-            return False, ''
+            return '[ERROR]', ''
 
         evaluate_json = json.loads(evaluate_result)
         message_data = evaluate_json.get("message", {})
         content = message_data.get("content", "")
-        # If an [ERROR] message appears, the process is considered a failure.
+        # If an [ERROR] message appears, the process is considered a fundamental failure.
         if "[ERROR]" in content:
-            return False, content
+            return '[ERROR]', content
 
+        # If a [REFINED] message appears, the result is partially correct and needs iterative adjustment.
+        if "[REFINED]" in content:
+            return '[REFINED]', content
+
+        # If a [COMPLETED] message appears, the sub-task is successfully finished.
         if "[COMPLETED]" in content:
-            return True, ''
+            return '[COMPLETED]', ''
 
-        return False, content
+        return '[ERROR]', content
 
     def __build_context(self, exclude_task_id: str = None) -> str:
         """
