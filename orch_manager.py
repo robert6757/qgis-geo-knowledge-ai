@@ -29,6 +29,7 @@ import requests
 from enum import Enum
 from typing import List, Dict, Any
 from dataclasses import dataclass, field
+from .global_utils import get_workspace_info
 
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication, QSemaphore
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
@@ -259,8 +260,6 @@ class CTOrchManager(QThread):
                 else: # FAILED or other
                     break
 
-
-
     def __step_all_subtask(self, task_plan: TaskPlan):
         if self._stop_flag:
             return
@@ -268,6 +267,7 @@ class CTOrchManager(QThread):
         self.report_subtask_stream.emit(self.tr("**Start step-by-step execution of the task plan:**"))
 
         execution_order = task_plan.execution_order
+        current_feedback = None
 
         for sub_task_id in execution_order:
             if self._stop_flag:
@@ -291,7 +291,9 @@ class CTOrchManager(QThread):
             self.orch_subtask_started.emit(sub_task)
 
             # execute the subtask.
-            self.__execute_sub_task(sub_task)
+            status, feedback = self.__execute_sub_task(sub_task, feedback=current_feedback)
+            if status != TaskStatus.COMPLETED:
+                current_feedback = feedback
 
             self.orch_subtask_finished.emit(sub_task)
 
@@ -310,6 +312,9 @@ class CTOrchManager(QThread):
                 # Reset subtask status to pending
                 sub_task.status = TaskStatus.PENDING
                 sub_task.result = ""
+            else:
+                # move to the next subtask.
+                current_feedback = None
 
     def on_received_subtask_stream(self, content: str):
         # self.report_subtask_stream.emit(content)
@@ -559,6 +564,9 @@ class CTOrchManager(QThread):
         evaluate_request = copy.deepcopy(self.request)
         evaluate_request["prompt"] = sub_task.description
         evaluate_request["history"] = [[result]]
+        
+        # Update workspace info to current state
+        evaluate_request["workspace"] = get_workspace_info(self.iface, include_processing_tools=False)
 
         if self._capture_screen_flag:
             chat_id = self.request.get("chat_id", "")

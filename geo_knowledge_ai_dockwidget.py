@@ -33,7 +33,7 @@ from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
 
-from .orch_manager import CTOrchManager, TaskPlan, SubTask
+from .orch_manager import CTOrchManager, TaskPlan, SubTask, TaskStatus
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
 from .setting_dialog import SettingDialog
@@ -42,6 +42,7 @@ from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
 from .compat import *
 from .code_exec_utils import ensure_code_execution
+from .global_utils import get_workspace_info
 
 from .subtask_dialog import SubtaskDialog
 
@@ -392,8 +393,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     def on_orch_finish_subtask_received(self, subtask: SubTask):
         """receive the subtask finished message"""
         content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
+        if subtask.status == TaskStatus.REFINED:
+            content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
         content += "\n\n"
         content = content.replace("{subtask_id}", subtask.id)
+
         self.chatbot_browser.append_markdown(content)
 
     def on_stream_ended(self):
@@ -482,7 +486,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             capture_screen_url = self.capture_screen(self.chat_id)
 
         # get qgis basic information in project context.
-        workspace_info = self._get_workspace_info()
+        workspace_info = get_workspace_info(self.iface)
 
         # Set a temporary directory for the workspace
         workspace_info["TempFolder"] = temp_folder
@@ -598,131 +602,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             # current chat will be the next previous chat.
             self.pre_chat_timestamp = cur_chat_timestamp
 
-    def _get_workspace_info(self):
-        workspace_info = {}
-
-        # qgis version
-        workspace_info["version"] = Qgis.version()
-
-        # get working project
-        project = QgsProject.instance()
-
-        # CRS part
-        project_crs = project.crs()
-        workspace_info["CRSAuthId"] = project_crs.authid()
-
-        # get map canvas parameters.
-        map_canvas = self.iface.mapCanvas()
-        canvas_extent = map_canvas.extent()
-        workspace_info["MapCanvasExtent"] = [
-            f"{canvas_extent.xMinimum():.6f}",
-            f"{canvas_extent.yMinimum():.6f}",
-            f"{canvas_extent.xMaximum():.6f}",
-            f"{canvas_extent.yMaximum():.6f}"]
-
-        # enumerate layers in project.
-        layers_info = []
-        layer_tree_root = project.layerTreeRoot()
-        layers = project.mapLayers().values()
-        for layer in layers:
-            node = layer_tree_root.findLayer(layer.id())
-            visible = node.isVisible() if node else False
-
-            layer_info = {}
-            layer_info["name"] = f"{layer.name()}"
-            layer_info["type"] = f"{layer.type().name}"
-            layer_info["visible"] = visible
-
-            crs = layer.crs()
-            layer_info["CRSAuthId"] = f"{crs.authid()}"
-
-            # get fields data in vector data.
-            if layer.type() == QgsMapLayer.LayerType.VectorLayer:
-                fields_info = []
-                fields = layer.fields()
-                for field in fields:
-                    field_info = {
-                        "name": field.name(),
-                        "type": field.typeName(),
-                        "length": field.length(),
-                        "precision": field.precision()
-                    }
-                    fields_info.append(field_info)
-                layer_info["fields"] = fields_info
-
-            # get bands data in raster data.
-            elif layer.type() == QgsMapLayer.LayerType.RasterLayer:
-                bands_info = []
-                provider = layer.dataProvider()
-                if provider:
-                    # basic raster variables.
-                    layer_info["raster_width"] = provider.xSize()
-                    layer_info["raster_height"] = provider.ySize()
-
-                    # extent of data.
-                    extent = provider.extent()
-                    layer_info["raster_extent"] = [
-                        f"{extent.xMinimum():.6f}",
-                        f"{extent.yMinimum():.6f}",
-                        f"{extent.xMaximum():.6f}",
-                        f"{extent.yMaximum():.6f}"
-                    ]
-
-                    if provider.xSize() > 0 and provider.ySize() > 0:
-                        pixel_size_x = (extent.xMaximum() - extent.xMinimum()) / provider.xSize()
-                        pixel_size_y = (extent.yMaximum() - extent.yMinimum()) / provider.ySize()
-                        layer_info["pixel_size"] = [
-                            f"{pixel_size_x:.6f}",
-                            f"{pixel_size_y:.6f}"
-                        ]
-
-                    layer_info["origin"] = [
-                        f"{extent.xMinimum():.6f}",
-                        f"{extent.yMaximum():.6f}"
-                    ]
-
-                    band_count = provider.bandCount()
-                    for band in range(1, band_count + 1):
-                        band_info = {
-                            "band_number": band,
-                            "band_name": f"Band {band}",
-                            "data_type": provider.dataType(band),
-                        }
-                        color_interp = provider.colorInterpretation(band)
-                        if hasattr(color_interp, 'name'):
-                            band_info["color_interpretation"] = color_interp.name
-
-                        # In order to shorten time of statistic, use the custom sample size.
-                        customSampleSize = int(max(provider.xSize(), provider.ySize()) / 256)
-                        stats = provider.bandStatistics(band, sampleSize=customSampleSize)
-                        if stats:
-                            band_info["minimum"] = stats.minimumValue
-                            band_info["maximum"] = stats.maximumValue
-                            band_info["mean"] = stats.mean
-                            band_info["std_dev"] = stats.stdDev
-
-                        bands_info.append(band_info)
-
-                layer_info["bands"] = bands_info
-
-            layers_info.append(layer_info)
-        workspace_info["Layers"] = layers_info
-
-        # get Processing Tools
-        processing_tools = []
-        registry = QgsApplication.processingRegistry()
-        providers = registry.providers()
-        for provider in providers:
-            algorithm_ids = []
-            for algorithm in provider.algorithms():
-                algorithm_ids.append(algorithm.id())
-            processing_tools.append({
-                'name': provider.name(),
-                'algorithms': algorithm_ids
-            })
-        workspace_info["ProcessingTools"] = processing_tools
-
-        return workspace_info
 
     def capture_screen(self, chat_id):
         # 1. save screenshot to temp dir.
