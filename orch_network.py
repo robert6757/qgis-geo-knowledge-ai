@@ -47,8 +47,8 @@ class CTOrchNetwork(QThread):
         # 1: decompose task 2:tool calls 3:conclusion 0: unknown
         self.orch_type = orch_type
         self.buffer = bytearray()
-        # Store the final complete response separately from the intermediate buffer.
-        self._final_response = ""
+        # Store the final complete response as a list to avoid frequent string concatenation.
+        self._final_response = []
         self._abort_network.connect(self._do_abort, type=DirectConnection)
 
     def run(self):
@@ -90,7 +90,7 @@ class CTOrchNetwork(QThread):
             self.error_occurred.emit(self.tr("Network Error:") + str(e))
 
     def get_raw_response(self):
-        return self._final_response
+        return "".join(self._final_response)
 
     def abort(self):
         self._abort_network.emit()
@@ -142,8 +142,8 @@ class CTOrchNetwork(QThread):
                         thinking_content = data_json.get('content', '')
                         self.thinking_received.emit(thinking_content)
                     else:
-                        # Non-thinking data: save to final response AND emit content_received.
-                        self._final_response = data_str
+                        # Non-thinking data: append to final response AND emit content_received.
+                        self._final_response.append(data_str)
                         self.content_received.emit(data_str)
                 except json.JSONDecodeError:
                     # Not a JSON event, skip
@@ -161,7 +161,7 @@ class CTOrchNetwork(QThread):
                     response_data = full_str[len('data: '):]
                 else:
                     response_data = full_str
-                self._final_response = response_data
+                self._final_response.append(response_data)
                 self.content_received.emit(response_data)
             except Exception as e:
                 print(f"Parse error: {e}")

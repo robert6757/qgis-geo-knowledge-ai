@@ -38,7 +38,7 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
                    "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers",
-                   "qgis_capture_canvas_screenshot"]
+                   "qgis_capture_canvas_screenshot","qgis_set_layers_visibility"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -694,6 +694,42 @@ class OrchToolExecutor(QObject):
                 "moved_count": moved_count,
                 "skipped_ids": skipped_ids,
                 "layer_order": current_order
+                }, ensure_ascii=False)
+
+        elif tool_name == "qgis_set_layers_visibility":
+            # Control visibility of layers.
+            # layer_ids: list of layer ids.
+            # visible: boolean (True to show, False to hide).
+            layer_ids = arguments.get("layer_ids", [])
+            visible = arguments.get("visible")
+
+            if not layer_ids:
+                raise Exception({"error_msg": "No layer_ids provided"})
+            if visible is None:
+                raise Exception({"error_msg": "Visibility state (visible) not provided"})
+
+            project = QgsProject.instance()
+            root = project.layerTreeRoot()
+
+            updated_count = 0
+            skipped_ids = []
+
+            for layer_id in layer_ids:
+                node = root.findLayer(layer_id)
+                if node:
+                    node.setItemVisibilityChecked(bool(visible))
+                    updated_count += 1
+                else:
+                    skipped_ids.append(layer_id)
+
+            if updated_count == 0:
+                raise Exception({"error_msg": f"None of the layer_ids were found: {layer_ids}"})
+
+            return json.dumps({
+                "status": "success",
+                "message": f"Updated visibility for {updated_count} layer(s).",
+                "updated_count": updated_count,
+                "skipped_ids": skipped_ids
             }, ensure_ascii=False)
 
         elif tool_name == "qgis_capture_canvas_screenshot":
@@ -737,9 +773,11 @@ class OrchToolExecutor(QObject):
     # def test_tool(self):
     #     tool_result = ""
     #     try:
+    #         project = QgsProject.instance()
+    #         layer_id, layer = list(project.mapLayers().items())[0]
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_capture_canvas_screenshot",
-    #             {})
+    #             "qgis_set_layers_visibility",
+    #             {"layer_ids": [layer_id], "visible": False})
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
     #     return tool_result

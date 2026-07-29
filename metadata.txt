@@ -7,7 +7,7 @@ name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
-version=1.20
+version=1.21
 author=phoenix-gis
 email=phoenixgis@sina.com
 
