@@ -86,7 +86,12 @@
     <message>
         <location filename="../orch_manager.py" line="390"/>
         <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
-        <translation>[Βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
+        <translation type="obsolete">[Βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Μη βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
     </message>
 </context>
 <context>

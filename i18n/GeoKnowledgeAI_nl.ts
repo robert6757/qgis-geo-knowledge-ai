@@ -86,7 +86,12 @@
     <message>
         <location filename="../orch_manager.py" line="390"/>
         <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
-        <translation>[Verfijnd] Subtaak [{}] heeft verdere aanpassing nodig: {}</translation>
+        <translation type="obsolete">[Verfijnd] Subtaak [{}] heeft verdere aanpassing nodig: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Onverfijnd] Subtaak [{}] heeft verdere aanpassing nodig: {}</translation>
     </message>
 </context>
 <context>

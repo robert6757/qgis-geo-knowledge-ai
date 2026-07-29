@@ -86,7 +86,12 @@
     <message>
         <location filename="../orch_manager.py" line="390"/>
         <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
-        <translation>[Affinée] La sous-tâche [{}] nécessite un ajustement supplémentaire : {}</translation>
+        <translation type="obsolete">[Affinée] La sous-tâche [{}] nécessite un ajustement supplémentaire : {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Non affinée] La sous-tâche [{}] nécessite un ajustement supplémentaire : {}</translation>
     </message>
 </context>
 <context>

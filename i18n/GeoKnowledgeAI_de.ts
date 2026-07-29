@@ -86,7 +86,12 @@
     <message>
         <location filename="../orch_manager.py" line="390"/>
         <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
-        <translation>[Verfeinert] Teilaufgabe [{}] benötigt weitere Anpassung: {}</translation>
+        <translation type="obsolete">[Verfeinert] Teilaufgabe [{}] benötigt weitere Anpassung: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Unverfeinert] Teilaufgabe [{}] benötigt weitere Anpassung: {}</translation>
     </message>
 </context>
 <context>

@@ -86,7 +86,12 @@
     <message>
         <location filename="../orch_manager.py" line="390"/>
         <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
-        <translation>[Forfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
+        <translation type="obsolete">[Forfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Uforfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
     </message>
 </context>
 <context>
