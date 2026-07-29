@@ -9,74 +9,84 @@
         <translation type="obsolete">**Genererar uppgiftsplan:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="134"/>
+        <location filename="../orch_manager.py" line="138"/>
         <source>Invalid Task plan!</source>
         <translation>Ogiltig uppgiftsplan!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="139"/>
+        <location filename="../orch_manager.py" line="143"/>
         <source>VIP requests remaining: </source>
         <translation>Återstående VIP-förfrågningar: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="219"/>
+        <location filename="../orch_manager.py" line="223"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Starta automatisk körning av uppgiftsplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="260"/>
+        <location filename="../orch_manager.py" line="278"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[VARNING] Deluppgift [{}] hittades inte, hoppa över.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="267"/>
+        <location filename="../orch_manager.py" line="285"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[VARNING] Beroendet [{}] av deluppgift [{}] är ofullständigt. Försök fortsätta.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="249"/>
+        <location filename="../orch_manager.py" line="266"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Starta steg-för-steg-körning av uppgiftsplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="328"/>
+        <location filename="../orch_manager.py" line="352"/>
         <source>Start executing the subtask:</source>
         <translation>Starta körning av deluppgiften:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="358"/>
+        <location filename="../orch_manager.py" line="383"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Slutförd] Deluppgift [{}] kördes framgångsrikt.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="363"/>
+        <location filename="../orch_manager.py" line="396"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Misslyckades] Resultatet av deluppgift [{}] motsvarade inte förväntningarna. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="368"/>
+        <location filename="../orch_manager.py" line="402"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Misslyckades] Deluppgift [{}] kunde inte köras: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="604"/>
+        <location filename="../orch_manager.py" line="712"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fel: Inget körningsresultat för deluppgift.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="608"/>
+        <location filename="../orch_manager.py" line="716"/>
         <source>**Summary of tasks:**</source>
         <translation>**Sammanfattning av uppgifter:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="151"/>
+        <location filename="../orch_manager.py" line="155"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>Uppgiften kan inte fortsätta eftersom kodkörningsmodulen inte är tillgänglig!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="122"/>
+        <location filename="../orch_manager.py" line="126"/>
         <source>**Thinking...**</source>
         <translation>**Tänker...**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
+        <translation>Förfinar deluppgift [{sub_task.name}]... (Försök {attempts}/{max_refine_attempts})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Förfinad] Deluppgift [{}] behöver ytterligare justering: {}</translation>
     </message>
 </context>
 <context>
@@ -315,47 +325,47 @@ FÖRSIKTIGHET: Trots våra STRENGA begränsningar för STM är den genererade ko
         <translation>Nej</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="452"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
         <source>**Question:</source>
         <translation>**Fråga:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="453"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="451"/>
         <source>**Answer:</source>
         <translation>**Svar:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="542"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="546"/>
         <source>Stop</source>
         <translation>Stoppa</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="584"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="588"/>
         <source>Send</source>
         <translation>Skicka</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Tip</source>
         <translation>Tips</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Thank you for your feedback.</source>
         <translation>Tack för din feedback!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="206"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="207"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Det gick inte att skicka din feedback. Försök igen senare.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="211"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="212"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Nätverksfel: kontrollera din anslutning och försök igen.</translation>
     </message>
@@ -370,27 +380,27 @@ FÖRSIKTIGHET: Trots våra STRENGA begränsningar för STM är den genererade ko
         <translation type="obsolete">Kodkörning startad i bakgrunden...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
         <source>Success</source>
         <translation>Framgång</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="254"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
         <source>Auto-Fix</source>
         <translation>Automatisk korrigering</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="263"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="264"/>
         <source>Code Copied Successfully!</source>
         <translation>Kod kopierad framgångsrikt!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
         <source>RuntimeError</source>
         <translation>Körningsfel</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -446,7 +456,7 @@ Innan du använder denna plugin, läs och godkänn vår [Sekretesspolicy](https:
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -529,7 +539,7 @@ Jag är din GIS AI-assistent och erbjuder skräddarsydda professionella handledn
 Dessutom kommer jag att guida dig genom viktiga verktyg som GDAL, GRASS och SAGA för att göra din rumsliga analys mer effektiv och intelligent.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="790"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="673"/>
         <source>
 
 ———
@@ -581,27 +591,27 @@ Jag är din GIS AI-assistent och erbjuder tre agenter: **kunskaps-F&amp;S-agent*
 Dessutom kommer jag att guida dig genom viktiga verktyg som GDAL, GRASS och SAGA för att göra din rumsliga analys mer effektiv och intelligent.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="307"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Endast den aktuella deluppgiften kan fortsättas.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Endast den aktuella deluppgiften kan upprepas.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="382"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="383"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Steg för steg](agent://orch/substask/step) | [Automatisera alla](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="394"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="395"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Upprepa](agent://orch/substask/repeat/{subtask_id}) | [Detalj](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="786"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="665"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -641,9 +651,19 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
         <translation type="obsolete">**Genererar uppgiftsplan:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="375"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="376"/>
         <source>**Task plan:**</source>
         <translation>**Uppgiftsplan:**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Förfina](agent://orch/substask/repeat/{subtask_id}) | [Detalj](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <translation>**✨ Vad är nytt:** Lagt till multimodalt stöd för arbetsflödesautomatisering.</translation>
     </message>
 </context>
 <context>

@@ -9,74 +9,84 @@
         <translation type="obsolete">**Generazione del piano attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="134"/>
+        <location filename="../orch_manager.py" line="138"/>
         <source>Invalid Task plan!</source>
         <translation>Piano attività non valido!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="139"/>
+        <location filename="../orch_manager.py" line="143"/>
         <source>VIP requests remaining: </source>
         <translation>Richieste VIP rimanenti: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="219"/>
+        <location filename="../orch_manager.py" line="223"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Avvia esecuzione automatica del piano attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="260"/>
+        <location filename="../orch_manager.py" line="278"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ATTENZIONE] Subtask [{}] non trovato, salto.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="267"/>
+        <location filename="../orch_manager.py" line="285"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ATTENZIONE] La dipendenza [{}] del subtask [{}] è incompleta. Tentativo di proseguire.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="249"/>
+        <location filename="../orch_manager.py" line="266"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Avvia esecuzione passo-passo del piano attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="328"/>
+        <location filename="../orch_manager.py" line="352"/>
         <source>Start executing the subtask:</source>
         <translation>Avvio esecuzione del subtask:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="358"/>
+        <location filename="../orch_manager.py" line="383"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Completato] Subtask [{}] eseguito con successo.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="363"/>
+        <location filename="../orch_manager.py" line="396"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Fallito] Il risultato del subtask [{}] non ha soddisfatto le aspettative. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="368"/>
+        <location filename="../orch_manager.py" line="402"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Fallito] Esecuzione del subtask [{}] non riuscita: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="604"/>
+        <location filename="../orch_manager.py" line="712"/>
         <source>Error: No subtask execution result.</source>
         <translation>Errore: nessun risultato di esecuzione del subtask.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="608"/>
+        <location filename="../orch_manager.py" line="716"/>
         <source>**Summary of tasks:**</source>
         <translation>**Riepilogo delle attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="151"/>
+        <location filename="../orch_manager.py" line="155"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
-        <translation>L&apos;attività non può continuare perché il modulo di esecuzione del codice non è disponibile!</translation>
+        <translation>L'attività non può continuare perché il modulo di esecuzione del codice non è disponibile!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="122"/>
+        <location filename="../orch_manager.py" line="126"/>
         <source>**Thinking...**</source>
         <translation>**Riflettendo...**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
+        <translation>Affinamento della sotto-attività [{sub_task.name}]... (Tentativo {attempts}/{max_refine_attempts})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Affinata] La sotto-attività [{}] richiede ulteriori aggiustamenti: {}</translation>
     </message>
 </context>
 <context>
@@ -173,7 +183,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="130"/>
         <source>The default maximum number of conversation turns is 2. Lengthy conversations may cause the topic to become less focused.</source>
-        <translation type="obsolete">Il numero massimo predefinito di turni di conversazione è 2. Un numero eccessivo di turni può causare la perdita di focus sull&apos;argomento.</translation>
+        <translation type="obsolete">Il numero massimo predefinito di turni di conversazione è 2. Un numero eccessivo di turni può causare la perdita di focus sull'argomento.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="80"/>
@@ -293,11 +303,11 @@
 If you want to execute code automatically, please press &quot;Yes&quot;. The Geo Knowledge AI plugin will download the execution module to start the automated process.
 
 CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not completely reliable. Please check it carefully. We suggest you back up your data and QGIS project before executing code.</source>
-        <translation>Per migliorare la sicurezza di esecuzione, QGIS non consente l&apos;esecuzione automatica di codice esterno (ad esempio, codice generato in tempo reale dall&apos;IA).
+        <translation>Per migliorare la sicurezza di esecuzione, QGIS non consente l'esecuzione automatica di codice esterno (ad esempio, codice generato in tempo reale dall'IA).
 
 Se desideri eseguire il codice automaticamente, premi &quot;Sì&quot;. Il plugin Geo Knowledge AI scaricherà il modulo di esecuzione per avviare il processo automatizzato.
 
-ATTENZIONE: Nonostante le nostre RIGIDE restrizioni sull&apos;IA, il codice generato non è completamente affidabile. Per favore controllalo attentamente. Ti suggeriamo di eseguire il backup dei dati e del progetto QGIS prima di eseguire il codice.</translation>
+ATTENZIONE: Nonostante le nostre RIGIDE restrizioni sull'IA, il codice generato non è completamente affidabile. Per favore controllalo attentamente. Ti suggeriamo di eseguire il backup dei dati e del progetto QGIS prima di eseguire il codice.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -315,47 +325,47 @@ ATTENZIONE: Nonostante le nostre RIGIDE restrizioni sull&apos;IA, il codice gene
         <translation>No</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="452"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
         <source>**Question:</source>
         <translation>**Domanda:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="453"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="451"/>
         <source>**Answer:</source>
         <translation>**Risposta:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="542"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="546"/>
         <source>Stop</source>
         <translation>Ferma</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="584"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="588"/>
         <source>Send</source>
         <translation>Invia</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Tip</source>
         <translation>Suggerimento</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Thank you for your feedback.</source>
         <translation>Grazie per il tuo feedback!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="206"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="207"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Invio del feedback fallito. Riprova più tardi.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="211"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="212"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Errore di rete: controlla la connessione e riprova.</translation>
     </message>
@@ -370,27 +380,27 @@ ATTENZIONE: Nonostante le nostre RIGIDE restrizioni sull&apos;IA, il codice gene
         <translation type="obsolete">Esecuzione codice avviata in background...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
         <source>Success</source>
         <translation>Successo</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="254"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
         <source>Auto-Fix</source>
         <translation>Correzione automatica</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="263"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="264"/>
         <source>Code Copied Successfully!</source>
         <translation>Codice copiato con successo!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
         <source>RuntimeError</source>
         <translation>Errore di esecuzione</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -413,7 +423,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 
 **Felice di conoscerti! 🌍**
 
-Sono il tuo assistente GIS IA, che fornisce tutorial professionali personalizzati che coprono un&apos;ampia gamma di attività geospaziali, tra cui scoperta di dati geografici globali, modellazione geoscientifica, analisi idrologica e del terreno, elaborazione di telerilevamento e generazione di codice PyQGIS.
+Sono il tuo assistente GIS IA, che fornisce tutorial professionali personalizzati che coprono un'ampia gamma di attività geospaziali, tra cui scoperta di dati geografici globali, modellazione geoscientifica, analisi idrologica e del terreno, elaborazione di telerilevamento e generazione di codice PyQGIS.
 
 Inoltre, ti guiderò attraverso strumenti essenziali come GDAL, GRASS e SAGA per rendere la tua analisi spaziale più efficiente e intelligente.
 
@@ -438,7 +448,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 Prima di utilizzare questo plugin, leggi e accetta la nostra [Informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
-[Ho letto e accetto l&apos;Informativa sulla privacy.](agent://privacy/1)</translation>
+[Ho letto e accetto l'Informativa sulla privacy.](agent://privacy/1)</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="621"/>
@@ -446,7 +456,7 @@ Prima di utilizzare questo plugin, leggi e accetta la nostra [Informativa sulla 
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -472,7 +482,7 @@ Before using this plugin, please read our [Privacy Notice](https://github.com/ro
 
 Prima di utilizzare questo plugin, leggi la nostra [Informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
-[Ho letto e accetto l&apos;Informativa sulla privacy.](agent://privacy/1)</translation>
+[Ho letto e accetto l'Informativa sulla privacy.](agent://privacy/1)</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="591"/>
@@ -499,11 +509,11 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 
 Inserisci la tua domanda nel campo di input qui sotto e clicca sul pulsante **Invia** per iniziare la conversazione.
 
-Per comprendere meglio la tua domanda, attiva l&apos;interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Per comprendere meglio la tua domanda, attiva l'interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
-Quando generi codice, attiva l&apos;interruttore Catena di pensiero ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) per ottenere una risposta più precisa.
+Quando generi codice, attiva l'interruttore Catena di pensiero ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) per ottenere una risposta più precisa.
 
-Facendo una domanda, confermi di aver letto e accettato l&apos;[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+Facendo una domanda, confermi di aver letto e accettato l'[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </translation>
     </message>
@@ -529,7 +539,7 @@ Sono il tuo assistente GIS IA, che fornisce tutorial professionali personalizzat
 Inoltre, ti guiderò attraverso strumenti essenziali come GDAL, GRASS e SAGA per rendere la tua analisi spaziale più efficiente e intelligente.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="790"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="673"/>
         <source>
 
 ———
@@ -552,10 +562,10 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 
 Inserisci la tua domanda nel campo di input qui sotto e clicca sul pulsante **Invia** per iniziare la conversazione.
 
-Per comprendere meglio la tua domanda, attiva l&apos;interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Per comprendere meglio la tua domanda, attiva l'interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
 
-Facendo una domanda, confermi di aver letto e accettato l&apos;[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+Facendo una domanda, confermi di aver letto e accettato l'[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </translation>
     </message>
@@ -581,27 +591,27 @@ Sono il tuo assistente GIS IA, che fornisce tre agenti: **agente D&amp;R di cono
 Inoltre, ti guiderò attraverso strumenti essenziali come GDAL, GRASS e SAGA per rendere la tua analisi spaziale più efficiente e intelligente.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="307"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Solo il subtask corrente può essere continuato.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Solo il subtask corrente può essere ripetuto.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="382"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="383"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Passo-passo](agent://orch/substask/step) | [Automatizza tutto](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="394"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="395"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Continua](agent://orch/substask/continue/{subtask_id}) | [Ripeti](agent://orch/substask/repeat/{subtask_id}) | [Dettaglio](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="786"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="665"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -619,11 +629,11 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
 
 Sono il tuo assistente GIS IA, che fornisce quattro agenti: **D&amp;R di conoscenza**, **Ricerca dati**, **Generazione codice** e **Automazione flussi di lavoro**.
 
- La nostra base di conoscenze copre la scoperta di dati geografici globali, la modellazione geoscientifica, l&apos;analisi idrologica e del terreno, l&apos;elaborazione di telerilevamento e la documentazione PyQGIS.
+ La nostra base di conoscenze copre la scoperta di dati geografici globali, la modellazione geoscientifica, l'analisi idrologica e del terreno, l'elaborazione di telerilevamento e la documentazione PyQGIS.
 
 Inoltre, posso guidarti attraverso strumenti essenziali come GDAL, GRASS e SAGA per rendere la tua analisi spaziale più efficiente e intelligente.
 
-Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti complessi in modo completamente automatico o passo-passo. Ti suggeriamo di eseguire il backup dei dati e dei progetti QGIS prima di eseguire un flusso di lavoro.</translation>
+Suggerimento: **L'automazione dei flussi di lavoro** può gestire compiti complessi in modo completamente automatico o passo-passo. Ti suggeriamo di eseguire il backup dei dati e dei progetti QGIS prima di eseguire un flusso di lavoro.</translation>
     </message>
     <message>
         <location filename="../code_exec_utils.py" line="98"/>
@@ -641,9 +651,19 @@ Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti c
         <translation type="obsolete">**Generazione del piano attività:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="375"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="376"/>
         <source>**Task plan:**</source>
         <translation>**Piano attività:**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[Continua](agent://orch/substask/continue/{subtask_id}) | [Affina](agent://orch/substask/repeat/{subtask_id}) | [Dettagli](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <translation>**✨ Novità:** Aggiunto il supporto multimodale per l'automazione dei flussi di lavoro.</translation>
     </message>
 </context>
 <context>

@@ -9,74 +9,84 @@
         <translation type="obsolete">**Δημιουργία σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="134"/>
+        <location filename="../orch_manager.py" line="138"/>
         <source>Invalid Task plan!</source>
         <translation>Μη έγκυρο σχέδιο εργασιών!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="139"/>
+        <location filename="../orch_manager.py" line="143"/>
         <source>VIP requests remaining: </source>
         <translation>Υπόλοιπα αιτήματα VIP: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="219"/>
+        <location filename="../orch_manager.py" line="223"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Έναρξη αυτοματοποιημένης εκτέλεσης του σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="260"/>
+        <location filename="../orch_manager.py" line="278"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η υποεργασία [{}] δεν βρέθηκε, παράλειψη.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="267"/>
+        <location filename="../orch_manager.py" line="285"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η εξάρτηση [{}] της υποεργασίας [{}] είναι ελλιπής. Προσπάθεια συνέχισης.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="249"/>
+        <location filename="../orch_manager.py" line="266"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Έναρξη σταδιακής εκτέλεσης του σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="328"/>
+        <location filename="../orch_manager.py" line="352"/>
         <source>Start executing the subtask:</source>
         <translation>Έναρξη εκτέλεσης της υποεργασίας:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="358"/>
+        <location filename="../orch_manager.py" line="383"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Ολοκληρώθηκε] Η υποεργασία [{}] εκτελέστηκε επιτυχώς.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="363"/>
+        <location filename="../orch_manager.py" line="396"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Αποτυχία] Το αποτέλεσμα της υποεργασίας [{}] δεν ανταποκρίθηκε στις προσδοκίες. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="368"/>
+        <location filename="../orch_manager.py" line="402"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Αποτυχία] Η υποεργασία [{}] απέτυχε: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="604"/>
+        <location filename="../orch_manager.py" line="712"/>
         <source>Error: No subtask execution result.</source>
         <translation>Σφάλμα: Δεν υπάρχει αποτέλεσμα εκτέλεσης υποεργασίας.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="608"/>
+        <location filename="../orch_manager.py" line="716"/>
         <source>**Summary of tasks:**</source>
         <translation>**Σύνοψη εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="151"/>
+        <location filename="../orch_manager.py" line="155"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>Η εργασία δεν μπορεί να συνεχιστεί επειδή η μονάδα εκτέλεσης κώδικα δεν είναι διαθέσιμη!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="122"/>
+        <location filename="../orch_manager.py" line="126"/>
         <source>**Thinking...**</source>
         <translation>**Σκέψη...**</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
+        <translation>Βελτίωση υποεργασίας [{sub_task.name}]... (Προσπάθεια {attempts}/{max_refine_attempts})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="390"/>
+        <source>[Refined] Subtask [{}] needs further adjustment: {}</source>
+        <translation>[Βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
     </message>
 </context>
 <context>
@@ -315,47 +325,47 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation>Όχι</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="452"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
         <source>**Question:</source>
         <translation>**Ερώτηση:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="453"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="451"/>
         <source>**Answer:</source>
         <translation>**Απάντηση:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="542"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="546"/>
         <source>Stop</source>
         <translation>Διακοπή</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="584"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="588"/>
         <source>Send</source>
         <translation>Αποστολή</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Tip</source>
         <translation>Συμβουλή</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="202"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
         <source>Thank you for your feedback.</source>
         <translation>Ευχαριστούμε για τα σχόλιά σας!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="206"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="207"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Αποτυχία υποβολής των σχολίων σας. Παρακαλούμε δοκιμάστε ξανά αργότερα.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="211"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="212"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Σφάλμα δικτύου: ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</translation>
     </message>
@@ -370,27 +380,27 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation type="obsolete">Η εκτέλεση κώδικα ξεκίνησε στο παρασκήνιο...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
         <source>Success</source>
         <translation>Επιτυχία</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="254"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
         <source>Auto-Fix</source>
         <translation>Αυτόματη διόρθωση</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="263"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="264"/>
         <source>Code Copied Successfully!</source>
         <translation>Ο κώδικας αντιγράφηκε με επιτυχία!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
         <source>RuntimeError</source>
         <translation>Σφάλμα χρόνου εκτέλεσης</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="287"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -446,7 +456,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -529,7 +539,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 Επιπλέον, θα σας καθοδηγήσω σε βασικά εργαλεία όπως GDAL, GRASS και SAGA για να κάνω τη χωρική σας ανάλυση πιο αποδοτική και έξυπνη.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="790"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="673"/>
         <source>
 
 ———
@@ -581,27 +591,27 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 Επιπλέον, θα σας καθοδηγήσω σε βασικά εργαλεία όπως GDAL, GRASS και SAGA για να κάνω τη χωρική σας ανάλυση πιο αποδοτική και έξυπνη.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="307"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Μόνο η τρέχουσα υποεργασία μπορεί να συνεχιστεί.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="318"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Μόνο η τρέχουσα υποεργασία μπορεί να επαναληφθεί.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="382"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="383"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Βήμα-βήμα](agent://orch/substask/step) | [Αυτοματοποίηση όλων](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="394"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="395"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Συνέχεια](agent://orch/substask/continue/{subtask_id}) | [Επανάληψη](agent://orch/substask/repeat/{subtask_id}) | [Λεπτομέρεια](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="786"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="665"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -641,9 +651,19 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**Δημιουργία σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="375"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="376"/>
         <source>**Task plan:**</source>
         <translation>**Σχέδιο εργασιών:**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[Συνέχεια](agent://orch/substask/continue/{subtask_id}) | [Βελτίωση](agent://orch/substask/repeat/{subtask_id}) | [Λεπτομέρειες](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <translation>**✨ Τι νέο υπάρχει:** Προστέθηκε πολυτροπική υποστήριξη για τον Αυτοματισμό Ροής Εργασίας.</translation>
     </message>
 </context>
 <context>
