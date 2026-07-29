@@ -31,7 +31,7 @@ from typing import List, Dict, Any
 from dataclasses import dataclass, field
 from .global_utils import get_workspace_info
 
-from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication, QSemaphore
+from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication, QSemaphore, QEventLoop
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .compat import *
@@ -253,12 +253,11 @@ class CTOrchManager(QThread):
                 
                 if status == TaskStatus.COMPLETED:
                     break
-                elif status == TaskStatus.REFINED:
-                    attempts += 1
-                    current_feedback = feedback
-                    self.report_subtask_stream.emit(self.tr(f"Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})"))
-                else: # FAILED or other
-                    break
+
+                # Try redoing every subtask if it fails.
+                attempts += 1
+                current_feedback = feedback
+                self.report_subtask_stream.emit(self.tr(f"Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})"))
 
     def __step_all_subtask(self, task_plan: TaskPlan):
         if self._stop_flag:
@@ -432,6 +431,15 @@ class CTOrchManager(QThread):
                     sub_task_request["context"] = context
                     sub_task_request["tool_call_results"] = tool_call_results
 
+                    # If the previous tool was qgis_capture_canvas_screenshot, capture and upload the canvas image now.
+                    if (self._capture_screen_flag and
+                            all_tool_results and
+                            all_tool_results[-1].get("tool_name") == "qgis_capture_canvas_screenshot"):
+                        chat_id = self.request.get("chat_id", "")
+                        capture_url = self.__capture_canvas_screen(chat_id)
+                        if capture_url:
+                           sub_task_request["screenshot_url"] = capture_url
+
                     subtask_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=2)
                     subtask_subthread.content_received.connect(self.on_received_subtask_stream)
                     subtask_subthread.error_occurred.connect(self.on_network_error_occurred)
@@ -467,20 +475,24 @@ class CTOrchManager(QThread):
                                 arguments = {}
 
                         result_container = {"result": None}
-                        def on_completed(result, rc=result_container):
-                            rc["result"] = result
+                        event_loop = QEventLoop()
 
-                        def on_error(error, rc=result_container):
-                            rc["result"] = error
+                        def on_completed(result):
+                            result_container["result"] = result
+                            event_loop.quit()
+
+                        def on_error(error):
+                            result_container["result"] = error
+                            event_loop.quit()
 
                         self.tool_executor.execution_completed.connect(on_completed, QueuedConnection)
                         self.tool_executor.execution_error.connect(on_error, QueuedConnection)
                         self.tool_executor.execute_requested.emit(tool_name, arguments)
 
                         # Waiting for execution to complete
-                        while result_container["result"] is None:
-                            QCoreApplication.processEvents()
+                        event_loop.exec()
 
+                        # Disconnect handlers
                         self.tool_executor.execution_completed.disconnect(on_completed)
                         self.tool_executor.execution_error.disconnect(on_error)
 

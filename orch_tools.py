@@ -23,20 +23,22 @@ import sys
 import io
 import os
 import json
-from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant, QStandardPaths
-from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle, QgsLayerTreeLayer
+from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
+from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle, QgsLayerTreeLayer, QgsSettings
 from qgis import processing
 
 from .code_exec_utils import get_code_execution_class
 from .compat import *
 from .orch_tools_osm import OverpassTool
 from .orch_tools_qml import QmlStyleTool
+from .global_defs import *
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
-                   "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers"]
+                   "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers",
+                   "qgis_capture_canvas_screenshot"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -694,6 +696,20 @@ class OrchToolExecutor(QObject):
                 "layer_order": current_order
             }, ensure_ascii=False)
 
+        elif tool_name == "qgis_capture_canvas_screenshot":
+            gSetting = QgsSettings()
+            # Check if screen capture is allowed
+            if gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() != "true":
+                return json.dumps({
+                    "status": "error",
+                    "message": "Permission denied"
+                }, ensure_ascii=False)
+
+            # This is only a successful flag.
+            # The actual screenshot operation will be performed and included in the tool invocation before the next tool is executed.
+            return json.dumps({
+                "status": "success",
+            }, ensure_ascii=False)
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
 
@@ -722,8 +738,8 @@ class OrchToolExecutor(QObject):
     #     tool_result = ""
     #     try:
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_get_pyqgis_class_help",
-    #             {"class_names": ['QgsGraduatedSymbolRenderer']})
+    #             "qgis_capture_canvas_screenshot",
+    #             {})
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
     #     return tool_result

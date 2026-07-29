@@ -444,12 +444,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
 
-        # ONLY for test.
-        # from .orch_tools import OrchToolExecutor
-        # tool_executor = OrchToolExecutor(self.iface)
-        # self.chatbot_browser.append_markdown(tool_executor.test_tool())
-        # return
-
         # add question in chatbot
         self.question_str = self.plainTextEdit.toPlainText()
         self.chatbot_browser.pre_process_markdown()
@@ -517,6 +511,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             "workspace": workspace_info,
             "screenshot_url": capture_screen_url
         }
+
+        # ONLY for test.
+        # from .orch_tools import OrchToolExecutor
+        # tool_executor = OrchToolExecutor(self.iface)
+        # self.chatbot_browser.append_markdown(tool_executor.test_tool())
+        # return
 
         if chat_mode == 4:
             self.orch_current_subtask = None
