@@ -461,7 +461,7 @@ Antes de usar este complemento, lea y acepte nuestro [Aviso de privacidad](https
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +667,7 @@ Consejo: La **Automatización de flujo de trabajo** puede manejar tareas complej
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Novedades:** Se ha añadido soporte multimodal para la automatización de flujos de trabajo.</translation>
     </message>
 </context>

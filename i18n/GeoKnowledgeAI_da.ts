@@ -312,7 +312,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Hvis du ønsker at udføre kode automatisk, skal du trykke på &quot;Ja&quot;. Geo Knowledge AI-plugin vil downloade udførelsesmodulet for at starte den automatiserede proces.
 
-FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
+FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM&apos;er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -461,7 +461,7 @@ Før du bruger denne plugin, skal du læse og acceptere vores [Privatlivspolitik
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +667,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Det er nyt:** Tilføjet multimodal understøttelse til Workflow-automatisering.</translation>
     </message>
 </context>

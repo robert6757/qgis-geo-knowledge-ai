@@ -461,7 +461,7 @@ Innan du använder denna plugin, läs och godkänn vår [Sekretesspolicy](https:
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +667,7 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Vad är nytt:** Lagt till multimodalt stöd för arbetsflödesautomatisering.</translation>
     </message>
 </context>

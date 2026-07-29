@@ -11,7 +11,10 @@ version=1.20
 author=phoenix-gis
 email=phoenixgis@sina.com
 
-about=This plugin integrates four specialized AI agents for Knowledge Q&A, Data Search, Code Generation, and Workflow Automation (which now supports direct loading of OSM and Google Maps). Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
+about=This plugin integrates four specialized AI agents for Knowledge Q&A, Data Search, Code Generation, and Workflow Automation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
+
+ Multimodal Workflow Automation:
+ Workflow Automation now incorporates multimodal processing to deliver enhanced geospatial analysis and cartographic outputs. It also supports direct integration with OSM vector data and Google Maps tiles, streamlining basemap overlays and automated mapping pipelines.
 
  Fully supporting multiple languages—including English, français, italiano, Deutsch, español, 中文, русский, svenska, Nederlands, português, čeština, eesti, Indonesia, norsk bokmål, slovenščina, українська, polski, română, 日本語, العربية, Türkçe, magyar, 한국어.
 
@@ -23,7 +26,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.20 2026-07-21
+changelog=Version 1.21 2026-07-29
+      * New Feature: Added multi-modal support for Workflow Automation.
+      Version 1.20 2026-07-21
       * New Feature: Added Workflow capabilities for OSM loading.
       * New Feature: Added Workflow Vision capabilities.
       * New Feature: Added Workflow sub-task modification capabilities.

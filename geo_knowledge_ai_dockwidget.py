@@ -393,7 +393,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
     def on_orch_finish_subtask_received(self, subtask: SubTask):
         """receive the subtask finished message"""
         content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
-        if subtask.status == TaskStatus.REFINED:
+        if subtask.status == TaskStatus.UNREFINED:
             content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
         content += "\n\n"
         content = content.replace("{subtask_id}", subtask.id)
@@ -663,6 +663,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def show_welcome_content(self):
         welcome_str = self.tr("""### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing four agents: **Knowledge Q&A**, **Data Search**, **Code Generation**, and **Workflow Automation**.\n\n Our knowledge base covers global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.\n\nAdditionally, I can guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.\n\nTip: **Workflow Automation** can handle complex tasks either fully automatically or step-by-step. We suggest backing up your data and QGIS projects before running a workflow.""")
+
+        # add news.
+        welcome_str += "\n\n"
+        welcome_str += self.tr("**✨ What's New:** Added multi-modal support for Workflow Automation.")
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":

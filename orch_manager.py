@@ -45,7 +45,7 @@ class TaskStatus(Enum):
     RUNNING = "Running"
     COMPLETED = "Completed"
     FAILED = "Failed"
-    REFINED = "Refined"
+    UNREFINED = "Unrefined"
 
 @dataclass
 class SubTask:
@@ -140,7 +140,7 @@ class CTOrchManager(QThread):
             return
 
         if user_info and user_info["remaining_vip_ticket"]:
-            self.report_decompose_stream.emit(self.tr("\n\nVIP requests remaining: ")+ str(user_info["remaining_vip_ticket"]))
+            self.report_decompose_stream.emit("\n\n" + self.tr("VIP requests remaining: ")+ str(user_info["remaining_vip_ticket"]))
 
         self.orch_decompose_finished.emit(task_plan)
 
@@ -383,13 +383,13 @@ class CTOrchManager(QThread):
                 report_str = self.tr("[Completed] Subtask [{}] executed successfully.").format(sub_task.name)
                 self.report_subtask_stream.emit(report_str)
                 return TaskStatus.COMPLETED, ""
-            elif completed_status == '[REFINED]':
-                sub_task.status = TaskStatus.REFINED
+            elif completed_status == '[UNREFINED]':
+                sub_task.status = TaskStatus.UNREFINED
                 sub_task.result = final_result
                 self.sub_task_results[sub_task.id] = final_content
-                report_str = self.tr("[Refined] Subtask [{}] needs further adjustment: {}").format(sub_task.name, status_msg)
+                report_str = self.tr("[Unrefined] Subtask [{}] needs further adjustment: {}").format(sub_task.name, status_msg)
                 self.report_subtask_stream.emit(report_str)
-                return TaskStatus.REFINED, status_msg
+                return TaskStatus.UNREFINED, status_msg
             else:
                 sub_task.status = TaskStatus.FAILED
                 sub_task.result = f"The execution result did not meet expectations: {final_result}."
@@ -604,9 +604,9 @@ class CTOrchManager(QThread):
         if "[ERROR]" in content:
             return '[ERROR]', content
 
-        # If a [REFINED] message appears, the result is partially correct and needs iterative adjustment.
-        if "[REFINED]" in content:
-            return '[REFINED]', content
+        # If a [UNREFINED] message appears, the result is partially correct and needs iterative adjustment.
+        if "[UNREFINED]" in content:
+            return '[UNREFINED]', content
 
         # If a [COMPLETED] message appears, the sub-task is successfully finished.
         if "[COMPLETED]" in content:
