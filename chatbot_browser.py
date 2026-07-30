@@ -249,13 +249,9 @@ class ChatbotBrowser(QTextBrowser):
         return re.sub(pattern, replace_match, markdown_text)
 
     def clean_html_tag(self, markdown_text):
-        # wellknown HTML tag.
-        html_tags = r'div|span|p|a|br|hr|img|table|tr|td|th|ul|ol|li|b|i|u|header|footer|section|canvas|svg'
-
-        # remove these tags.
-        pattern = rf'</?(?:{html_tags})\b[^>]*>'
-
-        return re.sub(pattern, '', markdown_text)
+        # Matching structures like <tag> and replace them with &lt;tag&gt;
+        pattern = r'<(/?(?:[a-zA-Z]+)[^>]*)>'
+        return re.sub(pattern, r'&lt;\1&gt;', markdown_text)
 
     def clear(self):
         self.markdown_content = ""
