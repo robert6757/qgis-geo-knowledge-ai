@@ -24,47 +24,47 @@
         <translation>**Automatisierte Ausführung des Aufgabenplans starten:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[WARNUNG] Subtask [{}] nicht gefunden, überspringe.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[WARNUNG] Die Abhängigkeit [{}] von Subtask [{}] ist unvollständig. Versuche fortzufahren.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Schrittweise Ausführung des Aufgabenplans starten:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Beginne mit der Ausführung des Subtasks:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Abgeschlossen] Subtask [{}] erfolgreich ausgeführt.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Fehlschlag] Das Ergebnis von Subtask [{}] entsprach nicht den Erwartungen. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Fehlschlag] Subtask [{}] fehlgeschlagen: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fehler: Kein Subtask-Ergebnis vorhanden.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**Zusammenfassung der Aufgaben:**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>Verfeinere Teilaufgabe [{sub_task.name}]... (Versuch {attempts}/{max_refine_attempts})</translation>
+        <translation type="obsolete">Verfeinere Teilaufgabe [{sub_task.name}]... (Versuch {attempts}/{max_refine_attempts})</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[Verfeinert] Teilaufgabe [{}] benötigt weitere Anpassung: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Unverfeinert] Teilaufgabe [{}] benötigt weitere Anpassung: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>Verfeinere Teilaufgabe [{}]... (Versuch {}/{})</translation>
     </message>
 </context>
 <context>
@@ -461,7 +466,7 @@ Bevor Sie dieses Plugin verwenden, lesen und akzeptieren Sie bitte unsere [Daten
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,8 +672,8 @@ Tipp: Die **Workflow-Automatisierung** kann komplexe Aufgaben entweder vollautom
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
-        <translation>**✨ Was gibt&apos;s Neues:** Multimodale Unterstützung für Workflow-Automatisierung hinzugefügt.</translation>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <translation>**✨ Was gibt's Neues:** Multimodale Unterstützung für Workflow-Automatisierung hinzugefügt.</translation>
     </message>
 </context>
 <context>

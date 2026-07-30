@@ -24,47 +24,47 @@
         <translation>**Starta automatisk körning av uppgiftsplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[VARNING] Deluppgift [{}] hittades inte, hoppa över.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[VARNING] Beroendet [{}] av deluppgift [{}] är ofullständigt. Försök fortsätta.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Starta steg-för-steg-körning av uppgiftsplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Starta körning av deluppgiften:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Slutförd] Deluppgift [{}] kördes framgångsrikt.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Misslyckades] Resultatet av deluppgift [{}] motsvarade inte förväntningarna. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Misslyckades] Deluppgift [{}] kunde inte köras: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fel: Inget körningsresultat för deluppgift.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**Sammanfattning av uppgifter:**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>Förfinar deluppgift [{sub_task.name}]... (Försök {attempts}/{max_refine_attempts})</translation>
+        <translation type="obsolete">Förfinar deluppgift [{sub_task.name}]... (Försök {attempts}/{max_refine_attempts})</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[Förfinad] Deluppgift [{}] behöver ytterligare justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Oförfinad] Deluppgift [{}] behöver ytterligare justering: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>Förfinar deluppgift [{}]... (Försök {}/{})</translation>
     </message>
 </context>
 <context>
@@ -461,7 +466,7 @@ Innan du använder denna plugin, läs och godkänn vår [Sekretesspolicy](https:
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +672,7 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Vad är nytt:** Lagt till multimodalt stöd för arbetsflödesautomatisering.</translation>
     </message>
 </context>

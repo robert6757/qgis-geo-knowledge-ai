@@ -24,47 +24,47 @@
         <translation>**开始全自动执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[警告] 跳过未找到子任务 [{}]。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[警告]子任务 [{1}] 所依赖的任务 [{0}] 未完成。请尝试继续执行。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**开始单步执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>开始执行子任务：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[已完成] 子任务 [{}] 执行成功。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[失败] 子任务 [{}] 的执行结果未达到预期。{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[失败] 子任务 [{}] 执行失败：[{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>错误：未找到子任务执行结果。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**任务总结：**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>正在优化子任务 [{sub_task.name}]... (第 {attempts}/{max_refine_attempts} 次尝试)</translation>
+        <translation type="obsolete">正在优化子任务 [{sub_task.name}]... (第 {attempts}/{max_refine_attempts} 次尝试)</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[优化] 子任务 [{}] 需要进一步调整：{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[待优化] 子任务 [{}] 需要进一步调整：{}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>正在优化子任务 [{}]... (第 {}/{} 次尝试)</translation>
     </message>
 </context>
 <context>
@@ -461,7 +466,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -676,7 +681,7 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ 更新内容：** 为自动化工作流添加了多模态支持。</translation>
     </message>
 </context>

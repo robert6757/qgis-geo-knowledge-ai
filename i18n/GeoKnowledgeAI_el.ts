@@ -24,47 +24,47 @@
         <translation>**Έναρξη αυτοματοποιημένης εκτέλεσης του σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η υποεργασία [{}] δεν βρέθηκε, παράλειψη.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η εξάρτηση [{}] της υποεργασίας [{}] είναι ελλιπής. Προσπάθεια συνέχισης.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Έναρξη σταδιακής εκτέλεσης του σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Έναρξη εκτέλεσης της υποεργασίας:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Ολοκληρώθηκε] Η υποεργασία [{}] εκτελέστηκε επιτυχώς.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Αποτυχία] Το αποτέλεσμα της υποεργασίας [{}] δεν ανταποκρίθηκε στις προσδοκίες. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Αποτυχία] Η υποεργασία [{}] απέτυχε: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>Σφάλμα: Δεν υπάρχει αποτέλεσμα εκτέλεσης υποεργασίας.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**Σύνοψη εργασιών:**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>Βελτίωση υποεργασίας [{sub_task.name}]... (Προσπάθεια {attempts}/{max_refine_attempts})</translation>
+        <translation type="obsolete">Βελτίωση υποεργασίας [{sub_task.name}]... (Προσπάθεια {attempts}/{max_refine_attempts})</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[Βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Μη βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>Βελτίωση υποεργασίας [{}]... (Προσπάθεια {}/{})</translation>
     </message>
 </context>
 <context>
@@ -461,7 +466,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +672,7 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Τι νέο υπάρχει:** Προστέθηκε πολυτροπική υποστήριξη για τον Αυτοματισμό Ροής Εργασίας.</translation>
     </message>
 </context>

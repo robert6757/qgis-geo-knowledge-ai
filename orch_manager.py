@@ -247,17 +247,15 @@ class CTOrchManager(QThread):
             attempts = 0
             max_refine_attempts = 3
             current_feedback = None
-            
-            while attempts < max_refine_attempts:
-                status, feedback = self.__execute_sub_task(sub_task, feedback=current_feedback)
-                
-                if status == TaskStatus.COMPLETED:
-                    break
+            status, current_feedback = self.__execute_sub_task(sub_task, feedback=current_feedback)
 
-                # Try redoing every subtask if it fails.
+            while status == TaskStatus.UNREFINED and attempts < max_refine_attempts:
                 attempts += 1
-                current_feedback = feedback
-                self.report_subtask_stream.emit(self.tr(f"Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})"))
+                report_content = self.tr("Refining sub-task [{}]... (Attempt {}/{})")
+                report_content = report_content.format(sub_task.name, attempts, max_refine_attempts)
+                self.report_subtask_stream.emit(report_content)
+
+                status, current_feedback = self.__execute_sub_task(sub_task, feedback=current_feedback)
 
     def __step_all_subtask(self, task_plan: TaskPlan):
         if self._stop_flag:
@@ -528,7 +526,7 @@ class CTOrchManager(QThread):
         try:
             # 1. save screenshot to temp dir.
             screenshot_path = os.path.join(
-                QStandardPaths.writableLocation(QStandardPaths.TempLocation),
+                QStandardPaths.writableLocation(TempLocation),
                 f"qgis-canvas-screenshot-{uuid.uuid4().hex}.png"
             )
             pixmap = self.iface.mapCanvas().grab()

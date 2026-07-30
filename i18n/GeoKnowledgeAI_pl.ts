@@ -24,47 +24,47 @@
         <translation>**Rozpocznij automatyczne wykonanie planu zadań:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[OSTRZEŻENIE] Podzadanie [{}] nie znalezione, pomijanie.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[OSTRZEŻENIE] Zależność [{}] podzadania [{}] jest niekompletna. Próba kontynuacji.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Rozpocznij wykonanie planu zadań krok po kroku:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Rozpoczęcie wykonywania podzadania:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Zakończono] Podzadanie [{}] wykonane pomyślnie.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Niepowodzenie] Wynik podzadania [{}] nie spełnił oczekiwań. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Niepowodzenie] Wykonanie podzadania [{}] nie powiodło się: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>Błąd: Brak wyniku wykonania podzadania.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**Podsumowanie zadań:**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>Ulepszanie podzadania [{sub_task.name}]... (Próba {attempts}/{max_refine_attempts})</translation>
+        <translation type="obsolete">Ulepszanie podzadania [{sub_task.name}]... (Próba {attempts}/{max_refine_attempts})</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[Ulepszone] Podzadanie [{}] wymaga dalszej korekty: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Nieulepszone] Podzadanie [{}] wymaga dalszej korekty: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>Ulepszanie podzadania [{}]... (Próba {}/{})</translation>
     </message>
 </context>
 <context>
@@ -461,7 +466,7 @@ Przed użyciem tej wtyczki przeczytaj i zaakceptuj naszą [Politykę prywatnośc
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +672,7 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Co nowego:** Dodano wielomodalną obsługę automatyzacji przepływu pracy.</translation>
     </message>
 </context>

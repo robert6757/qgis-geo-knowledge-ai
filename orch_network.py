@@ -119,7 +119,7 @@ class CTOrchNetwork(QThread):
 
             # The last part may be incomplete; keep it in the buffer for next read
             if not full_str.endswith('\n\n'):
-                self.buffer = parts[-1].encode('utf-8')
+                self.buffer = bytearray(parts[-1].encode('utf-8'))
                 # Process all complete events (all parts except the last incomplete one)
                 complete_events = parts[:-1]
             else:

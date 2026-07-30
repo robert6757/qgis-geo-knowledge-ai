@@ -24,47 +24,47 @@
         <translation>**Start automatisk udførelse af opgaveplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ADVARSEL] Delopgave [{}] ikke fundet, spring over.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ADVARSEL] Afhængigheden [{}] af delopgave [{}] er ufuldstændig. Forsøg at fortsætte.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Start trinvis udførelse af opgaveplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Start udførelse af delopgaven:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Fuldført] Delopgave [{}] udført med succes.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Mislykkedes] Resultatet af delopgave [{}] levede ikke op til forventningerne. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Mislykkedes] Delopgave [{}] kunne ikke udføres: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fejl: Intet udførelsesresultat for delopgave.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**Resumé af opgaver:**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>Forfiner delopgave [{sub_task.name}]... (Forsøg {attempts}/{max_refine_attempts})</translation>
+        <translation type="obsolete">Forfiner delopgave [{sub_task.name}]... (Forsøg {attempts}/{max_refine_attempts})</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[Forfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Uforfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>Forfiner delopgave [{}]... (Forsøg {}/{})</translation>
     </message>
 </context>
 <context>
@@ -312,7 +317,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Hvis du ønsker at udføre kode automatisk, skal du trykke på &quot;Ja&quot;. Geo Knowledge AI-plugin vil downloade udførelsesmodulet for at starte den automatiserede proces.
 
-FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM&apos;er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
+FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -461,7 +466,7 @@ Før du bruger denne plugin, skal du læse og acceptere vores [Privatlivspolitik
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +672,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Det er nyt:** Tilføjet multimodal understøttelse til Workflow-automatisering.</translation>
     </message>
 </context>

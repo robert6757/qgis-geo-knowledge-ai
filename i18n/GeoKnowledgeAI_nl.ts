@@ -24,47 +24,47 @@
         <translation>**Geautomatiseerde uitvoering van het taakplan starten:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="278"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[WAARSCHUWING] Subtask [{}] niet gevonden, overslaan.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="285"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[WAARSCHUWING] De afhankelijkheid [{}] van subtask [{}] is onvolledig. Probeer uitvoering voort te zetten.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="266"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Stapsgewijze uitvoering van het taakplan starten:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="352"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Start uitvoering van de subtask:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="383"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Voltooid] Subtask [{}] succesvol uitgevoerd.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Mislukt] Het resultaat van subtask [{}] voldeed niet aan de verwachtingen. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Mislukt] Uitvoering van subtask [{}] mislukt: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="712"/>
+        <location filename="../orch_manager.py" line="714"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fout: Geen subtask-uitvoeringsresultaat.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="716"/>
+        <location filename="../orch_manager.py" line="718"/>
         <source>**Summary of tasks:**</source>
         <translation>**Samenvatting van taken:**</translation>
     </message>
@@ -81,7 +81,7 @@
     <message>
         <location filename="../orch_manager.py" line="260"/>
         <source>Refining sub-task [{sub_task.name}]... (Attempt {attempts}/{max_refine_attempts})</source>
-        <translation>Verfijnen van subtaak [{sub_task.name}]... (Poging {attempts}/{max_refine_attempts})</translation>
+        <translation type="obsolete">Verfijnen van subtaak [{sub_task.name}]... (Poging {attempts}/{max_refine_attempts})</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="390"/>
@@ -89,9 +89,14 @@
         <translation type="obsolete">[Verfijnd] Subtaak [{}] heeft verdere aanpassing nodig: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="390"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Onverfijnd] Subtaak [{}] heeft verdere aanpassing nodig: {}</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="260"/>
+        <source>Refining sub-task [{}]... (Attempt {}/{})</source>
+        <translation>Verfijnen van subtaak [{}]... (Poging {}/{})</translation>
     </message>
 </context>
 <context>
@@ -312,7 +317,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Als u code automatisch wilt uitvoeren, druk dan op &quot;Ja&quot;. De Geo Knowledge AI-plugin zal de uitvoeringsmodule downloaden om het geautomatiseerde proces te starten.
 
-LET OP: Ondanks onze STRENGE beperkingen voor LLM&apos;s is de gegenereerde code niet volledig betrouwbaar. Controleer deze zorgvuldig. We raden u aan een back-up te maken van uw gegevens en QGIS-project voordat u code uitvoert.</translation>
+LET OP: Ondanks onze STRENGE beperkingen voor LLM's is de gegenereerde code niet volledig betrouwbaar. Controleer deze zorgvuldig. We raden u aan een back-up te maken van uw gegevens en QGIS-project voordat u code uitvoert.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -461,7 +466,7 @@ Lees voordat u deze plugin gebruikt onze [Privacyverklaring](https://github.com/
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -667,7 +672,7 @@ Tip: **Workflow-automatisering** kan complexe taken volledig automatisch of stap
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Wat is nieuw:** Multimodale ondersteuning voor Workflow-automatisering toegevoegd.</translation>
     </message>
 </context>
