@@ -23,6 +23,9 @@ import sys
 import io
 import os
 import json
+import uuid
+import requests
+from urllib.parse import urlparse, parse_qs
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle, QgsLayerTreeLayer, QgsSettings
 from qgis import processing
@@ -741,10 +744,59 @@ class OrchToolExecutor(QObject):
                     "message": "Permission denied"
                 }, ensure_ascii=False)
 
-            # This is only a successful flag.
-            # The actual screenshot operation will be performed and included in the tool invocation before the next tool is executed.
+            try:
+                # 1. save screenshot to temp dir.
+                screenshot_path = os.path.join(
+                    QStandardPaths.writableLocation(TempLocation),
+                    f"qgis-canvas-screenshot-{uuid.uuid4().hex}.png"
+                )
+                pixmap = self.iface.mapCanvas().grab()
+                pixmap.save(screenshot_path)
+
+                screenshot_width = pixmap.width()
+                screenshot_height = pixmap.height()
+
+                # 2. upload to server
+                upload_url = f"{AI_SERVER_DOMAIN}/ai/v1/attachment/image"
+                image_name = os.path.basename(screenshot_path)
+
+                with open(screenshot_path, 'rb') as f:
+                    image_data = f.read()
+
+                params = {
+                    "image_name": image_name
+                }
+                headers = {
+                    "Content-Type": "image/png"
+                }
+                response = requests.post(
+                    upload_url,
+                    params=params,
+                    data=image_data,
+                    headers=headers,
+                    timeout=5
+                )
+
+                if response.status_code != 200:
+                    raise Exception({"error_msg": f"Failed to upload canvas screen: {image_name}"})
+
+                response_text = response.text.strip()
+                if not response_text:
+                    raise Exception({"error_msg": f"Server did not return a valid image url: {response_text}"})
+
+                image_url = response_text
+            except Exception as e:
+                raise Exception({"error_msg": f"Failed to capture canvas screen: {image_name}"})
+            finally:
+                if 'screenshot_path' in locals() and os.path.exists(screenshot_path):
+                    os.remove(screenshot_path)
+
             return json.dumps({
                 "status": "success",
+                "image_url": image_url,
+                "format": "png",
+                "width": screenshot_width,
+                "height": screenshot_height
             }, ensure_ascii=False)
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})

@@ -429,15 +429,6 @@ class CTOrchManager(QThread):
                     sub_task_request["context"] = context
                     sub_task_request["tool_call_results"] = tool_call_results
 
-                    # If the previous tool was qgis_capture_canvas_screenshot, capture and upload the canvas image now.
-                    if (self._capture_screen_flag and
-                            all_tool_results and
-                            all_tool_results[-1].get("tool_name") == "qgis_capture_canvas_screenshot"):
-                        chat_id = self.request.get("chat_id", "")
-                        capture_url = self.__capture_canvas_screen(chat_id)
-                        if capture_url:
-                           sub_task_request["screenshot_url"] = capture_url
-
                     subtask_subthread = CTOrchNetwork(request_data=sub_task_request, orch_type=2)
                     subtask_subthread.content_received.connect(self.on_received_subtask_stream)
                     subtask_subthread.error_occurred.connect(self.on_network_error_occurred)
@@ -500,6 +491,18 @@ class CTOrchManager(QThread):
                             "arguments": arguments,
                             "result": tool_result
                         })
+
+                        # Include the screenshot in the request body.
+                        if tool_name == "qgis_capture_canvas_screenshot" and isinstance(tool_result, str):
+                            try:
+                                res_json = json.loads(tool_result)
+                                if res_json.get("status") == "success" and res_json.get("image_url"):
+                                    self.request["screenshot_url"] = res_json.get("image_url")
+                                    # If the current subtask has multiple rounds of self-correction,
+                                    # also make it immediately include the latest screenshot.
+                                    sub_task_request["screenshot_url"] = res_json.get("image_url")
+                            except Exception as e:
+                                pass
 
                         # remember the result of tools.
                         tool_call_history = []
