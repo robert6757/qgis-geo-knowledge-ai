@@ -111,7 +111,11 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QTextEdit" name="textEditDetail"/>
+        <widget class="QTextEdit" name="textEditDetail">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

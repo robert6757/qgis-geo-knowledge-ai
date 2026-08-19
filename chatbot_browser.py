@@ -107,6 +107,7 @@ class ChatbotBrowser(QTextBrowser):
     trigger_orch_subtask_continue = pyqtSignal(str)
     trigger_orch_subtask_repeat = pyqtSignal(str)
     trigger_orch_subtask_detail = pyqtSignal(str)
+    trigger_orch_favorite_plan = pyqtSignal()
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -115,6 +116,7 @@ class ChatbotBrowser(QTextBrowser):
         self.auto_scroll_to_bottom = True
         self.setMouseTracking(True)
         self.show_feedback = True
+        self.chat_mode = 1
 
         # drawing queue
         self.drawing_queue = queue.Queue()
@@ -136,6 +138,7 @@ class ChatbotBrowser(QTextBrowser):
 
         self.feedback_text = self.tr(
             "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)")
+        self.favorite_text = self.tr("[Favorite](agent://orch/favorite/plan)")
         self.exec_code_text = "\n\n" + self.tr(
             "[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
         self.exec_processing_text = "[{processing_id}](agent://execute/processing/{processing_id})"
@@ -207,7 +210,7 @@ class ChatbotBrowser(QTextBrowser):
             # resume scroll bar value and disable auto scrolling to bottom.
             scrollbar.setValue(current_scroll_value)
 
-    def pre_process_markdown(self):
+    def pre_process_markdown(self, chat_mode):
         # resume auto scroll to bottom.
         self.auto_scroll_to_bottom = True
         self.show_feedback = True
@@ -216,6 +219,7 @@ class ChatbotBrowser(QTextBrowser):
         self.pending_images.clear()
         self.python_code_block_list.clear()
         self.stop_event.clear()
+        self.chat_mode = chat_mode
         while not self.drawing_queue.empty():
             # clear drawing queue.
             self.drawing_queue.get_nowait()
@@ -315,6 +319,8 @@ class ChatbotBrowser(QTextBrowser):
                 elif path.startswith("/substask/detail"):
                     subtask_id = path.split("/")[-1]
                     self.trigger_orch_subtask_detail.emit(subtask_id)
+                elif path.startswith("/favorite/plan"):
+                    self.trigger_orch_favorite_plan.emit()
             return
 
         # open web browser
@@ -482,6 +488,9 @@ class ChatbotBrowser(QTextBrowser):
         # add feedback
         if self.show_feedback:
             self.markdown_content += "\n\n" + self.feedback_text
+            if self.chat_mode == 4:
+                # Favorites only in orchestration.
+                self.markdown_content += " | " + self.favorite_text
 
         # add execute button after the python code block.
         self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(

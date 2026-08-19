@@ -34,6 +34,7 @@ IS_QT6 = QT_MAJOR_VERSION == 6
 RightDockWidgetArea = Qt.DockWidgetArea.RightDockWidgetArea
 NoError = QNetworkReply.NetworkError.NoError
 TempLocation = QStandardPaths.StandardLocation.TempLocation
+AppDataLocation = QStandardPaths.StandardLocation.AppDataLocation
 ArrowCursor = Qt.CursorShape.ArrowCursor
 UserRole = Qt.ItemDataRole.UserRole
 Accepted = QDialog.DialogCode.Accepted

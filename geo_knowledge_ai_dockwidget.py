@@ -33,6 +33,8 @@ from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
 
+from .orch_favorites_manager import OrchFavoritesManager
+from .orch_favorites_dialog import OrchFavoritesDialog
 from .orch_manager import CTOrchManager, TaskPlan, SubTask, TaskStatus
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
@@ -61,6 +63,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         self.chatbot_browser = ChatbotBrowser(iface)
         self.history_manager = HistoryManager()
+        self.orch_favorites_manager = OrchFavoritesManager()
 
         chatbot_layout = QGridLayout()
         chatbot_layout.setContentsMargins(0, 0, 0, 0)
@@ -81,9 +84,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.trigger_orch_subtask_continue.connect(self.handle_click_exec_subtask_continue)
         self.chatbot_browser.trigger_orch_subtask_repeat.connect(self.handle_click_exec_subtask_repeat)
         self.chatbot_browser.trigger_orch_subtask_detail.connect(self.handle_click_exec_subtask_detail)
+        self.chatbot_browser.trigger_orch_favorite_plan.connect(self.handle_click_exec_favorite_plan)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
         self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
         self.cbSwitchMode.currentIndexChanged.connect(self.handle_update_chat_mode)
+        self.btnFavorites.clicked.connect(self.handle_click_favorites_btn)
 
         # update chat mode combobox
         gSetting = QgsSettings()
@@ -162,16 +167,27 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if history_item is None:
             return
 
+        # chat mode
+        gSetting = QgsSettings()
+        chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
+
         self.chatbot_browser.clear()
         self.plainTextEdit.clear()
         self.chat_id = None
         self.orch_current_subtask = None
         self.pre_chat_timestamp = history_item.get("timestamp", 0)
         self.orch_task_plan = history_item.get("task_plan")
-        self.chatbot_browser.pre_process_markdown()
+        self.chatbot_browser.pre_process_markdown(chat_mode=chat_mode)
         self.chatbot_browser.append_markdown(history_item["answer"])
         self.chatbot_browser.post_process_markdown(show_feedback=False)
         self.plainTextEdit.setPlainText(history_item["question"])
+
+    def handle_click_favorites_btn(self):
+        dlg = OrchFavoritesDialog(self.orch_favorites_manager)
+        dlg.setModal(True)
+        dlg.show()
+        if dlg.exec() != Accepted:
+            return
 
     def handle_update_chat_mode(self, index):
         # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Workflow Automation
@@ -342,6 +358,16 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # update the prompt of subtask.
         sub_task.description = dlg.get_modified_prompt()
 
+    def handle_click_exec_favorite_plan(self):
+        if not self.orch_task_plan or not self.chat_id:
+            return
+
+        self.orch_favorites_manager.put_favorite(self.chat_id, self.orch_task_plan)
+
+        QMessageBox.information(self, self.tr("Tip"),
+                                self.tr("Task added to favorites successfully."),
+                                QMessageBoxOK)
+
     def handle_ensure_code_execution(self):
         if not self.orch_manager or not self.orch_task_plan:
             return
@@ -401,6 +427,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.append_markdown(content)
 
     def on_stream_ended(self):
+        # Favorites only for Orchestration.
         self.chatbot_browser.post_process_markdown()
         self.btn_send_or_terminate_tag = 0
         self.btnSendOrTerminate.setText(self.tr("Send"))
@@ -446,12 +473,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
 
-        # add question in chatbot
-        self.question_str = self.plainTextEdit.toPlainText()
-        self.chatbot_browser.pre_process_markdown()
-        self.chatbot_browser.append_markdown(self.tr("**Question:") + self.question_str + "**\n\n")
-        self.chatbot_browser.append_markdown(self.tr("**Answer:") + "**\n\n")
-
         gSetting = QgsSettings()
 
         # uid
@@ -473,6 +494,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # build new chat id.
         self.chat_id = uuid.uuid4().hex
+
+        # add question in chatbot
+        self.question_str = self.plainTextEdit.toPlainText()
+        self.chatbot_browser.pre_process_markdown(chat_mode)
+        self.chatbot_browser.append_markdown(self.tr("**Question:") + self.question_str + "**\n\n")
+        self.chatbot_browser.append_markdown(self.tr("**Answer:") + "**\n\n")
 
         # capture screen
         capture_screen_tag = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
@@ -582,7 +609,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.orch_manager.stop()
             self.orch_manager = None
             self.orch_current_subtask = None
-            self.orch_task_plan = None
 
         self.chatbot_browser.post_process_markdown()
         self.btnSendOrTerminate.setEnabled(True)

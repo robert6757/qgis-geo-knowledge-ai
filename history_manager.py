@@ -24,7 +24,8 @@ import json
 import os
 from dataclasses import asdict
 from .compat import *
-from .orch_manager import TaskPlan, SubTask, TaskStatus
+from .orch_manager import TaskPlan, SubTask
+from qgis.core import QgsApplication
 
 class HistoryManager:
 
@@ -52,10 +53,10 @@ class HistoryManager:
             return None
 
         data = asdict(task_plan)
+        data.pop('final_result', None)
         for sub_task in data.get('sub_tasks', []):
-            status = sub_task.get('status')
-            if isinstance(status, TaskStatus):
-                sub_task['status'] = status.value
+            sub_task.pop('status', None)
+            sub_task.pop('result', None)
         return data
 
     def _deserialize_task_plan(self, data):
@@ -65,18 +66,10 @@ class HistoryManager:
 
         sub_tasks = []
         for sub_data in data.get('sub_tasks', []):
-            status_value = sub_data.get('status', TaskStatus.PENDING.value)
-            try:
-                status = TaskStatus(status_value)
-            except ValueError:
-                status = TaskStatus.PENDING
-
             sub_tasks.append(SubTask(
                 id=sub_data.get('id', ''),
                 name=sub_data.get('name', ''),
                 description=sub_data.get('description', ''),
-                status=status,
-                result=sub_data.get('result', ''),
                 dependencies=sub_data.get('dependencies', []),
                 tool_calls=sub_data.get('tool_calls', [])
             ))
@@ -84,8 +77,7 @@ class HistoryManager:
         return TaskPlan(
             original_task=data.get('original_task', ''),
             sub_tasks=sub_tasks,
-            execution_order=data.get('execution_order', []),
-            final_result=data.get('final_result', '')
+            execution_order=data.get('execution_order', [])
         )
 
     def remove_history(self, timestamp: int):
@@ -142,5 +134,6 @@ class HistoryManager:
             pass
     def __get_history_file_path(self):
         """get the history file path"""
-        temp_dir = QStandardPaths.writableLocation(TempLocation)
-        return os.path.join(temp_dir, "qgis-geo-knowledge-ai-plugin.dat")
+        profile_dir = QgsApplication.qgisSettingsDirPath()
+        plugin_dir = os.path.join(profile_dir, "qgis-geo-knowledge-ai")
+        return os.path.join(plugin_dir, "qgis-geo-knowledge-ai-plugin-history.dat")

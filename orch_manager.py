@@ -98,7 +98,7 @@ class CTOrchManager(QThread):
         self._stop_flag = False
         self._capture_screen_flag = True if request["screenshot_url"] else False
         self.request = request
-        self.prompt = ""
+        self.prompt = request.get("prompt", "")
         self.sub_task_results: Dict[str, str] = {}
         # 0: automate 1: step
         self.task_plan_execute_type = 0
