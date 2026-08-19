@@ -22,13 +22,16 @@
 
 import json
 import os
+from dataclasses import asdict
 from .compat import *
+from .orch_manager import TaskPlan, SubTask, TaskStatus
 
 class HistoryManager:
 
     def __init__(self):
         self.history_file = self.__get_history_file_path()
-    def put_history(self, timestamp: int, pre_timestamp:int, question: str, answer: str):
+
+    def put_history(self, timestamp: int, pre_timestamp:int, question: str, answer: str, task_plan: TaskPlan):
         """add new history"""
         histories = self._load_histories()
 
@@ -37,10 +40,53 @@ class HistoryManager:
             'timestamp': timestamp,
             'pre_timestamp': pre_timestamp,
             'question': question,
-            'answer': answer
+            'answer': answer,
+            'task_plan': self._serialize_task_plan(task_plan)
         })
 
         self._save_histories(histories)
+
+    def _serialize_task_plan(self, task_plan: TaskPlan):
+        """serialize TaskPlan object to a json-serializable dict."""
+        if task_plan is None:
+            return None
+
+        data = asdict(task_plan)
+        for sub_task in data.get('sub_tasks', []):
+            status = sub_task.get('status')
+            if isinstance(status, TaskStatus):
+                sub_task['status'] = status.value
+        return data
+
+    def _deserialize_task_plan(self, data):
+        """restore TaskPlan object from a dict."""
+        if data is None:
+            return None
+
+        sub_tasks = []
+        for sub_data in data.get('sub_tasks', []):
+            status_value = sub_data.get('status', TaskStatus.PENDING.value)
+            try:
+                status = TaskStatus(status_value)
+            except ValueError:
+                status = TaskStatus.PENDING
+
+            sub_tasks.append(SubTask(
+                id=sub_data.get('id', ''),
+                name=sub_data.get('name', ''),
+                description=sub_data.get('description', ''),
+                status=status,
+                result=sub_data.get('result', ''),
+                dependencies=sub_data.get('dependencies', []),
+                tool_calls=sub_data.get('tool_calls', [])
+            ))
+
+        return TaskPlan(
+            original_task=data.get('original_task', ''),
+            sub_tasks=sub_tasks,
+            execution_order=data.get('execution_order', []),
+            final_result=data.get('final_result', '')
+        )
 
     def remove_history(self, timestamp: int):
         """remove history by timestamp"""
@@ -57,6 +103,7 @@ class HistoryManager:
         histories = self._load_histories()
         for item in histories:
             if item['timestamp'] == timestamp:
+                item['task_plan'] = self._deserialize_task_plan(item.get('task_plan'))
                 return item
         return None
     def enum_question(self):

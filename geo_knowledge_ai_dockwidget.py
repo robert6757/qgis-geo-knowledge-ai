@@ -165,9 +165,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.clear()
         self.plainTextEdit.clear()
         self.chat_id = None
-        self.orch_task_plan = None
         self.orch_current_subtask = None
         self.pre_chat_timestamp = history_item.get("timestamp", 0)
+        self.orch_task_plan = history_item.get("task_plan")
         self.chatbot_browser.pre_process_markdown()
         self.chatbot_browser.append_markdown(history_item["answer"])
         self.chatbot_browser.post_process_markdown(show_feedback=False)
@@ -416,7 +416,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             cur_chat_timestamp,
             self.pre_chat_timestamp,
             self.question_str,
-            self.recv_raw_content)
+            self.recv_raw_content,
+            self.orch_task_plan
+        )
 
         # current chat will be the next previous chat.
         self.pre_chat_timestamp = cur_chat_timestamp
@@ -597,7 +599,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                 cur_chat_timestamp,
                 self.pre_chat_timestamp,
                 self.question_str,
-                self.recv_raw_content)
+                self.recv_raw_content,
+                self.orch_task_plan
+            )
 
             # current chat will be the next previous chat.
             self.pre_chat_timestamp = cur_chat_timestamp
