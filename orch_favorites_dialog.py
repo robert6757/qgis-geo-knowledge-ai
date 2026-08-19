@@ -23,7 +23,7 @@
 import os
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QListWidgetItem
+from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction
 from .compat import *
 from .orch_favorites_manager import OrchFavoritesManager
 
@@ -43,6 +43,8 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         self.listWidgetFavoritesList.itemClicked.connect(self.handle_list_item_clicked)
         self.listWidgetFavoritesList.itemDoubleClicked.connect(self.handle_list_item_dclicked)
         self.lineEditFilter.textChanged.connect(self.handle_filter_text_changed)
+        self.listWidgetFavoritesList.setContextMenuPolicy(CustomContextMenu)
+        self.listWidgetFavoritesList.customContextMenuRequested.connect(self.handle_list_context_menu)
 
         self.all_favorites = []
         for item in self.manager.enum_favorites():
@@ -55,18 +57,18 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             list_item.setData(UserRole, item["chat_id"])
             self.listWidgetFavoritesList.addItem(list_item)
 
-    def get_selected_favorite_timestamp(self):
-        return self.selected_timestamp
+    def get_selected_favorite_chat_id(self):
+        return self.selected_chat_id
 
     def handle_ok_clicked(self):
         selected_items = self.listWidgetFavoritesList.selectedItems()
         if len(selected_items) > 0:
-            self.selected_timestamp = selected_items[0].data(UserRole)
+            self.selected_chat_id = selected_items[0].data(UserRole)
 
         super().accept()
 
     def handle_cancel_clicked(self):
-        self.selected_timestamp = 0
+        self.selected_chat_id = 0
         super().close()
 
     def handle_list_item_clicked(self, list_item):
@@ -95,7 +97,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         if list_item is None:
             return
 
-        self.selected_timestamp = list_item.data(UserRole)
+        self.selected_chat_id = list_item.data(UserRole)
         super().accept()
 
     def handle_filter_text_changed(self, text):
@@ -109,3 +111,28 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                 list_item.setText(item["original_task"])
                 list_item.setData(UserRole, item["chat_id"])
                 self.listWidgetFavoritesList.addItem(list_item)
+
+    def handle_list_context_menu(self, pos):
+        """Show context menu for the favorites list to remove a favorite."""
+        list_item = self.listWidgetFavoritesList.itemAt(pos)
+        if list_item is None:
+            return
+
+        self.listWidgetFavoritesList.setCurrentItem(list_item)
+
+        menu = QMenu(self)
+        remove_action = QAction("Remove", self)
+        remove_action.triggered.connect(lambda: self.remove_favorite_item(list_item))
+        menu.addAction(remove_action)
+        menu.exec_(self.listWidgetFavoritesList.viewport().mapToGlobal(pos))
+
+    def remove_favorite_item(self, list_item):
+        """Remove a favorite by its list item and update the manager/list."""
+        chat_id = list_item.data(UserRole)
+        if self.manager.remove_favorite(chat_id):
+            self.all_favorites = [
+                item for item in self.all_favorites if item["chat_id"] != chat_id
+            ]
+            row = self.listWidgetFavoritesList.row(list_item)
+            self.listWidgetFavoritesList.takeItem(row)
+            self.textEditDetail.setPlainText("")

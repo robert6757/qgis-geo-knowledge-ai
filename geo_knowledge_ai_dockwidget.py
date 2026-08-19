@@ -94,11 +94,6 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
         self.cbSwitchMode.setCurrentIndex(chat_mode-1)
-        if chat_mode == 1 or chat_mode == 4:
-            # the screen capture supported only in Knowledge Q&A
-            self.btnScreenCapture.setEnabled(True)
-        else:
-            self.btnScreenCapture.setEnabled(False)
 
         # update screen capture status.
         capture_screen = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
@@ -189,6 +184,16 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if dlg.exec() != Accepted:
             return
 
+        favorite_chat_id = dlg.get_selected_favorite_chat_id()
+        favorite = self.orch_favorites_manager.retrieve_favorite(favorite_chat_id)
+        if favorite is None or favorite.get("task_plan") is None:
+            return
+
+        # Set the UI state and start the orchestration with favorite task plan.
+        favorite_orch_task_plan = favorite["task_plan"]
+        self.plainTextEdit.setPlainText(favorite_orch_task_plan.original_task)
+        self._begin_chat(favorite_orch_task_plan)
+
     def handle_update_chat_mode(self, index):
         # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Workflow Automation
         chat_mode = index + 1
@@ -196,11 +201,18 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         gSetting.setValue(CHAT_MODE_TAG, str(chat_mode))
 
-        if chat_mode == 1 or chat_mode == 4:
-            # the screen capture supported only in Knowledge Q&A and Workflow.
+        if chat_mode == 1:
             self.btnScreenCapture.setEnabled(True)
-        else:
+            self.btnFavorites.setEnabled(False)
+        elif chat_mode == 2:
             self.btnScreenCapture.setEnabled(False)
+            self.btnFavorites.setEnabled(False)
+        elif chat_mode == 3:
+            self.btnScreenCapture.setEnabled(False)
+            self.btnFavorites.setEnabled(False)
+        elif chat_mode == 4:
+            self.btnScreenCapture.setEnabled(True)
+            self.btnFavorites.setEnabled(True)
 
     def handle_click_feedback(self, star: int):
         if not self.chat_id:
@@ -434,6 +446,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
+        self.btnFavorites.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
         self.orch_current_subtask = None
 
@@ -467,8 +480,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
+        self.btnFavorites.setEnabled(True)
 
-    def _begin_chat(self):
+    def _begin_chat(self, task_plan:TaskPlan = None):
         # In order to  make the markdown render faster, we have to clear the previous markdown content.
         self.chatbot_browser.clear()
         self.recv_raw_content = ""
@@ -550,7 +564,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if chat_mode == 4:
             self.orch_current_subtask = None
             self.orch_task_plan = None
-            self.orch_manager = CTOrchManager(self.iface, request_data)
+            self.orch_manager = CTOrchManager(self.iface, request_data, task_plan=task_plan)
             self.orch_manager.report_decompose_stream.connect(self.recv_orch_content_stream)
             self.orch_manager.orch_decompose_finished.connect(self.on_orch_decompose_received)
             self.orch_manager.orch_subtask_started.connect(self.on_orch_start_subtask_received)
@@ -576,6 +590,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(False)
         self.btnClear.setEnabled(False)
         self.cbSwitchMode.setEnabled(False)
+        self.btnFavorites.setEnabled(False)
 
     def _stop_chat(self):
         if self.chat_worker:
@@ -617,6 +632,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
+        self.btnFavorites.setEnabled(True)
 
         # save to history
         if self.recv_raw_content.strip():

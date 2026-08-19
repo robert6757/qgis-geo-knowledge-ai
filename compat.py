@@ -41,6 +41,7 @@ Accepted = QDialog.DialogCode.Accepted
 PointingHandCursor = Qt.CursorShape.PointingHandCursor
 ContentTypeHeader = QNetworkRequest.KnownHeaders.ContentTypeHeader
 DirectConnection = Qt.ConnectionType.DirectConnection
+CustomContextMenu = Qt.ContextMenuPolicy.CustomContextMenu
 QMessageBoxOK = QMessageBox.StandardButton.Ok
 QMessageBoxCancel = QMessageBox.StandardButton.Cancel
 QMessageBoxYes = QMessageBox.StandardButton.Yes

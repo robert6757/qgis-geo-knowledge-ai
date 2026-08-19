@@ -91,7 +91,7 @@ class CTOrchManager(QThread):
     # report thinking stream
     report_thinking_stream = pyqtSignal(str)
 
-    def __init__(self, iface, request):
+    def __init__(self, iface, request, task_plan=None):
         super().__init__()
 
         self.iface = iface
@@ -106,6 +106,8 @@ class CTOrchManager(QThread):
         self.sub_task_execute_type = 0
         # CodeExecution in postprocess.
         self.code_execution = None
+        # TaskPlan from favorites.
+        self.task_plan = task_plan
 
         self.network_manager = QNetworkAccessManager()
 
@@ -122,25 +124,31 @@ class CTOrchManager(QThread):
         self._current_subthread = None
 
     def run(self):
-        # 1.decompose task
-        self.report_decompose_stream.emit(self.tr("**Thinking...**"))
+        # 1. construct task plan.
+        if not self.task_plan:
+            # decompose task and generate task plan.
+            self.report_decompose_stream.emit(self.tr("**Thinking...**"))
 
-        decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
-        decompose_subthread.error_occurred.connect(self.on_network_error_occurred)
-        decompose_subthread.thinking_received.connect(self.on_received_thinking_stream)
-        self._current_subthread = decompose_subthread
-        decompose_subthread.start()
-        decompose_subthread.wait()
-        self._current_subthread = None
+            decompose_subthread = CTOrchNetwork(request_data=self.request, orch_type=1)
+            decompose_subthread.error_occurred.connect(self.on_network_error_occurred)
+            decompose_subthread.thinking_received.connect(self.on_received_thinking_stream)
+            self._current_subthread = decompose_subthread
+            decompose_subthread.start()
+            decompose_subthread.wait()
+            self._current_subthread = None
 
-        task_plan, user_info = self.__parse_task_plan(decompose_subthread.get_raw_response())
-        if not task_plan:
-            self.error_occurred.emit("\n\n" + self.tr("Invalid Task plan!"))
-            self._stop_flag = True
-            return
+            task_plan, user_info = self.__parse_task_plan(decompose_subthread.get_raw_response())
+            if not task_plan:
+                self.error_occurred.emit("\n\n" + self.tr("Invalid Task plan!"))
+                self._stop_flag = True
+                return
 
-        if user_info and user_info["remaining_vip_ticket"]:
-            self.report_decompose_stream.emit("\n\n" + self.tr("VIP requests remaining: ")+ str(user_info["remaining_vip_ticket"]))
+            if user_info and user_info["remaining_vip_ticket"]:
+                self.report_decompose_stream.emit(
+                    "\n\n" + self.tr("VIP requests remaining: ") + str(user_info["remaining_vip_ticket"]))
+        else:
+            # use the appointed task plan.
+            task_plan = self.task_plan
 
         self.orch_decompose_finished.emit(task_plan)
 
