@@ -710,7 +710,11 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         # add news.
         welcome_str += "\n\n"
-        welcome_str += self.tr("**✨ What's New:** Added multi-modal support for Workflow Automation.")
+        welcome_str += self.tr("**✨ What's New:**")
+        welcome_str += "\n\n"
+        welcome_str += self.tr("**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.")
+        welcome_str += "\n\n"
+        welcome_str += self.tr("**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).")
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
