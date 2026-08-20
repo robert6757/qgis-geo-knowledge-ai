@@ -9,72 +9,72 @@
         <translation type="obsolete">**Genererer opgaveplan:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="138"/>
+        <location filename="../orch_manager.py" line="142"/>
         <source>Invalid Task plan!</source>
         <translation>Ugyldig opgaveplan!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="143"/>
+        <location filename="../orch_manager.py" line="147"/>
         <source>VIP requests remaining: </source>
         <translation>Resterende VIP-anmodninger: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="223"/>
+        <location filename="../orch_manager.py" line="231"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Start automatisk udførelse af opgaveplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="280"/>
+        <location filename="../orch_manager.py" line="284"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ADVARSEL] Delopgave [{}] ikke fundet, spring over.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="287"/>
+        <location filename="../orch_manager.py" line="291"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ADVARSEL] Afhængigheden [{}] af delopgave [{}] er ufuldstændig. Forsøg at fortsætte.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="268"/>
+        <location filename="../orch_manager.py" line="272"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Start trinvis udførelse af opgaveplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="354"/>
+        <location filename="../orch_manager.py" line="358"/>
         <source>Start executing the subtask:</source>
         <translation>Start udførelse af delopgaven:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="385"/>
+        <location filename="../orch_manager.py" line="389"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Fuldført] Delopgave [{}] udført med succes.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="398"/>
+        <location filename="../orch_manager.py" line="402"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Mislykkedes] Resultatet af delopgave [{}] levede ikke op til forventningerne. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="404"/>
+        <location filename="../orch_manager.py" line="408"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Mislykkedes] Delopgave [{}] kunne ikke udføres: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="714"/>
+        <location filename="../orch_manager.py" line="721"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fejl: Intet udførelsesresultat for delopgave.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="718"/>
+        <location filename="../orch_manager.py" line="725"/>
         <source>**Summary of tasks:**</source>
         <translation>**Resumé af opgaver:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="155"/>
+        <location filename="../orch_manager.py" line="163"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>Opgaven kan ikke fortsætte, fordi kodeudførelsesmodulet ikke er tilgængeligt!</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="126"/>
+        <location filename="../orch_manager.py" line="130"/>
         <source>**Thinking...**</source>
         <translation>**Tænker...**</translation>
     </message>
@@ -89,12 +89,12 @@
         <translation type="obsolete">[Forfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="392"/>
+        <location filename="../orch_manager.py" line="396"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Uforfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="260"/>
+        <location filename="../orch_manager.py" line="262"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Forfiner delopgave [{}]... (Forsøg {}/{})</translation>
     </message>
@@ -110,7 +110,7 @@
 <context>
     <name>ChatbotBrowser</name>
     <message>
-        <location filename="../chatbot_browser.py" line="137"/>
+        <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
         <translation>Var dette svar nyttigt? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Gentag](agent://repeat)</translation>
     </message>
@@ -120,7 +120,7 @@
         <translation type="obsolete">[Udfør kode](agent://execute/code) | [Kopier kode](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="139"/>
+        <location filename="../chatbot_browser.py" line="142"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[Udfør kode](agent://execute/code/{index}) | [Kopier kode](agent://execute/copycode/{index})</translation>
     </message>
@@ -128,6 +128,11 @@
         <location filename="../chatbot_browser.py" line="132"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)</source>
         <translation type="obsolete">Var dette svar nyttigt? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Gentag](agent://repeat) | [Tankekæde](agent://cot/1)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="141"/>
+        <source>[Favorite](agent://orch/favorite/plan)</source>
+        <translation>[Favorit](agent://orch/favorite/plan)</translation>
     </message>
 </context>
 <context>
@@ -287,6 +292,44 @@
     </message>
 </context>
 <context>
+    <name>FavoriteDlg</name>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="14"/>
+        <source>Workflow Favorites</source>
+        <translation>Workflow-favoritter</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="20"/>
+        <source>Cancel</source>
+        <translation>Annuller</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="27"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="47"/>
+        <source>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</source>
+        <translation>Tip: Vælg et workflow, og klik på OK for at indlæse det i Workflow-automatiseringstilstand.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="61"/>
+        <source>Favorites List:</source>
+        <translation>Favoritliste:</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="80"/>
+        <source>Filter</source>
+        <translation>Filtrer</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="116"/>
+        <source>Workflow Detail:</source>
+        <translation>Workflow-detaljer:</translation>
+    </message>
+</context>
+<context>
     <name>GeoKnowledgeAI</name>
     <message>
         <location filename="../geo_knowledge_ai.py" line="213"/>
@@ -335,47 +378,47 @@ FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den generered
         <translation>Nej</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="513"/>
         <source>**Question:</source>
         <translation>**Spørgsmål:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="451"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="514"/>
         <source>**Answer:</source>
         <translation>**Svar:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="546"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="588"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="629"/>
         <source>Send</source>
         <translation>Send</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
         <source>Tip</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="229"/>
         <source>Thank you for your feedback.</source>
         <translation>Tak for din feedback!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
         <source>Error</source>
         <translation>Fejl</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="207"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Kunne ikke sende din feedback. Prøv igen senere.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="212"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Netværksfejl: kontrollér din forbindelse og prøv igen.</translation>
     </message>
@@ -390,27 +433,27 @@ FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den generered
         <translation type="obsolete">Kodeudførelse startet i baggrunden...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="273"/>
         <source>Success</source>
         <translation>Succes</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="281"/>
         <source>Auto-Fix</source>
         <translation>Automatisk rettelse</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="264"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="290"/>
         <source>Code Copied Successfully!</source>
         <translation>Kode kopieret med succes!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>RuntimeError</source>
         <translation>Kørselsfejl</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -549,7 +592,7 @@ Jeg er din GIS AI-assistent og tilbyder skræddersyede professionelle vejledning
 Derudover vil jeg guide dig gennem væsentlige værktøjer som GDAL, GRASS og SAGA for at gøre din rumlige analyse mere effektiv og intelligent.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="673"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
         <source>
 
 ———
@@ -601,27 +644,27 @@ Jeg er din GIS AI-assistent og tilbyder tre agenter: **videns-S&amp;R-agent**, *
 Derudover vil jeg guide dig gennem væsentlige værktøjer som GDAL, GRASS og SAGA for at gøre din rumlige analyse mere effektiv og intelligent.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="334"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Kun den aktuelle delopgave kan fortsættes.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Kun den aktuelle delopgave kan gentages.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="383"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="419"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Trin for trin](agent://orch/substask/step) | [Automatiser alle](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="395"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Fortsæt](agent://orch/substask/continue/{subtask_id}) | [Gentag](agent://orch/substask/repeat/{subtask_id}) | [Detalje](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="665"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -661,19 +704,24 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
         <translation type="obsolete">**Genererer opgaveplan:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="376"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
         <source>**Task plan:**</source>
         <translation>**Opgaveplan:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="433"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Fortsæt](agent://orch/substask/continue/{subtask_id}) | [Forfin](agent://orch/substask/repeat/{subtask_id}) | [Detalje](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
         <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Det er nyt:** Tilføjet multimodal understøttelse til Workflow-automatisering.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <source>Task added to favorites successfully.</source>
+        <translation>Opgave tilføjet til favoritter.</translation>
     </message>
 </context>
 <context>
@@ -684,32 +732,32 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
         <translation>Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="84"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="101"/>
         <source>Chatbot:</source>
         <translation>Chat:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="111"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="128"/>
         <source>My Question:</source>
         <translation>Mit spørgsmål:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="184"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="167"/>
         <source>Settings</source>
         <translation>Indstillinger</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="227"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="190"/>
         <source>Send</source>
         <translation>Send</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="159"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="243"/>
         <source>Clear</source>
         <translation>Ryd</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="170"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="41"/>
         <source>History List</source>
         <translation>Historik</translation>
     </message>
@@ -719,12 +767,12 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
         <translation type="obsolete">Brug tankekæderesonnement til at generere, fejlrette og udføre kode.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="198"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="55"/>
         <source>Capture QGIS main window to start chat.</source>
         <translation>Fang QGIS-hovedvinduet for at starte chatten.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="48"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="211"/>
         <source>Knowledge Q&amp;A</source>
         <translation>Viden S&amp;R</translation>
     </message>
@@ -749,24 +797,29 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
         <translation type="obsolete">Send spørgsmål</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="53"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="216"/>
         <source>Data Search</source>
         <translation>Datasøgning</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="58"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="221"/>
         <source>Code Generation</source>
         <translation>Kodegenerering</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="63"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="226"/>
         <source>Workflow Automation</source>
         <translation>Workflow-automatisering</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="156"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="240"/>
         <source>Clear chatbot and start a new conversation.</source>
         <translation>Ryd chatten og start en ny samtale.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="254"/>
+        <source>Workflow Favorites.</source>
+        <translation>Workflow-favoritter.</translation>
     </message>
 </context>
 <context>
@@ -803,6 +856,74 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
         <location filename="../history_dialog.ui" line="62"/>
         <source>Remove All History</source>
         <translation>Fjern al historik</translation>
+    </message>
+</context>
+<context>
+    <name>OrchFavoritesDialog</name>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="217"/>
+        <source>[Server]</source>
+        <translation>[Server]</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="219"/>
+        <source>[Local]</source>
+        <translation>[Lokal]</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="167"/>
+        <source>Export Task Plan</source>
+        <translation>Eksporter opgaveplan</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <source>JSON files (*.json)</source>
+        <translation>JSON-filer (*.json)</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <source>Tip</source>
+        <translation>Tip</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="177"/>
+        <source>Task plan exported successfully.</source>
+        <translation>Opgaveplan eksporteret.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <source>Error</source>
+        <translation>Fejl</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="181"/>
+        <source>Failed to export task plan.</source>
+        <translation>Kunne ikke eksportere opgaveplan.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <source>Import Task Plan</source>
+        <translation>Importer opgaveplan</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <source>Failed to import task plan. Please check the file format.</source>
+        <translation>Kunne ikke importere opgaveplan. Tjek filformatet.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <source>Task plan imported successfully.</source>
+        <translation>Opgaveplan importeret.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <source>Confirm Delete</source>
+        <translation>Bekræft sletning</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <source>Are you sure you want to remove this favorite task?</source>
+        <translation>Er du sikker på, at du vil fjerne denne favoritopgave?</translation>
     </message>
 </context>
 <context>

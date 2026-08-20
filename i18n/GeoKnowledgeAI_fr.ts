@@ -9,72 +9,72 @@
         <translation type="obsolete">**Génération du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="138"/>
+        <location filename="../orch_manager.py" line="142"/>
         <source>Invalid Task plan!</source>
         <translation>Plan de tâches invalide !</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="143"/>
+        <location filename="../orch_manager.py" line="147"/>
         <source>VIP requests remaining: </source>
         <translation>Requêtes VIP restantes :</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="223"/>
+        <location filename="../orch_manager.py" line="231"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Exécution automatique du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="280"/>
+        <location filename="../orch_manager.py" line="284"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ATTENTION] Sous-tâche [{}] introuvable, ignorée.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="287"/>
+        <location filename="../orch_manager.py" line="291"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ATTENTION] La dépendance [{}] de la sous-tâche [{}] est incomplète. Tentative de poursuite.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="268"/>
+        <location filename="../orch_manager.py" line="272"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Exécution pas à pas du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="354"/>
+        <location filename="../orch_manager.py" line="358"/>
         <source>Start executing the subtask:</source>
         <translation>Début de l'exécution de la sous-tâche :</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="385"/>
+        <location filename="../orch_manager.py" line="389"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Terminé] Sous-tâche [{}] exécutée avec succès.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="398"/>
+        <location filename="../orch_manager.py" line="402"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Échec] Le résultat de la sous-tâche [{}] n'a pas répondu aux attentes. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="404"/>
+        <location filename="../orch_manager.py" line="408"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Échec] Échec de l'exécution de la sous-tâche [{}] : [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="714"/>
+        <location filename="../orch_manager.py" line="721"/>
         <source>Error: No subtask execution result.</source>
         <translation>Erreur : aucun résultat d'exécution de sous-tâche.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="718"/>
+        <location filename="../orch_manager.py" line="725"/>
         <source>**Summary of tasks:**</source>
         <translation>Résumé des tâches :</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="155"/>
+        <location filename="../orch_manager.py" line="163"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>La tâche ne peut pas continuer car le module d'exécution de code n'est pas disponible !</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="126"/>
+        <location filename="../orch_manager.py" line="130"/>
         <source>**Thinking...**</source>
         <translation>**Réflexion en cours...**</translation>
     </message>
@@ -89,12 +89,12 @@
         <translation type="obsolete">[Affinée] La sous-tâche [{}] nécessite un ajustement supplémentaire : {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="392"/>
+        <location filename="../orch_manager.py" line="396"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Non affinée] La sous-tâche [{}] nécessite un ajustement supplémentaire : {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="260"/>
+        <location filename="../orch_manager.py" line="262"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Affinage de la sous-tâche [{}]... (Tentative {}/{})</translation>
     </message>
@@ -110,7 +110,7 @@
 <context>
     <name>ChatbotBrowser</name>
     <message>
-        <location filename="../chatbot_browser.py" line="137"/>
+        <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
         <translation>Cette réponse vous a-t-elle été utile ? [Oui](agent://feedback/5) | [Non](agent://feedback/1) | [Répéter](agent://repeat)</translation>
     </message>
@@ -120,7 +120,7 @@
         <translation type="obsolete">[Exécuter le code](agent://execute/code) | [Copier le code](agent://execute/copycode)</translation>
     </message>
     <message>
-        <location filename="../chatbot_browser.py" line="139"/>
+        <location filename="../chatbot_browser.py" line="142"/>
         <source>[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})</source>
         <translation>[Exécuter le code](agent://execute/code/{index}) | [Copier le code](agent://execute/copycode/{index})</translation>
     </message>
@@ -128,6 +128,11 @@
         <location filename="../chatbot_browser.py" line="132"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)</source>
         <translation type="obsolete">Cette réponse vous a-t-elle été utile ? [Oui](agent://feedback/5) | [Non](agent://feedback/1) | [Répéter](agent://repeat) | [Chaîne de pensée](agent://cot/1)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="141"/>
+        <source>[Favorite](agent://orch/favorite/plan)</source>
+        <translation>[Favori](agent://orch/favorite/plan)</translation>
     </message>
 </context>
 <context>
@@ -287,6 +292,44 @@
     </message>
 </context>
 <context>
+    <name>FavoriteDlg</name>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="14"/>
+        <source>Workflow Favorites</source>
+        <translation>Workflows favoris</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="20"/>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="27"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="47"/>
+        <source>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</source>
+        <translation>Astuce : Sélectionnez un workflow et cliquez sur OK pour le charger en mode Automatisation de workflows.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="61"/>
+        <source>Favorites List:</source>
+        <translation>Liste des favoris :</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="80"/>
+        <source>Filter</source>
+        <translation>Filtrer</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.ui" line="116"/>
+        <source>Workflow Detail:</source>
+        <translation>Détails du workflow :</translation>
+    </message>
+</context>
+<context>
     <name>GeoKnowledgeAI</name>
     <message>
         <location filename="../geo_knowledge_ai.py" line="213"/>
@@ -335,47 +378,47 @@ ATTENTION : Malgré nos restrictions strictes sur l'IA, le code généré n'est 
         <translation>Non</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="450"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="513"/>
         <source>**Question:</source>
         <translation>**Question :</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="451"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="514"/>
         <source>**Answer:</source>
         <translation>**Réponse :</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="546"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
         <source>Stop</source>
         <translation>Arrêter</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="588"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="629"/>
         <source>Send</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
         <source>Tip</source>
         <translation>Astuce</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="203"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="229"/>
         <source>Thank you for your feedback.</source>
         <translation>Merci pour votre retour !</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="207"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Échec de l'envoi de votre avis. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="212"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Erreur réseau : veuillez vérifier votre connexion et réessayer.</translation>
     </message>
@@ -390,27 +433,27 @@ ATTENTION : Malgré nos restrictions strictes sur l'IA, le code généré n'est 
         <translation type="obsolete">Exécution du code en arrière-plan...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="247"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="273"/>
         <source>Success</source>
         <translation>Succès</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="255"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="281"/>
         <source>Auto-Fix</source>
         <translation>Correction automatique</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="264"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="290"/>
         <source>Code Copied Successfully!</source>
         <translation>Code copié avec succès !</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>RuntimeError</source>
         <translation>Erreur d'exécution</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="288"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
         <translation></translation>
     </message>
@@ -550,7 +593,7 @@ De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et 
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="673"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
         <source>
 
 ———
@@ -604,27 +647,27 @@ De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et 
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="308"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="334"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Seule la sous-tâche actuelle peut être poursuivie.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="319"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Seule la sous-tâche actuelle peut être répétée.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="383"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="419"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Pas à pas](agent://orch/substask/step) | [Tout automatiser](agent://orch/substask/automate)</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="395"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Continuer](agent://orch/substask/continue/{subtask_id}) | [Répéter](agent://orch/substask/repeat/{subtask_id}) | [Détail](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="665"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -666,19 +709,24 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
         <translation type="obsolete">**Génération du plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="376"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
         <source>**Task plan:**</source>
         <translation>**Plan de tâches :**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="397"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="433"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Continuer](agent://orch/substask/continue/{subtask_id}) | [Affiner](agent://orch/substask/repeat/{subtask_id}) | [Détail](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="669"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
         <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation>**✨ Nouveautés :** Ajout de la prise en charge multimodale pour l'automatisation des flux de travail.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <source>Task added to favorites successfully.</source>
+        <translation>Tâche ajoutée aux favoris.</translation>
     </message>
 </context>
 <context>
@@ -689,32 +737,32 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
         <translation>Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="84"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="101"/>
         <source>Chatbot:</source>
         <translation>Chat :</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="111"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="128"/>
         <source>My Question:</source>
         <translation>Ma question :</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="184"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="167"/>
         <source>Settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="227"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="190"/>
         <source>Send</source>
         <translation>Envoyer</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="159"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="243"/>
         <source>Clear</source>
         <translation>Effacer</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="170"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="41"/>
         <source>History List</source>
         <translation>Historique</translation>
     </message>
@@ -724,12 +772,12 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
         <translation type="obsolete">Utiliser le raisonnement en chaîne de pensée pour générer, déboguer et exécuter du code.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="198"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="55"/>
         <source>Capture QGIS main window to start chat.</source>
         <translation>Capturer la fenêtre principale de QGIS pour commencer la conversation.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="48"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="211"/>
         <source>Knowledge Q&amp;A</source>
         <translation>Questions &amp; Réponses</translation>
     </message>
@@ -754,24 +802,29 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
         <translation type="obsolete">Envoyer</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="53"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="216"/>
         <source>Data Search</source>
         <translation>Recherche de données</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="58"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="221"/>
         <source>Code Generation</source>
         <translation>Génération de code</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="63"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="226"/>
         <source>Workflow Automation</source>
         <translation>Automatisation de workflows</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="156"/>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="240"/>
         <source>Clear chatbot and start a new conversation.</source>
         <translation>Effacer le chat et démarrer une nouvelle conversation.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget_base.ui" line="254"/>
+        <source>Workflow Favorites.</source>
+        <translation>Workflows favoris.</translation>
     </message>
 </context>
 <context>
@@ -808,6 +861,74 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
         <location filename="../history_dialog.ui" line="62"/>
         <source>Remove All History</source>
         <translation>Supprimer tout l'historique</translation>
+    </message>
+</context>
+<context>
+    <name>OrchFavoritesDialog</name>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="217"/>
+        <source>[Server]</source>
+        <translation>[Serveur]</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="219"/>
+        <source>[Local]</source>
+        <translation>[Local]</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="167"/>
+        <source>Export Task Plan</source>
+        <translation>Exporter le plan de tâches</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <source>JSON files (*.json)</source>
+        <translation>Fichiers JSON (*.json)</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <source>Tip</source>
+        <translation>Astuce</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="177"/>
+        <source>Task plan exported successfully.</source>
+        <translation>Plan de tâches exporté.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="181"/>
+        <source>Failed to export task plan.</source>
+        <translation>Échec de l'exportation du plan de tâches.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <source>Import Task Plan</source>
+        <translation>Importer le plan de tâches</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <source>Failed to import task plan. Please check the file format.</source>
+        <translation>Échec de l'importation du plan de tâches. Veuillez vérifier le format du fichier.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <source>Task plan imported successfully.</source>
+        <translation>Plan de tâches importé.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <source>Confirm Delete</source>
+        <translation>Confirmer la suppression</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <source>Are you sure you want to remove this favorite task?</source>
+        <translation>Êtes-vous sûr de vouloir supprimer cette tâche favorite ?</translation>
     </message>
 </context>
 <context>
