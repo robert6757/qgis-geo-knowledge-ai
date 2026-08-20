@@ -27,12 +27,22 @@ import uuid
 from dataclasses import asdict
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, QgsBlockingNetworkRequest
+from qgis.PyQt.QtCore import QUrl, QUrlQuery
+from qgis.PyQt.QtNetwork import QNetworkRequest
+
+from .global_defs import AI_SERVER_DOMAIN
 
 class OrchFavoritesManager:
 
+    FAVORITES_ENUM_URL = "/ai/v1/orch/favorites/enum"
+    FAVORITES_GET_URL = "/ai/v1/orch/favorites/get"
+
     def __init__(self):
         self.favorites_file = self.__get_favorites_file_path()
+        # Maps randomly generated chat_id for server favorites to their
+        # original_task name, so retrieve_favorite can fetch the full plan.
+        self._remote_chat_id_map = {}
 
     def put_favorite(self, chat_id: str, task_plan: TaskPlan):
         """add or update a favorite orchestration plan."""
@@ -65,20 +75,139 @@ class OrchFavoritesManager:
         return False
 
     def retrieve_favorite(self, chat_id):
-        """retrieve the favorite orchestration plan base on chat_id."""
+        """retrieve the favorite orchestration plan base on chat_id.
+
+        First try to find it in local storage. If not found, treat chat_id
+        as the server-side favorite name (original_task) and fetch it from
+        the remote server. Server favorites do not contain chat_id, so a
+        random UUID is generated to build the local-style item.
+        """
         favorites = self._load_favorites()
         for item in favorites:
             if item['chat_id'] == chat_id:
                 item['task_plan'] = self._deserialize_task_plan(item.get('task_plan'))
                 return item
-        return None
+
+        # Local not found, try to fetch from server by name.
+        # For server favorites generated in enum_favorites, the chat_id is a
+        # random UUID mapped to the original_task name.
+        remote_name = self._remote_chat_id_map.get(chat_id)
+        if not remote_name:
+            return None
+
+        remote_favorite = self._fetch_remote_favorite_by_name(remote_name)
+        if not remote_favorite:
+            return None
+
+        return remote_favorite
 
     def enum_favorites(self):
-        """enumerate all favorites sorted by chat_id."""
-        favorites = self._load_favorites()
-        for item in favorites:
+        """enumerate all favorites from local storage and remote server.
+
+        Local items are tagged with source='local'; remote items are tagged
+        with source='server'. Remote favorites have a randomly generated
+        chat_id because the server does not provide one.
+        """
+        local_favorites = self._load_favorites()
+        for item in local_favorites:
             item['task_plan'] = self._deserialize_task_plan(item.get('task_plan'))
-        return favorites
+            item['source'] = 'local'
+
+        remote_favorites = self._fetch_remote_favorites()
+        return local_favorites + remote_favorites
+
+    def _fetch_remote_favorites(self):
+        """fetch favorite names from the server and build favorite items.
+
+        The server's /enum endpoint returns a list of original_task strings.
+        For each name, a random chat_id is generated and the task_plan is
+        reconstructed from the original_task string only (sub_tasks remain
+        empty until the full plan is retrieved via retrieve_favorite).
+        """
+        url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_ENUM_URL
+        request = QNetworkRequest(QUrl(url))
+        request.setRawHeader(b"Accept", b"application/json")
+
+        blocking_request = QgsBlockingNetworkRequest()
+        err_code = blocking_request.get(request)
+        if err_code != QgsBlockingNetworkRequest.ErrorCode.NoError:
+            print(f"Failed to fetch remote favorites: {err_code}")
+            return []
+
+        reply = blocking_request.reply()
+        if reply is None:
+            return []
+
+        try:
+            content = bytes(reply.content().data()).decode('utf-8')
+            names = json.loads(content)
+            if not isinstance(names, list):
+                return []
+        except (json.JSONDecodeError, UnicodeDecodeError, TypeError) as e:
+            print(f"Error parsing remote favorites: {e}")
+            return []
+
+        # Rebuild the chat_id -> original_task mapping each time we enumerate
+        # remote favorites, because the generated UUIDs are not persistent.
+        self._remote_chat_id_map.clear()
+        results = []
+        for name in names:
+            if not isinstance(name, str):
+                continue
+            chat_id = str(uuid.uuid4())
+            self._remote_chat_id_map[chat_id] = name
+            task_plan = TaskPlan(original_task=name)
+            results.append({
+                'chat_id': chat_id,
+                'task_plan': task_plan,
+                'source': 'server'
+            })
+        return results
+
+    def _fetch_remote_favorite_by_name(self, name):
+        """fetch a single favorite from the server by name.
+
+        The server expects a 'name' query parameter which can be the
+        original_task. A random chat_id is generated because the server
+        response does not contain one.
+        """
+        url = QUrl(AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL)
+        url_query = QUrlQuery()
+        url_query.addQueryItem('name', name)
+        url.setQuery(url_query)
+
+        request = QNetworkRequest(url)
+        request.setRawHeader(b"Accept", b"application/json")
+
+        blocking_request = QgsBlockingNetworkRequest()
+        err_code = blocking_request.get(request)
+        if err_code != QgsBlockingNetworkRequest.ErrorCode.NoError:
+            print(f"Failed to fetch remote favorite '{name}': {err_code}")
+            return None
+
+        reply = blocking_request.reply()
+        if reply is None:
+            return None
+
+        try:
+            content = bytes(reply.content().data()).decode('utf-8')
+            data = json.loads(content)
+            if not isinstance(data, dict):
+                return None
+
+            task_plan = self._deserialize_task_plan(data)
+            if task_plan is None:
+                return None
+
+            chat_id = str(uuid.uuid4())
+            return {
+                'chat_id': chat_id,
+                'task_plan': task_plan,
+                'source': 'server'
+            }
+        except (json.JSONDecodeError, UnicodeDecodeError, TypeError) as e:
+            print(f"Error parsing remote favorite '{name}': {e}")
+            return None
 
     def _serialize_task_plan(self, task_plan: TaskPlan):
         """serialize TaskPlan object to a json-serializable dict."""

@@ -49,13 +49,21 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
 
         self.all_favorites = []
         for item in self.manager.enum_favorites():
+            source = item.get("source", "local")
+            display_text = item["task_plan"].original_task
+            if source == "server":
+                display_text = self.tr("[Server]") + display_text
+            else:
+                display_text = self.tr("[Local]") + display_text
             self.all_favorites.append({
                 "chat_id": item["chat_id"],
-                "original_task": item["task_plan"].original_task
+                "original_task": item["task_plan"].original_task,
+                "source": source
             })
             list_item = QListWidgetItem()
-            list_item.setText(item["task_plan"].original_task)
+            list_item.setText(display_text)
             list_item.setData(UserRole, item["chat_id"])
+            list_item.setData(UserRole + 1, source)
             self.listWidgetFavoritesList.addItem(list_item)
 
     def get_selected_favorite_chat_id(self):
@@ -108,9 +116,16 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
 
         for item in self.all_favorites:
             if not filter_text or filter_text in item["original_task"].lower():
+                source = item.get("source", "local")
+                display_text = item["original_task"]
+                if source == "server":
+                    display_text = self.tr("[Server]") + display_text
+                else:
+                    display_text = self.tr("[Local]") + display_text
                 list_item = QListWidgetItem()
-                list_item.setText(item["original_task"])
+                list_item.setText(display_text)
                 list_item.setData(UserRole, item["chat_id"])
+                list_item.setData(UserRole + 1, source)
                 self.listWidgetFavoritesList.addItem(list_item)
 
     def handle_list_context_menu(self, pos):
@@ -130,9 +145,11 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             export_action.triggered.connect(lambda: self.export_favorite_item(list_item))
             menu.addAction(export_action)
 
-            remove_action = QAction("Remove", self)
-            remove_action.triggered.connect(lambda: self.remove_favorite_item(list_item))
-            menu.addAction(remove_action)
+            source = list_item.data(UserRole + 1)
+            if source != "server":
+                remove_action = QAction("Remove", self)
+                remove_action.triggered.connect(lambda: self.remove_favorite_item(list_item))
+                menu.addAction(remove_action)
 
         menu.exec_(self.listWidgetFavoritesList.viewport().mapToGlobal(pos))
 
@@ -188,14 +205,22 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             return
 
         original_task = favorite["task_plan"].original_task
+        source = favorite.get("source", "local")
         self.all_favorites.append({
             "chat_id": new_chat_id,
-            "original_task": original_task
+            "original_task": original_task,
+            "source": source
         })
 
+        display_text = original_task
+        if source == "server":
+            display_text = self.tr("[Server]") + display_text
+        else:
+            display_text = self.tr("[Local]") + display_text
         list_item = QListWidgetItem()
-        list_item.setText(original_task)
+        list_item.setText(display_text)
         list_item.setData(UserRole, new_chat_id)
+        list_item.setData(UserRole + 1, source)
         self.listWidgetFavoritesList.addItem(list_item)
         self.listWidgetFavoritesList.setCurrentItem(list_item)
         self.handle_list_item_clicked(list_item)
