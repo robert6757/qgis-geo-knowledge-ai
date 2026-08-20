@@ -509,7 +509,7 @@ Innan du använder denna plugin, läs och godkänn vår [Sekretesspolicy](https:
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -592,7 +592,7 @@ Jag är din GIS AI-assistent och erbjuder skräddarsydda professionella handledn
 Dessutom kommer jag att guida dig genom viktiga verktyg som GDAL, GRASS och SAGA för att göra din rumsliga analys mer effektiv och intelligent.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="721"/>
         <source>
 
 ———
@@ -715,13 +715,28 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
-        <translation>**✨ Vad är nytt:** Lagt till multimodalt stöd för arbetsflödesautomatisering.</translation>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <translation type="obsolete">**✨ Vad är nytt:** Lagt till multimodalt stöd för arbetsflödesautomatisering.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
         <source>Task added to favorites successfully.</source>
         <translation>Uppgift tillagd i favoriter.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <source>**✨ What&apos;s New:**</source>
+        <translation>**✨ Nyheter:**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
+        <translation>**Automatisering av multimodala arbetsflöden:** Förbättrat stöd för multimodal automatisering, inklusive bildigenkänning.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
+        <translation>**Arbetsflödesfavoriter:** Håll dina favoritarbetsflöden organiserade med Lokala favoriter (lagras privat på din enhet) och Serverfavoriter (arbetsflöden lagrade i molnet, redo att laddas ner till din lokala arbetsyta när som helst).</translation>
     </message>
 </context>
 <context>

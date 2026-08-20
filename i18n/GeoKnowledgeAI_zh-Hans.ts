@@ -509,7 +509,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -596,7 +596,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="721"/>
         <source>
 
 ———
@@ -724,13 +724,28 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
-        <translation>**✨ 更新内容：** 为自动化工作流添加了多模态支持。</translation>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <translation type="obsolete">**✨ 更新内容：** 为自动化工作流添加了多模态支持。</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
         <source>Task added to favorites successfully.</source>
         <translation>任务已成功添加到收藏夹中。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <source>**✨ What&apos;s New:**</source>
+        <translation>**✨ 新功能：**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
+        <translation>**多模态自动化工作流：** 集成多模态处理与图像识别技术，提供更强大的地理空间分析和制图输出能力。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
+        <translation>**工作流收藏夹：** 将常用工作流存储于本地或下载服务器中的其他工作流。</translation>
     </message>
 </context>
 <context>

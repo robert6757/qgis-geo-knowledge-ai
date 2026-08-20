@@ -509,7 +509,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -592,7 +592,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 Επιπλέον, θα σας καθοδηγήσω σε βασικά εργαλεία όπως GDAL, GRASS και SAGA για να κάνω τη χωρική σας ανάλυση πιο αποδοτική και έξυπνη.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="721"/>
         <source>
 
 ———
@@ -715,13 +715,28 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
-        <translation>**✨ Τι νέο υπάρχει:** Προστέθηκε πολυτροπική υποστήριξη για τον Αυτοματισμό Ροής Εργασίας.</translation>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <translation type="obsolete">**✨ Τι νέο υπάρχει:** Προστέθηκε πολυτροπική υποστήριξη για τον Αυτοματισμό Ροής Εργασίας.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
         <source>Task added to favorites successfully.</source>
         <translation>Η εργασία προστέθηκε στα αγαπημένα.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <source>**✨ What&apos;s New:**</source>
+        <translation>**✨ Τι νέο υπάρχει:**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
+        <translation>**Αυτοματοποίηση Πολυτροπικών Ροών Εργασίας:** Ενισχυμένη υποστήριξη για πολυτροπική αυτοματοποίηση, συμπεριλαμβανομένης της Αναγνώρισης Εικόνας.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
+        <translation>**Αγαπημένες Ροές Εργασίας:** Οργανώστε τις αγαπημένες σας ροές εργασίας με Τοπικά Αγαπημένα (αποθηκευμένα ιδιωτικά στη συσκευή σας) και Αγαπημένα Διακομιστή (ροές εργασίας αποθηκευμένες στο cloud, έτοιμες για λήψη στον τοπικό σας χώρο εργασίας ανά πάσα στιγμή).</translation>
     </message>
 </context>
 <context>

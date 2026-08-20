@@ -509,7 +509,7 @@ Przed użyciem tej wtyczki przeczytaj i zaakceptuj naszą [Politykę prywatnośc
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -592,7 +592,7 @@ Jestem Twoim asystentem GIS IA, oferującym dostosowane profesjonalne samouczki 
 Dodatkowo poprowadzę Cię przez podstawowe narzędzia takie jak GDAL, GRASS i SAGA, aby Twoja analiza przestrzenna była bardziej wydajna i inteligentna.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="721"/>
         <source>
 
 ———
@@ -715,13 +715,28 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
-        <translation>**✨ Co nowego:** Dodano wielomodalną obsługę automatyzacji przepływu pracy.</translation>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <translation type="obsolete">**✨ Co nowego:** Dodano wielomodalną obsługę automatyzacji przepływu pracy.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
         <source>Task added to favorites successfully.</source>
         <translation>Zadanie dodano do ulubionych.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <source>**✨ What&apos;s New:**</source>
+        <translation>**✨ Nowości:**</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
+        <translation>**Automatyzacja wielomodalnych przepływów pracy:** Rozszerzone wsparcie dla automatyzacji wielomodalnej, w tym rozpoznawania obrazów.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
+        <translation>**Ulubione przepływy pracy:** Organizuj swoje ulubione przepływy pracy za pomocą Ulubionych lokalnych (przechowywanych prywatnie na Twoim urządzeniu) i Ulubionych serwera (przepływy pracy przechowywane w chmurze, gotowe do pobrania do lokalnego obszaru roboczego w dowolnym momencie).</translation>
     </message>
 </context>
 <context>
