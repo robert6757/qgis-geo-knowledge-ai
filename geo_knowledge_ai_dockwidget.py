@@ -94,6 +94,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         chat_mode = int(gSetting.value(CHAT_MODE_TAG, "1"))
         self.cbSwitchMode.setCurrentIndex(chat_mode-1)
+        # Ensure UI status is updated
+        self.handle_update_chat_mode(chat_mode-1)
 
         # update screen capture status.
         capture_screen = gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() == "true"
@@ -184,6 +186,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if dlg.exec() != Accepted:
             return
 
+        # switch mode to Workflow Automation
+        if self.cbSwitchMode.currentIndex() != 3:
+            self.cbSwitchMode.setCurrentIndex(3)
+
         favorite_chat_id = dlg.get_selected_favorite_chat_id()
         favorite = self.orch_favorites_manager.retrieve_favorite(favorite_chat_id)
         if favorite is None or favorite.get("task_plan") is None:
@@ -201,18 +207,10 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         gSetting = QgsSettings()
         gSetting.setValue(CHAT_MODE_TAG, str(chat_mode))
 
-        if chat_mode == 1:
+        if chat_mode == 1 or chat_mode == 4:
             self.btnScreenCapture.setEnabled(True)
-            self.btnFavorites.setEnabled(False)
-        elif chat_mode == 2:
+        else:
             self.btnScreenCapture.setEnabled(False)
-            self.btnFavorites.setEnabled(False)
-        elif chat_mode == 3:
-            self.btnScreenCapture.setEnabled(False)
-            self.btnFavorites.setEnabled(False)
-        elif chat_mode == 4:
-            self.btnScreenCapture.setEnabled(True)
-            self.btnFavorites.setEnabled(True)
 
     def handle_click_feedback(self, star: int):
         if not self.chat_id:
@@ -446,8 +444,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnSendOrTerminate.setEnabled(True)
         self.btnHistory.setEnabled(True)
         self.btnClear.setEnabled(True)
-        self.btnFavorites.setEnabled(True)
         self.cbSwitchMode.setEnabled(True)
+        self.btnFavorites.setEnabled(True)
         self.orch_current_subtask = None
 
         # save to history
