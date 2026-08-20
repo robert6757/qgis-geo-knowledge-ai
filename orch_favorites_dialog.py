@@ -21,9 +21,10 @@
 """
 
 import os
+import re
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction
+from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction, QFileDialog, QMessageBox
 from .compat import *
 from .orch_favorites_manager import OrchFavoritesManager
 
@@ -113,22 +114,109 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                 self.listWidgetFavoritesList.addItem(list_item)
 
     def handle_list_context_menu(self, pos):
-        """Show context menu for the favorites list to remove a favorite."""
+        """Show context menu for the favorites list to remove/export/import a favorite."""
         list_item = self.listWidgetFavoritesList.itemAt(pos)
-        if list_item is None:
-            return
-
-        self.listWidgetFavoritesList.setCurrentItem(list_item)
 
         menu = QMenu(self)
-        remove_action = QAction("Remove", self)
-        remove_action.triggered.connect(lambda: self.remove_favorite_item(list_item))
-        menu.addAction(remove_action)
+
+        import_action = QAction("Import", self)
+        import_action.triggered.connect(self.import_favorite_item)
+        menu.addAction(import_action)
+
+        if list_item is not None:
+            self.listWidgetFavoritesList.setCurrentItem(list_item)
+
+            export_action = QAction("Export", self)
+            export_action.triggered.connect(lambda: self.export_favorite_item(list_item))
+            menu.addAction(export_action)
+
+            remove_action = QAction("Remove", self)
+            remove_action.triggered.connect(lambda: self.remove_favorite_item(list_item))
+            menu.addAction(remove_action)
+
         menu.exec_(self.listWidgetFavoritesList.viewport().mapToGlobal(pos))
+
+    def export_favorite_item(self, list_item):
+        """Export a favorite task plan to a JSON file."""
+        chat_id = list_item.data(UserRole)
+        favorite = self.manager.retrieve_favorite(chat_id)
+        if favorite is None or favorite.get("task_plan") is None:
+            return
+
+        original_task = favorite["task_plan"].original_task or "task_plan"
+        default_name = re.sub(r'[^\w\-_. ]+', '', original_task).strip().replace(' ', '_')[:50] or "task_plan"
+        default_name += ".json"
+
+        filepath, _ = QFileDialog.getSaveFileName(
+            self,
+            self.tr("Export Task Plan"),
+            default_name,
+            self.tr("JSON files (*.json)")
+        )
+        if not filepath:
+            return
+
+        if self.manager.export_task_plan_to_json(filepath, chat_id):
+            QMessageBox.information(self, self.tr("Tip"),
+                                    self.tr("Task plan exported successfully."),
+                                    QMessageBoxOK)
+        else:
+            QMessageBox.warning(self, self.tr("Error"),
+                              self.tr("Failed to export task plan."),
+                              QMessageBoxOK)
+
+    def import_favorite_item(self):
+        """Import a task plan from a JSON file and add it to favorites."""
+        filepath, _ = QFileDialog.getOpenFileName(
+            self,
+            self.tr("Import Task Plan"),
+            "",
+            self.tr("JSON files (*.json)")
+        )
+        if not filepath:
+            return
+
+        new_chat_id = self.manager.import_task_plan_from_json(filepath)
+        if new_chat_id is None:
+            QMessageBox.warning(self, self.tr("Error"),
+                              self.tr("Failed to import task plan. Please check the file format."),
+                              QMessageBoxOK)
+            return
+
+        favorite = self.manager.retrieve_favorite(new_chat_id)
+        if favorite is None or favorite.get("task_plan") is None:
+            return
+
+        original_task = favorite["task_plan"].original_task
+        self.all_favorites.append({
+            "chat_id": new_chat_id,
+            "original_task": original_task
+        })
+
+        list_item = QListWidgetItem()
+        list_item.setText(original_task)
+        list_item.setData(UserRole, new_chat_id)
+        self.listWidgetFavoritesList.addItem(list_item)
+        self.listWidgetFavoritesList.setCurrentItem(list_item)
+        self.handle_list_item_clicked(list_item)
+
+        QMessageBox.information(self, self.tr("Tip"),
+                                self.tr("Task plan imported successfully."),
+                                QMessageBoxOK)
 
     def remove_favorite_item(self, list_item):
         """Remove a favorite by its list item and update the manager/list."""
         chat_id = list_item.data(UserRole)
+        reply = QMessageBox.question(
+            self,
+            self.tr("Confirm Delete"),
+            self.tr("Are you sure you want to remove this favorite task?"),
+            QMessageBoxYes | QMessageBoxNo,
+            QMessageBoxNo
+        )
+        if reply != QMessageBoxYes:
+            return
+
         if self.manager.remove_favorite(chat_id):
             self.all_favorites = [
                 item for item in self.all_favorites if item["chat_id"] != chat_id

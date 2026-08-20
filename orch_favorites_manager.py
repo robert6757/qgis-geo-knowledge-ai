@@ -23,6 +23,7 @@
 
 import json
 import os
+import uuid
 from dataclasses import asdict
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
@@ -133,6 +134,42 @@ class OrchFavoritesManager:
                 json.dump(favorites, f, ensure_ascii=False, indent=2)
         except IOError:
             pass
+
+    def export_task_plan_to_json(self, filepath: str, chat_id: str):
+        """export a favorite task plan to a json file."""
+        favorite = self.retrieve_favorite(chat_id)
+        if favorite is None or favorite.get("task_plan") is None:
+            return False
+
+        try:
+            data = asdict(favorite["task_plan"])
+            # Drop runtime-only fields to keep the exported plan clean.
+            data.pop("final_result", None)
+            for sub_task in data.get("sub_tasks", []):
+                sub_task.pop("status", None)
+                sub_task.pop("result", None)
+
+            with open(filepath, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            return True
+        except (IOError, TypeError):
+            return False
+
+    def import_task_plan_from_json(self, filepath: str):
+        """import a single task plan from a json file and add it to favorites."""
+        try:
+            with open(filepath, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            task_plan = self._deserialize_task_plan(data)
+            if task_plan is None:
+                return None
+
+            new_chat_id = str(uuid.uuid4())
+            self.put_favorite(new_chat_id, task_plan)
+            return new_chat_id
+        except (json.JSONDecodeError, IOError, TypeError, KeyError):
+            return None
 
     def __get_favorites_file_path(self):
         """get the favorites file path"""

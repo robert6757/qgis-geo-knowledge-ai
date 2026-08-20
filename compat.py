@@ -45,6 +45,7 @@ CustomContextMenu = Qt.ContextMenuPolicy.CustomContextMenu
 QMessageBoxOK = QMessageBox.StandardButton.Ok
 QMessageBoxCancel = QMessageBox.StandardButton.Cancel
 QMessageBoxYes = QMessageBox.StandardButton.Yes
+QMessageBoxNo = QMessageBox.StandardButton.No
 QMessageBoxAcceptRole = QMessageBox.ButtonRole.AcceptRole
 QMessageBoxCritical = QMessageBox.Icon.Critical
 SmoothTransformation = Qt.TransformationMode.SmoothTransformation
