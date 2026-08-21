@@ -151,7 +151,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                 remove_action.triggered.connect(lambda: self.remove_favorite_item(list_item))
                 menu.addAction(remove_action)
 
-        menu.exec_(self.listWidgetFavoritesList.viewport().mapToGlobal(pos))
+        menu.exec(self.listWidgetFavoritesList.viewport().mapToGlobal(pos))
 
     def export_favorite_item(self, list_item):
         """Export a favorite task plan to a JSON file."""

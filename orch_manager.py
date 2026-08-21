@@ -510,7 +510,7 @@ class CTOrchManager(QThread):
                                     # also make it immediately include the latest screenshot.
                                     sub_task_request["screenshot_url"] = res_json.get("image_url")
                             except Exception as e:
-                                pass
+                                print(f"[orch_manager] Failed to parse screenshot tool result: {e}")
 
                         # remember the result of tools.
                         tool_call_history = []
