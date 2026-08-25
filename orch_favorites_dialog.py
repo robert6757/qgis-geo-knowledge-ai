@@ -24,8 +24,10 @@ import os
 import re
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction, QFileDialog, QMessageBox
+from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction, QFileDialog, QMessageBox, QLabel, QLineEdit
+from qgis.core import QgsSettings
 from .compat import *
+from .global_defs import USER_TOKEN_PARAMS_TAG
 from .orch_favorites_manager import OrchFavoritesManager
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -38,7 +40,14 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         super(OrchFavoritesDialog, self).__init__(parent)
         self.setupUi(self)
 
+        # Make textEditDetail span two columns so token inputs line up below it.
+        self.gridLayout_2.removeWidget(self.textEditDetail)
+        self.gridLayout_2.addWidget(self.textEditDetail, 1, 0, 1, 2)
+
         self.manager = manager
+        self.token_input_widgets = []
+        self.token_line_edits = {}
+
         self.btnOK.clicked.connect(self.handle_ok_clicked)
         self.btnCancel.clicked.connect(self.handle_cancel_clicked)
         self.listWidgetFavoritesList.itemClicked.connect(self.handle_list_item_clicked)
@@ -69,10 +78,49 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
     def get_selected_favorite_chat_id(self):
         return self.selected_chat_id
 
+    def _save_token_to_settings(self, token_name):
+        """Persist the token value for token_name to QGIS settings."""
+        line_edit = self.token_line_edits.get(token_name)
+        if line_edit is None:
+            return
+        user_token = line_edit.text().strip()
+        gSetting = QgsSettings()
+        gSetting.setValue(USER_TOKEN_PARAMS_TAG + f"/{token_name}", user_token)
+
+    def _check_tokens_filled(self):
+        """Return the first empty token name, or None if all are filled."""
+        for token_name, line_edit in self.token_line_edits.items():
+            if not line_edit.text().strip():
+                return token_name
+        return None
+
+    def _show_token_missing_warning(self, token_name):
+        """Show a warning telling the user which auth token is missing."""
+        QMessageBox.warning(
+            self,
+            self.tr("Missing Auth Token"),
+            self.tr("Please enter the auth token for '{0}' before continuing.").format(token_name),
+            QMessageBoxOK
+        )
+
+    def _clear_token_input_widgets(self):
+        """Remove any previously created token input rows."""
+        for widgets in self.token_input_widgets:
+            for widget in widgets:
+                self.gridLayout_2.removeWidget(widget)
+                widget.deleteLater()
+        self.token_input_widgets = []
+        self.token_line_edits = {}
+
     def handle_ok_clicked(self):
         selected_items = self.listWidgetFavoritesList.selectedItems()
         if len(selected_items) > 0:
             self.selected_chat_id = selected_items[0].data(UserRole)
+
+        empty_token = self._check_tokens_filled()
+        if empty_token is not None:
+            self._show_token_missing_warning(empty_token)
+            return
 
         super().accept()
 
@@ -85,9 +133,10 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             return
 
         chat_id = list_item.data(UserRole)
-        favorite = self.manager.retrieve_favorite(chat_id)
+        favorite = self.manager.retrieve_favorite(chat_id, inject_auth_tokens=False)
         if favorite is None or favorite.get("task_plan") is None:
             self.textEditDetail.setPlainText("")
+            self._clear_token_input_widgets()
             return
 
         task_plan = favorite["task_plan"]
@@ -102,11 +151,41 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
 
         self.textEditDetail.setPlainText("\n".join(detail_lines))
 
+        self._clear_token_input_widgets()
+        detail_text = "\n".join(detail_lines)
+        token_names = list(dict.fromkeys(re.findall(r"\[AUTH_TOKEN:(.*?)\]", detail_text)))
+        base_row = self.gridLayout_2.rowCount()
+        for idx, token_name in enumerate(token_names):
+            label = QLabel(f"{token_name} Auth Token: ", self)
+            line_edit = QLineEdit(self)
+            line_edit.setPlaceholderText(self.tr("Enter token"))
+
+            gSetting = QgsSettings()
+            saved_token = gSetting.value(USER_TOKEN_PARAMS_TAG + f"/{token_name}", "")
+            if saved_token:
+                line_edit.setText(saved_token)
+
+            line_edit.editingFinished.connect(
+                lambda name=token_name: self._save_token_to_settings(name)
+            )
+
+            row = base_row + idx
+            self.gridLayout_2.addWidget(label, row, 0)
+            self.gridLayout_2.addWidget(line_edit, row, 1)
+            self.token_input_widgets.append((label, line_edit))
+            self.token_line_edits[token_name] = line_edit
+
     def handle_list_item_dclicked(self, list_item):
         if list_item is None:
             return
 
         self.selected_chat_id = list_item.data(UserRole)
+
+        empty_token = self._check_tokens_filled()
+        if empty_token is not None:
+            self._show_token_missing_warning(empty_token)
+            return
+
         super().accept()
 
     def handle_filter_text_changed(self, text):
@@ -156,7 +235,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
     def export_favorite_item(self, list_item):
         """Export a favorite task plan to a JSON file."""
         chat_id = list_item.data(UserRole)
-        favorite = self.manager.retrieve_favorite(chat_id)
+        favorite = self.manager.retrieve_favorite(chat_id, inject_auth_tokens=True)
         if favorite is None or favorite.get("task_plan") is None:
             return
 
@@ -200,7 +279,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                               QMessageBoxOK)
             return
 
-        favorite = self.manager.retrieve_favorite(new_chat_id)
+        favorite = self.manager.retrieve_favorite(new_chat_id, inject_auth_tokens=False)
         if favorite is None or favorite.get("task_plan") is None:
             return
 
@@ -249,3 +328,4 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             row = self.listWidgetFavoritesList.row(list_item)
             self.listWidgetFavoritesList.takeItem(row)
             self.textEditDetail.setPlainText("")
+            self._clear_token_input_widgets()

@@ -23,15 +23,16 @@
 
 import json
 import os
+import re
 import uuid
 from dataclasses import asdict
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
-from qgis.core import QgsApplication, QgsBlockingNetworkRequest
+from qgis.core import QgsApplication, QgsBlockingNetworkRequest, QgsSettings
 from qgis.PyQt.QtCore import QUrl, QUrlQuery
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
-from .global_defs import AI_SERVER_DOMAIN
+from .global_defs import AI_SERVER_DOMAIN, USER_TOKEN_PARAMS_TAG
 
 class OrchFavoritesManager:
 
@@ -74,7 +75,7 @@ class OrchFavoritesManager:
             return True
         return False
 
-    def retrieve_favorite(self, chat_id):
+    def retrieve_favorite(self, chat_id, inject_auth_tokens):
         """retrieve the favorite orchestration plan base on chat_id.
 
         First try to find it in local storage. If not found, treat chat_id
@@ -86,6 +87,8 @@ class OrchFavoritesManager:
         for item in favorites:
             if item['chat_id'] == chat_id:
                 item['task_plan'] = self._deserialize_task_plan(item.get('task_plan'))
+                if inject_auth_tokens:
+                    self._inject_auth_tokens(item['task_plan'])
                 return item
 
         # Local not found, try to fetch from server by name.
@@ -99,6 +102,8 @@ class OrchFavoritesManager:
         if not remote_favorite:
             return None
 
+        if inject_auth_tokens:
+            self._inject_auth_tokens(remote_favorite['task_plan'])
         return remote_favorite
 
     def enum_favorites(self):
@@ -115,6 +120,30 @@ class OrchFavoritesManager:
 
         remote_favorites = self._fetch_remote_favorites()
         return local_favorites + remote_favorites
+
+    def _inject_auth_tokens(self, task_plan):
+        """Scan original_task and sub-task descriptions for [AUTH_TOKEN:name]
+        placeholders and replace them with the values stored in QGIS settings."""
+        if task_plan is None:
+            return
+
+        gSetting = QgsSettings()
+
+        text_fields = [task_plan.original_task]
+        text_fields.extend(st.description for st in task_plan.sub_tasks)
+
+        token_names = set()
+        for text in text_fields:
+            token_names.update(re.findall(r"\[AUTH_TOKEN:(.*?)\]", text or ""))
+
+        for token_name in token_names:
+            saved_token = gSetting.value(USER_TOKEN_PARAMS_TAG + f"/{token_name}", "")
+            if not saved_token:
+                continue
+            placeholder = f"[AUTH_TOKEN:{token_name}]"
+            task_plan.original_task = task_plan.original_task.replace(placeholder, saved_token)
+            for st in task_plan.sub_tasks:
+                st.description = st.description.replace(placeholder, saved_token)
 
     def _fetch_remote_favorites(self):
         """fetch favorite names from the server and build favorite items.
@@ -266,7 +295,7 @@ class OrchFavoritesManager:
 
     def export_task_plan_to_json(self, filepath: str, chat_id: str):
         """export a favorite task plan to a json file."""
-        favorite = self.retrieve_favorite(chat_id)
+        favorite = self.retrieve_favorite(chat_id, inject_auth_tokens=True)
         if favorite is None or favorite.get("task_plan") is None:
             return False
 

@@ -191,7 +191,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.cbSwitchMode.setCurrentIndex(3)
 
         favorite_chat_id = dlg.get_selected_favorite_chat_id()
-        favorite = self.orch_favorites_manager.retrieve_favorite(favorite_chat_id)
+        favorite = self.orch_favorites_manager.retrieve_favorite(favorite_chat_id, inject_auth_tokens=True)
         if favorite is None or favorite.get("task_plan") is None:
             return
 
