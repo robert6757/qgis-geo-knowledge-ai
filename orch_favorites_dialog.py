@@ -133,7 +133,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             return
 
         chat_id = list_item.data(UserRole)
-        favorite = self.manager.retrieve_favorite(chat_id, inject_auth_tokens=False)
+        favorite = self.manager.retrieve_favorite(chat_id, inject_variables=False)
         if favorite is None or favorite.get("task_plan") is None:
             self.textEditDetail.setPlainText("")
             self._clear_token_input_widgets()
@@ -235,7 +235,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
     def export_favorite_item(self, list_item):
         """Export a favorite task plan to a JSON file."""
         chat_id = list_item.data(UserRole)
-        favorite = self.manager.retrieve_favorite(chat_id, inject_auth_tokens=True)
+        favorite = self.manager.retrieve_favorite(chat_id, inject_variables=True)
         if favorite is None or favorite.get("task_plan") is None:
             return
 
@@ -279,7 +279,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                               QMessageBoxOK)
             return
 
-        favorite = self.manager.retrieve_favorite(new_chat_id, inject_auth_tokens=False)
+        favorite = self.manager.retrieve_favorite(new_chat_id, inject_variables=False)
         if favorite is None or favorite.get("task_plan") is None:
             return
 

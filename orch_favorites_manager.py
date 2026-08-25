@@ -29,10 +29,10 @@ from dataclasses import asdict
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
 from qgis.core import QgsApplication, QgsBlockingNetworkRequest, QgsSettings
-from qgis.PyQt.QtCore import QUrl, QUrlQuery
+from qgis.PyQt.QtCore import QUrl, QUrlQuery, QStandardPaths
 from qgis.PyQt.QtNetwork import QNetworkRequest
 
-from .global_defs import AI_SERVER_DOMAIN, USER_TOKEN_PARAMS_TAG
+from .global_defs import AI_SERVER_DOMAIN, USER_TOKEN_PARAMS_TAG, TEMP_FOLDER_TAG
 
 class OrchFavoritesManager:
 
@@ -75,7 +75,7 @@ class OrchFavoritesManager:
             return True
         return False
 
-    def retrieve_favorite(self, chat_id, inject_auth_tokens):
+    def retrieve_favorite(self, chat_id, inject_variables):
         """retrieve the favorite orchestration plan base on chat_id.
 
         First try to find it in local storage. If not found, treat chat_id
@@ -87,8 +87,8 @@ class OrchFavoritesManager:
         for item in favorites:
             if item['chat_id'] == chat_id:
                 item['task_plan'] = self._deserialize_task_plan(item.get('task_plan'))
-                if inject_auth_tokens:
-                    self._inject_auth_tokens(item['task_plan'])
+                if inject_variables:
+                    self._inject_variables(item['task_plan'])
                 return item
 
         # Local not found, try to fetch from server by name.
@@ -102,8 +102,8 @@ class OrchFavoritesManager:
         if not remote_favorite:
             return None
 
-        if inject_auth_tokens:
-            self._inject_auth_tokens(remote_favorite['task_plan'])
+        if inject_variables:
+            self._inject_variables(remote_favorite['task_plan'])
         return remote_favorite
 
     def enum_favorites(self):
@@ -126,9 +126,14 @@ class OrchFavoritesManager:
 
         return local_favorites + remote_favorites
 
-    def _inject_auth_tokens(self, task_plan):
-        """Scan original_task and sub-task descriptions for [AUTH_TOKEN:name]
-        placeholders and replace them with the values stored in QGIS settings."""
+    def _inject_variables(self, task_plan):
+        """Scan original_task and sub-task descriptions for variable
+        placeholders and replace them with runtime values.
+
+        Supported placeholders:
+        - [AUTH_TOKEN:name] -> value from QGIS settings under auth_token/name.
+        - [OUTPUT_DIR]      -> the configured temporary folder path.
+        """
         if task_plan is None:
             return
 
@@ -137,6 +142,7 @@ class OrchFavoritesManager:
         text_fields = [task_plan.original_task]
         text_fields.extend(st.description for st in task_plan.sub_tasks)
 
+        # Inject [AUTH_TOKEN:name] placeholders.
         token_names = set()
         for text in text_fields:
             token_names.update(re.findall(r"\[AUTH_TOKEN:(.*?)\]", text or ""))
@@ -149,6 +155,16 @@ class OrchFavoritesManager:
             task_plan.original_task = task_plan.original_task.replace(placeholder, saved_token)
             for st in task_plan.sub_tasks:
                 st.description = st.description.replace(placeholder, saved_token)
+
+        # Inject [OUTPUT_DIR] placeholder with the configured temp folder.
+        temp_folder = gSetting.value(TEMP_FOLDER_TAG, "")
+        if not temp_folder:
+            temp_folder = QStandardPaths.writableLocation(TempLocation)
+        if temp_folder:
+            placeholder = "[OUTPUT_DIR]"
+            task_plan.original_task = task_plan.original_task.replace(placeholder, temp_folder)
+            for st in task_plan.sub_tasks:
+                st.description = st.description.replace(placeholder, temp_folder)
 
     def _fetch_remote_favorites(self):
         """fetch favorite names from the server and build favorite items.
@@ -300,7 +316,7 @@ class OrchFavoritesManager:
 
     def export_task_plan_to_json(self, filepath: str, chat_id: str):
         """export a favorite task plan to a json file."""
-        favorite = self.retrieve_favorite(chat_id, inject_auth_tokens=True)
+        favorite = self.retrieve_favorite(chat_id, inject_variables=True)
         if favorite is None or favorite.get("task_plan") is None:
             return False
 
