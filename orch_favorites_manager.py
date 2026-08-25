@@ -119,6 +119,11 @@ class OrchFavoritesManager:
             item['source'] = 'local'
 
         remote_favorites = self._fetch_remote_favorites()
+
+        # To ensure the output is neat, sorting is used here.
+        local_favorites.sort(key=lambda item: item.get('task_plan', TaskPlan(original_task='')).original_task or '')
+        remote_favorites.sort(key=lambda item: item.get('task_plan', TaskPlan(original_task='')).original_task or '')
+
         return local_favorites + remote_favorites
 
     def _inject_auth_tokens(self, task_plan):
