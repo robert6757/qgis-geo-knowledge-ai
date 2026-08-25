@@ -80,7 +80,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         super().reject()
 
     def handle_click_help(self):
-        url = "https://github.com/robert6757/qgis-geo-knowledge-ai"
+        url = "https://www.geoknowledgeai.com"
         webbrowser.open(url)
 
     def handle_click_apply(self):

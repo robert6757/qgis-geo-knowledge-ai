@@ -9,7 +9,7 @@ qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
 version=1.22
 author=phoenix-gis
-email=phoenixgis@sina.com
+email=business@geoknowledgeai.com
 
 about=This plugin integrates four specialized AI agents for Knowledge Q&A, Data Search, Code Generation, and Workflow Automation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
 
@@ -75,7 +75,7 @@ changelog=Version 1.22 2026-08-20
 # Tags are comma separated with spaces allowed
 tags=assistant, ai, geo, agent
 
-homepage=https://github.com/robert6757/qgis-geo-knowledge-ai
+homepage=https://www.geoknowledgeai.com/
 category=Plugins
 icon=icon.png
 # experimental flag
