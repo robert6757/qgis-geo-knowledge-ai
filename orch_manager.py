@@ -137,15 +137,11 @@ class CTOrchManager(QThread):
             decompose_subthread.wait()
             self._current_subthread = None
 
-            task_plan, user_info = self.__parse_task_plan(decompose_subthread.get_raw_response())
+            task_plan = self.__parse_task_plan(decompose_subthread.get_raw_response())
             if not task_plan:
                 self.error_occurred.emit("\n\n" + self.tr("Invalid Task plan!"))
                 self._stop_flag = True
                 return
-
-            if user_info and user_info["remaining_vip_ticket"]:
-                self.report_decompose_stream.emit(
-                    "\n\n" + self.tr("VIP requests remaining: ") + str(user_info["remaining_vip_ticket"]))
         else:
             # use the appointed task plan.
             task_plan = self.task_plan
@@ -644,11 +640,12 @@ class CTOrchManager(QThread):
 
         return "\n".join(context_parts)
 
-    def __parse_task_plan(self, plan_json_str: str) -> (TaskPlan, dict):
+    def __parse_task_plan(self, plan_json_str: str) -> TaskPlan:
         try:
             json_match = re.search(r'\{[\s\S]*\}', plan_json_str)
-            if json_match:
-                content = json_match.group()
+            if not json_match:
+                return None
+            content = json_match.group()
 
             plan_data = json.loads(content)
 
@@ -668,10 +665,9 @@ class CTOrchManager(QThread):
                 sub_tasks=sub_tasks,
                 execution_order=plan_data.get("execution_order", [st.id for st in sub_tasks])
             )
-        except Exception as e:
-            return None, None
-
-        return task_plan, plan_data.get("user_info")
+            return task_plan
+        except Exception:
+            return None
 
     def __parse_tool_calls_from_content(self, content: str) -> list:
         tool_calls = []

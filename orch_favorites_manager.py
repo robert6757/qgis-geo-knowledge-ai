@@ -25,12 +25,12 @@ import json
 import os
 import re
 import uuid
+import requests
 from dataclasses import asdict
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
-from qgis.core import QgsApplication, QgsBlockingNetworkRequest, QgsSettings
-from qgis.PyQt.QtCore import QUrl, QUrlQuery, QStandardPaths
-from qgis.PyQt.QtNetwork import QNetworkRequest
+from qgis.core import QgsApplication, QgsSettings
+from qgis.PyQt.QtCore import QStandardPaths
 
 from .global_defs import AI_SERVER_DOMAIN, USER_TOKEN_PARAMS_TAG, TEMP_FOLDER_TAG
 
@@ -175,25 +175,20 @@ class OrchFavoritesManager:
         empty until the full plan is retrieved via retrieve_favorite).
         """
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_ENUM_URL
-        request = QNetworkRequest(QUrl(url))
-        request.setRawHeader(b"Accept", b"application/json")
-
-        blocking_request = QgsBlockingNetworkRequest()
-        err_code = blocking_request.get(request)
-        if err_code != QgsBlockingNetworkRequest.ErrorCode.NoError:
-            print(f"Failed to fetch remote favorites: {err_code}")
-            return []
-
-        reply = blocking_request.reply()
-        if reply is None:
-            return []
 
         try:
-            content = bytes(reply.content().data()).decode('utf-8')
-            names = json.loads(content)
+            response = requests.get(url, timeout=2)
+            if response.status_code != 200:
+                print(f"Failed to fetch remote favorites: {response.status_code}")
+                return []
+
+            names = response.json()
             if not isinstance(names, list):
                 return []
-        except (json.JSONDecodeError, UnicodeDecodeError, TypeError) as e:
+        except requests.exceptions.RequestException as e:
+            print(f"Failed to fetch remote favorites: {e}")
+            return []
+        except (json.JSONDecodeError, TypeError) as e:
             print(f"Error parsing remote favorites: {e}")
             return []
 
@@ -221,27 +216,15 @@ class OrchFavoritesManager:
         original_task. A random chat_id is generated because the server
         response does not contain one.
         """
-        url = QUrl(AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL)
-        url_query = QUrlQuery()
-        url_query.addQueryItem('name', name)
-        url.setQuery(url_query)
-
-        request = QNetworkRequest(url)
-        request.setRawHeader(b"Accept", b"application/json")
-
-        blocking_request = QgsBlockingNetworkRequest()
-        err_code = blocking_request.get(request)
-        if err_code != QgsBlockingNetworkRequest.ErrorCode.NoError:
-            print(f"Failed to fetch remote favorite '{name}': {err_code}")
-            return None
-
-        reply = blocking_request.reply()
-        if reply is None:
-            return None
+        url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL
 
         try:
-            content = bytes(reply.content().data()).decode('utf-8')
-            data = json.loads(content)
+            response = requests.get(url, params={'name': name}, timeout=2)
+            if response.status_code != 200:
+                print(f"Failed to fetch remote favorite '{name}': {response.status_code}")
+                return None
+
+            data = response.json()
             if not isinstance(data, dict):
                 return None
 
@@ -255,7 +238,10 @@ class OrchFavoritesManager:
                 'task_plan': task_plan,
                 'source': 'server'
             }
-        except (json.JSONDecodeError, UnicodeDecodeError, TypeError) as e:
+        except requests.exceptions.RequestException as e:
+            print(f"Failed to fetch remote favorite '{name}': {e}")
+            return None
+        except (json.JSONDecodeError, TypeError) as e:
             print(f"Error parsing remote favorite '{name}': {e}")
             return None
 

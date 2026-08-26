@@ -22,7 +22,7 @@
 
 import json
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl
-from qgis.PyQt.QtNetwork import QNetworkAccessManager
+from qgis.PyQt.QtNetwork import QNetworkAccessManager, QNetworkRequest
 
 from .global_defs import *
 from .compat import *
@@ -154,17 +154,33 @@ class CTOrchNetwork(QThread):
 
     def on_finished(self):
         """request finished - The final analysis will be provided here."""
+        http_status = None
+        if self.reply:
+            http_status = self.reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
+
+        is_error_status = isinstance(http_status, int) and http_status >= 400
+
         if self.buffer:
             try:
                 full_str = self.buffer.decode('utf-8')
-                if full_str.startswith('data: '):
+                # If the server returns an HTTP error (e.g., 429), surface the
+                # response body as an error and do not treat it as SSE content.
+                if is_error_status:
+                    error_msg = f"HTTP {http_status}: {full_str}"
+                    self.error_occurred.emit(error_msg)
+                elif full_str.startswith('data: '):
                     response_data = full_str[len('data: '):]
+                    self._final_response.append(response_data)
+                    self.content_received.emit(response_data)
                 else:
-                    response_data = full_str
-                self._final_response.append(response_data)
-                self.content_received.emit(response_data)
+                    self._final_response.append(full_str)
+                    self.content_received.emit(full_str)
             except Exception as e:
                 print(f"Parse error: {e}")
+                if is_error_status:
+                    self.error_occurred.emit(f"HTTP {http_status}: failed to parse error response.")
+        elif is_error_status:
+            self.error_occurred.emit(f"HTTP {http_status}: request failed.")
 
         if self.reply:
             self.reply.finished.disconnect()

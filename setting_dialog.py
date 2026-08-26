@@ -50,6 +50,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         self.btnApply.clicked.connect(self.handle_click_apply)
         self.btnHelp.clicked.connect(self.handle_click_help)
         self.btnSelFolder.clicked.connect(self.handle_click_select_folder)
+        self.labelEnterprise.linkActivated.connect(self.handle_label_enterprise_link_clicked)
 
         gSetting = QgsSettings()
         email = gSetting.value(USER_EMAIL_TAG)
@@ -62,6 +63,48 @@ class SettingDialog(QDialog, FORM_CLASS):
 
         multi_turn = gSetting.value(MULTI_TURN_TAG, "3")
         self.cbChatTurn.setCurrentText(multi_turn)
+
+        self._update_credits_label()
+
+    def _update_credits_label(self):
+        """Fetch user info and update the hourly credits label."""
+        fallback_text = self.tr("Hourly Credits Left: -- (Resets in --).")
+        user_id = QgsSettings().value(USER_ID_TAG, "")
+        if not user_id:
+            self.labelCredits.setText(fallback_text)
+            return
+
+        try:
+            response = requests.get(
+                f"{AI_SERVER_DOMAIN}/ai/v1/userinfo?user_id={user_id}",
+                timeout=2
+            )
+            if response.status_code != 200:
+                self.labelCredits.setText(fallback_text)
+                return
+
+            data = response.json()
+            credits = data.get("credits")
+            reset_seconds = data.get("reset_remaining_seconds")
+            plan = data.get("plan")
+            if credits is None or reset_seconds is None:
+                raise ValueError(self.tr("Missing required fields in userinfo response"))
+
+            if plan == 0:
+                self.groupBox.setTitle(self.tr("Current Plan: Free"))
+            elif plan == 1:
+                self.groupBox.setTitle(self.tr("Current Plan: Enterprise"))
+            else:
+                self.groupBox.setTitle(self.tr("Current Plan: --"))
+
+            minutes = reset_seconds // 60
+            self.labelCredits.setText(
+                self.tr("Hourly Credits Left: {credits} (Resets in {minutes}m).").format(
+                    credits=max(0, credits), minutes=minutes)
+            )
+        except Exception:
+            self.labelCredits.setText(fallback_text)
+
     def handle_click_ok(self):
         email = self.lineEdit.text()
         temp_folder = self.lineEditTempFolderPath.text()
@@ -81,6 +124,9 @@ class SettingDialog(QDialog, FORM_CLASS):
 
     def handle_click_help(self):
         url = "https://www.geoknowledgeai.com"
+        webbrowser.open(url)
+
+    def handle_label_enterprise_link_clicked(self, url):
         webbrowser.open(url)
 
     def handle_click_apply(self):
