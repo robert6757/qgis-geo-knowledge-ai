@@ -16,60 +16,60 @@
     <message>
         <location filename="../orch_manager.py" line="147"/>
         <source>VIP requests remaining: </source>
-        <translation>Pozostałe żądania VIP: </translation>
+        <translation type="obsolete">Pozostałe żądania VIP: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="231"/>
+        <location filename="../orch_manager.py" line="227"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Rozpocznij automatyczne wykonanie planu zadań:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="284"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[OSTRZEŻENIE] Podzadanie [{}] nie znalezione, pomijanie.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="291"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[OSTRZEŻENIE] Zależność [{}] podzadania [{}] jest niekompletna. Próba kontynuacji.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="272"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Rozpocznij wykonanie planu zadań krok po kroku:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="358"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Rozpoczęcie wykonywania podzadania:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="389"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Zakończono] Podzadanie [{}] wykonane pomyślnie.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Niepowodzenie] Wynik podzadania [{}] nie spełnił oczekiwań. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="408"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Niepowodzenie] Wykonanie podzadania [{}] nie powiodło się: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="717"/>
         <source>Error: No subtask execution result.</source>
         <translation>Błąd: Brak wyniku wykonania podzadania.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="725"/>
+        <location filename="../orch_manager.py" line="721"/>
         <source>**Summary of tasks:**</source>
         <translation>**Podsumowanie zadań:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="163"/>
+        <location filename="../orch_manager.py" line="159"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>Zadanie nie może być kontynuowane, ponieważ moduł wykonywania kodu jest niedostępny!</translation>
     </message>
@@ -89,12 +89,12 @@
         <translation type="obsolete">[Ulepszone] Podzadanie [{}] wymaga dalszej korekty: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Nieulepszone] Podzadanie [{}] wymaga dalszej korekty: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="262"/>
+        <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Ulepszanie podzadania [{}]... (Próba {}/{})</translation>
     </message>
@@ -158,40 +158,40 @@
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
         <source>Apply for high-speed channel. Please enter your email address and click &apos;Apply&apos;. We will contact you via email within 24 hours. </source>
-        <translation>Poproś o kanał szybkiej transmisji. Wprowadź swój adres e-mail i kliknij „Poproś&quot;. Skontaktujemy się z Tobą e-mailem w ciągu 24 godzin. </translation>
+        <translation type="obsolete">Poproś o kanał szybkiej transmisji. Wprowadź swój adres e-mail i kliknij „Poproś&quot;. Skontaktujemy się z Tobą e-mailem w ciągu 24 godzin. </translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="47"/>
+        <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
         <translation>E-mail:</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
         <source>Apply</source>
-        <translation>Poproś</translation>
+        <translation type="obsolete">Poproś</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="210"/>
+        <location filename="../setting_dialog.ui" line="226"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="220"/>
+        <location filename="../setting_dialog.ui" line="236"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="183"/>
+        <location filename="../setting_dialog.ui" line="199"/>
         <source>Get Help</source>
         <translation>Uzyskaj pomoc</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
         <source>High-Speed Channel</source>
-        <translation>Kanał szybkiej transmisji</translation>
+        <translation type="obsolete">Kanał szybkiej transmisji</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="69"/>
+        <location filename="../setting_dialog.ui" line="85"/>
         <source>Multi-Turn Conversation</source>
         <translation>Rozmowa wieloobrotowa</translation>
     </message>
@@ -201,22 +201,22 @@
         <translation type="obsolete">Domyślna maksymalna liczba tur rozmowy to 2. Długie rozmowy mogą spowodować utratę skupienia na temacie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="80"/>
+        <location filename="../setting_dialog.ui" line="96"/>
         <source>Turn Limit：</source>
         <translation>Limit tur:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="94"/>
+        <location filename="../setting_dialog.ui" line="110"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="99"/>
+        <location filename="../setting_dialog.ui" line="115"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="104"/>
+        <location filename="../setting_dialog.ui" line="120"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -256,39 +256,59 @@
         <translation type="obsolete">Rozumowanie łańcucha myśli</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="109"/>
+        <location filename="../setting_dialog.ui" line="125"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="114"/>
+        <location filename="../setting_dialog.ui" line="130"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="124"/>
+        <location filename="../setting_dialog.ui" line="140"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>Domyślny limit to 3 tury rozmowy, aby utrzymać dyskusję na temacie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="137"/>
+        <location filename="../setting_dialog.ui" line="153"/>
         <source>Temporary Folder</source>
         <translation>Folder Tymczasowy</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="143"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
         <translation>Foldery tymczasowe są wykorzystywane do przechowywania plików pośrednich podczas procesu pobierania lub analizy danych.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="155"/>
+        <location filename="../setting_dialog.ui" line="171"/>
         <source>Path:</source>
         <translation>Ścieżka:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="187"/>
         <source>...</source>
         <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="20"/>
+        <source>Current Plan: Free</source>
+        <translation>Aktualny plan: Bezpłatny</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Hourly Credits Left: 0 (Resets in 0m).</source>
+        <translation>Pozostałe kredyty godzinowe: 0 (Reset za 0 min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Submit</source>
+        <translation>Prześlij</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;dwiedź &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Rozwiązania Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; aby dowiedzieć się więcej, lub wpisz swój e-mail i kliknij 'Prześlij', aby poprosić o nasz plan Enterprise—nasz zespół skontaktuje się z Tobą w ciągu 24 godzin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -324,7 +344,7 @@
         <translation>Filtruj</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.ui" line="116"/>
+        <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>Szczegóły przepływu pracy:</translation>
     </message>
@@ -509,7 +529,7 @@ Przed użyciem tej wtyczki przeczytaj i zaakceptuj naszą [Politykę prywatnośc
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -715,7 +735,7 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation type="obsolete">**✨ Co nowego:** Dodano wielomodalną obsługę automatyzacji przepływu pracy.</translation>
     </message>
     <message>
@@ -725,7 +745,7 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Nowości:**</translation>
     </message>
     <message>
@@ -876,69 +896,89 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
 <context>
     <name>OrchFavoritesDialog</name>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="217"/>
+        <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
         <translation>[Serwer]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="219"/>
+        <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
         <translation>[Lokalny]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="167"/>
+        <location filename="../orch_favorites_dialog.py" line="246"/>
         <source>Export Task Plan</source>
         <translation>Eksportuj plan zadań</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <location filename="../orch_favorites_dialog.py" line="266"/>
         <source>JSON files (*.json)</source>
         <translation>Pliki JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <location filename="../orch_favorites_dialog.py" line="307"/>
         <source>Tip</source>
         <translation>Wskazówka</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="177"/>
+        <location filename="../orch_favorites_dialog.py" line="256"/>
         <source>Task plan exported successfully.</source>
         <translation>Plan zadań wyeksportowano.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <location filename="../orch_favorites_dialog.py" line="277"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="181"/>
+        <location filename="../orch_favorites_dialog.py" line="260"/>
         <source>Failed to export task plan.</source>
         <translation>Nie udało się wyeksportować planu zadań.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <location filename="../orch_favorites_dialog.py" line="266"/>
         <source>Import Task Plan</source>
         <translation>Importuj plan zadań</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <location filename="../orch_favorites_dialog.py" line="277"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>Nie udało się zaimportować planu zadań. Sprawdź format pliku.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <location filename="../orch_favorites_dialog.py" line="307"/>
         <source>Task plan imported successfully.</source>
         <translation>Plan zadań zaimportowano.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <location filename="../orch_favorites_dialog.py" line="314"/>
         <source>Confirm Delete</source>
         <translation>Potwierdź usunięcie</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <location filename="../orch_favorites_dialog.py" line="314"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>Czy na pewno chcesz usunąć to ulubione zadanie?</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="99"/>
+        <source>Missing Auth Token</source>
+        <translation>Brak tokenu uwierzytelniania</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="99"/>
+        <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
+        <translation>Wprowadź token uwierzytelniania dla '{0}' przed kontynuowaniem.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <source>Enter token</source>
+        <translation>Wprowadź token</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <source>{} Auth Token: </source>
+        <translation>{} Token uwierzytelniania: </translation>
     </message>
 </context>
 <context>
@@ -997,49 +1037,79 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
         <translation>Ostrzeżenie</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
         <translation>Proszę wprowadzić swój adres e-mail.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
         <translation>Proszę wprowadzić prawidłowy adres e-mail.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="114"/>
+        <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
         <translation>Wskazówka</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="114"/>
+        <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
         <translation>Twoja prośba została otrzymana. Skontaktujemy się z Tobą e-mailem w ciągu 24 godzin. Sprawdź później swoją skrzynkę odbiorczą.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="119"/>
+        <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
         <translation>Nie udało się przesłać prośby. Spróbuj ponownie później.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Błąd sieci: sprawdź połączenie i spróbuj ponownie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="132"/>
+        <location filename="../setting_dialog.py" line="178"/>
         <source>Select Temporary Folder</source>
         <translation>Wybierz folder tymczasowy</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="71"/>
+        <source>Hourly Credits Left: -- (Resets in --).</source>
+        <translation>Pozostałe kredyty godzinowe: -- (Reset za --).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="94"/>
+        <source>Current Plan: Free</source>
+        <translation>Aktualny plan: Bezpłatny</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="96"/>
+        <source>Current Plan: Enterprise</source>
+        <translation>Aktualny plan: Enterprise</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: --</source>
+        <translation>Aktualny plan: --</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="101"/>
+        <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>Pozostałe kredyty godzinowe: {credits} (Reset za {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="91"/>
+        <source>Missing required fields in response</source>
+        <translation>Brak wymaganych pól w odpowiedzi</translation>
     </message>
 </context>
 <context>

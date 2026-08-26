@@ -16,62 +16,62 @@
     <message>
         <location filename="../orch_manager.py" line="147"/>
         <source>VIP requests remaining: </source>
-        <translation>Richieste VIP rimanenti: </translation>
+        <translation type="obsolete">Richieste VIP rimanenti: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="231"/>
+        <location filename="../orch_manager.py" line="227"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Avvia esecuzione automatica del piano attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="284"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ATTENZIONE] Subtask [{}] non trovato, salto.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="291"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ATTENZIONE] La dipendenza [{}] del subtask [{}] è incompleta. Tentativo di proseguire.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="272"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Avvia esecuzione passo-passo del piano attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="358"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Avvio esecuzione del subtask:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="389"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Completato] Subtask [{}] eseguito con successo.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Fallito] Il risultato del subtask [{}] non ha soddisfatto le aspettative. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="408"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Fallito] Esecuzione del subtask [{}] non riuscita: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="717"/>
         <source>Error: No subtask execution result.</source>
         <translation>Errore: nessun risultato di esecuzione del subtask.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="725"/>
+        <location filename="../orch_manager.py" line="721"/>
         <source>**Summary of tasks:**</source>
         <translation>**Riepilogo delle attività:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="163"/>
+        <location filename="../orch_manager.py" line="159"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
-        <translation>L&apos;attività non può continuare perché il modulo di esecuzione del codice non è disponibile!</translation>
+        <translation>L'attività non può continuare perché il modulo di esecuzione del codice non è disponibile!</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="130"/>
@@ -89,12 +89,12 @@
         <translation type="obsolete">[Affinata] La sotto-attività [{}] richiede ulteriori aggiustamenti: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Non affinata] La sotto-attività [{}] richiede ulteriori aggiustamenti: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="262"/>
+        <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Affinamento della sotto-attività [{}]... (Tentativo {}/{})</translation>
     </message>
@@ -158,65 +158,65 @@
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
         <source>Apply for high-speed channel. Please enter your email address and click &apos;Apply&apos;. We will contact you via email within 24 hours. </source>
-        <translation>Richiedi il canale ad alta velocità. Inserisci il tuo indirizzo email e clicca su &quot;Richiedi&quot;. Ti contatteremo via email entro 24 ore. </translation>
+        <translation type="obsolete">Richiedi il canale ad alta velocità. Inserisci il tuo indirizzo email e clicca su &quot;Richiedi&quot;. Ti contatteremo via email entro 24 ore. </translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="47"/>
+        <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
         <translation>E-mail:</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
         <source>Apply</source>
-        <translation>Richiedi</translation>
+        <translation type="obsolete">Richiedi</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="210"/>
+        <location filename="../setting_dialog.ui" line="226"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="220"/>
+        <location filename="../setting_dialog.ui" line="236"/>
         <source>Cancel</source>
         <translation>Annulla</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="183"/>
+        <location filename="../setting_dialog.ui" line="199"/>
         <source>Get Help</source>
         <translation>Ottieni aiuto</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
         <source>High-Speed Channel</source>
-        <translation>Canale ad alta velocità</translation>
+        <translation type="obsolete">Canale ad alta velocità</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="69"/>
+        <location filename="../setting_dialog.ui" line="85"/>
         <source>Multi-Turn Conversation</source>
         <translation>Conversazione multi-turno</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="130"/>
         <source>The default maximum number of conversation turns is 2. Lengthy conversations may cause the topic to become less focused.</source>
-        <translation type="obsolete">Il numero massimo predefinito di turni di conversazione è 2. Un numero eccessivo di turni può causare la perdita di focus sull&apos;argomento.</translation>
+        <translation type="obsolete">Il numero massimo predefinito di turni di conversazione è 2. Un numero eccessivo di turni può causare la perdita di focus sull'argomento.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="80"/>
+        <location filename="../setting_dialog.ui" line="96"/>
         <source>Turn Limit：</source>
         <translation>Limite turni:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="94"/>
+        <location filename="../setting_dialog.ui" line="110"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="99"/>
+        <location filename="../setting_dialog.ui" line="115"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="104"/>
+        <location filename="../setting_dialog.ui" line="120"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -256,39 +256,59 @@
         <translation type="obsolete">Ragionamento a catena</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="109"/>
+        <location filename="../setting_dialog.ui" line="125"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="114"/>
+        <location filename="../setting_dialog.ui" line="130"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="124"/>
+        <location filename="../setting_dialog.ui" line="140"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>Il limite predefinito è di 3 turni di conversazione per mantenere la discussione focalizzata.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="137"/>
+        <location filename="../setting_dialog.ui" line="153"/>
         <source>Temporary Folder</source>
         <translation>Cartella Temporanea</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="143"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
         <translation>Le cartelle temporanee vengono utilizzate per memorizzare i file intermedi durante il processo di download o analisi dei dati.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="155"/>
+        <location filename="../setting_dialog.ui" line="171"/>
         <source>Path:</source>
         <translation>Percorso:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="187"/>
         <source>...</source>
         <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="20"/>
+        <source>Current Plan: Free</source>
+        <translation>Piano attuale: Gratuito</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Hourly Credits Left: 0 (Resets in 0m).</source>
+        <translation>Crediti orari rimanenti: 0 (Reimpostazione tra 0 min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Submit</source>
+        <translation>Invia</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isita &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Soluzioni Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; per saperne di più, oppure inserisci la tua email e fai clic su 'Invia' per richiedere il nostro Piano Enterprise—il nostro team ti contatterà entro 24 ore.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -324,7 +344,7 @@
         <translation>Filtra</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.ui" line="116"/>
+        <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>Dettagli workflow:</translation>
     </message>
@@ -356,11 +376,11 @@
 If you want to execute code automatically, please press &quot;Yes&quot;. The Geo Knowledge AI plugin will download the execution module to start the automated process.
 
 CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not completely reliable. Please check it carefully. We suggest you back up your data and QGIS project before executing code.</source>
-        <translation>Per migliorare la sicurezza di esecuzione, QGIS non consente l&apos;esecuzione automatica di codice esterno (ad esempio, codice generato in tempo reale dall&apos;IA).
+        <translation>Per migliorare la sicurezza di esecuzione, QGIS non consente l'esecuzione automatica di codice esterno (ad esempio, codice generato in tempo reale dall'IA).
 
 Se desideri eseguire il codice automaticamente, premi &quot;Sì&quot;. Il plugin Geo Knowledge AI scaricherà il modulo di esecuzione per avviare il processo automatizzato.
 
-ATTENZIONE: Nonostante le nostre RIGIDE restrizioni sull&apos;IA, il codice generato non è completamente affidabile. Per favore controllalo attentamente. Ti suggeriamo di eseguire il backup dei dati e del progetto QGIS prima di eseguire il codice.</translation>
+ATTENZIONE: Nonostante le nostre RIGIDE restrizioni sull'IA, il codice generato non è completamente affidabile. Per favore controllalo attentamente. Ti suggeriamo di eseguire il backup dei dati e del progetto QGIS prima di eseguire il codice.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -476,7 +496,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 
 **Felice di conoscerti! 🌍**
 
-Sono il tuo assistente GIS IA, che fornisce tutorial professionali personalizzati che coprono un&apos;ampia gamma di attività geospaziali, tra cui scoperta di dati geografici globali, modellazione geoscientifica, analisi idrologica e del terreno, elaborazione di telerilevamento e generazione di codice PyQGIS.
+Sono il tuo assistente GIS IA, che fornisce tutorial professionali personalizzati che coprono un'ampia gamma di attività geospaziali, tra cui scoperta di dati geografici globali, modellazione geoscientifica, analisi idrologica e del terreno, elaborazione di telerilevamento e generazione di codice PyQGIS.
 
 Inoltre, ti guiderò attraverso strumenti essenziali come GDAL, GRASS e SAGA per rendere la tua analisi spaziale più efficiente e intelligente.
 
@@ -501,7 +521,7 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
 Prima di utilizzare questo plugin, leggi e accetta la nostra [Informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
-[Ho letto e accetto l&apos;Informativa sulla privacy.](agent://privacy/1)</translation>
+[Ho letto e accetto l'Informativa sulla privacy.](agent://privacy/1)</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="621"/>
@@ -509,7 +529,7 @@ Prima di utilizzare questo plugin, leggi e accetta la nostra [Informativa sulla 
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -535,7 +555,7 @@ Before using this plugin, please read our [Privacy Notice](https://github.com/ro
 
 Prima di utilizzare questo plugin, leggi la nostra [Informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
-[Ho letto e accetto l&apos;Informativa sulla privacy.](agent://privacy/1)</translation>
+[Ho letto e accetto l'Informativa sulla privacy.](agent://privacy/1)</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="591"/>
@@ -562,11 +582,11 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 
 Inserisci la tua domanda nel campo di input qui sotto e clicca sul pulsante **Invia** per iniziare la conversazione.
 
-Per comprendere meglio la tua domanda, attiva l&apos;interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Per comprendere meglio la tua domanda, attiva l'interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
-Quando generi codice, attiva l&apos;interruttore Catena di pensiero ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) per ottenere una risposta più precisa.
+Quando generi codice, attiva l'interruttore Catena di pensiero ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) per ottenere una risposta più precisa.
 
-Facendo una domanda, confermi di aver letto e accettato l&apos;[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+Facendo una domanda, confermi di aver letto e accettato l'[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </translation>
     </message>
@@ -615,10 +635,10 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 
 Inserisci la tua domanda nel campo di input qui sotto e clicca sul pulsante **Invia** per iniziare la conversazione.
 
-Per comprendere meglio la tua domanda, attiva l&apos;interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Per comprendere meglio la tua domanda, attiva l'interruttore dello screenshot ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
 
-Facendo una domanda, confermi di aver letto e accettato l&apos;[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+Facendo una domanda, confermi di aver letto e accettato l'[informativa sulla privacy](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </translation>
     </message>
@@ -682,11 +702,11 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
 
 Sono il tuo assistente GIS IA, che fornisce quattro agenti: **D&amp;R di conoscenza**, **Ricerca dati**, **Generazione codice** e **Automazione flussi di lavoro**.
 
- La nostra base di conoscenze copre la scoperta di dati geografici globali, la modellazione geoscientifica, l&apos;analisi idrologica e del terreno, l&apos;elaborazione di telerilevamento e la documentazione PyQGIS.
+ La nostra base di conoscenze copre la scoperta di dati geografici globali, la modellazione geoscientifica, l'analisi idrologica e del terreno, l'elaborazione di telerilevamento e la documentazione PyQGIS.
 
 Inoltre, posso guidarti attraverso strumenti essenziali come GDAL, GRASS e SAGA per rendere la tua analisi spaziale più efficiente e intelligente.
 
-Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti complessi in modo completamente automatico o passo-passo. Ti suggeriamo di eseguire il backup dei dati e dei progetti QGIS prima di eseguire un flusso di lavoro.</translation>
+Suggerimento: **L'automazione dei flussi di lavoro** può gestire compiti complessi in modo completamente automatico o passo-passo. Ti suggeriamo di eseguire il backup dei dati e dei progetti QGIS prima di eseguire un flusso di lavoro.</translation>
     </message>
     <message>
         <location filename="../code_exec_utils.py" line="98"/>
@@ -715,8 +735,8 @@ Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti c
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
-        <translation type="obsolete">**✨ Novità:** Aggiunto il supporto multimodale per l&apos;automazione dei flussi di lavoro.</translation>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <translation type="obsolete">**✨ Novità:** Aggiunto il supporto multimodale per l'automazione dei flussi di lavoro.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
@@ -725,13 +745,13 @@ Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti c
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Novità:**</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
-        <translation>**Automazione dei flussi di lavoro multimodali:** Supporto migliorato per l&apos;automazione multimodale, incluso il riconoscimento delle immagini.</translation>
+        <translation>**Automazione dei flussi di lavoro multimodali:** Supporto migliorato per l'automazione multimodale, incluso il riconoscimento delle immagini.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
@@ -876,69 +896,89 @@ Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti c
 <context>
     <name>OrchFavoritesDialog</name>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="217"/>
+        <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
         <translation>[Server]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="219"/>
+        <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
         <translation>[Locale]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="167"/>
+        <location filename="../orch_favorites_dialog.py" line="246"/>
         <source>Export Task Plan</source>
         <translation>Esporta piano attività</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <location filename="../orch_favorites_dialog.py" line="266"/>
         <source>JSON files (*.json)</source>
         <translation>File JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <location filename="../orch_favorites_dialog.py" line="307"/>
         <source>Tip</source>
         <translation>Suggerimento</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="177"/>
+        <location filename="../orch_favorites_dialog.py" line="256"/>
         <source>Task plan exported successfully.</source>
         <translation>Piano attività esportato.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <location filename="../orch_favorites_dialog.py" line="277"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="181"/>
+        <location filename="../orch_favorites_dialog.py" line="260"/>
         <source>Failed to export task plan.</source>
         <translation>Esportazione del piano attività non riuscita.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <location filename="../orch_favorites_dialog.py" line="266"/>
         <source>Import Task Plan</source>
         <translation>Importa piano attività</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <location filename="../orch_favorites_dialog.py" line="277"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>Importazione del piano attività non riuscita. Controllare il formato del file.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <location filename="../orch_favorites_dialog.py" line="307"/>
         <source>Task plan imported successfully.</source>
         <translation>Piano attività importato.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <location filename="../orch_favorites_dialog.py" line="314"/>
         <source>Confirm Delete</source>
         <translation>Conferma eliminazione</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <location filename="../orch_favorites_dialog.py" line="314"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>Vuoi davvero rimuovere questa attività preferita?</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="99"/>
+        <source>Missing Auth Token</source>
+        <translation>Token di autenticazione mancante</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="99"/>
+        <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
+        <translation>Inserisci il token di autenticazione per '{0}' prima di continuare.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <source>Enter token</source>
+        <translation>Inserisci token</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <source>{} Auth Token: </source>
+        <translation>{} Token di autenticazione: </translation>
     </message>
 </context>
 <context>
@@ -997,49 +1037,79 @@ Suggerimento: **L&apos;automazione dei flussi di lavoro** può gestire compiti c
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
         <translation>Avvertenza</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
         <translation>Inserisci il tuo indirizzo email.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
         <translation>Inserisci un indirizzo email valido.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="114"/>
+        <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
         <translation>Suggerimento</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="114"/>
+        <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
         <translation>La tua richiesta è stata ricevuta. Ti risponderemo via email entro 24 ore. Controlla la tua casella di posta.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
         <translation>Errore</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="119"/>
+        <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
         <translation>Invio della richiesta fallito. Riprova più tardi.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Errore di rete: controlla la connessione e riprova.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="132"/>
+        <location filename="../setting_dialog.py" line="178"/>
         <source>Select Temporary Folder</source>
         <translation>Seleziona cartella temporanea</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="71"/>
+        <source>Hourly Credits Left: -- (Resets in --).</source>
+        <translation>Crediti orari rimanenti: -- (Reimpostazione tra --).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="94"/>
+        <source>Current Plan: Free</source>
+        <translation>Piano attuale: Gratuito</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="96"/>
+        <source>Current Plan: Enterprise</source>
+        <translation>Piano attuale: Enterprise</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: --</source>
+        <translation>Piano attuale: --</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="101"/>
+        <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>Crediti orari rimanenti: {credits} (Reimpostazione tra {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="91"/>
+        <source>Missing required fields in response</source>
+        <translation>Campi obbligatori mancanti nella risposta</translation>
     </message>
 </context>
 <context>

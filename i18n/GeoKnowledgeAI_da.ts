@@ -16,60 +16,60 @@
     <message>
         <location filename="../orch_manager.py" line="147"/>
         <source>VIP requests remaining: </source>
-        <translation>Resterende VIP-anmodninger: </translation>
+        <translation type="obsolete">Resterende VIP-anmodninger: </translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="231"/>
+        <location filename="../orch_manager.py" line="227"/>
         <source>**Start automated execution of the task plan:**</source>
         <translation>**Start automatisk udførelse af opgaveplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="284"/>
+        <location filename="../orch_manager.py" line="280"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ADVARSEL] Delopgave [{}] ikke fundet, spring over.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="291"/>
+        <location filename="../orch_manager.py" line="287"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ADVARSEL] Afhængigheden [{}] af delopgave [{}] er ufuldstændig. Forsøg at fortsætte.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="272"/>
+        <location filename="../orch_manager.py" line="268"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Start trinvis udførelse af opgaveplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="358"/>
+        <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
         <translation>Start udførelse af delopgaven:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="389"/>
+        <location filename="../orch_manager.py" line="385"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Fuldført] Delopgave [{}] udført med succes.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="402"/>
+        <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Mislykkedes] Resultatet af delopgave [{}] levede ikke op til forventningerne. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="408"/>
+        <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Mislykkedes] Delopgave [{}] kunne ikke udføres: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="717"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fejl: Intet udførelsesresultat for delopgave.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="725"/>
+        <location filename="../orch_manager.py" line="721"/>
         <source>**Summary of tasks:**</source>
         <translation>**Resumé af opgaver:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="163"/>
+        <location filename="../orch_manager.py" line="159"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
         <translation>Opgaven kan ikke fortsætte, fordi kodeudførelsesmodulet ikke er tilgængeligt!</translation>
     </message>
@@ -89,12 +89,12 @@
         <translation type="obsolete">[Forfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="396"/>
+        <location filename="../orch_manager.py" line="392"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Uforfinet] Delopgave [{}] kræver yderligere justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="262"/>
+        <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Forfiner delopgave [{}]... (Forsøg {}/{})</translation>
     </message>
@@ -158,40 +158,40 @@
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
         <source>Apply for high-speed channel. Please enter your email address and click &apos;Apply&apos;. We will contact you via email within 24 hours. </source>
-        <translation>Ansøg om hurtigkanal. Indtast din e-mailadresse og klik på &quot;Ansøg&quot;. Vi kontakter dig via e-mail inden for 24 timer. </translation>
+        <translation type="obsolete">Ansøg om hurtigkanal. Indtast din e-mailadresse og klik på &quot;Ansøg&quot;. Vi kontakter dig via e-mail inden for 24 timer. </translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="47"/>
+        <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
         <translation>E-mail:</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
         <source>Apply</source>
-        <translation>Ansøg</translation>
+        <translation type="obsolete">Ansøg</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="210"/>
+        <location filename="../setting_dialog.ui" line="226"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="220"/>
+        <location filename="../setting_dialog.ui" line="236"/>
         <source>Cancel</source>
         <translation>Annuller</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="183"/>
+        <location filename="../setting_dialog.ui" line="199"/>
         <source>Get Help</source>
         <translation>Få hjælp</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
         <source>High-Speed Channel</source>
-        <translation>Hurtigkanal</translation>
+        <translation type="obsolete">Hurtigkanal</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="69"/>
+        <location filename="../setting_dialog.ui" line="85"/>
         <source>Multi-Turn Conversation</source>
         <translation>Flerrundes samtale</translation>
     </message>
@@ -201,22 +201,22 @@
         <translation type="obsolete">Standardmaksimumantallet af samtalerunder er 2. Lange samtaler kan få emnet til at blive mindre fokuseret.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="80"/>
+        <location filename="../setting_dialog.ui" line="96"/>
         <source>Turn Limit：</source>
         <translation>Rundegrænse:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="94"/>
+        <location filename="../setting_dialog.ui" line="110"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="99"/>
+        <location filename="../setting_dialog.ui" line="115"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="104"/>
+        <location filename="../setting_dialog.ui" line="120"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -256,39 +256,59 @@
         <translation type="obsolete">Tankekæderesonnement</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="109"/>
+        <location filename="../setting_dialog.ui" line="125"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="114"/>
+        <location filename="../setting_dialog.ui" line="130"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="124"/>
+        <location filename="../setting_dialog.ui" line="140"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>Standardgrænsen er 3 samtalerunder for at holde diskussionen om emnet.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="137"/>
+        <location filename="../setting_dialog.ui" line="153"/>
         <source>Temporary Folder</source>
         <translation>Midlertidig mappe</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="143"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
         <translation>Midlertidige mapper bruges til at gemme mellemfiler under datadownload- eller analyseprocessen.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="155"/>
+        <location filename="../setting_dialog.ui" line="171"/>
         <source>Path:</source>
         <translation>Sti:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="187"/>
         <source>...</source>
         <translation>...</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="20"/>
+        <source>Current Plan: Free</source>
+        <translation>Nuværende abonnement: Gratis</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Hourly Credits Left: 0 (Resets in 0m).</source>
+        <translation>Timevise credits tilbage: 0 (Nulstilles om 0 min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Submit</source>
+        <translation>Send</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;esøg &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-løsninger&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; for at få mere at vide, eller indtast din e-mail og klik på 'Send' for at anmode om vores Enterprise-plan—vores team vil kontakte dig inden for 24 timer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -324,7 +344,7 @@
         <translation>Filtrer</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.ui" line="116"/>
+        <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>Workflow-detaljer:</translation>
     </message>
@@ -360,7 +380,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Hvis du ønsker at udføre kode automatisk, skal du trykke på &quot;Ja&quot;. Geo Knowledge AI-plugin vil downloade udførelsesmodulet for at starte den automatiserede proces.
 
-FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM&apos;er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
+FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -509,7 +529,7 @@ Før du bruger denne plugin, skal du læse og acceptere vores [Privatlivspolitik
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -715,7 +735,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation type="obsolete">**✨ Det er nyt:** Tilføjet multimodal understøttelse til Workflow-automatisering.</translation>
     </message>
     <message>
@@ -725,7 +745,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Nyheder:**</translation>
     </message>
     <message>
@@ -876,69 +896,89 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
 <context>
     <name>OrchFavoritesDialog</name>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="217"/>
+        <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
         <translation>[Server]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="219"/>
+        <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
         <translation>[Lokal]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="167"/>
+        <location filename="../orch_favorites_dialog.py" line="246"/>
         <source>Export Task Plan</source>
         <translation>Eksporter opgaveplan</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <location filename="../orch_favorites_dialog.py" line="266"/>
         <source>JSON files (*.json)</source>
         <translation>JSON-filer (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <location filename="../orch_favorites_dialog.py" line="307"/>
         <source>Tip</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="177"/>
+        <location filename="../orch_favorites_dialog.py" line="256"/>
         <source>Task plan exported successfully.</source>
         <translation>Opgaveplan eksporteret.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <location filename="../orch_favorites_dialog.py" line="277"/>
         <source>Error</source>
         <translation>Fejl</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="181"/>
+        <location filename="../orch_favorites_dialog.py" line="260"/>
         <source>Failed to export task plan.</source>
         <translation>Kunne ikke eksportere opgaveplan.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="187"/>
+        <location filename="../orch_favorites_dialog.py" line="266"/>
         <source>Import Task Plan</source>
         <translation>Importer opgaveplan</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="198"/>
+        <location filename="../orch_favorites_dialog.py" line="277"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>Kunne ikke importere opgaveplan. Tjek filformatet.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="228"/>
+        <location filename="../orch_favorites_dialog.py" line="307"/>
         <source>Task plan imported successfully.</source>
         <translation>Opgaveplan importeret.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <location filename="../orch_favorites_dialog.py" line="314"/>
         <source>Confirm Delete</source>
         <translation>Bekræft sletning</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="235"/>
+        <location filename="../orch_favorites_dialog.py" line="314"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>Er du sikker på, at du vil fjerne denne favoritopgave?</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="99"/>
+        <source>Missing Auth Token</source>
+        <translation>Manglende godkendelsestoken</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="99"/>
+        <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
+        <translation>Indtast venligst godkendelsestoken for '{0}', før du fortsætter.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <source>Enter token</source>
+        <translation>Indtast token</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <source>{} Auth Token: </source>
+        <translation>{} Godkendelsestoken: </translation>
     </message>
 </context>
 <context>
@@ -997,49 +1037,79 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
         <translation>Advarsel</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
         <translation>Indtast venligst din e-mailadresse.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
         <translation>Indtast venligst en gyldig e-mailadresse.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="114"/>
+        <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="114"/>
+        <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
         <translation>Din anmodning er modtaget. Vi vender tilbage via e-mail inden for 24 timer. Tjek din indbakke senere.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
         <translation>Fejl</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="119"/>
+        <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
         <translation>Kunne ikke sende din anmodning. Prøv igen senere.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="124"/>
+        <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Netværksfejl: kontrollér din forbindelse og prøv igen.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="132"/>
+        <location filename="../setting_dialog.py" line="178"/>
         <source>Select Temporary Folder</source>
         <translation>Vælg midlertidig mappe</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="71"/>
+        <source>Hourly Credits Left: -- (Resets in --).</source>
+        <translation>Timevise credits tilbage: -- (Nulstilles om --).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="94"/>
+        <source>Current Plan: Free</source>
+        <translation>Nuværende abonnement: Gratis</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="96"/>
+        <source>Current Plan: Enterprise</source>
+        <translation>Nuværende abonnement: Enterprise</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: --</source>
+        <translation>Nuværende abonnement: --</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="101"/>
+        <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>Timevise credits tilbage: {credits} (Nulstilles om {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="91"/>
+        <source>Missing required fields in response</source>
+        <translation>Manglende påkrævede felter i svar</translation>
     </message>
 </context>
 <context>

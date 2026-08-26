@@ -88,7 +88,7 @@ class SettingDialog(QDialog, FORM_CLASS):
             reset_seconds = data.get("reset_remaining_seconds")
             plan = data.get("plan")
             if credits is None or reset_seconds is None:
-                raise ValueError(self.tr("Missing required fields in userinfo response"))
+                raise ValueError(self.tr("Missing required fields in response"))
 
             if plan == 0:
                 self.groupBox.setTitle(self.tr("Current Plan: Free"))

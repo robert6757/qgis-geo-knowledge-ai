@@ -156,7 +156,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         token_names = list(dict.fromkeys(re.findall(r"\[AUTH_TOKEN:(.*?)\]", detail_text)))
         base_row = self.gridLayout_2.rowCount()
         for idx, token_name in enumerate(token_names):
-            label = QLabel(f"{token_name} Auth Token: ", self)
+            label = QLabel(self.tr("{} Auth Token: ").format(token_name), self)
             line_edit = QLineEdit(self)
             line_edit.setPlaceholderText(self.tr("Enter token"))
 
