@@ -112,7 +112,7 @@
     <message>
         <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
-        <translation>Cette réponse vous a-t-elle été utile ? [Oui](agent://feedback/5) | [Non](agent://feedback/1) | [Répéter](agent://repeat)</translation>
+        <translation>Cette réponse vous a-t-elle été utile ? [Oui](agent://feedback/5) | [Non](agent://feedback/1) | [Régénérer](agent://repeat)</translation>
     </message>
     <message>
         <location filename="../chatbot_browser.py" line="63"/>
@@ -127,7 +127,7 @@
     <message>
         <location filename="../chatbot_browser.py" line="132"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat) | [Chain of Thought](agent://cot/1)</source>
-        <translation type="obsolete">Cette réponse vous a-t-elle été utile ? [Oui](agent://feedback/5) | [Non](agent://feedback/1) | [Répéter](agent://repeat) | [Chaîne de pensée](agent://cot/1)</translation>
+        <translation type="obsolete">Cette réponse vous a-t-elle été utile ? [Oui](agent://feedback/5) | [Non](agent://feedback/1) | [Régénérer](agent://repeat) | [Chaîne de pensée](agent://cot/1)</translation>
     </message>
     <message>
         <location filename="../chatbot_browser.py" line="141"/>
@@ -684,7 +684,7 @@ De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et 
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
-        <translation>[Continuer](agent://orch/substask/continue/{subtask_id}) | [Répéter](agent://orch/substask/repeat/{subtask_id}) | [Détail](agent://orch/substask/detail/{subtask_id})</translation>
+        <translation>[Continuer](agent://orch/substask/continue/{subtask_id}) | [Régénérer](agent://orch/substask/repeat/{subtask_id}) | [Détail](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
@@ -1016,7 +1016,7 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
     <message>
         <location filename="../subtask_dialog.ui" line="115"/>
         <source>Repeat</source>
-        <translation type="obsolete">Répéter</translation>
+        <translation type="obsolete">Régénérer</translation>
     </message>
     <message>
         <location filename="../subtask_dialog.ui" line="98"/>
