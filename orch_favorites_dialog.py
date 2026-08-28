@@ -27,7 +27,7 @@ from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction, QFileDialog, QMessageBox, QLabel, QLineEdit
 from qgis.core import QgsSettings
 from .compat import *
-from .global_defs import USER_TOKEN_PARAMS_TAG
+from .global_defs import USER_PARAM_KEYS_TAG
 from .orch_favorites_manager import OrchFavoritesManager
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -85,7 +85,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             return
         user_token = line_edit.text().strip()
         gSetting = QgsSettings()
-        gSetting.setValue(USER_TOKEN_PARAMS_TAG + f"/{token_name}", user_token)
+        gSetting.setValue(USER_PARAM_KEYS_TAG + f"/{token_name}", user_token)
 
     def _check_tokens_filled(self):
         """Return the first empty token name, or None if all are filled."""
@@ -161,7 +161,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             line_edit.setPlaceholderText(self.tr("Enter token"))
 
             gSetting = QgsSettings()
-            saved_token = gSetting.value(USER_TOKEN_PARAMS_TAG + f"/{token_name}", "")
+            saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
             if saved_token:
                 line_edit.setText(saved_token)
 

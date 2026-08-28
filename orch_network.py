@@ -156,7 +156,7 @@ class CTOrchNetwork(QThread):
         """request finished - The final analysis will be provided here."""
         http_status = None
         if self.reply:
-            http_status = self.reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
+            http_status = self.reply.attribute(HttpStatusCodeAttribute)
 
         is_error_status = isinstance(http_status, int) and http_status >= 400
 

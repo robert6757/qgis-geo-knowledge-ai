@@ -55,3 +55,4 @@ QueuedConnection = Qt.ConnectionType.QueuedConnection
 QMessageBoxQuestion = QMessageBox.Icon.Question
 QMessageBoxYesRole = QMessageBox.ButtonRole.YesRole
 QMessageBoxNoRole = QMessageBox.ButtonRole.NoRole
+HttpStatusCodeAttribute = QNetworkRequest.Attribute.HttpStatusCodeAttribute

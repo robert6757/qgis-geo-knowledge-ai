@@ -32,7 +32,7 @@ from .orch_manager import TaskPlan, SubTask
 from qgis.core import QgsApplication, QgsSettings
 from qgis.PyQt.QtCore import QStandardPaths
 
-from .global_defs import AI_SERVER_DOMAIN, USER_TOKEN_PARAMS_TAG, TEMP_FOLDER_TAG
+from .global_defs import AI_SERVER_DOMAIN, USER_PARAM_KEYS_TAG, TEMP_FOLDER_TAG
 
 class OrchFavoritesManager:
 
@@ -148,7 +148,7 @@ class OrchFavoritesManager:
             token_names.update(re.findall(r"\[AUTH_TOKEN:(.*?)\]", text or ""))
 
         for token_name in token_names:
-            saved_token = gSetting.value(USER_TOKEN_PARAMS_TAG + f"/{token_name}", "")
+            saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
             if not saved_token:
                 continue
             placeholder = f"[AUTH_TOKEN:{token_name}]"
