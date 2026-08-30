@@ -14,7 +14,8 @@ Geo Knowledge AI values your data privacy. This notice aims to clearly and trans
 
 **Basic Information (for improving service quality)**  
 - Text content of your interactions with the plugin (including conversation questions, answers, and user feedback)  
-- QGIS environment information (software version, current view extent, layer metadata)  
+- QGIS environment information (software version, current view extent, layer metadata)
+- Protection of Sensitive Credentials: We understand that your prompts may inadvertently contain sensitive information. Our system automatically scrubs recognized secrets—including Auth Tokens, API keys, and passwords—from your interaction data. Scrubbed data is permanently discarded and will not be used to train models or improve service quality
 
 This information is used solely to analyze Q&A performance and optimize the quality and accuracy of large model outputs. It will not be used to identify individuals.
 
