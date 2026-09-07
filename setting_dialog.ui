@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Geo Knowledge AI Setting</string>
+   <string>Geo Knowledge AI Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_6">
    <item row="0" column="0" colspan="4">
@@ -23,7 +23,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="labelCredits">
         <property name="text">
-         <string>Hourly Credits Left: 0 (Resets in 0m).</string>
+         <string>Credits Left: 0 (Resets in 0m).</string>
         </property>
         <property name="openExternalLinks">
          <bool>true</bool>
@@ -35,17 +35,17 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>E-mail：</string>
+           <string>Email：</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit"/>
-        </item>
-        <item>
-         <widget class="QPushButton" name="btnApply">
-          <property name="text">
-           <string>Submit</string>
+         <widget class="QLineEdit" name="lineEdit">
+          <property name="inputMask">
+           <string/>
+          </property>
+          <property name="placeholderText">
+           <string>Enter your purchase email (Optional)</string>
           </property>
          </widget>
         </item>
@@ -63,7 +63,7 @@
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -156,7 +156,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Temporary folder are used to store intermediate files during the data download or analysis process.</string>
+         <string>The temporary folder is used to store intermediate files during the data download or analysis process.</string>
         </property>
         <property name="wordWrap">
          <bool>true</bool>
@@ -242,6 +242,15 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>btnOK</tabstop>
+  <tabstop>btnCancel</tabstop>
+  <tabstop>lineEdit</tabstop>
+  <tabstop>cbChatTurn</tabstop>
+  <tabstop>lineEditTempFolderPath</tabstop>
+  <tabstop>btnSelFolder</tabstop>
+  <tabstop>btnHelp</tabstop>
+ </tabstops>
  <resources>
   <include location="resources.qrc"/>
  </resources>

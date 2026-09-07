@@ -47,7 +47,6 @@ class SettingDialog(QDialog, FORM_CLASS):
 
         self.btnOK.clicked.connect(self.handle_click_ok)
         self.btnCancel.clicked.connect(self.handle_click_cancel)
-        self.btnApply.clicked.connect(self.handle_click_apply)
         self.btnHelp.clicked.connect(self.handle_click_help)
         self.btnSelFolder.clicked.connect(self.handle_click_select_folder)
         self.labelEnterprise.linkActivated.connect(self.handle_label_enterprise_link_clicked)
@@ -67,8 +66,8 @@ class SettingDialog(QDialog, FORM_CLASS):
         self._update_credits_label()
 
     def _update_credits_label(self):
-        """Fetch user info and update the hourly credits label."""
-        fallback_text = self.tr("Hourly Credits Left: -- (Resets in --).")
+        """Fetch user info and update the credits label."""
+        fallback_text = self.tr("Credits Left: -- (Resets in --).")
         user_id = QgsSettings().value(USER_ID_TAG, "")
         if not user_id:
             self.labelCredits.setText(fallback_text)
@@ -99,7 +98,7 @@ class SettingDialog(QDialog, FORM_CLASS):
 
             minutes = reset_seconds // 60
             self.labelCredits.setText(
-                self.tr("Hourly Credits Left: {credits} (Resets in {minutes}m).").format(
+                self.tr("Credits Left: {credits} (Resets in {minutes}m).").format(
                     credits=max(0, credits), minutes=minutes)
             )
         except Exception:
@@ -128,48 +127,6 @@ class SettingDialog(QDialog, FORM_CLASS):
 
     def handle_label_enterprise_link_clicked(self, url):
         webbrowser.open(url)
-
-    def handle_click_apply(self):
-        email = self.lineEdit.text().strip()
-
-        # check email validation.
-        if not email:
-            QMessageBox.warning(self, self.tr("Warning"),
-                                self.tr("Please enter your email address."),
-                                QMessageBoxOK)
-            return
-
-        if "@" not in email or "." not in email:
-            QMessageBox.warning(self, self.tr("Warning"),
-                                self.tr("Please enter a valid email address."),
-                                QMessageBoxOK)
-            return
-
-        try:
-            user_id = QgsSettings().value(USER_ID_TAG, "")
-
-            # send email to server
-            response = requests.post(
-                AI_SERVER_DOMAIN + "/ai/v1/vip/apply",
-                json={"email": email, "user_id": user_id},
-                timeout=2
-            )
-
-            # check response
-            if response.status_code == 200:
-                QMessageBox.information(self, self.tr("Tip"),
-                                        self.tr(
-                                            "Your request has been received. We'll get back to you by email within 24 hours. Please check your inbox later."),
-                                        QMessageBoxOK)
-            else:
-                QMessageBox.warning(self, self.tr("Error"),
-                                    self.tr("Failed to submit your request. Please try again later."),
-                                    QMessageBoxOK)
-
-        except requests.exceptions.RequestException as e:
-            QMessageBox.critical(self, self.tr("Error"),
-                                 self.tr("Network error. Please check your connection and try again."),
-                                 QMessageBoxOK)
 
     def handle_click_select_folder(self):
         # Get the current path from lineEdit as starting directory
