@@ -34,6 +34,7 @@ from .code_exec_utils import get_code_execution_class
 from .compat import *
 from .orch_tools_osm import OverpassTool
 from .orch_tools_qml import QmlStyleTool
+from .orch_tools_stac import StacTool
 from .global_defs import *
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
@@ -41,7 +42,8 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
                    "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers",
-                   "qgis_capture_canvas_screenshot","qgis_set_layers_visibility"]
+                   "qgis_capture_canvas_screenshot", "qgis_set_layers_visibility",
+                   "qgis_search_stac_items", "qgis_load_stac_asset_to_map"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -55,6 +57,7 @@ class OrchToolExecutor(QObject):
         self.iface = iface
         self.overpass_tool = OverpassTool()
         self.qml_tool = QmlStyleTool()
+        self.stac_tool = StacTool()
         self.execute_requested.connect(self._on_execute_requested, QueuedConnection)
 
     def _on_execute_requested(self, tool_name: str, arguments: dict):
@@ -735,6 +738,61 @@ class OrchToolExecutor(QObject):
                 "skipped_ids": skipped_ids
             }, ensure_ascii=False)
 
+        elif tool_name == "qgis_search_stac_items":
+            collections = arguments.get("collections", [])
+            if isinstance(collections, str):
+                collections = json.loads(collections)
+            bbox = arguments.get("bbox")
+            if isinstance(bbox, str):
+                bbox = json.loads(bbox)
+            datetime_range = arguments.get("datetime_range")
+            query = arguments.get("query")
+            if isinstance(query, str):
+                query = json.loads(query)
+            limit = arguments.get("limit", 20)
+            base_url = arguments.get("base_url", 'https://planetarycomputer.microsoft.com/api/stac/v1')
+
+            # Determine if the selected STAC catalog requires special asset signing.
+            signing_provider = None
+            if "planetarycomputer.microsoft.com" in base_url:
+                signing_provider = "planetary"
+
+            stac_data = self.stac_tool.search_stac_items(
+                collections=collections,
+                bbox=bbox,
+                datetime_range=datetime_range,
+                query=query,
+                limit=limit,
+                base_url=base_url
+            )
+
+            assets = self.stac_tool.list_stac_assets(stac_data)
+            return json.dumps({
+                "status": "success",
+                "asset_count": len(assets),
+                "assets": assets,
+                "signing_provider": signing_provider
+            }, ensure_ascii=False)
+
+        elif tool_name == "qgis_load_stac_asset_to_map":
+            href = arguments.get("href", "")
+            if not href:
+                raise Exception({"error_msg": "No href provided"})
+
+            layer_name = arguments.get("layer_name", "STAC Asset")
+            is_vector = arguments.get("is_vector", False)
+            signing_provider = arguments.get("signing_provider", "")
+
+            # Sign assets when the source catalog requires it.
+            if signing_provider == "planetary":
+                href = self.stac_tool.sign_planetary_computer_href(href)
+
+            self.stac_tool.load_stac_asset_to_map(href, layer_name, is_vector)
+            return json.dumps({
+                "status": "success",
+                "message": f"STAC asset loaded to map as layer '{layer_name}'."
+            }, ensure_ascii=False)
+
         elif tool_name == "qgis_capture_canvas_screenshot":
             gSetting = QgsSettings()
             # Check if screen capture is allowed
@@ -825,11 +883,36 @@ class OrchToolExecutor(QObject):
     # def test_tool(self):
     #     tool_result = ""
     #     try:
-    #         project = QgsProject.instance()
-    #         layer_id, layer = list(project.mapLayers().items())[0]
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_set_layers_visibility",
-    #             {"layer_ids": [layer_id], "visible": False})
+    #             "qgis_search_stac_items",
+    #             {
+    #                 "collections": ["sentinel-2-l2a"],
+    #                 "bbox": [120.0, 30.0, 121.0, 31.0],
+    #                 "datetime_range": "2024-06-21/2024-06-30",
+    #                 "limit": 5
+    #             }
+    #         )
+    #
+    #         # Parse search result and load the first STAC asset to the map.
+    #         search_data = json.loads(tool_result)
+    #         assets = search_data.get("assets", [])
+    #         if not assets:
+    #             raise Exception({"error_msg": "No STAC assets found in search result"})
+    #
+    #         first_asset = assets[0]
+    #         href = first_asset.get("href", "")
+    #         if not href:
+    #             raise Exception({"error_msg": "First STAC asset has no href"})
+    #
+    #         load_result = self._execute_tool_impl(
+    #             "qgis_load_stac_asset_to_map",
+    #             {
+    #                 "href": href,
+    #                 "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
+    #                 "signing_provider": "planetary"
+    #             }
+    #         )
+    #         tool_result = load_result
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
     #     return tool_result
