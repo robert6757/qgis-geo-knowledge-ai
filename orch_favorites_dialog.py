@@ -61,9 +61,9 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             source = item.get("source", "local")
             display_text = item["task_plan"].original_task
             if source == "server":
-                display_text = self.tr("[Server]") + display_text
+                display_text = self.tr("[Official] ") + display_text
             else:
-                display_text = self.tr("[Local]") + display_text
+                display_text = self.tr("[Local] ") + display_text
             self.all_favorites.append({
                 "chat_id": item["chat_id"],
                 "original_task": item["task_plan"].original_task,
@@ -198,9 +198,9 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                 source = item.get("source", "local")
                 display_text = item["original_task"]
                 if source == "server":
-                    display_text = self.tr("[Server]") + display_text
+                    display_text = self.tr("[Official] ") + display_text
                 else:
-                    display_text = self.tr("[Local]") + display_text
+                    display_text = self.tr("[Local] ") + display_text
                 list_item = QListWidgetItem()
                 list_item.setText(display_text)
                 list_item.setData(UserRole, item["chat_id"])
@@ -293,9 +293,9 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
 
         display_text = original_task
         if source == "server":
-            display_text = self.tr("[Server]") + display_text
+            display_text = self.tr("[Official] ") + display_text
         else:
-            display_text = self.tr("[Local]") + display_text
+            display_text = self.tr("[Local] ") + display_text
         list_item = QListWidgetItem()
         list_item.setText(display_text)
         list_item.setData(UserRole, new_chat_id)
