@@ -25,12 +25,13 @@
  ***************************************************************************/
 """
 
+import os
 import json
+from urllib.parse import urlparse
 from typing import List, Optional, Dict
 from qgis.PyQt.QtCore import QByteArray, QUrl, QUrlQuery
 from qgis.PyQt.QtNetwork import QNetworkRequest
 from qgis.core import QgsVectorLayer, QgsRasterLayer, QgsProject, QgsBlockingNetworkRequest
-
 
 class StacTool:
     """
@@ -38,7 +39,19 @@ class StacTool:
     (SpatioTemporal Asset Catalog) compliant APIs. Implemented as a
     standalone tool using PyQGIS standard libraries, mirroring the
     structure of OverpassTool.
+
+    Auth model differs by provider:
+      - Planetary Computer: nearly everything is private and needs a
+        per-asset SAS token from a lightweight public sign endpoint
+        (see sign_planetary_computer_href).
+      - AWS Earth Search (Element84): most collections (e.g. sentinel-2-l2a
+        on the public 'sentinel-cogs' bucket) are fully public, no auth at
+        all. A few collections (e.g. landsat-c2-l2 on 'usgs-landsat') sit on
+        Requester Pays buckets and need real AWS credentials configured via
+        configure_aws_credentials(), read through /vsis3/ instead of
+        /vsicurl/.
     """
+
 
     def search_stac_items(
             self,
@@ -94,6 +107,36 @@ class StacTool:
 
         return data
 
+    @staticmethod
+    def _to_rfc3339(date_str: str, end_of_day: bool = False) -> str:
+        """
+        Normalize a bare date (YYYY-MM-DD) into a full RFC3339 timestamp.
+        Some STAC servers (e.g. Earth Search's stac-server) strictly validate
+        the 'datetime' parameter against RFC3339 and reject date-only
+        strings, even though bare dates are a common convention shown in
+        many STAC client docs/examples. Strings that already contain 'T'
+        (i.e. already a full timestamp) are returned unchanged.
+        """
+        if not date_str or 'T' in date_str or date_str == '..':
+            return date_str
+        return f"{date_str}T23:59:59Z" if end_of_day else f"{date_str}T00:00:00Z"
+
+    @classmethod
+    def _normalize_datetime_range(cls, datetime_range: str) -> str:
+        """
+        Normalize a STAC 'datetime' value (single instant or 'start/end'
+        interval, per the STAC API spec, including open-ended '..' bounds)
+        so bare dates are expanded to full RFC3339 before being sent.
+        """
+        if not datetime_range:
+            return datetime_range
+        if '/' in datetime_range:
+            start, end = datetime_range.split('/', 1)
+            start = cls._to_rfc3339(start.strip(), end_of_day=False)
+            end = cls._to_rfc3339(end.strip(), end_of_day=True)
+            return f"{start}/{end}"
+        return cls._to_rfc3339(datetime_range.strip(), end_of_day=False)
+
     def _generate_search_body(self, collections, bbox, datetime_range, query, limit) -> dict:
         """Internal helper to build a STAC API /search JSON request body."""
         body = {
@@ -103,19 +146,26 @@ class StacTool:
         if bbox:
             body['bbox'] = bbox
         if datetime_range:
-            body['datetime'] = datetime_range
+            body['datetime'] = self._normalize_datetime_range(datetime_range)
         if query:
             body['query'] = query
         return body
 
-    def list_stac_assets(self, stac_data: dict) -> List[dict]:
+    def list_stac_assets(self, stac_data: dict, data_only: bool = True) -> List[dict]:
         """
         Parse a STAC search response (GeoJSON FeatureCollection of Items)
         into a flat list of downloadable assets with their metadata. This is
         the equivalent of load_osm_json_to_map's parsing step, but STAC
         results describe *assets to fetch* rather than geometry to render.
 
+        Items typically mix several asset roles: 'data' (the actual pixel
+        data you want, e.g. 'vv'/'vh' GeoTIFFs for Sentinel-1), 'metadata'
+        (e.g. 'safe-manifest', an XML file describing the product -- NOT
+        loadable as a raster/vector layer), and 'thumbnail'/'overview'. Set
+        data_only=True to skip everything except actual imagery assets.
+
         :param stac_data: Parsed STAC search response (GeoJSON FeatureCollection dict).
+        :param data_only: If True, only return assets whose 'roles' include 'data'.
         :return: List of dicts: {item_id, asset_key, href, media_type, roles}
         """
         try:
@@ -128,22 +178,73 @@ class StacTool:
             for feat in features:
                 item_id = feat.get('id')
                 for asset_key, asset in feat.get('assets', {}).items():
+                    roles = asset.get('roles', [])
+                    if data_only and 'data' not in roles:
+                        continue
                     assets.append({
                         'item_id': item_id,
                         'asset_key': asset_key,
                         'href': asset.get('href'),
                         'media_type': asset.get('type'),
-                        'roles': asset.get('roles', [])
+                        'roles': roles
                     })
             return assets
 
         except Exception as e:
             raise e
 
+    def configure_aws_credentials(
+            self,
+            access_key_id: str,
+            secret_access_key: str,
+            session_token: Optional[str] = None
+    ):
+        """
+        Configure AWS credentials for GDAL so it can read from Requester Pays
+        S3 buckets (e.g. 'usgs-landsat' on Earth Search). This is not a
+        per-asset sign step like Planetary Computer -- it's a one-time,
+        per-session setup: GDAL/vsis3 picks up standard AWS environment
+        variables automatically for every subsequent /vsis3/ read.
+
+        The user must bring their own AWS account/credentials here (this is
+        the Tier-2 "account login" case from the auth-tier strategy, not
+        Tier-1 "call a public sign endpoint"). Store access_key_id /
+        secret_access_key via QGIS's Authentication Manager rather than
+        keeping them as plain strings in memory or on disk.
+
+        :param access_key_id: AWS access key id.
+        :param secret_access_key: AWS secret access key.
+        :param session_token: Optional session token (for temporary/STS credentials).
+        """
+        os.environ['AWS_ACCESS_KEY_ID'] = access_key_id
+        os.environ['AWS_SECRET_ACCESS_KEY'] = secret_access_key
+        if session_token:
+            os.environ['AWS_SESSION_TOKEN'] = session_token
+        # Required for GDAL to accept billing responsibility on Requester Pays buckets.
+        os.environ['AWS_REQUEST_PAYER'] = 'requester'
+
+    @staticmethod
+    def _to_vsis3_path(href: str) -> str:
+        """
+        Convert a virtual-hosted-style public HTTPS S3 URL, e.g.
+        'https://usgs-landsat.s3.us-west-2.amazonaws.com/collection02/...tif'
+        (or an equivalent 's3://bucket/key' URI) into a GDAL /vsis3/ virtual
+        path: '/vsis3/usgs-landsat/collection02/...tif'
+
+        /vsis3/ (instead of /vsicurl/) is required so GDAL signs the request
+        with AWS SigV4 credentials -- this is what actually lets GDAL read a
+        Requester Pays bucket; there is no separate "sign the URL" call for
+        this path, unlike Planetary Computer.
+        """
+        parsed = urlparse(href)
+        bucket = parsed.netloc.split('.s3')[0]
+        return f"/vsis3/{bucket}{parsed.path}"
+
     def sign_planetary_computer_href(
             self,
             href: str,
-            sign_base_url: str = 'https://planetarycomputer.microsoft.com/api/sas/v1/sign'
+            sign_base_url: str = 'https://planetarycomputer.microsoft.com/api/sas/v1/sign',
+            requester_pays: bool = False
     ) -> str:
         """
         Example of a Tier-1 auth flow (see the tiered auth strategy discussed
@@ -155,6 +256,10 @@ class StacTool:
 
         :param href: Unsigned asset URL returned by list_stac_assets().
         :param sign_base_url: Planetary Computer's signing endpoint.
+        :param requester_pays: Whether the underlying asset lives on a
+            Requester Pays bucket. Planetary Computer signing does not itself
+            change, but the flag is accepted for API symmetry with
+            load_stac_asset_to_map().
         :return: Signed URL with a valid SAS token appended.
         """
         try:
@@ -178,21 +283,43 @@ class StacTool:
         except Exception as e:
             raise e
 
-    def load_stac_asset_to_map(self, href: str, layer_name: str = "STAC Asset", is_vector: bool = False):
+    def load_stac_asset_to_map(
+            self,
+            href: str,
+            layer_name: str = "STAC Asset",
+            is_vector: bool = False,
+            requester_pays: bool = False
+    ):
         """
         Load a single STAC asset directly into the QGIS project as a raster or
-        vector layer. Many STAC assets (Cloud-Optimized GeoTIFFs on public
-        buckets, or already-signed Planetary Computer URLs) can be opened
-        directly by GDAL/OGR over HTTP via the /vsicurl/ virtual file system,
-        without a manual download-and-extract step.
+        vector layer. Most STAC assets (Cloud-Optimized GeoTIFFs on public
+        buckets like Earth Search's 'sentinel-cogs', or already-signed
+        Planetary Computer URLs) can be opened directly by GDAL/OGR over
+        HTTP via the /vsicurl/ virtual file system, without a manual
+        download-and-extract step.
+
+        Whether an asset sits on a Requester Pays bucket is a property of
+        the data provider/collection, not something reliably inferable from
+        the URL itself -- bucket names change and new providers appear
+        faster than any hardcoded list could track. The caller (who chose
+        the collection/base_url in search_stac_items) is expected to know
+        this and pass requester_pays explicitly.
 
         :param href: Direct asset URL (already signed, if the provider requires it).
         :param layer_name: Name to assign the new layer.
         :param is_vector: True to load via OGR (QgsVectorLayer), False for GDAL raster.
+        :param requester_pays: True if this asset's bucket is Requester Pays --
+            routes through /vsis3/ (AWS SigV4) instead of /vsicurl/. Requires
+            configure_aws_credentials() to have been called beforehand.
         """
         try:
-            # /vsicurl/ lets GDAL/OGR stream the remote file without a local copy.
-            gdal_path = href if href.startswith('/vsicurl/') else f"/vsicurl/{href}"
+            if requester_pays:
+                # Needs AWS SigV4 auth -- configure_aws_credentials() must have
+                # been called already, or this will fail with an access-denied error.
+                gdal_path = self._to_vsis3_path(href)
+            else:
+                # /vsicurl/ lets GDAL/OGR stream the remote file without a local copy.
+                gdal_path = href if href.startswith('/vsicurl/') else f"/vsicurl/{href}"
 
             if is_vector:
                 layer = QgsVectorLayer(gdal_path, layer_name, "ogr")

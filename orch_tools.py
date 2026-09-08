@@ -25,6 +25,7 @@ import os
 import json
 import uuid
 import requests
+from typing import Optional
 from urllib.parse import urlparse, parse_qs
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
 from qgis.core import QgsProject, QgsVectorLayer, QgsRasterLayer, QgsMapLayer, QgsFeatureRequest, QgsApplication, QgsProcessingFeedback, QgsRectangle, QgsLayerTreeLayer, QgsSettings
@@ -43,7 +44,7 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
                    "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers",
                    "qgis_capture_canvas_screenshot", "qgis_set_layers_visibility",
-                   "qgis_search_stac_items", "qgis_load_stac_asset_to_map"]
+                   "qgis_configure_aws_credentials", "qgis_search_stac_items", "qgis_load_stac_asset_to_map"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -738,6 +739,27 @@ class OrchToolExecutor(QObject):
                 "skipped_ids": skipped_ids
             }, ensure_ascii=False)
 
+        elif tool_name == "qgis_configure_aws_credentials":
+            access_key_id = arguments.get("access_key_id", "")
+            secret_access_key = arguments.get("secret_access_key", "")
+            session_token = arguments.get("session_token", None)
+
+            if not access_key_id:
+                raise Exception({"error_msg": "No access_key_id provided"})
+            if not secret_access_key:
+                raise Exception({"error_msg": "No secret_access_key provided"})
+
+            self.stac_tool.configure_aws_credentials(
+                access_key_id=access_key_id,
+                secret_access_key=secret_access_key,
+                session_token=session_token
+            )
+
+            return json.dumps({
+                "status": "success",
+                "message": "AWS credentials configured for GDAL /vsis3/ access."
+            }, ensure_ascii=False)
+
         elif tool_name == "qgis_search_stac_items":
             collections = arguments.get("collections", [])
             if isinstance(collections, str):
@@ -782,12 +804,13 @@ class OrchToolExecutor(QObject):
             layer_name = arguments.get("layer_name", "STAC Asset")
             is_vector = arguments.get("is_vector", False)
             signing_provider = arguments.get("signing_provider", "")
+            requester_pays = arguments.get("requester_pays", False)
 
             # Sign assets when the source catalog requires it.
             if signing_provider == "planetary":
-                href = self.stac_tool.sign_planetary_computer_href(href)
+                href = self.stac_tool.sign_planetary_computer_href(href, requester_pays=requester_pays)
 
-            self.stac_tool.load_stac_asset_to_map(href, layer_name, is_vector)
+            self.stac_tool.load_stac_asset_to_map(href, layer_name, is_vector, requester_pays)
             return json.dumps({
                 "status": "success",
                 "message": f"STAC asset loaded to map as layer '{layer_name}'."
@@ -880,39 +903,51 @@ class OrchToolExecutor(QObject):
         else:
             return str(layer.type())
 
-    # def test_tool(self):
-    #     tool_result = ""
-    #     try:
-    #         tool_result = self._execute_tool_impl(
-    #             "qgis_search_stac_items",
-    #             {
-    #                 "collections": ["sentinel-2-l2a"],
-    #                 "bbox": [120.0, 30.0, 121.0, 31.0],
-    #                 "datetime_range": "2024-06-21/2024-06-30",
-    #                 "limit": 5
-    #             }
-    #         )
-    #
-    #         # Parse search result and load the first STAC asset to the map.
-    #         search_data = json.loads(tool_result)
-    #         assets = search_data.get("assets", [])
-    #         if not assets:
-    #             raise Exception({"error_msg": "No STAC assets found in search result"})
-    #
-    #         first_asset = assets[0]
-    #         href = first_asset.get("href", "")
-    #         if not href:
-    #             raise Exception({"error_msg": "First STAC asset has no href"})
-    #
-    #         load_result = self._execute_tool_impl(
-    #             "qgis_load_stac_asset_to_map",
-    #             {
-    #                 "href": href,
-    #                 "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
-    #                 "signing_provider": "planetary"
-    #             }
-    #         )
-    #         tool_result = load_result
-    #     except Exception as e:
-    #         self.execution_error.emit(str(e))
-    #     return tool_result
+    def test_tool(self):
+        tool_result = ""
+        try:
+            tool_result = self._execute_tool_impl(
+                "qgis_search_stac_items",
+                {
+                    # "collections": ["sentinel-2-l2a"],
+                    "collections": ["sentinel-1-grd"],
+                    "bbox": [120.0, 30.0, 121.0, 31.0],
+                    "datetime_range": "2024-06-21/2024-06-30",
+                    "limit": 5,
+                    # "base_url": 'https://earth-search.aws.element84.com/v1'
+                }
+            )
+
+            # Parse search result and load the first STAC asset to the map.
+            search_data = json.loads(tool_result)
+            assets = search_data.get("assets", [])
+            if not assets:
+                raise Exception({"error_msg": "No STAC assets found in search result"})
+
+            first_asset = assets[0]
+            href = first_asset.get("href", "")
+            if not href:
+                raise Exception({"error_msg": "First STAC asset has no href"})
+
+            # Configure AWS credentials before loading S3-backed assets.
+            # self._execute_tool_impl(
+            #     "qgis_configure_aws_credentials",
+            #     {
+            #         "access_key_id": "YOUR_AWS_ACCESS_KEY_ID",
+            #         "secret_access_key": "YOUR_AWS_SECRET_ACCESS_KEY"
+            #     }
+            # )
+
+            load_result = self._execute_tool_impl(
+                "qgis_load_stac_asset_to_map",
+                {
+                    "href": href,
+                    "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
+                    "signing_provider": "planetary",
+                    # "requester_pays": True
+                }
+            )
+            tool_result = load_result
+        except Exception as e:
+            self.execution_error.emit(str(e))
+        return tool_result
