@@ -244,7 +244,6 @@ class StacTool:
             self,
             href: str,
             sign_base_url: str = 'https://planetarycomputer.microsoft.com/api/sas/v1/sign',
-            requester_pays: bool = False
     ) -> str:
         """
         Example of a Tier-1 auth flow (see the tiered auth strategy discussed
@@ -256,10 +255,6 @@ class StacTool:
 
         :param href: Unsigned asset URL returned by list_stac_assets().
         :param sign_base_url: Planetary Computer's signing endpoint.
-        :param requester_pays: Whether the underlying asset lives on a
-            Requester Pays bucket. Planetary Computer signing does not itself
-            change, but the flag is accepted for API symmetry with
-            load_stac_asset_to_map().
         :return: Signed URL with a valid SAS token appended.
         """
         try:

@@ -22,6 +22,7 @@
 import sys
 import io
 import os
+import re
 import json
 import uuid
 import requests
@@ -258,6 +259,15 @@ class OrchToolExecutor(QObject):
                 raise Exception({"error_msg": "Code execution module is not available"})
 
             code = arguments.get("code", "")
+
+            # Replace any [AUTH_TOKEN:xxx] placeholders in the code with locally saved tokens.
+            gSetting = QgsSettings()
+            token_pattern = re.compile(r"\[AUTH_TOKEN:(.*?)\]")
+            for token_name in token_pattern.findall(code):
+                saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
+                if saved_token:
+                    code = code.replace(f"[AUTH_TOKEN:{token_name}]", saved_token)
+
             code_exec = CodeExecution(
                 code=code,
                 parent_widget=self,
@@ -290,6 +300,18 @@ class OrchToolExecutor(QObject):
             algo_id = arguments.get("algo_id", "")
             algo_parameters = arguments.get("algo_parameters", "{}")
             algo_parameters_obj = json.loads(algo_parameters)
+
+            # Replace any [AUTH_TOKEN:xxx] placeholders in parameter values with locally saved tokens.
+            gSetting = QgsSettings()
+            token_pattern = re.compile(r"\[AUTH_TOKEN:(.*?)\]")
+            for key, value in list(algo_parameters_obj.items()):
+                if not isinstance(value, str):
+                    continue
+                for token_name in token_pattern.findall(value):
+                    saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
+                    if saved_token:
+                        value = value.replace(f"[AUTH_TOKEN:{token_name}]", saved_token)
+                algo_parameters_obj[key] = value
 
             # use metadata of processing to find the real algorithm id.
             processing_metadata = QgsApplication.processingRegistry().algorithmById(algo_id)
@@ -740,19 +762,28 @@ class OrchToolExecutor(QObject):
             }, ensure_ascii=False)
 
         elif tool_name == "qgis_configure_aws_credentials":
-            access_key_id = arguments.get("access_key_id", "")
-            secret_access_key = arguments.get("secret_access_key", "")
-            session_token = arguments.get("session_token", None)
+            # Read AWS credentials from QgsSettings using fixed token names.
+            AWS_ACCESS_KEY_ID_TOKEN = "aws_access_key_id"
+            AWS_SECRET_ACCESS_KEY_TOKEN = "aws_secret_access_key"
+            AWS_SESSION_TOKEN_TOKEN = "aws_session_token"
+
+            gSetting = QgsSettings()
+            access_key_id = gSetting.value(
+                USER_PARAM_KEYS_TAG + f"/{AWS_ACCESS_KEY_ID_TOKEN}", "")
+            secret_access_key = gSetting.value(
+                USER_PARAM_KEYS_TAG + f"/{AWS_SECRET_ACCESS_KEY_TOKEN}", "")
+            session_token = gSetting.value(
+                USER_PARAM_KEYS_TAG + f"/{AWS_SESSION_TOKEN_TOKEN}", "")
 
             if not access_key_id:
-                raise Exception({"error_msg": "No access_key_id provided"})
+                raise Exception({"error_msg": "No access_key_id configured in settings"})
             if not secret_access_key:
-                raise Exception({"error_msg": "No secret_access_key provided"})
+                raise Exception({"error_msg": "No secret_access_key configured in settings"})
 
             self.stac_tool.configure_aws_credentials(
                 access_key_id=access_key_id,
                 secret_access_key=secret_access_key,
-                session_token=session_token
+                session_token=session_token or None
             )
 
             return json.dumps({
@@ -775,7 +806,7 @@ class OrchToolExecutor(QObject):
             base_url = arguments.get("base_url", 'https://planetarycomputer.microsoft.com/api/stac/v1')
 
             # Determine if the selected STAC catalog requires special asset signing.
-            signing_provider = None
+            signing_provider = ''
             if "planetarycomputer.microsoft.com" in base_url:
                 signing_provider = "planetary"
 
@@ -808,7 +839,7 @@ class OrchToolExecutor(QObject):
 
             # Sign assets when the source catalog requires it.
             if signing_provider == "planetary":
-                href = self.stac_tool.sign_planetary_computer_href(href, requester_pays=requester_pays)
+                href = self.stac_tool.sign_planetary_computer_href(href)
 
             self.stac_tool.load_stac_asset_to_map(href, layer_name, is_vector, requester_pays)
             return json.dumps({
@@ -903,51 +934,49 @@ class OrchToolExecutor(QObject):
         else:
             return str(layer.type())
 
-    def test_tool(self):
-        tool_result = ""
-        try:
-            tool_result = self._execute_tool_impl(
-                "qgis_search_stac_items",
-                {
-                    # "collections": ["sentinel-2-l2a"],
-                    "collections": ["sentinel-1-grd"],
-                    "bbox": [120.0, 30.0, 121.0, 31.0],
-                    "datetime_range": "2024-06-21/2024-06-30",
-                    "limit": 5,
-                    # "base_url": 'https://earth-search.aws.element84.com/v1'
-                }
-            )
-
-            # Parse search result and load the first STAC asset to the map.
-            search_data = json.loads(tool_result)
-            assets = search_data.get("assets", [])
-            if not assets:
-                raise Exception({"error_msg": "No STAC assets found in search result"})
-
-            first_asset = assets[0]
-            href = first_asset.get("href", "")
-            if not href:
-                raise Exception({"error_msg": "First STAC asset has no href"})
-
-            # Configure AWS credentials before loading S3-backed assets.
-            # self._execute_tool_impl(
-            #     "qgis_configure_aws_credentials",
-            #     {
-            #         "access_key_id": "YOUR_AWS_ACCESS_KEY_ID",
-            #         "secret_access_key": "YOUR_AWS_SECRET_ACCESS_KEY"
-            #     }
-            # )
-
-            load_result = self._execute_tool_impl(
-                "qgis_load_stac_asset_to_map",
-                {
-                    "href": href,
-                    "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
-                    "signing_provider": "planetary",
-                    # "requester_pays": True
-                }
-            )
-            tool_result = load_result
-        except Exception as e:
-            self.execution_error.emit(str(e))
-        return tool_result
+    # def test_tool(self):
+    #     tool_result = ""
+    #     try:
+    #         tool_result = self._execute_tool_impl(
+    #             "qgis_search_stac_items",
+    #             {
+    #                 # "collections": ["sentinel-2-l2a"],
+    #                 "collections": ["sentinel-1-grd"],
+    #                 "bbox": [120.0, 30.0, 121.0, 31.0],
+    #                 "datetime_range": "2024-06-21/2024-06-30",
+    #                 "limit": 5,
+    #                 # "base_url": 'https://earth-search.aws.element84.com/v1'
+    #             }
+    #         )
+    #
+    #         # Parse search result and load the first STAC asset to the map.
+    #         search_data = json.loads(tool_result)
+    #         assets = search_data.get("assets", [])
+    #         if not assets:
+    #             raise Exception({"error_msg": "No STAC assets found in search result"})
+    #
+    #         first_asset = assets[0]
+    #         href = first_asset.get("href", "")
+    #         if not href:
+    #             raise Exception({"error_msg": "First STAC asset has no href"})
+    #
+    #         # Configure AWS credentials before loading S3-backed assets.
+    #         # self._execute_tool_impl(
+    #         #     "qgis_configure_aws_credentials",
+    #         #     {
+    #         #     }
+    #         # )
+    #
+    #         load_result = self._execute_tool_impl(
+    #             "qgis_load_stac_asset_to_map",
+    #             {
+    #                 "href": href,
+    #                 "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
+    #                 "signing_provider": "planetary",
+    #                 # "requester_pays": True
+    #             }
+    #         )
+    #         tool_result = load_result
+    #     except Exception as e:
+    #         self.execution_error.emit(str(e))
+    #     return tool_result

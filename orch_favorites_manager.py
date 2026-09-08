@@ -32,7 +32,7 @@ from .orch_manager import TaskPlan, SubTask
 from qgis.core import QgsApplication, QgsSettings
 from qgis.PyQt.QtCore import QStandardPaths
 
-from .global_defs import AI_SERVER_DOMAIN, USER_PARAM_KEYS_TAG, TEMP_FOLDER_TAG
+from .global_defs import AI_SERVER_DOMAIN, TEMP_FOLDER_TAG
 
 class OrchFavoritesManager:
 
@@ -131,30 +131,12 @@ class OrchFavoritesManager:
         placeholders and replace them with runtime values.
 
         Supported placeholders:
-        - [AUTH_TOKEN:name] -> value from QGIS settings under auth_token/name.
-        - [OUTPUT_DIR]      -> the configured temporary folder path.
+        - [OUTPUT_DIR] -> the configured temporary folder path.
         """
         if task_plan is None:
             return
 
         gSetting = QgsSettings()
-
-        text_fields = [task_plan.original_task]
-        text_fields.extend(st.description for st in task_plan.sub_tasks)
-
-        # Inject [AUTH_TOKEN:name] placeholders.
-        token_names = set()
-        for text in text_fields:
-            token_names.update(re.findall(r"\[AUTH_TOKEN:(.*?)\]", text or ""))
-
-        for token_name in token_names:
-            saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
-            if not saved_token:
-                continue
-            placeholder = f"[AUTH_TOKEN:{token_name}]"
-            task_plan.original_task = task_plan.original_task.replace(placeholder, saved_token)
-            for st in task_plan.sub_tasks:
-                st.description = st.description.replace(placeholder, saved_token)
 
         # Inject [OUTPUT_DIR] placeholder with the configured temp folder.
         temp_folder = gSetting.value(TEMP_FOLDER_TAG, "")
