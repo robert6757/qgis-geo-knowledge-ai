@@ -154,6 +154,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         self._clear_token_input_widgets()
         detail_text = "\n".join(detail_lines)
         token_names = list(dict.fromkeys(re.findall(r"\[AUTH_TOKEN:(.*?)\]", detail_text)))
+
         base_row = self.gridLayout_2.rowCount()
         for idx, token_name in enumerate(token_names):
             label = QLabel(self.tr("{} Auth Token: ").format(token_name), self)
@@ -174,6 +175,16 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             self.gridLayout_2.addWidget(line_edit, row, 1)
             self.token_input_widgets.append((label, line_edit))
             self.token_line_edits[token_name] = line_edit
+
+        # update tip message.
+        if len(token_names) > 0:
+            self.labelTip.setText(
+                self.tr("Tip: Auth tokens remain strictly local to QGIS and are never attached to prompts sent to LLM services.")
+            )
+        else:
+            self.labelTip.setText(
+                self.tr("Tip: Select a workflow and click OK to load it in Workflow Automation mode.")
+            )
 
     def handle_list_item_dclicked(self, list_item):
         if list_item is None:
