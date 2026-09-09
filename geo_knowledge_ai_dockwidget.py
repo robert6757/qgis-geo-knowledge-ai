@@ -718,7 +718,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
-            welcome_str += self.tr("""\n\n———\n\n **First-Time Use**\n\nPlease enter your question in the input box below and click the **Send** button to start the conversation.\n\nTo get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.\n\n\nBy asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).\n\n""")
+            welcome_str += self.tr("""\n\n———\n\n **First-Time Use**\n\nPlease enter your question in the input box below and click the **Send** button to start the conversation.\n\nTo get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.\n\n\nBy asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).\n\n""")
 
         self.chatbot_browser.append_markdown(welcome_str, True, in_gui_thread=True)
 
