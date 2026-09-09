@@ -19,6 +19,7 @@
  ***************************************************************************/
 """
 
+import math
 import os
 import requests
 
@@ -91,14 +92,21 @@ def get_workspace_info(iface, include_processing_tools=True):
     project_crs = project.crs()
     workspace_info["CRSAuthId"] = project_crs.authid()
 
+    def _format_extent(value, max_reasonable=1e15):
+        """Return a formatted float if finite and within a sane coordinate range, otherwise None."""
+        if not math.isfinite(value) or abs(value) >= max_reasonable:
+            return None
+        return f"{value:.6f}"
+
     # get map canvas parameters.
     map_canvas = iface.mapCanvas()
     canvas_extent = map_canvas.extent()
     workspace_info["MapCanvasExtent"] = [
-        f"{canvas_extent.xMinimum():.6f}",
-        f"{canvas_extent.yMinimum():.6f}",
-        f"{canvas_extent.xMaximum():.6f}",
-        f"{canvas_extent.yMaximum():.6f}"]
+        _format_extent(canvas_extent.xMinimum()),
+        _format_extent(canvas_extent.yMinimum()),
+        _format_extent(canvas_extent.xMaximum()),
+        _format_extent(canvas_extent.yMaximum())
+    ]
 
     # enumerate layers in project.
     layers_info = []
@@ -139,14 +147,21 @@ def get_workspace_info(iface, include_processing_tools=True):
                 layer_info["raster_height"] = provider.ySize()
 
                 extent = provider.extent()
+                extent_valid = (
+                    math.isfinite(extent.xMinimum()) and
+                    math.isfinite(extent.yMinimum()) and
+                    math.isfinite(extent.xMaximum()) and
+                    math.isfinite(extent.yMaximum())
+                )
+
                 layer_info["raster_extent"] = [
-                    f"{extent.xMinimum():.6f}",
-                    f"{extent.yMinimum():.6f}",
-                    f"{extent.xMaximum():.6f}",
-                    f"{extent.yMaximum():.6f}"
+                    _format_extent(extent.xMinimum()),
+                    _format_extent(extent.yMinimum()),
+                    _format_extent(extent.xMaximum()),
+                    _format_extent(extent.yMaximum())
                 ]
 
-                if provider.xSize() > 0 and provider.ySize() > 0:
+                if extent_valid and provider.xSize() > 0 and provider.ySize() > 0:
                     pixel_size_x = (extent.xMaximum() - extent.xMinimum()) / provider.xSize()
                     pixel_size_y = (extent.yMaximum() - extent.yMinimum()) / provider.ySize()
                     layer_info["pixel_size"] = [
@@ -155,8 +170,8 @@ def get_workspace_info(iface, include_processing_tools=True):
                     ]
 
                 layer_info["origin"] = [
-                    f"{extent.xMinimum():.6f}",
-                    f"{extent.yMaximum():.6f}"
+                    _format_extent(extent.xMinimum()),
+                    _format_extent(extent.yMaximum())
                 ]
 
                 band_count = provider.bandCount()
