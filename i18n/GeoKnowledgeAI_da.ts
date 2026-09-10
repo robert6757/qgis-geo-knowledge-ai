@@ -112,7 +112,7 @@
     <message>
         <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Repeat](agent://repeat)</source>
-        <translation>Var dette svar nyttigt? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Gentag](agent://repeat)</translation>
+        <translation type="obsolete">Var dette svar nyttigt? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Gentag](agent://repeat)</translation>
     </message>
     <message>
         <location filename="../chatbot_browser.py" line="63"/>
@@ -133,6 +133,11 @@
         <location filename="../chatbot_browser.py" line="141"/>
         <source>[Favorite](agent://orch/favorite/plan)</source>
         <translation>[Favorit](agent://orch/favorite/plan)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="139"/>
+        <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Regenerate](agent://repeat)</source>
+        <translation>Var dette svar nyttigt? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Gendan](agent://repeat)</translation>
     </message>
 </context>
 <context>
@@ -307,8 +312,8 @@
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;esøg &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-løsninger&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; for at få mere at vide, eller indtast din e-mail og klik på 'Send' for at anmode om vores Enterprise-plan—vores team vil kontakte dig inden for 24 timer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; to learn more, or enter your email and click &apos;Submit&apos; to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;esøg &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-løsninger&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; for at få mere at vide, eller indtast din e-mail og klik på &apos;Send&apos; for at anmode om vores Enterprise-plan—vores team vil kontakte dig inden for 24 timer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
@@ -410,7 +415,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Hvis du ønsker at udføre kode automatisk, skal du trykke på &quot;Ja&quot;. Geo Knowledge AI-plugin vil downloade udførelsesmodulet for at starte den automatiserede proces.
 
-FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
+FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM&apos;er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -559,7 +564,7 @@ Før du bruger denne plugin, skal du læse og acceptere vores [Privatlivspolitik
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -765,7 +770,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
         <translation type="obsolete">**✨ Det er nyt:** Tilføjet multimodal understøttelse til Workflow-automatisering.</translation>
     </message>
     <message>
@@ -775,7 +780,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What's New:**</source>
+        <source>**✨ What&apos;s New:**</source>
         <translation>**✨ Nyheder:**</translation>
     </message>
     <message>
@@ -1035,7 +1040,7 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation type="obsolete">Indtast venligst godkendelsestoken for '{0}', før du fortsætter.</translation>
+        <translation type="obsolete">Indtast venligst godkendelsestoken for &apos;{0}&apos;, før du fortsætter.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="170"/>
