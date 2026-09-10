@@ -153,7 +153,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="14"/>
         <source>Geo Knowledge AI Setting</source>
-        <translation>Geo Knowledge AI Instellingen</translation>
+        <translation type="obsolete">Geo Knowledge AI Instellingen</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
@@ -163,7 +163,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
-        <translation>E-mail:</translation>
+        <translation type="obsolete">E-mail:</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>Tijdelijke mappen worden gebruikt om tussenbestanden op te slaan tijdens het downloaden of analyseren van gegevens.</translation>
+        <translation type="obsolete">Tijdelijke mappen worden gebruikt om tussenbestanden op te slaan tijdens het downloaden of analyseren van gegevens.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="171"/>
@@ -298,17 +298,47 @@
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
         <source>Hourly Credits Left: 0 (Resets in 0m).</source>
-        <translation>Resterende tegoeden per uur: 0 (Reset over 0 min).</translation>
+        <translation type="obsolete">Resterende tegoeden per uur: 0 (Reset over 0 min).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="48"/>
         <source>Submit</source>
-        <translation>Verzenden</translation>
+        <translation type="obsolete">Verzenden</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;ezoek &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-oplossingen&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; om meer te weten te komen, of voer uw e-mailadres in en klik op 'Verzenden' om ons Enterprise-abonnement aan te vragen—ons team neemt binnen 24 uur contact met u op.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;ezoek &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-oplossingen&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; om meer te weten te komen, of voer uw e-mailadres in en klik op 'Verzenden' om ons Enterprise-abonnement aan te vragen—ons team neemt binnen 24 uur contact met u op.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Credits Left: 0 (Resets in 0m).</source>
+        <translation>Resterende credits: 0 (Reset over 0 min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="14"/>
+        <source>Geo Knowledge AI Settings</source>
+        <translation>Geo Knowledge AI-instellingen</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="38"/>
+        <source>Email：</source>
+        <translation>E-mail:</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Enter your purchase email (Optional)</source>
+        <translation>Voer uw aankoop-e-mail in (optioneel)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bezoek onze website om &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flexibele pakketten&lt;/span&gt;&lt;/a&gt; te verkennen en uw kredietlimiet per resetcyclus te verhogen. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="159"/>
+        <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
+        <translation>De tijdelijke map wordt gebruikt om tijdelijke bestanden op te slaan tijdens het downloaden of analyseren van gegevens.</translation>
     </message>
 </context>
 <context>
@@ -627,7 +657,7 @@ To get a more comprehensive understanding of your question, enable the screensho
 By asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 ———
 
@@ -751,12 +781,49 @@ Tip: **Workflow-automatisering** kan complexe taken volledig automatisch of stap
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
-        <translation>**Multimodale workflowautomatisering:** Verbeterde ondersteuning voor multimodale automatisering, waaronder beeldherkenning.</translation>
+        <translation type="obsolete">**Multimodale workflowautomatisering:** Verbeterde ondersteuning voor multimodale automatisering, waaronder beeldherkenning.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
-        <translation>**Workflowfavorieten:** Houd uw favoriete workflows georganiseerd met Lokale favorieten (privé opgeslagen op uw apparaat) en Serverfavorieten (in de cloud opgeslagen workflows die u op elk moment naar uw lokale werkruimte kunt downloaden).</translation>
+        <translation type="obsolete">**Workflowfavorieten:** Houd uw favoriete workflows georganiseerd met Lokale favorieten (privé opgeslagen op uw apparaat) en Serverfavorieten (in de cloud opgeslagen workflows die u op elk moment naar uw lokale werkruimte kunt downloaden).</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <source>
+
+———
+
+ **First-Time Use**
+
+Please enter your question in the input box below and click the **Send** button to start the conversation.
+
+To get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.
+
+
+By asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).
+
+</source>
+        <translation>
+
+———
+
+ **Eerste gebruik**
+
+Voer uw vraag in het invoerveld hieronder in en klik op de knop **Verzenden** om het gesprek te starten.
+
+Om uw vraag beter te begrijpen, schakelt u de schakelaar voor schermafbeeldingen ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) in.
+
+
+Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geoknowledgeai.com/#/privacy) en de [Servicevoorwaarden](https://www.geoknowledgeai.com/#/terms) hebt gelezen en geaccepteerd.
+
+
+</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
+        <translation>**Workflow-favorieten:** Houd uw favoriete workflows georganiseerd met Lokale favorieten (privé opgeslagen op uw apparaat) en Officiële favorieten (gecurateerde workflows die u altijd naar uw lokale werkruimte kunt downloaden). Officiële favorieten bevatten nu kant-en-klare workflows voor het zoeken en laden van satellietbeelden op aanvraag via STAC API&apos;s — met ondersteuning voor zowel AWS Earth Search als Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat en meer) — zodat remote sensing-gegevens rechtstreeks in uw pipeline stromen zonder handmatige downloads.</translation>
     </message>
 </context>
 <context>
@@ -898,87 +965,127 @@ Tip: **Workflow-automatisering** kan complexe taken volledig automatisch of stap
     <message>
         <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
-        <translation>[Server]</translation>
+        <translation type="obsolete">[Server]</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
-        <translation>[Lokaal]</translation>
+        <translation type="obsolete">[Lokaal]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="246"/>
+        <location filename="../orch_favorites_dialog.py" line="290"/>
         <source>Export Task Plan</source>
         <translation>Takenplan exporteren</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>JSON files (*.json)</source>
         <translation>JSON-bestanden (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Tip</source>
         <translation>Tip</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="256"/>
+        <location filename="../orch_favorites_dialog.py" line="300"/>
         <source>Task plan exported successfully.</source>
         <translation>Takenplan geëxporteerd.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Error</source>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="260"/>
+        <location filename="../orch_favorites_dialog.py" line="304"/>
         <source>Failed to export task plan.</source>
         <translation>Takenplan kon niet worden geëxporteerd.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>Import Task Plan</source>
         <translation>Takenplan importeren</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>Takenplan kon niet worden geïmporteerd. Controleer de bestandsindeling.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Task plan imported successfully.</source>
         <translation>Takenplan geïmporteerd.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Confirm Delete</source>
         <translation>Verwijderen bevestigen</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>Weet u zeker dat u deze favoriete taak wilt verwijderen?</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Missing Auth Token</source>
-        <translation>Auth-token ontbreekt</translation>
+        <translation type="obsolete">Auth-token ontbreekt</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation>Voer het auth-token voor '{0}' in voordat u doorgaat.</translation>
+        <translation type="obsolete">Voer het auth-token voor '{0}' in voordat u doorgaat.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <location filename="../orch_favorites_dialog.py" line="170"/>
         <source>Enter token</source>
         <translation>Token invoeren</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <location filename="../orch_favorites_dialog.py" line="168"/>
         <source>{} Auth Token: </source>
         <translation>{} Auth-token: </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="340"/>
+        <source>[Official] </source>
+        <translation>[Officieel] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="342"/>
+        <source>[Local] </source>
+        <translation>[Lokaal] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Missing Parameter</source>
+        <translation>Ontbrekende parameter</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
+        <translation>Voer de waarde in voor &apos;{0}&apos; voordat u doorgaat.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="191"/>
+        <source>{} User Parameter: </source>
+        <translation>{} gebruikersparameter: </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="193"/>
+        <source>Enter parameter value</source>
+        <translation>Voer parameterwaarde in</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="214"/>
+        <source>Tip: Auth tokens and user parameters remain strictly local to QGIS and are never attached to prompts sent to LLM services.</source>
+        <translation>Tip: Auth-tokens en gebruikersparameters blijven strikt lokaal in QGIS en worden nooit toegevoegd aan prompts die naar LLM-services worden verzonden.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="218"/>
+        <source>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</source>
+        <translation>Tip: Selecteer een workflow en klik op OK om deze te laden in de Workflow-automatiseringsmodus.</translation>
     </message>
 </context>
 <context>
@@ -1039,77 +1146,87 @@ Tip: **Workflow-automatisering** kan complexe taken volledig automatisch of stap
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
-        <translation>Waarschuwing</translation>
+        <translation type="obsolete">Waarschuwing</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
-        <translation>Voer uw e-mailadres in.</translation>
+        <translation type="obsolete">Voer uw e-mailadres in.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
-        <translation>Voer een geldig e-mailadres in.</translation>
+        <translation type="obsolete">Voer een geldig e-mailadres in.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
-        <translation>Tip</translation>
+        <translation type="obsolete">Tip</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
-        <translation>Uw verzoek is ontvangen. We nemen binnen 24 uur per e-mail contact met u op. Controleer later uw inbox.</translation>
+        <translation type="obsolete">Uw verzoek is ontvangen. We nemen binnen 24 uur per e-mail contact met u op. Controleer later uw inbox.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation type="obsolete">Fout</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
-        <translation>Verzenden van uw verzoek mislukt. Probeer het later opnieuw.</translation>
+        <translation type="obsolete">Verzenden van uw verzoek mislukt. Probeer het later opnieuw.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
-        <translation>Netwerkfout: controleer uw verbinding en probeer het opnieuw.</translation>
+        <translation type="obsolete">Netwerkfout: controleer uw verbinding en probeer het opnieuw.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="178"/>
+        <location filename="../setting_dialog.py" line="135"/>
         <source>Select Temporary Folder</source>
         <translation>Selecteer tijdelijke map</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="71"/>
         <source>Hourly Credits Left: -- (Resets in --).</source>
-        <translation>Resterende tegoeden per uur: -- (Reset over --).</translation>
+        <translation type="obsolete">Resterende tegoeden per uur: -- (Reset over --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="94"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Current Plan: Free</source>
         <translation>Huidig abonnement: Gratis</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
         <translation>Huidig abonnement: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Current Plan: --</source>
         <translation>Huidig abonnement: --</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="101"/>
         <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Resterende tegoeden per uur: {credits} (Reset over {minutes} min).</translation>
+        <translation type="obsolete">Resterende tegoeden per uur: {credits} (Reset over {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="90"/>
         <source>Missing required fields in response</source>
         <translation>Vereiste velden ontbreken in antwoord</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="70"/>
+        <source>Credits Left: -- (Resets in --).</source>
+        <translation>Tip: Selecteer een workflow en klik op OK om deze te laden in de Workflow Automation-modus.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>Resterende credits: -- (Reset over --).</translation>
     </message>
 </context>
 <context>

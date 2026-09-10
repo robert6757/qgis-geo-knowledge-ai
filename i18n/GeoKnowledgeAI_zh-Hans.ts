@@ -153,7 +153,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="14"/>
         <source>Geo Knowledge AI Setting</source>
-        <translation>Geo Knowledge AI 设置</translation>
+        <translation type="obsolete">Geo Knowledge AI 设置</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
@@ -163,7 +163,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
-        <translation>电子邮件：</translation>
+        <translation type="obsolete">电子邮件：</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>临时文件夹用于存放数据下载或分析过程中产生的中间文件。</translation>
+        <translation type="obsolete">临时文件夹用于存放数据下载或分析过程中产生的中间文件。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="171"/>
@@ -298,17 +298,47 @@
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
         <source>Hourly Credits Left: 0 (Resets in 0m).</source>
-        <translation>每小时剩余额度：0（0 分钟后重置）。</translation>
+        <translation type="obsolete">每小时剩余额度：0（0 分钟后重置）。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="48"/>
         <source>Submit</source>
-        <translation>提交</translation>
+        <translation type="obsolete">提交</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;访&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;问 &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;企业版解决方案&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; 了解详情，或输入您的电子邮箱并点击“提交”以申请我们的企业版套餐——我们的团队将在 24 小时内与您联系。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;访&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;问 &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;企业版解决方案&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; 了解详情，或输入您的电子邮箱并点击“提交”以申请我们的企业版套餐——我们的团队将在 24 小时内与您联系。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Credits Left: 0 (Resets in 0m).</source>
+        <translation>剩余额度：0（0 分钟后重置）。</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="14"/>
+        <source>Geo Knowledge AI Settings</source>
+        <translation>Geo Knowledge AI 设置</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="38"/>
+        <source>Email：</source>
+        <translation>电子邮件：</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Enter your purchase email (Optional)</source>
+        <translation>请输入购买邮箱（可选）</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;访问我们的网站了解 &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt;，以提高每个重置周期的额度上限。 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="159"/>
+        <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
+        <translation>临时文件夹用于存放数据下载或分析过程中产生的中间文件。</translation>
     </message>
 </context>
 <context>
@@ -631,7 +661,7 @@ To get a more comprehensive understanding of your question, enable the screensho
 By asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 ———
 
@@ -760,12 +790,49 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
-        <translation>**多模态自动化工作流：** 集成多模态处理与图像识别技术，提供更强大的地理空间分析和制图输出能力。</translation>
+        <translation type="obsolete">**多模态自动化工作流：** 集成多模态处理与图像识别技术，提供更强大的地理空间分析和制图输出能力。</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
-        <translation>**工作流收藏夹：** 将常用工作流存储于本地或下载服务器中的其他工作流。</translation>
+        <translation type="obsolete">**工作流收藏夹：** 将常用工作流存储于本地或下载服务器中的其他工作流。</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <source>
+
+———
+
+ **First-Time Use**
+
+Please enter your question in the input box below and click the **Send** button to start the conversation.
+
+To get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.
+
+
+By asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).
+
+</source>
+        <translation>
+
+———
+
+ **首次使用**
+
+请在下方输入框中输入您的问题，然后点击 **发送** 按钮开始对话。
+
+为了更全面地了解您的问题，请启用屏幕截图 ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) 开关。
+
+
+提问即表示您已阅读并同意 [隐私政策](https://www.geoknowledgeai.com/#/privacy) 和 [服务条款](https://www.geoknowledgeai.com/#/terms)。
+
+
+</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
+        <translation>**工作流收藏夹：** 使用本地收藏夹（仅存储在您的设备上）和官方收藏夹（精选工作流，可随时下载到本地工作空间）来管理您使用的工作流。官方收藏夹现已内置现成的工作流，可通过 STAC API 按需搜索并加载卫星影像 —— 同时支持 AWS Earth Search 与 Microsoft Planetary Computer（Sentinel-1、Sentinel-2、Landsat 等），让遥感数据无需手动下载即可直接接入您的处理流程。</translation>
     </message>
 </context>
 <context>
@@ -907,87 +974,127 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
-        <translation>[服务器]</translation>
+        <translation type="obsolete">[服务器]</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
-        <translation>[本地]</translation>
+        <translation type="obsolete">[本地]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="246"/>
+        <location filename="../orch_favorites_dialog.py" line="290"/>
         <source>Export Task Plan</source>
         <translation>导出任务计划</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>JSON files (*.json)</source>
         <translation>JSON 文件 (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="256"/>
+        <location filename="../orch_favorites_dialog.py" line="300"/>
         <source>Task plan exported successfully.</source>
         <translation>任务计划导出成功。</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="260"/>
+        <location filename="../orch_favorites_dialog.py" line="304"/>
         <source>Failed to export task plan.</source>
         <translation>导出任务计划失败。</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>Import Task Plan</source>
         <translation>导入任务计划</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>导入任务计划失败，请检查文件格式。</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Task plan imported successfully.</source>
         <translation>任务计划导入成功。</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Confirm Delete</source>
         <translation>确认删除</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>确定要移除这个收藏的任务吗？</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Missing Auth Token</source>
-        <translation>缺少认证令牌</translation>
+        <translation type="obsolete">缺少认证令牌</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation>请在继续之前输入‘{0}’的认证令牌。</translation>
+        <translation type="obsolete">请在继续之前输入‘{0}’的认证令牌。</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <location filename="../orch_favorites_dialog.py" line="170"/>
         <source>Enter token</source>
         <translation>输入令牌</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <location filename="../orch_favorites_dialog.py" line="168"/>
         <source>{} Auth Token: </source>
         <translation>{} 认证令牌：</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="340"/>
+        <source>[Official] </source>
+        <translation>[官方] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="342"/>
+        <source>[Local] </source>
+        <translation>[本地] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Missing Parameter</source>
+        <translation>缺少参数</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
+        <translation>请在继续之前输入 &apos;{0}&apos; 的值。</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="191"/>
+        <source>{} User Parameter: </source>
+        <translation>{} 用户参数：</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="193"/>
+        <source>Enter parameter value</source>
+        <translation>请输入参数值</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="214"/>
+        <source>Tip: Auth tokens and user parameters remain strictly local to QGIS and are never attached to prompts sent to LLM services.</source>
+        <translation>提示：认证令牌和用户参数始终仅保存在本地 QGIS 中，不会附加到发送给 LLM 服务的提示词中。</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="218"/>
+        <source>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</source>
+        <translation>提示：选择一个工作流并点击“确定”，以在自动化工作流模式下加载它。</translation>
     </message>
 </context>
 <context>
@@ -1048,77 +1155,87 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation type="obsolete">警告</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
-        <translation>请输入您的电子邮箱地址。</translation>
+        <translation type="obsolete">请输入您的电子邮箱地址。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
-        <translation>请输入正确的电子邮箱地址。</translation>
+        <translation type="obsolete">请输入正确的电子邮箱地址。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
-        <translation>提示</translation>
+        <translation type="obsolete">提示</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
-        <translation>您的申请已送达，我们将会在24小时内回复您。请稍后查收。</translation>
+        <translation type="obsolete">您的申请已送达，我们将会在24小时内回复您。请稍后查收。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="obsolete">错误</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
-        <translation>无法提交您的申请。请稍后再试。</translation>
+        <translation type="obsolete">无法提交您的申请。请稍后再试。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
-        <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
+        <translation type="obsolete">网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="178"/>
+        <location filename="../setting_dialog.py" line="135"/>
         <source>Select Temporary Folder</source>
         <translation>选择临时文件夹</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="71"/>
         <source>Hourly Credits Left: -- (Resets in --).</source>
-        <translation>每小时剩余额度：--（-- 后重置）。</translation>
+        <translation type="obsolete">每小时剩余额度：--（-- 后重置）。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="94"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Current Plan: Free</source>
         <translation>当前套餐：免费</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
         <translation>当前套餐：企业版</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Current Plan: --</source>
         <translation>当前套餐：--</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="101"/>
         <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>每小时剩余额度：{credits}（{minutes} 分钟后重置）。</translation>
+        <translation type="obsolete">每小时剩余额度：{credits}（{minutes} 分钟后重置）。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="90"/>
         <source>Missing required fields in response</source>
         <translation>响应中缺少必填字段</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="70"/>
+        <source>Credits Left: -- (Resets in --).</source>
+        <translation>提示：选择一个工作流并点击“确定”，即可在工作流自动化模式下加载它。</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>剩余额度：--（-- 后重置）。</translation>
     </message>
 </context>
 <context>

@@ -153,7 +153,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="14"/>
         <source>Geo Knowledge AI Setting</source>
-        <translation>Paramètres de Geo Knowledge AI</translation>
+        <translation type="obsolete">Paramètres de Geo Knowledge AI</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
@@ -163,7 +163,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
-        <translation>E-mail :</translation>
+        <translation type="obsolete">E-mail :</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>Les dossiers temporaires sont utilisés pour stocker des fichiers intermédiaires pendant le processus de téléchargement ou d'analyse des données.</translation>
+        <translation type="obsolete">Les dossiers temporaires sont utilisés pour stocker des fichiers intermédiaires pendant le processus de téléchargement ou d'analyse des données.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="171"/>
@@ -298,17 +298,47 @@
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
         <source>Hourly Credits Left: 0 (Resets in 0m).</source>
-        <translation>Crédits horaires restants : 0 (Réinitialisation dans 0 min).</translation>
+        <translation type="obsolete">Crédits horaires restants : 0 (Réinitialisation dans 0 min).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="48"/>
         <source>Submit</source>
-        <translation>Envoyer</translation>
+        <translation type="obsolete">Envoyer</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isitez &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Solutions d'entreprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; pour en savoir plus, ou saisissez votre e-mail et cliquez sur 'Envoyer' pour demander notre Plan Enterprise—notre équipe vous contactera dans les 24 heures.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isitez &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Solutions d'entreprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; pour en savoir plus, ou saisissez votre e-mail et cliquez sur 'Envoyer' pour demander notre Plan Enterprise—notre équipe vous contactera dans les 24 heures.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Credits Left: 0 (Resets in 0m).</source>
+        <translation>Crédits restants : 0 (Réinitialisation dans 0 min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="14"/>
+        <source>Geo Knowledge AI Settings</source>
+        <translation>Paramètres de Geo Knowledge AI</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="38"/>
+        <source>Email：</source>
+        <translation>E-mail :</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Enter your purchase email (Optional)</source>
+        <translation>Saisissez votre e-mail d&apos;achat (Facultatif)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visitez notre site web pour explorer &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;forfaits flexibles&lt;/span&gt;&lt;/a&gt; et augmenter votre limite de crédits par cycle de réinitialisation. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="159"/>
+        <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
+        <translation>Le dossier temporaire sert à stocker les fichiers intermédiaires pendant le téléchargement ou l&apos;analyse des données.</translation>
     </message>
 </context>
 <context>
@@ -628,7 +658,7 @@ To get a more comprehensive understanding of your question, enable the screensho
 By asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 ———
 
@@ -756,12 +786,49 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
-        <translation>**Automatisation des flux de travail multimodaux :** Prise en charge améliorée de l'automatisation multimodale, y compris la reconnaissance d'images.</translation>
+        <translation type="obsolete">**Automatisation des flux de travail multimodaux :** Prise en charge améliorée de l'automatisation multimodale, y compris la reconnaissance d'images.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
-        <translation>**Favoris de flux de travail :** Gardez vos flux de travail préférés organisés avec les Favoris locaux (stockés de manière privée sur votre appareil) et les Favoris du serveur (flux de travail stockés dans le cloud, prêts à être téléchargés dans votre espace de travail local à tout moment).</translation>
+        <translation type="obsolete">**Favoris de flux de travail :** Gardez vos flux de travail préférés organisés avec les Favoris locaux (stockés de manière privée sur votre appareil) et les Favoris du serveur (flux de travail stockés dans le cloud, prêts à être téléchargés dans votre espace de travail local à tout moment).</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <source>
+
+———
+
+ **First-Time Use**
+
+Please enter your question in the input box below and click the **Send** button to start the conversation.
+
+To get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.
+
+
+By asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).
+
+</source>
+        <translation>
+
+———
+
+ **Première utilisation**
+
+Veuillez saisir votre question dans la zone de saisie ci-dessous et cliquer sur le bouton **Envoyer** pour démarrer la conversation.
+
+Pour mieux comprendre votre question, activez l&apos;interrupteur des captures d&apos;écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+
+
+En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de confidentialité](https://www.geoknowledgeai.com/#/privacy) et les [conditions d&apos;utilisation](https://www.geoknowledgeai.com/#/terms).
+
+
+</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
+        <translation>**Favoris de workflows :** Gardez vos workflows favoris organisés avec les Favoris locaux (stockés en privé sur votre appareil) et les Favoris officiels (workflows sélectionnés prêts à télécharger dans votre espace de travail local à tout moment). Les Favoris officiels incluent désormais des workflows prêts à l&apos;emploi pour rechercher et charger des images satellites à la demande via des API STAC — prenant en charge à la fois AWS Earth Search et Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat et plus) — afin que les données de télédétection s&apos;intègrent directement à votre flux de travail sans téléchargements manuels.</translation>
     </message>
 </context>
 <context>
@@ -903,87 +970,127 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
     <message>
         <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
-        <translation>[Serveur]</translation>
+        <translation type="obsolete">[Serveur]</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
-        <translation>[Local]</translation>
+        <translation type="obsolete">[Local]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="246"/>
+        <location filename="../orch_favorites_dialog.py" line="290"/>
         <source>Export Task Plan</source>
         <translation>Exporter le plan de tâches</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>JSON files (*.json)</source>
         <translation>Fichiers JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Tip</source>
         <translation>Astuce</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="256"/>
+        <location filename="../orch_favorites_dialog.py" line="300"/>
         <source>Task plan exported successfully.</source>
         <translation>Plan de tâches exporté.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="260"/>
+        <location filename="../orch_favorites_dialog.py" line="304"/>
         <source>Failed to export task plan.</source>
         <translation>Échec de l'exportation du plan de tâches.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>Import Task Plan</source>
         <translation>Importer le plan de tâches</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>Échec de l'importation du plan de tâches. Veuillez vérifier le format du fichier.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Task plan imported successfully.</source>
         <translation>Plan de tâches importé.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Confirm Delete</source>
         <translation>Confirmer la suppression</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>Êtes-vous sûr de vouloir supprimer cette tâche favorite ?</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Missing Auth Token</source>
-        <translation>Jeton d'authentification manquant</translation>
+        <translation type="obsolete">Jeton d'authentification manquant</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation>Veuillez saisir le jeton d'authentification pour '{0}' avant de continuer.</translation>
+        <translation type="obsolete">Veuillez saisir le jeton d'authentification pour '{0}' avant de continuer.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <location filename="../orch_favorites_dialog.py" line="170"/>
         <source>Enter token</source>
         <translation>Saisir le jeton</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <location filename="../orch_favorites_dialog.py" line="168"/>
         <source>{} Auth Token: </source>
         <translation>{} Jeton d'authentification : </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="340"/>
+        <source>[Official] </source>
+        <translation>[Officiel] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="342"/>
+        <source>[Local] </source>
+        <translation>[Local] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Missing Parameter</source>
+        <translation>Paramètre manquant</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
+        <translation>Veuillez saisir la valeur pour &apos;{0}&apos; avant de continuer.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="191"/>
+        <source>{} User Parameter: </source>
+        <translation>{} Paramètre utilisateur : </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="193"/>
+        <source>Enter parameter value</source>
+        <translation>Saisissez la valeur du paramètre</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="214"/>
+        <source>Tip: Auth tokens and user parameters remain strictly local to QGIS and are never attached to prompts sent to LLM services.</source>
+        <translation>Conseil : Les jetons d&apos;authentification et les paramètres utilisateur restent strictement locaux à QGIS et ne sont jamais joints aux prompts envoyés aux services LLM.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="218"/>
+        <source>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</source>
+        <translation>Astuce : Sélectionnez un workflow et cliquez sur OK pour le charger en mode Automatisation de workflows.</translation>
     </message>
 </context>
 <context>
@@ -1044,77 +1151,87 @@ Astuce : L'automatisation de workflows peut gérer des tâches complexes de faç
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
-        <translation>Avertissement</translation>
+        <translation type="obsolete">Avertissement</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
-        <translation>Veuillez saisir votre adresse e-mail.</translation>
+        <translation type="obsolete">Veuillez saisir votre adresse e-mail.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
-        <translation>Veuillez saisir une adresse e-mail valide.</translation>
+        <translation type="obsolete">Veuillez saisir une adresse e-mail valide.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
-        <translation>Astuce</translation>
+        <translation type="obsolete">Astuce</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
-        <translation>Votre demande a été reçue. Nous vous répondrons par e-mail dans les 24 heures. Veuillez vérifier votre boîte de réception.</translation>
+        <translation type="obsolete">Votre demande a été reçue. Nous vous répondrons par e-mail dans les 24 heures. Veuillez vérifier votre boîte de réception.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation type="obsolete">Erreur</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
-        <translation>Échec de la soumission de votre demande. Veuillez réessayer plus tard.</translation>
+        <translation type="obsolete">Échec de la soumission de votre demande. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
-        <translation>Erreur réseau : veuillez vérifier votre connexion et réessayer.</translation>
+        <translation type="obsolete">Erreur réseau : veuillez vérifier votre connexion et réessayer.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="178"/>
+        <location filename="../setting_dialog.py" line="135"/>
         <source>Select Temporary Folder</source>
         <translation>Sélectionner le dossier temporaire</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="71"/>
         <source>Hourly Credits Left: -- (Resets in --).</source>
-        <translation>Crédits horaires restants : -- (Réinitialisation dans --).</translation>
+        <translation type="obsolete">Crédits horaires restants : -- (Réinitialisation dans --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="94"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Current Plan: Free</source>
         <translation>Plan actuel : Gratuit</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
         <translation>Plan actuel : Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Current Plan: --</source>
         <translation>Plan actuel : --</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="101"/>
         <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Crédits horaires restants : {credits} (Réinitialisation dans {minutes} min).</translation>
+        <translation type="obsolete">Crédits horaires restants : {credits} (Réinitialisation dans {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="90"/>
         <source>Missing required fields in response</source>
         <translation>Champs obligatoires manquants dans la réponse</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="70"/>
+        <source>Credits Left: -- (Resets in --).</source>
+        <translation>Conseil : Sélectionnez un workflow et cliquez sur OK pour le charger en mode Automatisation des workflows.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>Crédits restants : -- (Réinitialisation dans --).</translation>
     </message>
 </context>
 <context>

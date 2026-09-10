@@ -153,7 +153,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="14"/>
         <source>Geo Knowledge AI Setting</source>
-        <translation>Ρυθμίσεις Geo Knowledge AI</translation>
+        <translation type="obsolete">Ρυθμίσεις Geo Knowledge AI</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
@@ -163,7 +163,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="38"/>
         <source>E-mail：</source>
-        <translation>Email:</translation>
+        <translation type="obsolete">Email:</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="57"/>
@@ -278,7 +278,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation>Οι προσωρινοί φάκελοι χρησιμοποιούνται για την αποθήκευση ενδιάμεσων αρχείων κατά τη διάρκεια της διαδικασίας λήψης ή ανάλυσης δεδομένων.</translation>
+        <translation type="obsolete">Οι προσωρινοί φάκελοι χρησιμοποιούνται για την αποθήκευση ενδιάμεσων αρχείων κατά τη διάρκεια της διαδικασίας λήψης ή ανάλυσης δεδομένων.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="171"/>
@@ -298,17 +298,47 @@
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
         <source>Hourly Credits Left: 0 (Resets in 0m).</source>
-        <translation>Ωριαία credits υπόλοιπα: 0 (Επαναφορά σε 0 λεπτά).</translation>
+        <translation type="obsolete">Ωριαία credits υπόλοιπα: 0 (Επαναφορά σε 0 λεπτά).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="48"/>
         <source>Submit</source>
-        <translation>Υποβολή</translation>
+        <translation type="obsolete">Υποβολή</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;Ε&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;πισκεφθείτε &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Λύσεις Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; για να μάθετε περισσότερα, ή εισαγάγετε το email σας και κάντε κλικ στο 'Υποβολή' για να ζητήσετε το Enterprise πλάνο μας—η ομάδα μας θα επικοινωνήσει μαζί σας εντός 24 ωρών.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;Ε&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;πισκεφθείτε &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Λύσεις Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; για να μάθετε περισσότερα, ή εισαγάγετε το email σας και κάντε κλικ στο 'Υποβολή' για να ζητήσετε το Enterprise πλάνο μας—η ομάδα μας θα επικοινωνήσει μαζί σας εντός 24 ωρών.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="26"/>
+        <source>Credits Left: 0 (Resets in 0m).</source>
+        <translation>Μονάδες που απομένουν: 0 (Επαναφορά σε 0 λεπτά).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="14"/>
+        <source>Geo Knowledge AI Settings</source>
+        <translation>Ρυθμίσεις Geo Knowledge AI</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="38"/>
+        <source>Email：</source>
+        <translation>Email:</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="48"/>
+        <source>Enter your purchase email (Optional)</source>
+        <translation>Εισαγάγετε το email αγοράς σας (Προαιρετικό)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="66"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Επισκεφτείτε τον ιστότοπό μας για να εξερευνήσετε &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ευέλικτα πακέτα&lt;/span&gt;&lt;/a&gt; και να αυξήσετε το όριο πίστωσης ανά κύκλο επαναφοράς. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="159"/>
+        <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
+        <translation>Ο προσωρινός φάκελος χρησιμοποιείται για την αποθήκευση ενδιάμεσων αρχείων κατά τη λήψη δεδομένων ή τη διαδικασία ανάλυσης.</translation>
     </message>
 </context>
 <context>
@@ -627,7 +657,7 @@ To get a more comprehensive understanding of your question, enable the screensho
 By asking a question, you acknowledge that you have read and agreed to the [privacy notice](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
 </source>
-        <translation>
+        <translation type="obsolete">
 
 ———
 
@@ -751,12 +781,49 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
-        <translation>**Αυτοματοποίηση Πολυτροπικών Ροών Εργασίας:** Ενισχυμένη υποστήριξη για πολυτροπική αυτοματοποίηση, συμπεριλαμβανομένης της Αναγνώρισης Εικόνας.</translation>
+        <translation type="obsolete">**Αυτοματοποίηση Πολυτροπικών Ροών Εργασίας:** Ενισχυμένη υποστήριξη για πολυτροπική αυτοματοποίηση, συμπεριλαμβανομένης της Αναγνώρισης Εικόνας.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Server Favorites (cloud-stored workflows ready to download to your local workspace anytime).</source>
-        <translation>**Αγαπημένες Ροές Εργασίας:** Οργανώστε τις αγαπημένες σας ροές εργασίας με Τοπικά Αγαπημένα (αποθηκευμένα ιδιωτικά στη συσκευή σας) και Αγαπημένα Διακομιστή (ροές εργασίας αποθηκευμένες στο cloud, έτοιμες για λήψη στον τοπικό σας χώρο εργασίας ανά πάσα στιγμή).</translation>
+        <translation type="obsolete">**Αγαπημένες Ροές Εργασίας:** Οργανώστε τις αγαπημένες σας ροές εργασίας με Τοπικά Αγαπημένα (αποθηκευμένα ιδιωτικά στη συσκευή σας) και Αγαπημένα Διακομιστή (ροές εργασίας αποθηκευμένες στο cloud, έτοιμες για λήψη στον τοπικό σας χώρο εργασίας ανά πάσα στιγμή).</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <source>
+
+———
+
+ **First-Time Use**
+
+Please enter your question in the input box below and click the **Send** button to start the conversation.
+
+To get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.
+
+
+By asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).
+
+</source>
+        <translation>
+
+———
+
+ **Πρώτη χρήση**
+
+Εισαγάγετε την ερώτησή σας στο πλαίσιο εισόδου παρακάτω και κάντε κλικ στο κουμπί **Αποστολή** για να ξεκινήσετε τη συνομιλία.
+
+Για πιο ολοκληρωμένη κατανόηση της ερώτησής σας, ενεργοποιήστε τον διακόπτη στιγμιοτύπων οθόνης ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+
+
+Κάνοντας μια ερώτηση, αναγνωρίζετε ότι έχετε διαβάσει και συμφωνήσει με την [Πολιτική Απορρήτου](https://www.geoknowledgeai.com/#/privacy) και τους [Όρους Χρήσης](https://www.geoknowledgeai.com/#/terms).
+
+
+</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
+        <translation>**Workflow Favorites:** Διατηρήστε οργανωμένα τα αγαπημένα σας workflows με τα Τοπικά Αγαπημένα (αποθηκευμένα ιδιωτικά στη συσκευή σας) και Επίσημα Αγαπημένα (επιμελημένα workflows έτοιμα για λήψη στον τοπικό χώρο εργασίας σας ανά πάσα στιγμή). Τα Επίσημα Αγαπημένα περιλαμβάνουν πλέον έτοιμα workflows για αναζήτηση και φόρτωση δορυφορικών εικόνων κατά απαίτηση μέσω STAC APIs — υποστηρίζοντας τόσο το AWS Earth Search όσο και το Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat και άλλα) — ώστε τα δεδομένα τηλεπισκόπησης να ρέουν απευθείας στην ροή εργασίας σας χωρίς χειροκίνητες λήψεις.</translation>
     </message>
 </context>
 <context>
@@ -898,87 +965,127 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../orch_favorites_dialog.py" line="296"/>
         <source>[Server]</source>
-        <translation>[Διακομιστής]</translation>
+        <translation type="obsolete">[Διακομιστής]</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="298"/>
         <source>[Local]</source>
-        <translation>[Τοπικό]</translation>
+        <translation type="obsolete">[Τοπικό]</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="246"/>
+        <location filename="../orch_favorites_dialog.py" line="290"/>
         <source>Export Task Plan</source>
         <translation>Εξαγωγή σχεδίου εργασιών</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>JSON files (*.json)</source>
         <translation>Αρχεία JSON (*.json)</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Tip</source>
         <translation>Συμβουλή</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="256"/>
+        <location filename="../orch_favorites_dialog.py" line="300"/>
         <source>Task plan exported successfully.</source>
         <translation>Το σχέδιο εργασιών εξήχθη.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="260"/>
+        <location filename="../orch_favorites_dialog.py" line="304"/>
         <source>Failed to export task plan.</source>
         <translation>Αποτυχία εξαγωγής σχεδίου εργασιών.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="266"/>
+        <location filename="../orch_favorites_dialog.py" line="310"/>
         <source>Import Task Plan</source>
         <translation>Εισαγωγή σχεδίου εργασιών</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="277"/>
+        <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Failed to import task plan. Please check the file format.</source>
         <translation>Αποτυχία εισαγωγής σχεδίου εργασιών. Ελέγξτε τη μορφή του αρχείου.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="307"/>
+        <location filename="../orch_favorites_dialog.py" line="351"/>
         <source>Task plan imported successfully.</source>
         <translation>Το σχέδιο εργασιών εισήχθη.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Confirm Delete</source>
         <translation>Επιβεβαίωση διαγραφής</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="314"/>
+        <location filename="../orch_favorites_dialog.py" line="358"/>
         <source>Are you sure you want to remove this favorite task?</source>
         <translation>Είστε σίγουροι ότι θέλετε να καταργήσετε αυτήν την αγαπημένη εργασία;</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Missing Auth Token</source>
-        <translation>Λείπει το διακριτικό ελέγχου ταυτότητας</translation>
+        <translation type="obsolete">Λείπει το διακριτικό ελέγχου ταυτότητας</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation>Παρακαλώ εισαγάγετε το διακριτικό ελέγχου ταυτότητας για το '{0}' πριν συνεχίσετε.</translation>
+        <translation type="obsolete">Παρακαλώ εισαγάγετε το διακριτικό ελέγχου ταυτότητας για το '{0}' πριν συνεχίσετε.</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="161"/>
+        <location filename="../orch_favorites_dialog.py" line="170"/>
         <source>Enter token</source>
         <translation>Εισαγωγή διακριτικού</translation>
     </message>
     <message>
-        <location filename="../orch_favorites_dialog.py" line="159"/>
+        <location filename="../orch_favorites_dialog.py" line="168"/>
         <source>{} Auth Token: </source>
         <translation>{} Διακριτικό ελέγχου ταυτότητας: </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="340"/>
+        <source>[Official] </source>
+        <translation>[Επίσημα] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="342"/>
+        <source>[Local] </source>
+        <translation>[Τοπικά] </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Missing Parameter</source>
+        <translation>Λείπει παράμετρος</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="102"/>
+        <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
+        <translation>Εισαγάγετε την τιμή για το &apos;{0}&apos; πριν συνεχίσετε.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="191"/>
+        <source>{} User Parameter: </source>
+        <translation>{} Παράμετρος χρήστη: </translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="193"/>
+        <source>Enter parameter value</source>
+        <translation>Εισαγάγετε τιμή παραμέτρου</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="214"/>
+        <source>Tip: Auth tokens and user parameters remain strictly local to QGIS and are never attached to prompts sent to LLM services.</source>
+        <translation>Συμβουλή: Τα auth tokens και οι παράμετροι χρήστη παραμένουν αυστηρά τοπικά στο QGIS και δεν επισυνάπτονται ποτέ σε prompts που αποστέλλονται σε υπηρεσίες LLM.</translation>
+    </message>
+    <message>
+        <location filename="../orch_favorites_dialog.py" line="218"/>
+        <source>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</source>
+        <translation>Συμβουλή: Επιλέξτε μια ροή εργασίας και κάντε κλικ στο OK για να τη φορτώσετε στη λειτουργία Αυτοματοποίησης ροής εργασίας.</translation>
     </message>
 </context>
 <context>
@@ -1039,77 +1146,87 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Warning</source>
-        <translation>Προειδοποίηση</translation>
+        <translation type="obsolete">Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
         <source>Please enter your email address.</source>
-        <translation>Παρακαλούμε εισαγάγετε τη διεύθυνση email σας.</translation>
+        <translation type="obsolete">Παρακαλούμε εισαγάγετε τη διεύθυνση email σας.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="143"/>
         <source>Please enter a valid email address.</source>
-        <translation>Παρακαλούμε εισαγάγετε μια έγκυρη διεύθυνση email.</translation>
+        <translation type="obsolete">Παρακαλούμε εισαγάγετε μια έγκυρη διεύθυνση email.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Tip</source>
-        <translation>Συμβουλή</translation>
+        <translation type="obsolete">Συμβουλή</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="160"/>
         <source>Your request has been received. We&apos;ll get back to you by email within 24 hours. Please check your inbox later.</source>
-        <translation>Το αίτημά σας ελήφθη. Θα επικοινωνήσουμε μαζί σας μέσω email εντός 24 ωρών. Ελέγξτε τα εισερχόμενά σας αργότερα.</translation>
+        <translation type="obsolete">Το αίτημά σας ελήφθη. Θα επικοινωνήσουμε μαζί σας μέσω email εντός 24 ωρών. Ελέγξτε τα εισερχόμενά σας αργότερα.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Error</source>
-        <translation>Σφάλμα</translation>
+        <translation type="obsolete">Σφάλμα</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
         <source>Failed to submit your request. Please try again later.</source>
-        <translation>Αποτυχία υποβολής του αιτήματός σας. Παρακαλούμε δοκιμάστε ξανά αργότερα.</translation>
+        <translation type="obsolete">Αποτυχία υποβολής του αιτήματός σας. Παρακαλούμε δοκιμάστε ξανά αργότερα.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="170"/>
         <source>Network error. Please check your connection and try again.</source>
-        <translation>Σφάλμα δικτύου: ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</translation>
+        <translation type="obsolete">Σφάλμα δικτύου: ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="178"/>
+        <location filename="../setting_dialog.py" line="135"/>
         <source>Select Temporary Folder</source>
         <translation>Επιλογή Προσωρινού Φακέλου</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="71"/>
         <source>Hourly Credits Left: -- (Resets in --).</source>
-        <translation>Ωριαία credits υπόλοιπα: -- (Επαναφορά σε --).</translation>
+        <translation type="obsolete">Ωριαία credits υπόλοιπα: -- (Επαναφορά σε --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="94"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Current Plan: Free</source>
         <translation>Τρέχον πλάνο: Δωρεάν</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
         <translation>Τρέχον πλάνο: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Current Plan: --</source>
         <translation>Τρέχον πλάνο: --</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="101"/>
         <source>Hourly Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Ωριαία credits υπόλοιπα: {credits} (Επαναφορά σε {minutes} λεπτά).</translation>
+        <translation type="obsolete">Ωριαία credits υπόλοιπα: {credits} (Επαναφορά σε {minutes} λεπτά).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="91"/>
+        <location filename="../setting_dialog.py" line="90"/>
         <source>Missing required fields in response</source>
         <translation>Λείπουν απαιτούμενα πεδία στην απάντηση</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="70"/>
+        <source>Credits Left: -- (Resets in --).</source>
+        <translation>Συμβουλή: Επιλέξτε ένα workflow και κάντε κλικ στο OK για να το φορτώσετε σε λειτουργία Workflow Automation.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Credits Left: {credits} (Resets in {minutes}m).</source>
+        <translation>Μονάδες που απομένουν: -- (Επαναφορά σε --).</translation>
     </message>
 </context>
 <context>
