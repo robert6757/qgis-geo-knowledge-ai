@@ -406,11 +406,11 @@
 If you want to execute code automatically, please press &quot;Yes&quot;. The Geo Knowledge AI plugin will download the execution module to start the automated process.
 
 CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not completely reliable. Please check it carefully. We suggest you back up your data and QGIS project before executing code.</source>
-        <translation>Para mejorar la seguridad de ejecución, QGIS no permite ejecutar automáticamente código externo (por ejemplo, código generado en tiempo real por LA).
+        <translation>Para mejorar la seguridad de ejecución, QGIS no permite ejecutar automáticamente código externo (por ejemplo, código generado en tiempo real por LLM).
 
 Si desea ejecutar código automáticamente, presione &quot;Sí&quot;. El complemento Geo Knowledge AI descargará el módulo de ejecución para iniciar el proceso automatizado.
 
-PRECAUCIÓN: A pesar de nuestras ESTRICTAS restricciones a los LA, el código generado no es completamente fiable. Por favor, revíselo cuidadosamente. Le sugerimos que haga una copia de seguridad de sus datos y del proyecto QGIS antes de ejecutar el código.</translation>
+PRECAUCIÓN: A pesar de nuestras ESTRICTAS restricciones de los LLM, el código generado no es completamente fiable. Por favor, revíselo cuidadosamente. Le sugerimos que haga una copia de seguridad de sus datos y del proyecto QGIS antes de ejecutar el código.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
