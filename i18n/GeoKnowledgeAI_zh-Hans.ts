@@ -505,7 +505,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>无法找到进程: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1230,12 +1230,12 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>提示：选择一个工作流并点击“确定”，即可在工作流自动化模式下加载它。</translation>
+        <translation>剩余额度：--（-- 后重置）。</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>剩余额度：--（-- 后重置）。</translation>
+        <translation>剩余额度：{credits}（{minutes} 分钟后重置）。</translation>
     </message>
 </context>
 <context>

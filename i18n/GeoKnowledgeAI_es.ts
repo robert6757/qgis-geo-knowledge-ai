@@ -505,7 +505,7 @@ PRECAUCIÓN: A pesar de nuestras ESTRICTAS restricciones a los LA, el código ge
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>No se puede encontrar el procesamiento: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,7 +1221,7 @@ Al hacer una pregunta, reconoce que ha leído y aceptado el [Aviso de privacidad
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Consejo: Seleccione un workflow y haga clic en Aceptar para cargarlo en el modo de automatización de workflows.</translation>
+        <translation>Créditos restantes: -- (Se restablecen en --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>

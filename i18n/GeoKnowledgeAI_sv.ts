@@ -505,7 +505,7 @@ FÖRSIKTIGHET: Trots våra STRENGA begränsningar för STM är den genererade ko
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Kan inte hitta bearbetning: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,12 +1221,12 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Tips: Välj ett workflow och klicka på OK för att ladda det i Workflow Automation-läge.</translation>
+        <translation>Krediter kvar: -- (Återställs om --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Krediter kvar: -- (Återställs om --).</translation>
+        <translation>Krediter kvar: {credits} (Återställs om {minutes} min).</translation>
     </message>
 </context>
 <context>

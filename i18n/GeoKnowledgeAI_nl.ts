@@ -505,7 +505,7 @@ LET OP: Ondanks onze STRENGE beperkingen voor LLM's is de gegenereerde code niet
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Verwerking niet gevonden:</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,12 +1221,12 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Tip: Selecteer een workflow en klik op OK om deze te laden in de Workflow Automation-modus.</translation>
+        <translation>Resterende credits: -- (Reset over --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Resterende credits: -- (Reset over --).</translation>
+        <translation>Resterende credits: {credits} (Reset over {minutes} min).</translation>
     </message>
 </context>
 <context>

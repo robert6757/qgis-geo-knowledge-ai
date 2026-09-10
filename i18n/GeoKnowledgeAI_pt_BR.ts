@@ -505,7 +505,7 @@ ATENÇÃO: Apesar de nossas restrições RIGOROSAS em relação a IAs, o código
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Não foi possível encontrar o processamento: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1230,12 +1230,12 @@ Ao fazer uma pergunta, você reconhece que leu e concordou com o [Aviso de Priva
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Dica: selecione um workflow e clique em OK para carregá-lo no modo de Automação de Workflow.</translation>
+        <translation>Créditos restantes: -- (Reinicia em --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Créditos restantes: -- (Reinicia em --).</translation>
+        <translation>Créditos restantes: {credits} (Reinicia em {minutes} min).</translation>
     </message>
 </context>
 <context>

@@ -505,7 +505,7 @@ ACHTUNG: Trotz unserer STRENGEN Einschränkungen für KIs ist der generierte Cod
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Verarbeitung kann nicht gefunden werden: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,12 +1221,12 @@ Mit dem Stellen einer Frage bestätigen Sie, dass Sie die [Datenschutzerklärung
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Tipp: Wählen Sie einen Workflow und klicken Sie auf OK, um ihn im Workflow-Automatisierungsmodus zu laden.</translation>
+        <translation>Verbleibende Credits: -- (Zurücksetzen in --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Verbleibende Credits: -- (Zurücksetzen in --).</translation>
+        <translation>Verbleibende Credits: {credits} (Zurücksetzen in {minutes} Min).</translation>
     </message>
 </context>
 <context>

@@ -505,7 +505,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Δεν είναι δυνατή η εύρεση επεξεργασίας: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,12 +1221,12 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Συμβουλή: Επιλέξτε ένα workflow και κάντε κλικ στο OK για να το φορτώσετε σε λειτουργία Workflow Automation.</translation>
+        <translation>Μονάδες που απομένουν: -- (Επαναφορά σε --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Μονάδες που απομένουν: -- (Επαναφορά σε --).</translation>
+        <translation>Μονάδες που απομένουν: {credits} (Επαναφορά σε {minutes} λεπτά).</translation>
     </message>
 </context>
 <context>

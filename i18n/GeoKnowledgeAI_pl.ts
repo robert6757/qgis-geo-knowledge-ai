@@ -505,7 +505,7 @@ OSTROŻNIE: Pomimo naszych SUROWYCH ograniczeń wobec MM, wygenerowany kod nie j
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Nie można znaleźć przetwarzania: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,12 +1221,12 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Wskazówka: Wybierz workflow i kliknij OK, aby załadować go w trybie automatyzacji workflow.</translation>
+        <translation>Pozostałe kredyty: -- (Reset za --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Pozostałe kredyty: -- (Reset za --).</translation>
+        <translation>Pozostałe kredyty: {credits} (Reset za {minutes} min).</translation>
     </message>
 </context>
 <context>

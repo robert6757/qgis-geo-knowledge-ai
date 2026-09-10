@@ -505,7 +505,7 @@ FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den generered
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>Cannot find processing: </source>
-        <translation></translation>
+        <translation>Kan ikke finde processering: </translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
@@ -1221,12 +1221,12 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
     <message>
         <location filename="../setting_dialog.py" line="70"/>
         <source>Credits Left: -- (Resets in --).</source>
-        <translation>Tip: Vælg et workflow og klik OK for at indlæse det i Workflow Automation-tilstand.</translation>
+        <translation>Resterende credits: -- (Nulstilles om --).</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="100"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
-        <translation>Resterende credits: -- (Nulstilles om --).</translation>
+        <translation>Resterende credits: {credits} (Nulstilles om {minutes} min).</translation>
     </message>
 </context>
 <context>
