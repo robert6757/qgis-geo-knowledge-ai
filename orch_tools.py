@@ -829,7 +829,7 @@ class OrchToolExecutor(QObject):
             query = arguments.get("query")
             if isinstance(query, str):
                 query = json.loads(query)
-            limit = arguments.get("limit", 3)
+            limit = arguments.get("limit", 1)
             base_url = arguments.get("base_url", 'https://planetarycomputer.microsoft.com/api/stac/v1')
 
             # Determine if the selected STAC catalog requires special asset signing.

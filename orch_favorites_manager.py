@@ -45,7 +45,7 @@ class OrchFavoritesManager:
         # original_task name, so retrieve_favorite can fetch the full plan.
         self._remote_chat_id_map = {}
 
-    def put_favorite(self, chat_id: str, task_plan: TaskPlan):
+    def put_favorite(self, chat_id: str, task_plan: TaskPlan, placeholder_tip: dict = None):
         """add or update a favorite orchestration plan."""
         favorites = self._load_favorites()
 
@@ -53,14 +53,20 @@ class OrchFavoritesManager:
         for item in favorites:
             if item['chat_id'] == chat_id:
                 item['task_plan'] = self._serialize_task_plan(task_plan)
+                if placeholder_tip is not None:
+                    item['placeholder_tip'] = placeholder_tip
                 self._save_favorites(favorites)
                 return
 
         # add new item if the chat_id not found.
-        favorites.append({
+        new_item = {
             'chat_id': chat_id,
             'task_plan': self._serialize_task_plan(task_plan)
-        })
+        }
+        if placeholder_tip is not None:
+            new_item['placeholder_tip'] = placeholder_tip
+
+        favorites.append(new_item)
 
         self._save_favorites(favorites)
 
@@ -82,6 +88,9 @@ class OrchFavoritesManager:
         as the server-side favorite name (original_task) and fetch it from
         the remote server. Server favorites do not contain chat_id, so a
         random UUID is generated to build the local-style item.
+
+        The returned item may also contain a 'placeholder_tip' dict; it is
+        optional and defaults to an empty dict when missing.
         """
         favorites = self._load_favorites()
         for item in favorites:
@@ -115,7 +124,9 @@ class OrchFavoritesManager:
         """
         local_favorites = self._load_favorites()
         for item in local_favorites:
-            item['task_plan'] = self._deserialize_task_plan(item.get('task_plan'))
+            raw_task_plan = item.get('task_plan')
+            item['task_plan'] = self._deserialize_task_plan(raw_task_plan)
+            item['placeholder_tip'] = item.get('placeholder_tip', {})
             item['source'] = 'local'
 
         remote_favorites = self._fetch_remote_favorites()
@@ -197,6 +208,9 @@ class OrchFavoritesManager:
         The server expects a 'name' query parameter which can be the
         original_task. A random chat_id is generated because the server
         response does not contain one.
+
+        If the server response contains a 'placeholder_tip' dict, it is
+        preserved in the returned favorite item.
         """
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL
 
@@ -218,6 +232,7 @@ class OrchFavoritesManager:
             return {
                 'chat_id': chat_id,
                 'task_plan': task_plan,
+                'placeholder_tip': data.get("placeholder_tip", {}),
                 'source': 'server'
             }
         except requests.exceptions.RequestException as e:
@@ -238,6 +253,15 @@ class OrchFavoritesManager:
             sub_task.pop('status', None)
             sub_task.pop('result', None)
         return data
+
+    def _extract_placeholder_tip(self, data):
+        """extract the optional placeholder_tip dict from raw task plan data."""
+        if not isinstance(data, dict):
+            return {}
+        placeholder_tip = data.get('placeholder_tip')
+        if isinstance(placeholder_tip, dict):
+            return placeholder_tip
+        return {}
 
     def _deserialize_task_plan(self, data):
         """restore TaskPlan object from a dict."""
@@ -283,18 +307,31 @@ class OrchFavoritesManager:
             pass
 
     def export_task_plan_to_json(self, filepath: str, chat_id: str):
-        """export a favorite task plan to a json file."""
+        """export a favorite task plan to a json file.
+
+        The exported JSON contains the favorite at the top level:
+        {
+            "task_plan": {...},
+            "placeholder_tip": {...}
+        }
+        This keeps placeholder_tip as a favorite-level field, not inside task_plan.
+        """
         favorite = self.retrieve_favorite(chat_id, inject_variables=True)
         if favorite is None or favorite.get("task_plan") is None:
             return False
 
         try:
-            data = asdict(favorite["task_plan"])
+            task_plan_data = asdict(favorite["task_plan"])
             # Drop runtime-only fields to keep the exported plan clean.
-            data.pop("final_result", None)
-            for sub_task in data.get("sub_tasks", []):
+            task_plan_data.pop("final_result", None)
+            for sub_task in task_plan_data.get("sub_tasks", []):
                 sub_task.pop("status", None)
                 sub_task.pop("result", None)
+
+            data = {
+                "task_plan": task_plan_data,
+                "placeholder_tip": favorite.get("placeholder_tip", {})
+            }
 
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
@@ -303,17 +340,30 @@ class OrchFavoritesManager:
             return False
 
     def import_task_plan_from_json(self, filepath: str):
-        """import a single task plan from a json file and add it to favorites."""
+        """import a single task plan from a json file and add it to favorites.
+
+        The imported JSON must use the favorite-level format:
+        {
+            "task_plan": {...},
+            "placeholder_tip": {...}
+        }
+        """
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 data = json.load(f)
 
-            task_plan = self._deserialize_task_plan(data)
+            if not isinstance(data, dict) or "task_plan" not in data:
+                return None
+
+            task_plan = self._deserialize_task_plan(data["task_plan"])
+            placeholder_tip = self._extract_placeholder_tip(data)
+
             if task_plan is None:
                 return None
 
             new_chat_id = str(uuid.uuid4())
-            self.put_favorite(new_chat_id, task_plan)
+            self.put_favorite(new_chat_id, task_plan, placeholder_tip)
+
             return new_chat_id
         except (json.JSONDecodeError, IOError, TypeError, KeyError):
             return None

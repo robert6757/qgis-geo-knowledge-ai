@@ -40,6 +40,9 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         super(OrchFavoritesDialog, self).__init__(parent)
         self.setupUi(self)
 
+        # Make column 1 (input fields) stretch horizontally to give line edits more space.
+        self.gridLayout_2.setColumnStretch(1, 1)
+
         # Make textEditDetail span two columns so token inputs line up below it.
         self.gridLayout_2.removeWidget(self.textEditDetail)
         self.gridLayout_2.addWidget(self.textEditDetail, 1, 0, 1, 2)
@@ -157,12 +160,16 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         auth_token_names = list(dict.fromkeys(re.findall(r"\[AUTH_TOKEN:(.*?)\]", detail_text)))
         user_param_names = list(dict.fromkeys(re.findall(r"\[USER_PARAM:(.*?)\]", detail_text)))
 
+        placeholder_tip = favorite.get("placeholder_tip", {})
+
         base_row = self.gridLayout_2.rowCount()
 
         for idx, token_name in enumerate(auth_token_names):
             label = QLabel(self.tr("{} Auth Token: ").format(token_name), self)
             line_edit = QLineEdit(self)
-            line_edit.setPlaceholderText(self.tr("Enter token"))
+            line_edit.setPlaceholderText(
+                placeholder_tip.get(token_name, self.tr("Enter token"))
+            )
 
             gSetting = QgsSettings()
             saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
@@ -183,7 +190,9 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         for idx, param_name in enumerate(user_param_names):
             label = QLabel(self.tr("{} User Parameter: ").format(param_name), self)
             line_edit = QLineEdit(self)
-            line_edit.setPlaceholderText(self.tr("Enter parameter value"))
+            line_edit.setPlaceholderText(
+                placeholder_tip.get(param_name, self.tr("Enter parameter value"))
+            )
 
             gSetting = QgsSettings()
             saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
