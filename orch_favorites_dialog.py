@@ -45,8 +45,8 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         self.gridLayout_2.addWidget(self.textEditDetail, 1, 0, 1, 2)
 
         self.manager = manager
-        self.token_input_widgets = []
-        self.token_line_edits = {}
+        self.param_input_widgets = []
+        self.param_line_edits = {}
 
         self.btnOK.clicked.connect(self.handle_ok_clicked)
         self.btnCancel.clicked.connect(self.handle_cancel_clicked)
@@ -78,48 +78,48 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
     def get_selected_favorite_chat_id(self):
         return self.selected_chat_id
 
-    def _save_token_to_settings(self, token_name):
-        """Persist the token value for token_name to QGIS settings."""
-        line_edit = self.token_line_edits.get(token_name)
+    def _save_param_to_settings(self, param_name):
+        """Persist the parameter value for param_name to QGIS settings."""
+        line_edit = self.param_line_edits.get(param_name)
         if line_edit is None:
             return
-        user_token = line_edit.text().strip()
+        user_param = line_edit.text().strip()
         gSetting = QgsSettings()
-        gSetting.setValue(USER_PARAM_KEYS_TAG + f"/{token_name}", user_token)
+        gSetting.setValue(USER_PARAM_KEYS_TAG + f"/{param_name}", user_param)
 
-    def _check_tokens_filled(self):
-        """Return the first empty token name, or None if all are filled."""
-        for token_name, line_edit in self.token_line_edits.items():
+    def _check_params_filled(self):
+        """Return the first empty parameter name, or None if all are filled."""
+        for param_name, line_edit in self.param_line_edits.items():
             if not line_edit.text().strip():
-                return token_name
+                return param_name
         return None
 
-    def _show_token_missing_warning(self, token_name):
-        """Show a warning telling the user which auth token is missing."""
+    def _show_param_missing_warning(self, param_name):
+        """Show a warning telling the user which parameter is missing."""
         QMessageBox.warning(
             self,
-            self.tr("Missing Auth Token"),
-            self.tr("Please enter the auth token for '{0}' before continuing.").format(token_name),
+            self.tr("Missing Parameter"),
+            self.tr("Please enter the value for '{0}' before continuing.").format(param_name),
             QMessageBoxOK
         )
 
-    def _clear_token_input_widgets(self):
-        """Remove any previously created token input rows."""
-        for widgets in self.token_input_widgets:
+    def _clear_param_input_widgets(self):
+        """Remove any previously created parameter input rows."""
+        for widgets in self.param_input_widgets:
             for widget in widgets:
                 self.gridLayout_2.removeWidget(widget)
                 widget.deleteLater()
-        self.token_input_widgets = []
-        self.token_line_edits = {}
+        self.param_input_widgets = []
+        self.param_line_edits = {}
 
     def handle_ok_clicked(self):
         selected_items = self.listWidgetFavoritesList.selectedItems()
         if len(selected_items) > 0:
             self.selected_chat_id = selected_items[0].data(UserRole)
 
-        empty_token = self._check_tokens_filled()
-        if empty_token is not None:
-            self._show_token_missing_warning(empty_token)
+        empty_param = self._check_params_filled()
+        if empty_param is not None:
+            self._show_param_missing_warning(empty_param)
             return
 
         super().accept()
@@ -136,7 +136,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
         favorite = self.manager.retrieve_favorite(chat_id, inject_variables=False)
         if favorite is None or favorite.get("task_plan") is None:
             self.textEditDetail.setPlainText("")
-            self._clear_token_input_widgets()
+            self._clear_param_input_widgets()
             return
 
         task_plan = favorite["task_plan"]
@@ -151,35 +151,59 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
 
         self.textEditDetail.setPlainText("\n".join(detail_lines))
 
-        self._clear_token_input_widgets()
+        self._clear_param_input_widgets()
         detail_text = "\n".join(detail_lines)
-        token_names = list(dict.fromkeys(re.findall(r"\[AUTH_TOKEN:(.*?)\]", detail_text)))
+
+        auth_token_names = list(dict.fromkeys(re.findall(r"\[AUTH_TOKEN:(.*?)\]", detail_text)))
+        user_param_names = list(dict.fromkeys(re.findall(r"\[USER_PARAM:(.*?)\]", detail_text)))
 
         base_row = self.gridLayout_2.rowCount()
-        for idx, token_name in enumerate(token_names):
+
+        for idx, token_name in enumerate(auth_token_names):
             label = QLabel(self.tr("{} Auth Token: ").format(token_name), self)
             line_edit = QLineEdit(self)
             line_edit.setPlaceholderText(self.tr("Enter token"))
 
             gSetting = QgsSettings()
-            saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
-            if saved_token:
-                line_edit.setText(saved_token)
+            saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
+            if saved_value:
+                line_edit.setText(saved_value)
 
             line_edit.editingFinished.connect(
-                lambda name=token_name: self._save_token_to_settings(name)
+                lambda name=token_name: self._save_param_to_settings(name)
             )
 
             row = base_row + idx
             self.gridLayout_2.addWidget(label, row, 0)
             self.gridLayout_2.addWidget(line_edit, row, 1)
-            self.token_input_widgets.append((label, line_edit))
-            self.token_line_edits[token_name] = line_edit
+            self.param_input_widgets.append((label, line_edit))
+            self.param_line_edits[token_name] = line_edit
+
+        param_base_row = base_row + len(auth_token_names)
+        for idx, param_name in enumerate(user_param_names):
+            label = QLabel(self.tr("{} User Parameter: ").format(param_name), self)
+            line_edit = QLineEdit(self)
+            line_edit.setPlaceholderText(self.tr("Enter parameter value"))
+
+            gSetting = QgsSettings()
+            saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
+            if saved_value:
+                line_edit.setText(saved_value)
+
+            line_edit.editingFinished.connect(
+                lambda name=param_name: self._save_param_to_settings(name)
+            )
+
+            row = param_base_row + idx
+            self.gridLayout_2.addWidget(label, row, 0)
+            self.gridLayout_2.addWidget(line_edit, row, 1)
+            self.param_input_widgets.append((label, line_edit))
+            self.param_line_edits[param_name] = line_edit
 
         # update tip message.
-        if len(token_names) > 0:
+        if len(auth_token_names) > 0 or len(user_param_names) > 0:
             self.labelTip.setText(
-                self.tr("Tip: Auth tokens remain strictly local to QGIS and are never attached to prompts sent to LLM services.")
+                self.tr("Tip: Auth tokens and user parameters remain strictly local to QGIS and are never attached to prompts sent to LLM services.")
             )
         else:
             self.labelTip.setText(
@@ -192,9 +216,9 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
 
         self.selected_chat_id = list_item.data(UserRole)
 
-        empty_token = self._check_tokens_filled()
-        if empty_token is not None:
-            self._show_token_missing_warning(empty_token)
+        empty_param = self._check_params_filled()
+        if empty_param is not None:
+            self._show_param_missing_warning(empty_param)
             return
 
         super().accept()
@@ -339,4 +363,4 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             row = self.listWidgetFavoritesList.row(list_item)
             self.listWidgetFavoritesList.takeItem(row)
             self.textEditDetail.setPlainText("")
-            self._clear_token_input_widgets()
+            self._clear_param_input_widgets()

@@ -260,13 +260,14 @@ class OrchToolExecutor(QObject):
 
             code = arguments.get("code", "")
 
-            # Replace any [AUTH_TOKEN:xxx] placeholders in the code with locally saved tokens.
+            # Replace any [AUTH_TOKEN:xxx] / [USER_PARAM:xxx] placeholders in the code
+            # with locally saved values.
             gSetting = QgsSettings()
-            token_pattern = re.compile(r"\[AUTH_TOKEN:(.*?)\]")
-            for token_name in token_pattern.findall(code):
-                saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
-                if saved_token:
-                    code = code.replace(f"[AUTH_TOKEN:{token_name}]", saved_token)
+            placeholder_pattern = re.compile(r"\[(AUTH_TOKEN|USER_PARAM):(.*?)\]")
+            for placeholder_type, param_name in placeholder_pattern.findall(code):
+                saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
+                if saved_value:
+                    code = code.replace(f"[{placeholder_type}:{param_name}]", saved_value)
 
             code_exec = CodeExecution(
                 code=code,
@@ -301,16 +302,17 @@ class OrchToolExecutor(QObject):
             algo_parameters = arguments.get("algo_parameters", "{}")
             algo_parameters_obj = json.loads(algo_parameters)
 
-            # Replace any [AUTH_TOKEN:xxx] placeholders in parameter values with locally saved tokens.
+            # Replace any [AUTH_TOKEN:xxx] / [USER_PARAM:xxx] placeholders in parameter
+            # values with locally saved values.
             gSetting = QgsSettings()
-            token_pattern = re.compile(r"\[AUTH_TOKEN:(.*?)\]")
+            placeholder_pattern = re.compile(r"\[(AUTH_TOKEN|USER_PARAM):(.*?)\]")
             for key, value in list(algo_parameters_obj.items()):
                 if not isinstance(value, str):
                     continue
-                for token_name in token_pattern.findall(value):
-                    saved_token = gSetting.value(USER_PARAM_KEYS_TAG + f"/{token_name}", "")
-                    if saved_token:
-                        value = value.replace(f"[AUTH_TOKEN:{token_name}]", saved_token)
+                for placeholder_type, param_name in placeholder_pattern.findall(value):
+                    saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
+                    if saved_value:
+                        value = value.replace(f"[{placeholder_type}:{param_name}]", saved_value)
                 algo_parameters_obj[key] = value
 
             # use metadata of processing to find the real algorithm id.
@@ -762,18 +764,29 @@ class OrchToolExecutor(QObject):
             }, ensure_ascii=False)
 
         elif tool_name == "qgis_configure_aws_credentials":
-            # Read AWS credentials from QgsSettings using fixed token names.
+            # Read AWS credentials from QgsSettings using token names that may
+            # include [AUTH_TOKEN:xxx] placeholders, similar
+            # to the substitution logic used in qgis_execute_algorithm.
             AWS_ACCESS_KEY_ID_TOKEN = "aws_access_key_id"
             AWS_SECRET_ACCESS_KEY_TOKEN = "aws_secret_access_key"
             AWS_SESSION_TOKEN_TOKEN = "aws_session_token"
 
+            def _resolve_aws_token_name(token_name, gSetting):
+                placeholder_pattern = re.compile(r"\[AUTH_TOKEN:(.*?)\]")
+                resolved = token_name
+                for param_name in placeholder_pattern.findall(token_name):
+                    saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
+                    if saved_value:
+                        resolved = resolved.replace(f"[AUTH_TOKEN:{param_name}]", saved_value)
+                return resolved
+
             gSetting = QgsSettings()
             access_key_id = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{AWS_ACCESS_KEY_ID_TOKEN}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name(AWS_ACCESS_KEY_ID_TOKEN, gSetting)}", "")
             secret_access_key = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{AWS_SECRET_ACCESS_KEY_TOKEN}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name(AWS_SECRET_ACCESS_KEY_TOKEN, gSetting)}", "")
             session_token = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{AWS_SESSION_TOKEN_TOKEN}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name(AWS_SESSION_TOKEN_TOKEN, gSetting)}", "")
 
             if not access_key_id:
                 raise Exception({"error_msg": "No access_key_id configured in settings"})
@@ -799,10 +812,24 @@ class OrchToolExecutor(QObject):
             if isinstance(bbox, str):
                 bbox = json.loads(bbox)
             datetime_range = arguments.get("datetime_range")
+            gSetting = QgsSettings()
+            # Resolve any [USER_PARAM:xxx] placeholders before falling back
+            # to default values.
+            placeholder_pattern = re.compile(r"\[USER_PARAM:(.*?)\]")
+            if isinstance(datetime_range, str):
+                for param_name in placeholder_pattern.findall(datetime_range):
+                    saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
+                    if saved_value:
+                        datetime_range = datetime_range.replace(f"[USER_PARAM:{param_name}]", saved_value)
+            if not datetime_range:
+                datetime_range = (
+                    gSetting.value(USER_PARAM_KEYS_TAG + "/STAC_StartDate", "") + "/" +
+                    gSetting.value(USER_PARAM_KEYS_TAG + "/STAC_EndDate", "")
+                )
             query = arguments.get("query")
             if isinstance(query, str):
                 query = json.loads(query)
-            limit = arguments.get("limit", 20)
+            limit = arguments.get("limit", 3)
             base_url = arguments.get("base_url", 'https://planetarycomputer.microsoft.com/api/stac/v1')
 
             # Determine if the selected STAC catalog requires special asset signing.
@@ -940,12 +967,13 @@ class OrchToolExecutor(QObject):
     #         tool_result = self._execute_tool_impl(
     #             "qgis_search_stac_items",
     #             {
-    #                 # "collections": ["sentinel-2-l2a"],
-    #                 "collections": ["sentinel-1-grd"],
+    #                 "collections": ["sentinel-2-l2a"],
+    #                 # "collections": ["sentinel-1-grd"],
     #                 "bbox": [120.0, 30.0, 121.0, 31.0],
     #                 "datetime_range": "2024-06-21/2024-06-30",
-    #                 "limit": 5,
-    #                 # "base_url": 'https://earth-search.aws.element84.com/v1'
+    #                 # "datetime_range": "[USER_PARAM:STAC_StartDate]/[USER_PARAM:STAC_EndDate]",
+    #                 "limit": 1,
+    #                 "base_url": 'https://earth-search.aws.element84.com/v1'
     #             }
     #         )
     #
@@ -961,18 +989,18 @@ class OrchToolExecutor(QObject):
     #             raise Exception({"error_msg": "First STAC asset has no href"})
     #
     #         # Configure AWS credentials before loading S3-backed assets.
-    #         # self._execute_tool_impl(
-    #         #     "qgis_configure_aws_credentials",
-    #         #     {
-    #         #     }
-    #         # )
+    #         self._execute_tool_impl(
+    #             "qgis_configure_aws_credentials",
+    #             {
+    #             }
+    #         )
     #
     #         load_result = self._execute_tool_impl(
     #             "qgis_load_stac_asset_to_map",
     #             {
     #                 "href": href,
     #                 "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
-    #                 "signing_provider": "planetary",
+    #                 # "signing_provider": "planetary",
     #                 # "requester_pays": True
     #             }
     #         )

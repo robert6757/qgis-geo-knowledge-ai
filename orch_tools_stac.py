@@ -59,7 +59,7 @@ class StacTool:
             bbox: Optional[List[float]] = None,
             datetime_range: Optional[str] = None,
             query: Optional[Dict] = None,
-            limit: int = 20,
+            limit: int = 3,
             base_url: str = 'https://planetarycomputer.microsoft.com/api/stac/v1'
     ) -> dict:
         """
