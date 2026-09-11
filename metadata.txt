@@ -7,7 +7,7 @@ name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
-version=1.24
+version=1.25
 author=phoenix-gis
 email=info@geoknowledgeai.com
 
@@ -26,7 +26,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.24 2026-09-10
+changelog=Version 1.25 2026-09-11
+      * Bug fix: Fixed errors occurring in older versions of Python.
+      Version 1.24 2026-09-10
       * New Feature: Added STAC API support (AWS Earth Search & Microsoft Planetary Computer) for searching and loading satellite imagery in workflows.
       Version 1.23 2026-08-27
       * New Feature: Support for Enterprise Plan.

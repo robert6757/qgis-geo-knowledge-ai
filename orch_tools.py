@@ -778,11 +778,11 @@ class OrchToolExecutor(QObject):
 
             gSetting = QgsSettings()
             access_key_id = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name("aws_access_key_id", gSetting)}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name('aws_access_key_id', gSetting)}", "")
             secret_access_key = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name("aws_secret_access_key", gSetting)}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name('aws_secret_access_key', gSetting)}", "")
             session_token = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name("aws_session_token", gSetting)}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name('aws_session_token', gSetting)}", "")
 
             if not access_key_id:
                 raise Exception({"error_msg": "No access_key_id configured in settings"})
