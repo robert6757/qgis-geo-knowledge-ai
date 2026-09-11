@@ -338,7 +338,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;访问我们的网站了解 &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt;，以提高每个重置周期的额度上限。 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;访问我们的网站了解 &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;订阅计划&lt;/span&gt;&lt;/a&gt;，以提高每个重置周期的额度上限。 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
