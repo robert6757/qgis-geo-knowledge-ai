@@ -767,10 +767,6 @@ class OrchToolExecutor(QObject):
             # Read AWS credentials from QgsSettings using token names that may
             # include [AUTH_TOKEN:xxx] placeholders, similar
             # to the substitution logic used in qgis_execute_algorithm.
-            AWS_ACCESS_KEY_ID_TOKEN = "aws_access_key_id"
-            AWS_SECRET_ACCESS_KEY_TOKEN = "aws_secret_access_key"
-            AWS_SESSION_TOKEN_TOKEN = "aws_session_token"
-
             def _resolve_aws_token_name(token_name, gSetting):
                 placeholder_pattern = re.compile(r"\[AUTH_TOKEN:(.*?)\]")
                 resolved = token_name
@@ -782,11 +778,11 @@ class OrchToolExecutor(QObject):
 
             gSetting = QgsSettings()
             access_key_id = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name(AWS_ACCESS_KEY_ID_TOKEN, gSetting)}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name("aws_access_key_id", gSetting)}", "")
             secret_access_key = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name(AWS_SECRET_ACCESS_KEY_TOKEN, gSetting)}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name("aws_secret_access_key", gSetting)}", "")
             session_token = gSetting.value(
-                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name(AWS_SESSION_TOKEN_TOKEN, gSetting)}", "")
+                USER_PARAM_KEYS_TAG + f"/{_resolve_aws_token_name("aws_session_token", gSetting)}", "")
 
             if not access_key_id:
                 raise Exception({"error_msg": "No access_key_id configured in settings"})
