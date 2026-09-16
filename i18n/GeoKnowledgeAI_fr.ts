@@ -41,7 +41,7 @@
     <message>
         <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
-        <translation>Début de l&apos;exécution de la sous-tâche :</translation>
+        <translation type="obsolete">Début de l'exécution de la sous-tâche :</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="385"/>
@@ -51,17 +51,17 @@
     <message>
         <location filename="../orch_manager.py" line="398"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
-        <translation>[Échec] Le résultat de la sous-tâche [{}] n&apos;a pas répondu aux attentes. {}</translation>
+        <translation>[Échec] Le résultat de la sous-tâche [{}] n'a pas répondu aux attentes. {}</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="404"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
-        <translation>[Échec] Échec de l&apos;exécution de la sous-tâche [{}] : [{}]</translation>
+        <translation>[Échec] Échec de l'exécution de la sous-tâche [{}] : [{}]</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="717"/>
         <source>Error: No subtask execution result.</source>
-        <translation>Erreur : aucun résultat d&apos;exécution de sous-tâche.</translation>
+        <translation>Erreur : aucun résultat d'exécution de sous-tâche.</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="721"/>
@@ -71,7 +71,7 @@
     <message>
         <location filename="../orch_manager.py" line="159"/>
         <source>Task cannot continue because the code execution module is unavailable!</source>
-        <translation>La tâche ne peut pas continuer car le module d&apos;exécution de code n&apos;est pas disponible !</translation>
+        <translation>La tâche ne peut pas continuer car le module d'exécution de code n'est pas disponible !</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="130"/>
@@ -97,6 +97,11 @@
         <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Affinage de la sous-tâche [{}]... (Tentative {}/{})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="354"/>
+        <source>Start executing the subtask: </source>
+        <translation>Début de l'exécution de la sous-tâche : </translation>
     </message>
 </context>
 <context>
@@ -150,7 +155,7 @@
     <message>
         <location filename="../code_execution.py" line="87"/>
         <source>RuntimeError</source>
-        <translation>Erreur d&apos;exécution</translation>
+        <translation>Erreur d'exécution</translation>
     </message>
 </context>
 <context>
@@ -163,7 +168,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="35"/>
         <source>Apply for high-speed channel. Please enter your email address and click &apos;Apply&apos;. We will contact you via email within 24 hours. </source>
-        <translation type="obsolete">Pour demander l&apos;accès à la voie rapide, veuillez saisir votre adresse e-mail et cliquer sur « Demander ». Nous vous contacterons par e-mail dans les 24 heures.</translation>
+        <translation type="obsolete">Pour demander l'accès à la voie rapide, veuillez saisir votre adresse e-mail et cliquer sur « Demander ». Nous vous contacterons par e-mail dans les 24 heures.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="38"/>
@@ -188,7 +193,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="199"/>
         <source>Get Help</source>
-        <translation>Obtenir de l&apos;aide</translation>
+        <translation>Obtenir de l'aide</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
@@ -283,7 +288,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary folder are used to store intermediate files during the data download or analysis process.</source>
-        <translation type="obsolete">Les dossiers temporaires sont utilisés pour stocker des fichiers intermédiaires pendant le processus de téléchargement ou d&apos;analyse des données.</translation>
+        <translation type="obsolete">Les dossiers temporaires sont utilisés pour stocker des fichiers intermédiaires pendant le processus de téléchargement ou d'analyse des données.</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="171"/>
@@ -298,7 +303,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="20"/>
         <source>Current Plan: Free</source>
-        <translation>Plan actuel : Gratuit</translation>
+        <translation>Forfait actuel : Gratuit</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
@@ -312,8 +317,8 @@
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; to learn more, or enter your email and click &apos;Submit&apos; to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;isitez &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Solutions d&apos;entreprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; pour en savoir plus, ou saisissez votre e-mail et cliquez sur &apos;Envoyer&apos; pour demander notre Plan Enterprise—notre équipe vous contactera dans les 24 heures.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isitez &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Solutions d'entreprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; pour en savoir plus, ou saisissez votre e-mail et cliquez sur 'Envoyer' pour demander notre Plan Enterprise—notre équipe vous contactera dans les 24 heures.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
@@ -333,7 +338,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="48"/>
         <source>Enter your purchase email (Optional)</source>
-        <translation>Saisissez votre e-mail d&apos;achat (Facultatif)</translation>
+        <translation>Saisissez votre e-mail d'achat (Facultatif)</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
@@ -343,7 +348,7 @@
     <message>
         <location filename="../setting_dialog.ui" line="159"/>
         <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
-        <translation>Le dossier temporaire sert à stocker les fichiers intermédiaires pendant le téléchargement ou l&apos;analyse des données.</translation>
+        <translation>Le dossier temporaire sert à stocker les fichiers intermédiaires pendant le téléchargement ou l'analyse des données.</translation>
     </message>
 </context>
 <context>
@@ -411,11 +416,11 @@
 If you want to execute code automatically, please press &quot;Yes&quot;. The Geo Knowledge AI plugin will download the execution module to start the automated process.
 
 CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not completely reliable. Please check it carefully. We suggest you back up your data and QGIS project before executing code.</source>
-        <translation>Pour améliorer la sécurité d&apos;exécution, QGIS interdit l&apos;exécution automatique de code externe (par exemple, du code généré en temps réel par l&apos;IA).
+        <translation>Pour améliorer la sécurité d'exécution, QGIS interdit l'exécution automatique de code externe (par exemple, du code généré en temps réel par l'IA).
 
-Si vous souhaitez exécuter le code automatiquement, veuillez cliquer sur « Oui ». Le plugin Geo Knowledge AI téléchargera le module d&apos;exécution pour lancer le processus automatisé.
+Si vous souhaitez exécuter le code automatiquement, veuillez cliquer sur « Oui ». Le plugin Geo Knowledge AI téléchargera le module d'exécution pour lancer le processus automatisé.
 
-ATTENTION : Malgré nos restrictions strictes sur l&apos;IA, le code généré n&apos;est pas totalement fiable. Veuillez le vérifier attentivement. Nous vous recommandons de sauvegarder vos données et votre projet QGIS avant d&apos;exécuter du code.</translation>
+ATTENTION : Malgré nos restrictions strictes sur l'IA, le code généré n'est pas totalement fiable. Veuillez le vérifier attentivement. Nous vous recommandons de sauvegarder vos données et votre projet QGIS avant d'exécuter du code.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -470,7 +475,7 @@ ATTENTION : Malgré nos restrictions strictes sur l&apos;IA, le code généré n
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
         <source>Failed to submit your feedback. Please try again later.</source>
-        <translation>Échec de l&apos;envoi de votre avis. Veuillez réessayer plus tard.</translation>
+        <translation>Échec de l'envoi de votre avis. Veuillez réessayer plus tard.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
@@ -505,7 +510,7 @@ ATTENTION : Malgré nos restrictions strictes sur l&apos;IA, le code généré n
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
         <source>RuntimeError</source>
-        <translation>Erreur d&apos;exécution</translation>
+        <translation>Erreur d'exécution</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
@@ -531,7 +536,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 
 **Ravi de vous rencontrer ! 🌍**
 
-Je suis votre assistant GIS IA, fournissant des tutoriels professionnels sur mesure couvrant un large éventail de tâches géospatiales, notamment la recherche de données géographiques mondiales, la modélisation géoscientifique, l&apos;analyse hydrologique et de terrain, le traitement de télédétection et la génération de code PyQGIS.
+Je suis votre assistant GIS IA, fournissant des tutoriels professionnels sur mesure couvrant un large éventail de tâches géospatiales, notamment la recherche de données géographiques mondiales, la modélisation géoscientifique, l'analyse hydrologique et de terrain, le traitement de télédétection et la génération de code PyQGIS.
 
 De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et SAGA pour rendre votre analyse spatiale plus efficace et intelligente.
 </translation>
@@ -553,9 +558,9 @@ Before using this plugin, please read and agree to our [Privacy Notice](https://
 
  **🔒 Confirmation de confidentialité**
 
-Avant d&apos;utiliser ce plugin, veuillez lire et accepter notre [avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+Avant d'utiliser ce plugin, veuillez lire et accepter notre [avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
-[J&apos;ai lu et j&apos;accepte l&apos;avis de confidentialité.](agent://privacy/1)</translation>
+[J'ai lu et j'accepte l'avis de confidentialité.](agent://privacy/1)</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="621"/>
@@ -563,12 +568,12 @@ Avant d&apos;utiliser ce plugin, veuillez lire et accepter notre [avis de confid
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
 
-Merci d&apos;avoir choisi Geo Knowledge AI ! Tout est prêt — commençons votre voyage GIS ! 🚀</translation>
+Merci d'avoir choisi Geo Knowledge AI ! Tout est prêt — commençons votre voyage GIS ! 🚀</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="612"/>
@@ -587,9 +592,9 @@ Before using this plugin, please read our [Privacy Notice](https://github.com/ro
 
  **🔒 Confirmation de confidentialité**
 
-Avant d&apos;utiliser ce plugin, veuillez lire notre [avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+Avant d'utiliser ce plugin, veuillez lire notre [avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 
-[J&apos;ai lu et j&apos;accepte l&apos;avis de confidentialité.](agent://privacy/1)</translation>
+[J'ai lu et j'accepte l'avis de confidentialité.](agent://privacy/1)</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="591"/>
@@ -616,11 +621,11 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 
 Veuillez saisir votre question dans la zone de saisie ci-dessous et cliquer sur le bouton **Envoyer** pour démarrer la conversation.
 
-Pour mieux comprendre votre question, activez le bouton de capture d&apos;écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Pour mieux comprendre votre question, activez le bouton de capture d'écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
 Lors de la génération de code, activez le raisonnement en chaîne de pensée ![CoT](qtres://plugins/geo_knowledge_ai/image/infinite.svg) pour obtenir une réponse plus précise.
 
-En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+En posant une question, vous reconnaissez avoir lu et accepté l'[avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 </translation>
     </message>
     <message>
@@ -642,7 +647,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 
 Je suis votre assistant GIS IA, fournissant des tutoriels professionnels sur mesure couvrant trois agents : **Questions &amp; Réponses**, **Recherche de données**, et **Génération de code**.
 
-Notre base de connaissances contient la découverte de données géographiques mondiales, la modélisation géoscientifique, l&apos;analyse hydrologique et de terrain, le traitement de télédétection et la documentation PyQGIS.
+Notre base de connaissances contient la découverte de données géographiques mondiales, la modélisation géoscientifique, l'analyse hydrologique et de terrain, le traitement de télédétection et la documentation PyQGIS.
 
 De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et SAGA pour rendre votre analyse spatiale plus efficace et intelligente.
 </translation>
@@ -671,10 +676,10 @@ By asking a question, you acknowledge that you have read and agreed to the [priv
 
 Veuillez saisir votre question dans la zone de saisie ci-dessous et cliquer sur le bouton **Envoyer** pour démarrer la conversation.
 
-Pour mieux comprendre votre question, activez le bouton de capture d&apos;écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Pour mieux comprendre votre question, activez le bouton de capture d'écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
 
-En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
+En posant une question, vous reconnaissez avoir lu et accepté l'[avis de confidentialité](https://github.com/robert6757/qgis-geo-knowledge-ai/blob/main/README.md).
 </translation>
     </message>
     <message>
@@ -696,7 +701,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 
 Je suis votre assistant GIS IA, proposant trois agents : **agent Questions &amp; Réponses**, **agent Recherche de données**, et **agent Génération de code**.
 
-Notre base de connaissances contient la découverte de données géographiques mondiales, la modélisation géoscientifique, l&apos;analyse hydrologique et de terrain, le traitement de télédétection et la documentation PyQGIS.
+Notre base de connaissances contient la découverte de données géographiques mondiales, la modélisation géoscientifique, l'analyse hydrologique et de terrain, le traitement de télédétection et la documentation PyQGIS.
 
 De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et SAGA pour rendre votre analyse spatiale plus efficace et intelligente.
 </translation>
@@ -742,21 +747,21 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
 
 Je suis votre assistant GIS IA, fournissant des tutoriels professionnels sur mesure couvrant quatre agents : **Questions &amp; Réponses**, **Recherche de données**, **Génération de code**, et **Automatisation de workflows**.
 
-Notre base de connaissances contient la découverte de données géographiques mondiales, la modélisation géoscientifique, l&apos;analyse hydrologique et de terrain, le traitement de télédétection et la documentation PyQGIS.
+Notre base de connaissances contient la découverte de données géographiques mondiales, la modélisation géoscientifique, l'analyse hydrologique et de terrain, le traitement de télédétection et la documentation PyQGIS.
 
 De plus, je vous guiderai à travers des outils essentiels comme GDAL, GRASS et SAGA pour rendre votre analyse spatiale plus efficace et intelligente.
 
-Astuce : L&apos;automatisation de workflows peut gérer des tâches complexes de façon entièrement automatique ou pas à pas. Nous vous suggérons de sauvegarder vos données et projets QGIS avant d&apos;exécuter un workflow.</translation>
+Astuce : L'automatisation de workflows peut gérer des tâches complexes de façon entièrement automatique ou pas à pas. Nous vous suggérons de sauvegarder vos données et projets QGIS avant d'exécuter un workflow.</translation>
     </message>
     <message>
         <location filename="../code_exec_utils.py" line="98"/>
         <source>Failed to load the downloaded code execution module</source>
-        <translation>Échec du chargement du module d&apos;exécution de code</translation>
+        <translation>Échec du chargement du module d'exécution de code</translation>
     </message>
     <message>
         <location filename="../code_exec_utils.py" line="104"/>
         <source>Failed to download code execution module: {}</source>
-        <translation>Échec du téléchargement du module d&apos;exécution de code : {}</translation>
+        <translation>Échec du téléchargement du module d'exécution de code : {}</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="378"/>
@@ -775,8 +780,8 @@ Astuce : L&apos;automatisation de workflows peut gérer des tâches complexes de
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
-        <translation type="obsolete">**✨ Nouveautés :** Ajout de la prise en charge multimodale pour l&apos;automatisation des flux de travail.</translation>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
+        <translation type="obsolete">**✨ Nouveautés :** Ajout de la prise en charge multimodale pour l'automatisation des flux de travail.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
@@ -785,13 +790,13 @@ Astuce : L&apos;automatisation de workflows peut gérer des tâches complexes de
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Nouveautés :**</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Multi-Modal Workflow Automation:** Enhanced support for multi-modal automation, including Image Recognition.</source>
-        <translation type="obsolete">**Automatisation des flux de travail multimodaux :** Prise en charge améliorée de l&apos;automatisation multimodale, y compris la reconnaissance d&apos;images.</translation>
+        <translation type="obsolete">**Automatisation des flux de travail multimodaux :** Prise en charge améliorée de l'automatisation multimodale, y compris la reconnaissance d'images.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="717"/>
@@ -822,10 +827,10 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
 
 Veuillez saisir votre question dans la zone de saisie ci-dessous et cliquer sur le bouton **Envoyer** pour démarrer la conversation.
 
-Pour mieux comprendre votre question, activez l&apos;interrupteur des captures d&apos;écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
+Pour mieux comprendre votre question, activez l'interrupteur des captures d'écran ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg).
 
 
-En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de confidentialité](https://www.geoknowledgeai.com/#/privacy) et les [conditions d&apos;utilisation](https://www.geoknowledgeai.com/#/terms).
+En posant une question, vous reconnaissez avoir lu et accepté l'[avis de confidentialité](https://www.geoknowledgeai.com/#/privacy) et les [conditions d'utilisation](https://www.geoknowledgeai.com/#/terms).
 
 
 </translation>
@@ -833,7 +838,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
-        <translation>**Favoris de workflows :** Gardez vos workflows favoris organisés avec les Favoris locaux (stockés en privé sur votre appareil) et les Favoris officiels (workflows sélectionnés prêts à télécharger dans votre espace de travail local à tout moment). Les Favoris officiels incluent désormais des workflows prêts à l&apos;emploi pour rechercher et charger des images satellites à la demande via des API STAC — prenant en charge à la fois AWS Earth Search et Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat et plus) — afin que les données de télédétection s&apos;intègrent directement à votre flux de travail sans téléchargements manuels.</translation>
+        <translation>**Favoris de workflows :** Gardez vos workflows favoris organisés avec les Favoris locaux (stockés en privé sur votre appareil) et les Favoris officiels (workflows sélectionnés prêts à télécharger dans votre espace de travail local à tout moment). Les Favoris officiels incluent désormais des workflows prêts à l'emploi pour rechercher et charger des images satellites à la demande via des API STAC — prenant en charge à la fois AWS Earth Search et Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat et plus) — afin que les données de télédétection s'intègrent directement à votre flux de travail sans téléchargements manuels.</translation>
     </message>
 </context>
 <context>
@@ -939,12 +944,12 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../history_dialog.py" line="68"/>
         <source>Delete All Chat History</source>
-        <translation>Supprimer tout l&apos;historique</translation>
+        <translation>Supprimer tout l'historique</translation>
     </message>
     <message>
         <location filename="../history_dialog.py" line="68"/>
         <source>Are you sure you want to delete all chat history?</source>
-        <translation>Êtes-vous sûr de vouloir supprimer tout l&apos;historique des conversations ?</translation>
+        <translation>Êtes-vous sûr de vouloir supprimer tout l'historique des conversations ?</translation>
     </message>
 </context>
 <context>
@@ -967,7 +972,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../history_dialog.ui" line="62"/>
         <source>Remove All History</source>
-        <translation>Supprimer tout l&apos;historique</translation>
+        <translation>Supprimer tout l'historique</translation>
     </message>
 </context>
 <context>
@@ -1010,7 +1015,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../orch_favorites_dialog.py" line="304"/>
         <source>Failed to export task plan.</source>
-        <translation>Échec de l&apos;exportation du plan de tâches.</translation>
+        <translation>Échec de l'exportation du plan de tâches.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="310"/>
@@ -1020,7 +1025,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../orch_favorites_dialog.py" line="321"/>
         <source>Failed to import task plan. Please check the file format.</source>
-        <translation>Échec de l&apos;importation du plan de tâches. Veuillez vérifier le format du fichier.</translation>
+        <translation>Échec de l'importation du plan de tâches. Veuillez vérifier le format du fichier.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="351"/>
@@ -1040,12 +1045,12 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Missing Auth Token</source>
-        <translation type="obsolete">Jeton d&apos;authentification manquant</translation>
+        <translation type="obsolete">Jeton d'authentification manquant</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation type="obsolete">Veuillez saisir le jeton d&apos;authentification pour &apos;{0}&apos; avant de continuer.</translation>
+        <translation type="obsolete">Veuillez saisir le jeton d'authentification pour '{0}' avant de continuer.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="170"/>
@@ -1055,7 +1060,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../orch_favorites_dialog.py" line="168"/>
         <source>{} Auth Token: </source>
-        <translation>{} Jeton d&apos;authentification : </translation>
+        <translation>{} Jeton d'authentification : </translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="340"/>
@@ -1075,7 +1080,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../orch_favorites_dialog.py" line="102"/>
         <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
-        <translation>Veuillez saisir la valeur pour &apos;{0}&apos; avant de continuer.</translation>
+        <translation>Veuillez saisir la valeur pour '{0}' avant de continuer.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="191"/>
@@ -1090,7 +1095,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../orch_favorites_dialog.py" line="214"/>
         <source>Tip: Auth tokens and user parameters remain strictly local to QGIS and are never attached to prompts sent to LLM services.</source>
-        <translation>Conseil : Les jetons d&apos;authentification et les paramètres utilisateur restent strictement locaux à QGIS et ne sont jamais joints aux prompts envoyés aux services LLM.</translation>
+        <translation>Conseil : Les jetons d'authentification et les paramètres utilisateur restent strictement locaux à QGIS et ne sont jamais joints aux prompts envoyés aux services LLM.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="218"/>
@@ -1143,7 +1148,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
     <message>
         <location filename="../subtask_dialog.ui" line="79"/>
         <source>The prompt can be modified. Click OK after confirming.</source>
-        <translation>L&apos;invite peut être modifiée. Cliquez sur OK après confirmation.</translation>
+        <translation>L'invite peut être modifiée. Cliquez sur OK après confirmation.</translation>
     </message>
     <message>
         <location filename="../subtask_dialog.ui" line="53"/>
@@ -1194,7 +1199,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
         <translation type="obsolete">Erreur réseau : veuillez vérifier votre connexion et réessayer.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="135"/>
+        <location filename="../setting_dialog.py" line="140"/>
         <source>Select Temporary Folder</source>
         <translation>Sélectionner le dossier temporaire</translation>
     </message>
@@ -1204,19 +1209,19 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
         <translation type="obsolete">Crédits horaires restants : -- (Réinitialisation dans --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="96"/>
         <source>Current Plan: Free</source>
-        <translation>Plan actuel : Gratuit</translation>
+        <translation>Forfait actuel : Gratuit</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
-        <translation>Plan actuel : Enterprise</translation>
+        <translation type="obsolete">Forfait actuel : Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: --</source>
-        <translation>Plan actuel : --</translation>
+        <translation>Forfait actuel : --</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="101"/>
@@ -1224,7 +1229,7 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
         <translation type="obsolete">Crédits horaires restants : {credits} (Réinitialisation dans {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="90"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Missing required fields in response</source>
         <translation>Champs obligatoires manquants dans la réponse</translation>
     </message>
@@ -1234,9 +1239,19 @@ En posant une question, vous reconnaissez avoir lu et accepté l&apos;[avis de c
         <translation>Crédits restants : -- (Réinitialisation dans --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="105"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Crédits restants : {credits} (Réinitialisation dans {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: Solo Engineer</source>
+        <translation>Forfait actuel : Solo Engineer</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Current Plan: Studio</source>
+        <translation>Forfait actuel : Studio</translation>
     </message>
 </context>
 <context>

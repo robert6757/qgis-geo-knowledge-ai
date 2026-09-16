@@ -41,7 +41,7 @@
     <message>
         <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
-        <translation>Rozpoczęcie wykonywania podzadania:</translation>
+        <translation type="obsolete">Rozpoczęcie wykonywania podzadania:</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="385"/>
@@ -97,6 +97,11 @@
         <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Ulepszanie podzadania [{}]... (Próba {}/{})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="354"/>
+        <source>Start executing the subtask: </source>
+        <translation>Rozpoczęcie wykonywania podzadania: </translation>
     </message>
 </context>
 <context>
@@ -312,8 +317,8 @@
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; to learn more, or enter your email and click &apos;Submit&apos; to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;dwiedź &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Rozwiązania Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; aby dowiedzieć się więcej, lub wpisz swój e-mail i kliknij &apos;Prześlij&apos;, aby poprosić o nasz plan Enterprise—nasz zespół skontaktuje się z Tobą w ciągu 24 godzin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;dwiedź &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Rozwiązania Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; aby dowiedzieć się więcej, lub wpisz swój e-mail i kliknij 'Prześlij', aby poprosić o nasz plan Enterprise—nasz zespół skontaktuje się z Tobą w ciągu 24 godzin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
@@ -564,7 +569,7 @@ Przed użyciem tej wtyczki przeczytaj i zaakceptuj naszą [Politykę prywatnośc
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -770,7 +775,7 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation type="obsolete">**✨ Co nowego:** Dodano wielomodalną obsługę automatyzacji przepływu pracy.</translation>
     </message>
     <message>
@@ -780,7 +785,7 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Nowości:**</translation>
     </message>
     <message>
@@ -828,7 +833,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
-        <translation>**Ulubione workflowy:** Utrzymuj ulubione workflowy w porządku dzięki Ulubionym lokalnym (przechowywanym prywatnie na Twoim urządzeniu) i Oficjalnym ulubionym (wyselekcjonowanym workflowom gotowym do pobrania do lokalnej przestrzeni roboczej w dowolnym momencie). Oficjalne ulubione zawierają teraz gotowe workflowy do wyszukiwania i ładowania zdjęć satelitarnych na żądanie przez API STAC — obsługując zarówno AWS Earth Search, jak i Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat i inne) — dzięki czemu dane teledetekcyjne przepływają bezpośrednio do Twojego pipeline&apos;u bez ręcznych pobrań.</translation>
+        <translation>**Ulubione workflowy:** Utrzymuj ulubione workflowy w porządku dzięki Ulubionym lokalnym (przechowywanym prywatnie na Twoim urządzeniu) i Oficjalnym ulubionym (wyselekcjonowanym workflowom gotowym do pobrania do lokalnej przestrzeni roboczej w dowolnym momencie). Oficjalne ulubione zawierają teraz gotowe workflowy do wyszukiwania i ładowania zdjęć satelitarnych na żądanie przez API STAC — obsługując zarówno AWS Earth Search, jak i Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat i inne) — dzięki czemu dane teledetekcyjne przepływają bezpośrednio do Twojego pipeline'u bez ręcznych pobrań.</translation>
     </message>
 </context>
 <context>
@@ -1040,7 +1045,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation type="obsolete">Wprowadź token uwierzytelniania dla &apos;{0}&apos; przed kontynuowaniem.</translation>
+        <translation type="obsolete">Wprowadź token uwierzytelniania dla '{0}' przed kontynuowaniem.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="170"/>
@@ -1070,7 +1075,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
     <message>
         <location filename="../orch_favorites_dialog.py" line="102"/>
         <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
-        <translation>Wprowadź wartość dla &apos;{0}&apos; przed kontynuowaniem.</translation>
+        <translation>Wprowadź wartość dla '{0}' przed kontynuowaniem.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="191"/>
@@ -1189,7 +1194,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Błąd sieci: sprawdź połączenie i spróbuj ponownie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="135"/>
+        <location filename="../setting_dialog.py" line="140"/>
         <source>Select Temporary Folder</source>
         <translation>Wybierz folder tymczasowy</translation>
     </message>
@@ -1199,17 +1204,17 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Pozostałe kredyty godzinowe: -- (Reset za --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="96"/>
         <source>Current Plan: Free</source>
         <translation>Aktualny plan: Bezpłatny</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
-        <translation>Aktualny plan: Enterprise</translation>
+        <translation type="obsolete">Aktualny plan: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: --</source>
         <translation>Aktualny plan: --</translation>
     </message>
@@ -1219,7 +1224,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Pozostałe kredyty godzinowe: {credits} (Reset za {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="90"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Missing required fields in response</source>
         <translation>Brak wymaganych pól w odpowiedzi</translation>
     </message>
@@ -1229,9 +1234,19 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation>Pozostałe kredyty: -- (Reset za --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="105"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Pozostałe kredyty: {credits} (Reset za {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: Solo Engineer</source>
+        <translation>Aktualny plan: Solo Engineer</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Current Plan: Studio</source>
+        <translation>Aktualny plan: Studio</translation>
     </message>
 </context>
 <context>

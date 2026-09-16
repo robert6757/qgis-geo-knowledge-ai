@@ -41,7 +41,7 @@
     <message>
         <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
-        <translation>Start uitvoering van de subtask:</translation>
+        <translation type="obsolete">Start uitvoering van de subtask:</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="385"/>
@@ -97,6 +97,11 @@
         <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Verfijnen van subtaak [{}]... (Poging {}/{})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="354"/>
+        <source>Start executing the subtask: </source>
+        <translation>Start uitvoering van de subtaak: </translation>
     </message>
 </context>
 <context>
@@ -312,8 +317,8 @@
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; to learn more, or enter your email and click &apos;Submit&apos; to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;ezoek &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-oplossingen&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; om meer te weten te komen, of voer uw e-mailadres in en klik op &apos;Verzenden&apos; om ons Enterprise-abonnement aan te vragen—ons team neemt binnen 24 uur contact met u op.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;ezoek &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-oplossingen&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; om meer te weten te komen, of voer uw e-mailadres in en klik op 'Verzenden' om ons Enterprise-abonnement aan te vragen—ons team neemt binnen 24 uur contact met u op.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
@@ -415,7 +420,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Als u code automatisch wilt uitvoeren, druk dan op &quot;Ja&quot;. De Geo Knowledge AI-plugin zal de uitvoeringsmodule downloaden om het geautomatiseerde proces te starten.
 
-LET OP: Ondanks onze STRENGE beperkingen voor LLM&apos;s is de gegenereerde code niet volledig betrouwbaar. Controleer deze zorgvuldig. We raden u aan een back-up te maken van uw gegevens en QGIS-project voordat u code uitvoert.</translation>
+LET OP: Ondanks onze STRENGE beperkingen voor LLM's is de gegenereerde code niet volledig betrouwbaar. Controleer deze zorgvuldig. We raden u aan een back-up te maken van uw gegevens en QGIS-project voordat u code uitvoert.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -564,7 +569,7 @@ Lees voordat u deze plugin gebruikt onze [Privacyverklaring](https://github.com/
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -770,7 +775,7 @@ Tip: **Workflow-automatisering** kan complexe taken volledig automatisch of stap
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation type="obsolete">**✨ Wat is nieuw:** Multimodale ondersteuning voor Workflow-automatisering toegevoegd.</translation>
     </message>
     <message>
@@ -780,7 +785,7 @@ Tip: **Workflow-automatisering** kan complexe taken volledig automatisch of stap
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Wat is er nieuw:**</translation>
     </message>
     <message>
@@ -828,7 +833,7 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
-        <translation>**Workflow-favorieten:** Houd uw favoriete workflows georganiseerd met Lokale favorieten (privé opgeslagen op uw apparaat) en Officiële favorieten (gecurateerde workflows die u altijd naar uw lokale werkruimte kunt downloaden). Officiële favorieten bevatten nu kant-en-klare workflows voor het zoeken en laden van satellietbeelden op aanvraag via STAC API&apos;s — met ondersteuning voor zowel AWS Earth Search als Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat en meer) — zodat remote sensing-gegevens rechtstreeks in uw pipeline stromen zonder handmatige downloads.</translation>
+        <translation>**Workflow-favorieten:** Houd uw favoriete workflows georganiseerd met Lokale favorieten (privé opgeslagen op uw apparaat) en Officiële favorieten (gecurateerde workflows die u altijd naar uw lokale werkruimte kunt downloaden). Officiële favorieten bevatten nu kant-en-klare workflows voor het zoeken en laden van satellietbeelden op aanvraag via STAC API's — met ondersteuning voor zowel AWS Earth Search als Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat en meer) — zodat remote sensing-gegevens rechtstreeks in uw pipeline stromen zonder handmatige downloads.</translation>
     </message>
 </context>
 <context>
@@ -1040,7 +1045,7 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation type="obsolete">Voer het auth-token voor &apos;{0}&apos; in voordat u doorgaat.</translation>
+        <translation type="obsolete">Voer het auth-token voor '{0}' in voordat u doorgaat.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="170"/>
@@ -1070,7 +1075,7 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
     <message>
         <location filename="../orch_favorites_dialog.py" line="102"/>
         <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
-        <translation>Voer de waarde in voor &apos;{0}&apos; voordat u doorgaat.</translation>
+        <translation>Voer de waarde in voor '{0}' voordat u doorgaat.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="191"/>
@@ -1189,7 +1194,7 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
         <translation type="obsolete">Netwerkfout: controleer uw verbinding en probeer het opnieuw.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="135"/>
+        <location filename="../setting_dialog.py" line="140"/>
         <source>Select Temporary Folder</source>
         <translation>Selecteer tijdelijke map</translation>
     </message>
@@ -1199,17 +1204,17 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
         <translation type="obsolete">Resterende tegoeden per uur: -- (Reset over --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="96"/>
         <source>Current Plan: Free</source>
         <translation>Huidig abonnement: Gratis</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
-        <translation>Huidig abonnement: Enterprise</translation>
+        <translation type="obsolete">Huidig abonnement: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: --</source>
         <translation>Huidig abonnement: --</translation>
     </message>
@@ -1219,7 +1224,7 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
         <translation type="obsolete">Resterende tegoeden per uur: {credits} (Reset over {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="90"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Missing required fields in response</source>
         <translation>Vereiste velden ontbreken in antwoord</translation>
     </message>
@@ -1229,9 +1234,19 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
         <translation>Resterende credits: -- (Reset over --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="105"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Resterende credits: {credits} (Reset over {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: Solo Engineer</source>
+        <translation>Huidig abonnement: Solo Engineer</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Current Plan: Studio</source>
+        <translation>Huidig abonnement: Studio</translation>
     </message>
 </context>
 <context>

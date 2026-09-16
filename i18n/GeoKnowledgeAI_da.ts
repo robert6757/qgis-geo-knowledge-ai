@@ -41,7 +41,7 @@
     <message>
         <location filename="../orch_manager.py" line="354"/>
         <source>Start executing the subtask:</source>
-        <translation>Start udførelse af delopgaven:</translation>
+        <translation type="obsolete">Start udførelse af delopgaven:</translation>
     </message>
     <message>
         <location filename="../orch_manager.py" line="385"/>
@@ -97,6 +97,11 @@
         <location filename="../orch_manager.py" line="258"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Forfiner delopgave [{}]... (Forsøg {}/{})</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="354"/>
+        <source>Start executing the subtask: </source>
+        <translation>Start udførelse af delopgaven: </translation>
     </message>
 </context>
 <context>
@@ -312,8 +317,8 @@
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="66"/>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; to learn more, or enter your email and click &apos;Submit&apos; to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt;esøg &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-løsninger&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:&apos;Google Sans 58&apos;,&apos;sans-serif&apos;;&quot;&gt; for at få mere at vide, eller indtast din e-mail og klik på &apos;Send&apos; for at anmode om vores Enterprise-plan—vores team vil kontakte dig inden for 24 timer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;V&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;isit &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise Solutions&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; to learn more, or enter your email and click 'Submit' to request our Enterprise Plan—our team will reach out within 24 hours.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;esøg &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-løsninger&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; for at få mere at vide, eller indtast din e-mail og klik på 'Send' for at anmode om vores Enterprise-plan—vores team vil kontakte dig inden for 24 timer.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../setting_dialog.ui" line="26"/>
@@ -415,7 +420,7 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
 
 Hvis du ønsker at udføre kode automatisk, skal du trykke på &quot;Ja&quot;. Geo Knowledge AI-plugin vil downloade udførelsesmodulet for at starte den automatiserede proces.
 
-FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM&apos;er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
+FORSIGTIG: På trods af vores STRENGE begrænsninger for LLM'er er den genererede kode ikke fuldstændig pålidelig. Kontrollér den omhyggeligt. Vi foreslår, at du sikkerhedskopierer dine data og QGIS-projekt, før du udfører kode.</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="340"/>
@@ -564,7 +569,7 @@ Før du bruger denne plugin, skal du læse og acceptere vores [Privatlivspolitik
 
 ———
 
-Thank you for choosing Geo Knowledge AI! Everything is ready — let&apos;s begin your GIS journey! 🚀</source>
+Thank you for choosing Geo Knowledge AI! Everything is ready — let's begin your GIS journey! 🚀</source>
         <translation type="obsolete">
 
 ———
@@ -770,7 +775,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:** Added multi-modal support for Workflow Automation.</source>
+        <source>**✨ What's New:** Added multi-modal support for Workflow Automation.</source>
         <translation type="obsolete">**✨ Det er nyt:** Tilføjet multimodal understøttelse til Workflow-automatisering.</translation>
     </message>
     <message>
@@ -780,7 +785,7 @@ Tip: **Workflow-automatisering** kan håndtere komplekse opgaver enten helt auto
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
-        <source>**✨ What&apos;s New:**</source>
+        <source>**✨ What's New:**</source>
         <translation>**✨ Nyheder:**</translation>
     </message>
     <message>
@@ -828,7 +833,7 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
-        <translation>**Workflow-favoritter:** Hold dine favoritworkflows organiseret med Lokale favoritter (gemt privat på din enhed) og Officielle favoritter (kuraterede workflows klar til download til dit lokale arbejdsområde når som helst). Officielle favoritter indeholder nu færdiglavede workflows til at søge og indlæse satellitbilleder efter behov via STAC API&apos;er — med understøttelse af både AWS Earth Search og Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat og flere) — så remote sensing-data strømmer direkte ind i dit workflow uden manuelle downloads.</translation>
+        <translation>**Workflow-favoritter:** Hold dine favoritworkflows organiseret med Lokale favoritter (gemt privat på din enhed) og Officielle favoritter (kuraterede workflows klar til download til dit lokale arbejdsområde når som helst). Officielle favoritter indeholder nu færdiglavede workflows til at søge og indlæse satellitbilleder efter behov via STAC API'er — med understøttelse af både AWS Earth Search og Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat og flere) — så remote sensing-data strømmer direkte ind i dit workflow uden manuelle downloads.</translation>
     </message>
 </context>
 <context>
@@ -1040,7 +1045,7 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
     <message>
         <location filename="../orch_favorites_dialog.py" line="99"/>
         <source>Please enter the auth token for &apos;{0}&apos; before continuing.</source>
-        <translation type="obsolete">Indtast venligst godkendelsestoken for &apos;{0}&apos;, før du fortsætter.</translation>
+        <translation type="obsolete">Indtast venligst godkendelsestoken for '{0}', før du fortsætter.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="170"/>
@@ -1070,7 +1075,7 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
     <message>
         <location filename="../orch_favorites_dialog.py" line="102"/>
         <source>Please enter the value for &apos;{0}&apos; before continuing.</source>
-        <translation>Indtast værdien for &apos;{0}&apos;, før du fortsætter.</translation>
+        <translation>Indtast værdien for '{0}', før du fortsætter.</translation>
     </message>
     <message>
         <location filename="../orch_favorites_dialog.py" line="191"/>
@@ -1189,7 +1194,7 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
         <translation type="obsolete">Netværksfejl: kontrollér din forbindelse og prøv igen.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="135"/>
+        <location filename="../setting_dialog.py" line="140"/>
         <source>Select Temporary Folder</source>
         <translation>Vælg midlertidig mappe</translation>
     </message>
@@ -1199,17 +1204,17 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
         <translation type="obsolete">Timevise credits tilbage: -- (Nulstilles om --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="96"/>
         <source>Current Plan: Free</source>
         <translation>Nuværende abonnement: Gratis</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="95"/>
         <source>Current Plan: Enterprise</source>
-        <translation>Nuværende abonnement: Enterprise</translation>
+        <translation type="obsolete">Nuværende abonnement: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="97"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: --</source>
         <translation>Nuværende abonnement: --</translation>
     </message>
@@ -1219,7 +1224,7 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
         <translation type="obsolete">Timevise credits tilbage: {credits} (Nulstilles om {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="90"/>
+        <location filename="../setting_dialog.py" line="93"/>
         <source>Missing required fields in response</source>
         <translation>Manglende påkrævede felter i svar</translation>
     </message>
@@ -1229,9 +1234,19 @@ Ved at stille et spørgsmål bekræfter du, at du har læst og accepteret [Priva
         <translation>Resterende credits: -- (Nulstilles om --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="105"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Resterende credits: {credits} (Nulstilles om {minutes} min).</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="98"/>
+        <source>Current Plan: Solo Engineer</source>
+        <translation>Nuværende abonnement: Solo Engineer</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="100"/>
+        <source>Current Plan: Studio</source>
+        <translation>Nuværende abonnement: Studio</translation>
     </message>
 </context>
 <context>
