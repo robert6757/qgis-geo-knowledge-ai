@@ -92,7 +92,9 @@ class SettingDialog(QDialog, FORM_CLASS):
             if plan == 0:
                 self.groupBox.setTitle(self.tr("Current Plan: Free"))
             elif plan == 1:
-                self.groupBox.setTitle(self.tr("Current Plan: Enterprise"))
+                self.groupBox.setTitle(self.tr("Current Plan: Solo Engineer"))
+            elif plan == 2:
+                self.groupBox.setTitle(self.tr("Current Plan: Studio"))
             else:
                 self.groupBox.setTitle(self.tr("Current Plan: --"))
 

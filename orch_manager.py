@@ -351,7 +351,7 @@ class CTOrchManager(QThread):
         if self._stop_flag:
             return TaskStatus.FAILED, ""
 
-        self.report_subtask_stream.emit(self.tr("Start executing the subtask:") + sub_task.name)
+        self.report_subtask_stream.emit(self.tr("Start executing the subtask: ") + sub_task.name)
 
         # Build the context (containing the results of completed subtasks).
         context = self.__build_context(exclude_task_id=sub_task.id)
