@@ -63,9 +63,9 @@ class SettingDialog(QDialog, FORM_CLASS):
         multi_turn = gSetting.value(MULTI_TURN_TAG, "3")
         self.cbChatTurn.setCurrentText(multi_turn)
 
-        self._update_credits_label()
+        self._update_credits_label(email)
 
-    def _update_credits_label(self):
+    def _update_credits_label(self, email):
         """Fetch user info and update the credits label."""
         fallback_text = self.tr("Credits Left: -- (Resets in --).")
         user_id = QgsSettings().value(USER_ID_TAG, "")
@@ -74,8 +74,11 @@ class SettingDialog(QDialog, FORM_CLASS):
             return
 
         try:
+            url = f"{AI_SERVER_DOMAIN}/ai/v1/userinfo?user_id={user_id}"
+            if email:
+                url += f"&email={email}"
             response = requests.get(
-                f"{AI_SERVER_DOMAIN}/ai/v1/userinfo?user_id={user_id}",
+                url,
                 timeout=2
             )
             if response.status_code != 200:
