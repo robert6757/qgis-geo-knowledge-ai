@@ -14,7 +14,7 @@ email=info@geoknowledgeai.com
 about=This plugin integrates four specialized AI agents for Knowledge Q&A, Data Search, Code Generation, and Workflow Automation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
 
  Multimodal Workflow Automation:
- Workflow Automation now incorporates multimodal processing and image recognition to deliver enhanced geospatial analysis and cartographic outputs. It also supports direct integration with OSM vector data, Google Maps tiles, and satellite imagery via STAC APIs (AWS Earth Search & Microsoft Planetary Computer)—streamlining basemap overlays, remote sensing data access, and automated mapping pipelines.
+ Workflow Automation now incorporates multimodal processing and image recognition to deliver enhanced geospatial analysis and cartographic outputs. It also supports direct integration with OSM vector data and Google Maps tiles, and accesses satellite imagery via STAC APIs (AWS Earth Search & Microsoft Planetary Computer)—streamlining basemap overlays, remote sensing data access, and automated mapping pipelines.
 
  Fully supporting multiple languages—including English, français, italiano, Deutsch, español, 中文, русский, svenska, Nederlands, português, čeština, eesti, Indonesia, norsk bokmål, slovenščina, українська, polski, română, 日本語, العربية, Türkçe, magyar, 한국어.
 

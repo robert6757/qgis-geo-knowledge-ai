@@ -316,7 +316,7 @@ class OrchFavoritesManager:
         }
         This keeps placeholder_tip as a favorite-level field, not inside task_plan.
         """
-        favorite = self.retrieve_favorite(chat_id, inject_variables=True)
+        favorite = self.retrieve_favorite(chat_id, inject_variables=False)
         if favorite is None or favorite.get("task_plan") is None:
             return False
 
