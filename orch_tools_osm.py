@@ -253,3 +253,117 @@ class OverpassTool:
 
         except Exception as e:
             raise e
+
+    def search_place(
+            self,
+            place_name: str,
+            output_path: str,
+            limit: int = 5,
+            base_url: str = 'https://nominatim.openstreetmap.org/search'
+    ):
+        """
+        Query place names using OSM Nominatim API.
+
+        :param place_name: The name of the place to search for (e.g., "北京").
+        :param output_path: Path to save the query results as JSON.
+        :param limit: Maximum number of results to return.
+        :param contact_email: Required by Nominatim's Fair Use Policy for identification.
+        :param base_url: Base URL of the Nominatim API.
+        """
+        try:
+            # 1. Construct the URL and Parameters
+            url = QUrl(base_url)
+            url_query = QUrlQuery()
+            url_query.addQueryItem('q', place_name)
+            url_query.addQueryItem('format', 'json')
+            url_query.addQueryItem('limit', str(limit))
+            url.setQuery(url_query)
+
+            # 2. Execute request using QgsFileDownloader (GET)
+            downloader = QgsFileDownloader(
+                url,
+                output_path,
+                delayStart=True,
+                httpMethod=Qgis.HttpMethod.Get
+            )
+
+            loop = QEventLoop()
+            downloader.downloadExited.connect(loop.quit)
+            downloader.startDownload()
+            loop.exec()
+
+            # 3. Validate the result
+            if os.path.exists(output_path):
+                with open(output_path, 'r', encoding='utf8') as f:
+                    content = f.read()
+                    if not content or '<html' in content.lower() or 'bad request' in content.lower():
+                        raise RuntimeError("The downloaded geocoding data is empty or contains an error.")
+            else:
+                raise FileNotFoundError("Place search result file not found. The API might have timed out.")
+
+        except Exception as e:
+            raise e
+
+    def load_place_json_to_map(self, json_path: str, layer_name: str = "Place Search Results"):
+        """
+        Read Nominatim JSON results and display them as a Point vector layer on the map.
+
+        :param json_path: Path to the JSON file containing Nominatim results.
+        :param layer_name: Name of the layer to be created.
+        """
+        try:
+            if not os.path.exists(json_path):
+                raise FileNotFoundError(f"Place JSON file not found: {json_path}")
+
+            with open(json_path, 'r', encoding='utf8') as f:
+                data = json.load(f)
+
+            if not data or not isinstance(data, list):
+                raise ValueError("No place results found in the JSON file or incorrect format.")
+
+            # Create Point layer
+            layer = QgsVectorLayer("Point?crs=EPSG:4326", layer_name, "memory")
+            if not layer.isValid():
+                raise Exception("Failed to create memory layer for place search.")
+
+            provider = layer.dataProvider()
+
+            # Define fields based on Nominatim output
+            fields = [
+                QgsField("display_name", QVariant.String),
+                QgsField("type", QVariant.String),
+                QgsField("importance", QVariant.Double),
+                QgsField("place_id", QVariant.String)
+            ]
+            provider.addAttributes(fields)
+            layer.updateFields()
+
+            features = []
+            for el in data:
+                feat = QgsFeature()
+                lon, lat = el.get('lon'), el.get('lat')
+
+                if lon is not None and lat is not None:
+                    # Parse geometry
+                    geom = QgsGeometry.fromPointXY(QgsPointXY(float(lon), float(lat)))
+                    feat.setGeometry(geom)
+
+                    # Set attributes
+                    feat.setAttributes([
+                        el.get('display_name', ''),
+                        el.get('type', ''),
+                        float(el.get('importance', 0.0)),
+                        str(el.get('place_id', ''))
+                    ])
+                    features.append(feat)
+
+            if not features:
+                raise ValueError("No valid coordinates found to create map features.")
+
+            # Add layer to project
+            provider.addFeatures(features)
+            layer.updateExtents()
+            QgsProject.instance().addMapLayer(layer)
+
+        except Exception as e:
+            raise e

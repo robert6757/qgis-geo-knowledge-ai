@@ -43,8 +43,8 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
                    "qgis_execute_algorithm", "qgis_add_osm_layer", "qgis_add_google_layer",
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
-                   "qgis_query_and_show_osm_objects", "qgis_get_qml_template", "qgis_reorder_layers",
-                   "qgis_capture_canvas_screenshot", "qgis_set_layers_visibility",
+                   "qgis_query_and_show_osm_objects", "qgis_search_and_show_place", "qgis_get_qml_template",
+                   "qgis_reorder_layers", "qgis_capture_canvas_screenshot", "qgis_set_layers_visibility",
                    "qgis_configure_aws_credentials", "qgis_search_stac_items", "qgis_load_stac_asset_to_map"]
 
 class OrchToolExecutor(QObject):
@@ -668,6 +668,48 @@ class OrchToolExecutor(QObject):
             result = {"status": "success", "message": "OSM data successfully loaded to map."}
             return json.dumps(result, ensure_ascii=False)
 
+        elif tool_name == "qgis_search_and_show_place":
+            # Search for a place name using Nominatim and display results on the map.
+            place_name = arguments.get("place_name", "")
+            if not place_name:
+                raise Exception({"error_msg": "place_name is required"})
+
+            limit = arguments.get("limit", 5)
+            layer_name = arguments.get("layer_name", "Place Search Results")
+            base_url = arguments.get("base_url", 'https://nominatim.openstreetmap.org/search')
+
+            temp_dir = QStandardPaths.writableLocation(TempLocation)
+            output_path = os.path.join(temp_dir, "qgis-geo-knowledge-ai-place-search.json")
+
+            try:
+                self.overpass_tool.search_place(
+                    place_name=place_name,
+                    output_path=output_path,
+                    limit=limit,
+                    base_url=base_url
+                )
+                self.overpass_tool.load_place_json_to_map(output_path, layer_name)
+            except Exception as e:
+                raise Exception({"error_msg": str(e)})
+
+            # Count results for the response
+            result_count = 0
+            try:
+                with open(output_path, 'r', encoding='utf8') as f:
+                    place_data = json.load(f)
+                    if isinstance(place_data, list):
+                        result_count = len(place_data)
+            except Exception:
+                result_count = 0
+
+            return json.dumps({
+                "status": "success",
+                "message": f"Place search results for '{place_name}' loaded to map.",
+                "place_name": place_name,
+                "result_count": result_count,
+                "layer_name": layer_name
+            }, ensure_ascii=False)
+
         elif tool_name == "qgis_get_qml_template":
             style_type = arguments.get("style_type")
             try:
@@ -961,46 +1003,11 @@ class OrchToolExecutor(QObject):
     #     tool_result = ""
     #     try:
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_search_stac_items",
+    #             "qgis_search_and_show_place",
     #             {
-    #                 "collections": ["sentinel-2-l2a"],
-    #                 # "collections": ["sentinel-1-grd"],
-    #                 "bbox": [120.0, 30.0, 121.0, 31.0],
-    #                 "datetime_range": "2024-06-21/2024-06-30",
-    #                 # "datetime_range": "[USER_PARAM:STAC_StartDate]/[USER_PARAM:STAC_EndDate]",
-    #                 "limit": 1,
-    #                 "base_url": 'https://earth-search.aws.element84.com/v1'
+    #                 "place_name": 'Paris'
     #             }
     #         )
-    #
-    #         # Parse search result and load the first STAC asset to the map.
-    #         search_data = json.loads(tool_result)
-    #         assets = search_data.get("assets", [])
-    #         if not assets:
-    #             raise Exception({"error_msg": "No STAC assets found in search result"})
-    #
-    #         first_asset = assets[0]
-    #         href = first_asset.get("href", "")
-    #         if not href:
-    #             raise Exception({"error_msg": "First STAC asset has no href"})
-    #
-    #         # Configure AWS credentials before loading S3-backed assets.
-    #         self._execute_tool_impl(
-    #             "qgis_configure_aws_credentials",
-    #             {
-    #             }
-    #         )
-    #
-    #         load_result = self._execute_tool_impl(
-    #             "qgis_load_stac_asset_to_map",
-    #             {
-    #                 "href": href,
-    #                 "layer_name": f"{first_asset.get('item_id', 'STAC')}_{first_asset.get('asset_key', 'asset')}",
-    #                 # "signing_provider": "planetary",
-    #                 # "requester_pays": True
-    #             }
-    #         )
-    #         tool_result = load_result
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
     #     return tool_result

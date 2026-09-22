@@ -428,7 +428,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
 
     def on_orch_finish_subtask_received(self, subtask: SubTask):
         """receive the subtask finished message"""
-        content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
+        content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
         if subtask.status == TaskStatus.UNREFINED:
             content = self.tr("[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})")
         content += "\n\n"
