@@ -721,7 +721,7 @@ Daarnaast zal ik u begeleiden bij essentiële hulpmiddelen zoals GDAL, GRASS en 
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
-        <translation>[Doorgaan](agent://orch/substask/continue/{subtask_id}) | [Herhalen](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</translation>
+        <translation type="obsolete">[Doorgaan](agent://orch/substask/continue/{subtask_id}) | [Herhalen](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
@@ -834,6 +834,11 @@ Door een vraag te stellen, erkent u dat u de [Privacyverklaring](https://www.geo
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**Workflow-favorieten:** Houd uw favoriete workflows georganiseerd met Lokale favorieten (privé opgeslagen op uw apparaat) en Officiële favorieten (gecurateerde workflows die u altijd naar uw lokale werkruimte kunt downloaden). Officiële favorieten bevatten nu kant-en-klare workflows voor het zoeken en laden van satellietbeelden op aanvraag via STAC API's — met ondersteuning voor zowel AWS Earth Search als Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat en meer) — zodat remote sensing-gegevens rechtstreeks in uw pipeline stromen zonder handmatige downloads.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[Doorgaan](agent://orch/substask/continue/{subtask_id}) | [Opnieuw proberen](agent://orch/substask/repeat/{subtask_id}) | [Details](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
 </context>
 <context>

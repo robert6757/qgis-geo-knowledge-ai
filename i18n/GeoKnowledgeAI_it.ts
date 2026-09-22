@@ -721,7 +721,7 @@ Inoltre, ti guiderò attraverso strumenti essenziali come GDAL, GRASS e SAGA per
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
-        <translation>[Continua](agent://orch/substask/continue/{subtask_id}) | [Ripeti](agent://orch/substask/repeat/{subtask_id}) | [Dettaglio](agent://orch/substask/detail/{subtask_id})</translation>
+        <translation type="obsolete">[Continua](agent://orch/substask/continue/{subtask_id}) | [Ripeti](agent://orch/substask/repeat/{subtask_id}) | [Dettaglio](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
@@ -834,6 +834,11 @@ Facendo una domanda, dichiari di aver letto e accettato l'[Informativa sulla pri
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**Preferiti workflow:** Tieni organizzati i tuoi workflow preferiti con Preferiti locali (archiviati privatamente sul tuo dispositivo) e Preferiti ufficiali (workflow curati pronti per il download nel tuo spazio di lavoro locale in qualsiasi momento). I Preferiti ufficiali ora includono workflow pronti all'uso per cercare e caricare immagini satellitari su richiesta tramite API STAC — supportando sia AWS Earth Search che Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat e altri) — in modo che i dati telerilevati fluiscano direttamente nella tua pipeline senza download manuali.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[Continua](agent://orch/substask/continue/{subtask_id}) | [Riprova](agent://orch/substask/repeat/{subtask_id}) | [Dettagli](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
 </context>
 <context>

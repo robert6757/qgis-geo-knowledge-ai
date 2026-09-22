@@ -721,7 +721,7 @@ Dessutom kommer jag att guida dig genom viktiga verktyg som GDAL, GRASS och SAGA
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Repeat](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
-        <translation>[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Upprepa](agent://orch/substask/repeat/{subtask_id}) | [Detalj](agent://orch/substask/detail/{subtask_id})</translation>
+        <translation type="obsolete">[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Upprepa](agent://orch/substask/repeat/{subtask_id}) | [Detalj](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
@@ -834,6 +834,11 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
         <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**Workflow-favoriter:** Håll dina favorit-workflows organiserade med lokala favoriter (lagrade privat på din enhet) och officiella favoriter (kurerade workflows redo att laddas ner till din lokala arbetsyta när som helst). Officiella favoriter inkluderar nu färdiga workflows för att söka efter och ladda satellitbilder på begäran via STAC API:er — med stöd för både AWS Earth Search och Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat med flera) — så att fjärranalysdata flödar direkt in i din pipeline utan manuella nedladdningar.</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
+        <translation>[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Försök igen](agent://orch/substask/repeat/{subtask_id}) | [Detaljer](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
 </context>
 <context>
