@@ -27,6 +27,7 @@ import re
 import uuid
 import requests
 from dataclasses import asdict
+from datetime import datetime
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
 from qgis.core import QgsApplication, QgsSettings
@@ -158,6 +159,15 @@ class OrchFavoritesManager:
             task_plan.original_task = task_plan.original_task.replace(placeholder, temp_folder)
             for st in task_plan.sub_tasks:
                 st.description = st.description.replace(placeholder, temp_folder)
+
+        # Inject [TIMESTAMP_STR] placeholder with current timestamp.
+        timestamp_str = datetime.now().strftime('%Y%m%d_%H%M%S')
+        placeholder = "[TIMESTAMP_STR]"
+        if placeholder in task_plan.original_task:
+            task_plan.original_task = task_plan.original_task.replace(placeholder, timestamp_str)
+        for st in task_plan.sub_tasks:
+            if placeholder in st.description:
+                st.description = st.description.replace(placeholder, timestamp_str)
 
     def _fetch_remote_favorites(self):
         """fetch favorite names from the server and build favorite items.
