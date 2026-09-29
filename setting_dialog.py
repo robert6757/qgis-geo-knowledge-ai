@@ -79,7 +79,7 @@ class SettingDialog(QDialog, FORM_CLASS):
                 url += f"&email={email}"
             response = requests.get(
                 url,
-                timeout=2
+                timeout=10
             )
             if response.status_code != 200:
                 self.labelCredits.setText(fallback_text)

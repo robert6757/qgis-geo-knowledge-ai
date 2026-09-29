@@ -180,7 +180,7 @@ class OrchFavoritesManager:
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_ENUM_URL
 
         try:
-            response = requests.get(url, timeout=2)
+            response = requests.get(url, timeout=10)
             if response.status_code != 200:
                 print(f"Failed to fetch remote favorites: {response.status_code}")
                 return []
@@ -225,7 +225,7 @@ class OrchFavoritesManager:
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL
 
         try:
-            response = requests.get(url, params={'name': name}, timeout=2)
+            response = requests.get(url, params={'name': name}, timeout=10)
             if response.status_code != 200:
                 print(f"Failed to fetch remote favorite '{name}': {response.status_code}")
                 return None

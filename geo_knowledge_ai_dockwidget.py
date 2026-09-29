@@ -677,7 +677,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                 params=params,
                 data=image_data,
                 headers=headers,
-                timeout=5
+                timeout=10
             )
 
             if response.status_code != 200:

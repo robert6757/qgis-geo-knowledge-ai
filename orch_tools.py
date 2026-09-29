@@ -26,6 +26,7 @@ import re
 import json
 import uuid
 import requests
+import zipfile
 from typing import Optional
 from urllib.parse import urlparse, parse_qs
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
@@ -45,7 +46,8 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_query_raster_values_by_bbox", "qgis_get_algorithm_help", "qgis_get_pyqgis_class_help",
                    "qgis_query_and_show_osm_objects", "qgis_search_and_show_place", "qgis_get_qml_template",
                    "qgis_reorder_layers", "qgis_capture_canvas_screenshot", "qgis_set_layers_visibility",
-                   "qgis_configure_aws_credentials", "qgis_search_stac_items", "qgis_load_stac_asset_to_map"]
+                   "qgis_configure_aws_credentials", "qgis_search_stac_items", "qgis_load_stac_asset_to_map",
+                   "qgis_create_folder", "qgis_zip_files", "qgis_unzip_files"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -951,7 +953,7 @@ class OrchToolExecutor(QObject):
                     params=params,
                     data=image_data,
                     headers=headers,
-                    timeout=5
+                    timeout=10
                 )
 
                 if response.status_code != 200:
@@ -975,6 +977,120 @@ class OrchToolExecutor(QObject):
                 "width": screenshot_width,
                 "height": screenshot_height
             }, ensure_ascii=False)
+
+        elif tool_name == "qgis_create_folder":
+            # Create a directory (and parent directories if needed).
+            path = arguments.get("path", "")
+            if not path:
+                raise Exception({"error_msg": "No path provided"})
+
+            normalized_path = os.path.normpath(path)
+
+            try:
+                os.makedirs(normalized_path, exist_ok=True)
+            except Exception as e:
+                raise Exception({"error_msg": f"Failed to create folder {normalized_path}: {str(e)}"})
+
+            return json.dumps({
+                "status": "success",
+                "path": normalized_path
+            }, ensure_ascii=False)
+
+        elif tool_name == "qgis_zip_files":
+            # Create a zip archive from one or more files/folders.
+            source_path = arguments.get("source_path", "")
+            output_zip = arguments.get("output_zip", "")
+            arcname_prefix = arguments.get("arcname_prefix", "")
+
+            if not output_zip:
+                raise Exception({"error_msg": "No output_zip provided"})
+            if not source_path:
+                raise Exception({"error_msg": "No source_path provided"})
+
+            output_zip = os.path.normpath(output_zip)
+
+            if isinstance(source_path, str):
+                source_paths = [source_path]
+            elif isinstance(source_path, list):
+                source_paths = source_path
+            else:
+                raise Exception({"error_msg": "source_path must be a string or a list of strings"})
+
+            parent_dir = os.path.dirname(output_zip)
+            if parent_dir:
+                os.makedirs(parent_dir, exist_ok=True)
+
+            added_count = 0
+            skipped_paths = []
+            prefix = (arcname_prefix if arcname_prefix else "").replace('\\', '/').strip('/')
+
+            with zipfile.ZipFile(output_zip, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                for src in source_paths:
+                    src = os.path.normpath(src)
+                    if not os.path.exists(src):
+                        skipped_paths.append(f"{src} (not found)")
+                        continue
+
+                    if os.path.isdir(src):
+                        for root_dir, dirs, files in os.walk(src):
+                            for file in files:
+                                file_path = os.path.join(root_dir, file)
+                                rel_path = os.path.relpath(file_path, src).replace('\\', '/')
+                                arcname = f"{prefix}/{rel_path}" if prefix else rel_path
+                                zipf.write(file_path, arcname)
+                                added_count += 1
+                    else:
+                        rel_path = os.path.basename(src).replace('\\', '/')
+                        arcname = f"{prefix}/{rel_path}" if prefix else rel_path
+                        zipf.write(src, arcname)
+                        added_count += 1
+
+            return json.dumps({
+                "status": "success",
+                "output_zip": output_zip,
+                "added_count": added_count,
+                "skipped_paths": skipped_paths
+            }, ensure_ascii=False)
+
+        elif tool_name == "qgis_unzip_files":
+            # Extract a zip archive to a directory.
+            zip_path = arguments.get("zip_path", "")
+            output_dir = arguments.get("output_dir", "")
+            overwrite = arguments.get("overwrite", True)
+
+            if not zip_path:
+                raise Exception({"error_msg": "No zip_path provided"})
+
+            zip_path = os.path.normpath(zip_path)
+            if not os.path.exists(zip_path):
+                raise Exception({"error_msg": f"Zip file not found: {zip_path}"})
+
+            if not output_dir:
+                output_dir = os.path.dirname(zip_path) or os.getcwd()
+            output_dir = os.path.normpath(output_dir)
+            os.makedirs(output_dir, exist_ok=True)
+
+            extracted_count = 0
+            output_dir_with_sep = os.path.normpath(output_dir) + os.sep
+
+            with zipfile.ZipFile(zip_path, 'r') as zipf:
+                for member in zipf.namelist():
+                    target_path = os.path.normpath(os.path.join(output_dir, member))
+                    if not target_path.startswith(output_dir_with_sep):
+                        raise Exception({"error_msg": f"Unsafe zip entry detected: {member}"})
+
+                    if not overwrite and os.path.exists(target_path):
+                        continue
+
+                    zipf.extract(member, output_dir)
+                    extracted_count += 1
+
+            return json.dumps({
+                "status": "success",
+                "output_dir": output_dir,
+                "extracted_count": extracted_count
+            }, ensure_ascii=False)
+
         else:
             raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
 
@@ -999,15 +1115,25 @@ class OrchToolExecutor(QObject):
         else:
             return str(layer.type())
 
-    # def test_tool(self):
-    #     tool_result = ""
-    #     try:
-    #         tool_result = self._execute_tool_impl(
-    #             "qgis_search_and_show_place",
-    #             {
-    #                 "place_name": 'Paris'
-    #             }
-    #         )
-    #     except Exception as e:
-    #         self.execution_error.emit(str(e))
-    #     return tool_result
+    def test_tool(self):
+        tool_result = ""
+        try:
+            tool_result = self._execute_tool_impl(
+                "qgis_zip_files",
+                {
+                    "source_path": r"D:\output\0625-1",
+                    "output_zip": r"D:\output\0625-1.zip"
+                }
+            )
+
+            tool_result = self._execute_tool_impl(
+                "qgis_unzip_files",
+                {
+                    "zip_path": r"D:\output\0625-1.zip",
+                    "output_dir": r"D:\output\0625-1-new",
+                    "overwrite": True
+                }
+            )
+        except Exception as e:
+            self.execution_error.emit(str(e))
+        return tool_result

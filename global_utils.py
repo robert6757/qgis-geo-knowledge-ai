@@ -20,54 +20,8 @@
 """
 
 import math
-import os
-import requests
 
 from qgis.core import QgsProject, Qgis, QgsMapLayer, QgsApplication
-
-from .global_defs import AI_SERVER_DOMAIN
-
-
-def upload_image_to_server(image_path, chat_id):
-    """
-    Upload an image file to the AI server and return the remote URL.
-
-    Args:
-        image_path: Local file path of the image (PNG) to upload.
-        chat_id: The current chat session id used as a server-side grouping key.
-
-    Returns:
-        The remote image URL string returned by the server, or None if the
-        upload failed for any reason.
-    """
-    try:
-        upload_url = f"{AI_SERVER_DOMAIN}/ai/v1/attachment/image"
-        image_name = os.path.basename(image_path)
-
-        with open(image_path, 'rb') as f:
-            image_data = f.read()
-
-        params = {
-            "chat_id": chat_id,
-            "image_name": image_name
-        }
-        headers = {
-            "Content-Type": "image/png"
-        }
-        response = requests.post(
-            upload_url,
-            params=params,
-            data=image_data,
-            headers=headers,
-            timeout=10
-        )
-
-        if response.status_code == 200:
-            return response.text.strip()
-    except Exception as e:
-        print(f"Failed to upload image: {str(e)}")
-    return None
-
 
 def get_workspace_info(iface, include_processing_tools=True):
     """
