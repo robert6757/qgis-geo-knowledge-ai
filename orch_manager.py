@@ -529,49 +529,6 @@ class CTOrchManager(QThread):
                     "error": str(e)
                 }
 
-    def __capture_canvas_screen(self, chat_id):
-        """Capture only the map canvas and upload to server."""
-        try:
-            # 1. save screenshot to temp dir.
-            screenshot_path = os.path.join(
-                QStandardPaths.writableLocation(TempLocation),
-                f"qgis-canvas-screenshot-{uuid.uuid4().hex}.png"
-            )
-            pixmap = self.iface.mapCanvas().grab()
-            pixmap.save(screenshot_path)
-
-            # 2. upload to server
-            upload_url = f"{AI_SERVER_DOMAIN}/ai/v1/attachment/image"
-            image_name = os.path.basename(screenshot_path)
-
-            with open(screenshot_path, 'rb') as f:
-                image_data = f.read()
-
-            params = {
-                "chat_id": chat_id,
-                "image_name": image_name
-            }
-            headers = {
-                "Content-Type": "image/png"
-            }
-            response = requests.post(
-                upload_url,
-                params=params,
-                data=image_data,
-                headers=headers,
-                timeout=10
-            )
-
-            if response.status_code == 200:
-                return response.text.strip()
-        except Exception as e:
-            # Silently fail or log the error, as this is an auxiliary capture for evaluation
-            print(f"Failed to capture canvas screen: {str(e)}")
-        finally:
-            if 'screenshot_path' in locals() and os.path.exists(screenshot_path):
-                os.remove(screenshot_path)
-        return None
-
     def __check_subtask_completion(self, sub_task: SubTask, result: str) -> (str, str):
         if self._stop_flag:
             return '[ERROR]', ''
@@ -585,12 +542,6 @@ class CTOrchManager(QThread):
         
         # Update workspace info to current state
         evaluate_request["workspace"] = get_workspace_info(self.iface, include_processing_tools=False)
-
-        if self._capture_screen_flag:
-            chat_id = self.request.get("chat_id", "")
-            capture_url = self.__capture_canvas_screen(chat_id)
-            if capture_url:
-                evaluate_request["screenshot_url"] = capture_url
 
         evaluate_subthread = CTOrchNetwork(request_data=evaluate_request, orch_type=3)
         evaluate_subthread.error_occurred.connect(self.on_network_error_occurred)

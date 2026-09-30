@@ -29,7 +29,7 @@ import requests
 import zipfile
 from typing import Optional
 from urllib.parse import urlparse, parse_qs
-from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant
+from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant, QSize
 from qgis.PyQt.QtGui import QColor
 from qgis.core import (
     QgsProject,
@@ -71,11 +71,10 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "qgis_query_and_show_osm_objects", "qgis_search_and_show_place", "qgis_get_qml_template",
                    "qgis_reorder_layers", "qgis_capture_canvas_screenshot", "qgis_set_layers_visibility",
                    "qgis_configure_aws_credentials", "qgis_search_stac_items", "qgis_load_stac_asset_to_map",
-                   "create_folder", "zip_files", "unzip_files",
-                   "qgis_list_layouts", "qgis_create_layout", "qgis_remove_layout", "qgis_get_layout_info",
-                    "qgis_export_layout", "qgis_add_layout_map", "qgis_add_layout_label", "qgis_add_layout_legend",
-                    "qgis_add_layout_scalebar", "qgis_add_layout_picture", "qgis_add_layout_table",
-                    "qgis_configure_layout_atlas", "qgis_export_layout_atlas"]
+                   "create_folder", "zip_files", "unzip_files", "qgis_list_layouts", "qgis_create_layout",
+                   "qgis_capture_layout_screenshot", "qgis_remove_layout", "qgis_get_layout_info",
+                   "qgis_export_layout", "qgis_add_layout_map", "qgis_add_layout_label", "qgis_add_layout_legend",
+                   "qgis_add_layout_scalebar", "qgis_add_layout_picture", "qgis_add_layout_table", "qgis_move_layout_item"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -1143,6 +1142,99 @@ class OrchToolExecutor(QObject):
 
             return json.dumps({"status": "success", "name": name}, ensure_ascii=False)
 
+        elif tool_name == "qgis_capture_layout_screenshot":
+            gSetting = QgsSettings()
+            if gSetting.value(CAPTURE_SCREEN_TAG, 'false').lower() != "true":
+                return json.dumps({
+                    "status": "error",
+                    "message": "Permission denied"
+                }, ensure_ascii=False)
+
+            screenshot_path = None
+            image_name = ""
+            try:
+                # Parse parameters
+                layout_name = arguments.get("layout_name")
+                page_index = int(arguments.get("page_index", 0))
+                dpi = float(arguments.get("dpi", 96))
+                dpi = max(30, min(dpi, 150))  # Limit DPI to prevent images from becoming too large.
+
+                # Find layout.
+                layout = None
+                if layout_name:
+                    layout = QgsProject.instance().layoutManager().layoutByName(layout_name)
+                    if layout is None:
+                        raise Exception(f"Layout not found: {layout_name}")
+                else:
+                    # Prioritize the currently open layout designer
+                    designers = self.iface.openLayoutDesigners()
+                    if designers:
+                        layout = designers[-1].layout()
+                    else:
+                        layouts = QgsProject.instance().layoutManager().printLayouts()
+                        if not layouts:
+                            raise Exception("No layout found in current project")
+                        layout = layouts[0]
+
+                page_count = layout.pageCollection().pageCount()
+                if page_index < 0 or page_index >= page_count:
+                    raise Exception(f"page_index out of range, layout has {page_count} page(s)")
+
+                # Render as QImage and save to a temporary directory
+                exporter = QgsLayoutExporter(layout)
+                # QSize() indicates automatic calculation based on page size and DPI.
+                image = exporter.renderPageToImage(page_index, QSize(), dpi)
+                if image.isNull():
+                    raise Exception("Failed to render layout page")
+
+                screenshot_path = os.path.join(
+                    QStandardPaths.writableLocation(TempLocation),
+                    f"qgis-layout-screenshot-{uuid.uuid4().hex}.png"
+                )
+                if not image.save(screenshot_path, "PNG"):
+                    raise Exception("Failed to save layout image")
+
+                screenshot_width = image.width()
+                screenshot_height = image.height()
+
+                # upload to server
+                upload_url = f"{AI_SERVER_DOMAIN}/ai/v1/attachment/image"
+                image_name = os.path.basename(screenshot_path)
+
+                with open(screenshot_path, 'rb') as f:
+                    image_data = f.read()
+
+                response = requests.post(
+                    upload_url,
+                    params={"image_name": image_name},
+                    data=image_data,
+                    headers={"Content-Type": "image/png"},
+                    timeout=10
+                )
+                if response.status_code != 200:
+                    raise Exception(f"Failed to upload layout screenshot: {image_name}")
+
+                image_url = response.text.strip()
+                if not image_url:
+                    raise Exception("Server did not return a valid image url")
+
+            except Exception as e:
+                raise Exception({"error_msg": f"Failed to capture layout screenshot: {e}"})
+            finally:
+                if screenshot_path and os.path.exists(screenshot_path):
+                    os.remove(screenshot_path)
+
+            return json.dumps({
+                "status": "success",
+                "image_url": image_url,
+                "format": "png",
+                "layout_name": layout.name(),
+                "page_index": page_index,
+                "page_count": page_count,
+                "width": screenshot_width,
+                "height": screenshot_height
+            }, ensure_ascii=False)
+
         elif tool_name == "qgis_remove_layout":
             layout_name = arguments.get("layout_name", "")
             layout = self._get_layout(layout_name)
@@ -1260,20 +1352,87 @@ class OrchToolExecutor(QObject):
             map_item_id = arguments.get("map_item_id", None)
             x = arguments.get("x", 10)
             y = arguments.get("y", 10)
-            width = arguments.get("width", 80)
-            height = arguments.get("height", 100)
+            width = arguments.get("width", None)  # If not passed, it adapts to the content.
+            height = arguments.get("height", None)
             title = arguments.get("title", "Legend")
+            layer_ids = arguments.get("layer_ids") or []  # Specify by layer ID
+            filter_by_map = bool(arguments.get("filter_by_map", False))  # Show only the legend for features visible within the map extent
 
             layout = self._get_layout(layout_name)
+            if layout is None:
+                return json.dumps({"status": "error", "message": f"Layout not found: {layout_name}"},
+                                  ensure_ascii=False)
+
+            project = QgsProject.instance()
+
+            # Parse layers (preserve input order, remove duplicates)
+            layers, missing = [], []
+            seen = set()
+
+            def _add_layer(lyr):
+                if lyr.id() not in seen:
+                    seen.add(lyr.id())
+                    layers.append(lyr)
+
+            for lid in layer_ids:
+                lyr = project.mapLayer(lid)
+                if lyr is not None and lyr.isValid():
+                    _add_layer(lyr)
+                else:
+                    missing.append(lid)
+
+            # The user explicitly specified layers, but none were found -> Throw an error to avoid generating an empty legend.
+            if layer_ids and not layers:
+                return json.dumps({
+                    "status": "error",
+                    "message": "None of the specified layers were found",
+                    "missing_layers": missing
+                }, ensure_ascii=False)
+
+            # Create a legend
             legend = QgsLayoutItemLegend(layout)
             legend.setTitle(title)
+
             map_item = self._find_layout_map(layout, map_item_id)
             if map_item:
                 legend.setLinkedMap(map_item)
+            elif map_item_id:
+                # Explicitly notify if a specified map item is not found, rather than silently ignoring it.
+                return json.dumps({"status": "error",
+                                   "message": f"Map item not found: {map_item_id}"},
+                                  ensure_ascii=False)
+
+            # Specify Layers: Disable automatic updates and rebuild the layer tree.
+            if layers:
+                legend.setAutoUpdateModel(False)  # Must be closed first; otherwise, it will be covered by the project layer tree.
+                root = legend.model().rootGroup()
+                root.clear()
+                for lyr in layers:
+                    root.addLayer(lyr)
+
+            if filter_by_map and map_item:
+                legend.setLegendFilterByMapEnabled(True)
+
             layout.addLayoutItem(legend)
-            legend.attemptMove(QgsLayoutPoint(x, y))
-            legend.attemptResize(QgsLayoutSize(width, height))
-            return json.dumps({"status": "success", "uuid": legend.uuid()}, ensure_ascii=False)
+            legend.attemptMove(QgsLayoutPoint(x, y, QgsUnitTypes.LayoutMillimeters))
+
+            # Size: By default, the legend automatically adjusts its size based on content;
+            # to manually specify width/height, you must first disable auto-scaling.
+            if width is not None and height is not None:
+                legend.setResizeToContents(False)
+                legend.attemptResize(QgsLayoutSize(width, height, QgsUnitTypes.LayoutMillimeters))
+            else:
+                legend.adjustBoxSize()
+
+            legend.refresh()
+
+            return json.dumps({
+                "status": "success",
+                "uuid": legend.uuid(),
+                "layers": [{"id": l.id(), "name": l.name()} for l in layers],
+                "missing_layers": missing,
+                "auto_update": not bool(layers)
+            }, ensure_ascii=False)
 
         elif tool_name == "qgis_add_layout_scalebar":
             layout_name = arguments.get("layout_name", "")
@@ -1338,77 +1497,96 @@ class OrchToolExecutor(QObject):
             table.addFrame(frame)
             return json.dumps({"status": "success", "uuid": frame.uuid()}, ensure_ascii=False)
 
-        elif tool_name == "qgis_configure_layout_atlas":
+        elif tool_name == "qgis_move_layout_item":
             layout_name = arguments.get("layout_name", "")
-            coverage_layer = arguments.get("coverage_layer", "")
-            enabled = arguments.get("enabled", True)
-            page_name_expression = arguments.get("page_name_expression", None)
-            filter_expression = arguments.get("filter_expression", None)
-            sort_expression = arguments.get("sort_expression", None)
+            item_id = arguments.get("item_id", "") # Supports UUID or the Item ID set in the designer.
+            x = arguments.get("x", None)  # Absolute position (only one value may be passed)
+            y = arguments.get("y", None)
+            dx = arguments.get("dx", None)  # Relative offset (applies when x/y are not provided)
+            dy = arguments.get("dy", None)
+            page = arguments.get("page", None)  # Optional: Coordinates relative to the page number (0-indexed)
+            unit_name = str(arguments.get("unit", "mm")).lower()
 
-            layer = self._get_vector_layer(coverage_layer)
-            layout = self._get_layout(layout_name)
-            atlas = layout.atlas()
-            atlas.setEnabled(bool(enabled))
-            atlas.setCoverageLayer(layer)
+            unit_map = {
+                "mm": QgsUnitTypes.LayoutMillimeters,
+                "cm": QgsUnitTypes.LayoutCentimeters,
+                "in": QgsUnitTypes.LayoutInches,
+                "pt": QgsUnitTypes.LayoutPoints,
+                "px": QgsUnitTypes.LayoutPixels,
+            }
+            unit = unit_map.get(unit_name)
+            if unit is None:
+                return json.dumps({"status": "error",
+                                   "message": f"Unsupported unit: {unit_name}, use one of {list(unit_map.keys())}"},
+                                  ensure_ascii=False)
 
-            if page_name_expression:
-                atlas.setPageNameExpression(page_name_expression)
-            if filter_expression:
-                atlas.setFilterFeatures(True)
-                ok, error = atlas.setFilterExpression(filter_expression)
-                if not ok:
-                    raise Exception({"error_msg": f"Atlas filter expression error: {error}"})
-            if sort_expression:
-                atlas.setSortFeatures(True)
-                atlas.setSortExpression(sort_expression)
-
-            atlas.updateFeatures()
-            return json.dumps({
-                "status": "success",
-                "coverage_layer": layer.name(),
-                "enabled": bool(enabled),
-                "count": atlas.count(),
-            }, ensure_ascii=False)
-
-        elif tool_name == "qgis_export_layout_atlas":
-            layout_name = arguments.get("layout_name", "")
-            output_path = arguments.get("output_path", "")
-            fmt = arguments.get("format", "pdf")
-            dpi = arguments.get("dpi", 300)
+            if all(v is None for v in (x, y, dx, dy)):
+                return json.dumps({"status": "error",
+                                   "message": "Provide x/y (absolute) or dx/dy (relative)"},
+                                  ensure_ascii=False)
 
             layout = self._get_layout(layout_name)
-            atlas = layout.atlas()
-            if not atlas.enabled():
-                raise Exception({"error_msg": "Atlas not enabled; call qgis_configure_layout_atlas first"})
+            if layout is None:
+                return json.dumps({"status": "error", "message": f"Layout not found: {layout_name}"},
+                                  ensure_ascii=False)
 
-            atlas.updateFeatures()
-            fmt_lower = fmt.lower()
+            # 1. Find Item: first by UUID, then by ID
+            item = layout.itemByUuid(item_id) if item_id else None
+            if item is None and item_id:
+                item = layout.itemById(item_id)
+            if item is None:
+                return json.dumps({"status": "error", "message": f"Layout item not found: {item_id}"},
+                                  ensure_ascii=False)
 
-            if fmt_lower == "pdf":
-                settings = QgsLayoutExporter.PdfExportSettings()
-                settings.dpi = dpi
-                result, error = QgsLayoutExporter.exportToPdf(atlas, output_path, settings)
-            elif fmt_lower in ("png", "jpg", "jpeg", "tif", "tiff"):
-                os.makedirs(output_path, exist_ok=True)
-                settings = QgsLayoutExporter.ImageExportSettings()
-                settings.dpi = dpi
-                base = os.path.join(output_path, layout_name)
-                result, error = QgsLayoutExporter.exportToImage(atlas, base, fmt_lower, settings)
+            if item.isLocked():
+                return json.dumps({"status": "error", "message": f"Layout item is locked: {item_id}"},
+                                  ensure_ascii=False)
+
+            # When specifying a page number, the coordinates are relative to the page;
+            # both x and y must be provided to avoid confusion with current global coordinates.
+            if page is not None:
+                page = int(page)
+                if page < 0 or page >= layout.pageCollection().pageCount():
+                    return json.dumps({"status": "error",
+                                       "message": f"page out of range, layout has {layout.pageCollection().pageCount()} page(s)"},
+                                      ensure_ascii=False)
+                if x is None or y is None:
+                    return json.dumps({"status": "error",
+                                       "message": "x and y are both required when page is specified"},
+                                      ensure_ascii=False)
+
+            # 2. Calculate target position: Convert to the target unit before processing.
+            converter = layout.renderContext().measurementConverter()
+            old_pos = converter.convert(item.positionWithUnits(), unit)
+
+            def _resolve(abs_val, delta, current):
+                if abs_val is not None:
+                    return float(abs_val)
+                if delta is not None:
+                    return current + float(delta)
+                return current
+
+            new_x = _resolve(x, dx, old_pos.x())
+            new_y = _resolve(y, dy, old_pos.y())
+
+            # 3. Move
+            if page is not None:
+                item.attemptMove(QgsLayoutPoint(new_x, new_y, unit), True, False, page)
             else:
-                raise Exception({"error_msg": f"Unsupported atlas format: {fmt}"})
+                item.attemptMove(QgsLayoutPoint(new_x, new_y, unit))
+            item.refresh()
 
-            if result != QgsLayoutExporter.ExportResult.Success:
-                raise Exception({"error_msg": f"Atlas export failed: {error}"})
+            final_pos = converter.convert(item.positionWithUnits(), unit)
 
             return json.dumps({
                 "status": "success",
-                "output": output_path,
-                "count": atlas.count(),
+                "uuid": item.uuid(),
+                "id": item.id(),
+                "unit": unit_name,
+                "old_position": {"x": round(old_pos.x(), 3), "y": round(old_pos.y(), 3)},
+                "new_position": {"x": round(final_pos.x(), 3), "y": round(final_pos.y(), 3)},
+                "page": item.page()
             }, ensure_ascii=False)
-
-        else:
-            raise Exception({"error_msg": f"Unknown tool: {tool_name}"})
 
     def _get_layout(self, layout_name):
         """Get a print layout by name or raise."""
@@ -1427,7 +1605,7 @@ class OrchToolExecutor(QObject):
             raise Exception({"error_msg": f"Map item not found in layout: {map_item_id}"})
         return maps[0] if maps else None
 
-    def _style_label(label, color, font_size):
+    def _style_label(self, label, color, font_size):
         """Set a layout label's colour and size through the current API."""
         text_format = getattr(label, "textFormat", None)
         if text_format is not None and hasattr(label, "setTextFormat"):
@@ -1442,7 +1620,7 @@ class OrchToolExecutor(QObject):
         font.setPointSize(int(font_size))
         label.setFont(font)
 
-    def _get_vector_layer(layer_id):
+    def _get_vector_layer(self, layer_id):
         """Get a vector layer by id or raise."""
         if not layer_id:
             raise Exception({"error_msg": "No layer id provided"})
