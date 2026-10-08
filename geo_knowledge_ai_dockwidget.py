@@ -45,6 +45,7 @@ from .history_dialog import HistoryDialog
 from .compat import *
 from .code_exec_utils import ensure_code_execution
 from .global_utils import get_workspace_info
+from .feedback_dialog import FeedbackDialog
 
 from .subtask_dialog import SubtaskDialog
 
@@ -216,12 +217,24 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if not self.chat_id:
             return
 
+        email = ""
+        issue = ""
+        if star == 2:
+            # Collect feedback from users
+            dlg = FeedbackDialog(self.chat_id, parent=self)
+            dlg.setModal(True)
+            dlg.show()
+            if dlg.exec() != Accepted:
+                return
+
+            issue, email = dlg.get_feedback()
+
+        # send feedback to server
         try:
-            # send feedback to server
             response = requests.post(
                 AI_SERVER_DOMAIN + "/ai/v1/feedback",
-                json={"chat_id": self.chat_id, "star": star},
-                timeout=2
+                json={"chat_id": self.chat_id, "star": star, "email": email, "issue": issue},
+                timeout=5
             )
 
             # check response

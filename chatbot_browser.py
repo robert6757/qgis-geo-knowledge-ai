@@ -137,7 +137,7 @@ class ChatbotBrowser(QTextBrowser):
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
         self.feedback_text = self.tr(
-            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Regenerate](agent://repeat)")
+            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2) | [Regenerate](agent://repeat)")
         self.favorite_text = self.tr("[Favorite](agent://orch/favorite/plan)")
         self.exec_code_text = "\n\n" + self.tr(
             "[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
