@@ -1414,13 +1414,13 @@ class OrchToolExecutor(QObject):
                 legend.setLegendFilterByMapEnabled(True)
 
             layout.addLayoutItem(legend)
-            legend.attemptMove(QgsLayoutPoint(x, y, QgsUnitTypes.LayoutMillimeters))
+            legend.attemptMove(QgsLayoutPoint(x, y, QgsUnitTypes.LayoutUnit.LayoutMillimeters))
 
             # Size: By default, the legend automatically adjusts its size based on content;
             # to manually specify width/height, you must first disable auto-scaling.
             if width is not None and height is not None:
                 legend.setResizeToContents(False)
-                legend.attemptResize(QgsLayoutSize(width, height, QgsUnitTypes.LayoutMillimeters))
+                legend.attemptResize(QgsLayoutSize(width, height, QgsUnitTypes.LayoutUnit.LayoutMillimeters))
             else:
                 legend.adjustBoxSize()
 
@@ -1508,11 +1508,11 @@ class OrchToolExecutor(QObject):
             unit_name = str(arguments.get("unit", "mm")).lower()
 
             unit_map = {
-                "mm": QgsUnitTypes.LayoutMillimeters,
-                "cm": QgsUnitTypes.LayoutCentimeters,
-                "in": QgsUnitTypes.LayoutInches,
-                "pt": QgsUnitTypes.LayoutPoints,
-                "px": QgsUnitTypes.LayoutPixels,
+                "mm": QgsUnitTypes.LayoutUnit.LayoutMillimeters,
+                "cm": QgsUnitTypes.LayoutUnit.LayoutCentimeters,
+                "in": QgsUnitTypes.LayoutUnit.LayoutInches,
+                "pt": QgsUnitTypes.LayoutUnit.LayoutPoints,
+                "px": QgsUnitTypes.LayoutUnit.LayoutPixels,
             }
             unit = unit_map.get(unit_name)
             if unit is None:
