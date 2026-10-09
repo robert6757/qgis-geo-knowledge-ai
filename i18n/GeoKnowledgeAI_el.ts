@@ -24,17 +24,17 @@
         <translation>**Έναρξη αυτοματοποιημένης εκτέλεσης του σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="280"/>
+        <location filename="../orch_manager.py" line="281"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η υποεργασία [{}] δεν βρέθηκε, παράλειψη.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="287"/>
+        <location filename="../orch_manager.py" line="288"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η εξάρτηση [{}] της υποεργασίας [{}] είναι ελλιπής. Προσπάθεια συνέχισης.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="268"/>
+        <location filename="../orch_manager.py" line="269"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Έναρξη σταδιακής εκτέλεσης του σχεδίου εργασιών:**</translation>
     </message>
@@ -44,27 +44,27 @@
         <translation type="obsolete">Έναρξη εκτέλεσης της υποεργασίας:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="385"/>
+        <location filename="../orch_manager.py" line="386"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Ολοκληρώθηκε] Η υποεργασία [{}] εκτελέστηκε επιτυχώς.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="398"/>
+        <location filename="../orch_manager.py" line="399"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Αποτυχία] Το αποτέλεσμα της υποεργασίας [{}] δεν ανταποκρίθηκε στις προσδοκίες. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="404"/>
+        <location filename="../orch_manager.py" line="405"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Αποτυχία] Η υποεργασία [{}] απέτυχε: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="717"/>
+        <location filename="../orch_manager.py" line="669"/>
         <source>Error: No subtask execution result.</source>
         <translation>Σφάλμα: Δεν υπάρχει αποτέλεσμα εκτέλεσης υποεργασίας.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="673"/>
         <source>**Summary of tasks:**</source>
         <translation>**Σύνοψη εργασιών:**</translation>
     </message>
@@ -89,19 +89,24 @@
         <translation type="obsolete">[Βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="392"/>
+        <location filename="../orch_manager.py" line="393"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Μη βελτιωμένη] Η υποεργασία [{}] χρειάζεται περαιτέρω προσαρμογή: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="258"/>
+        <location filename="../orch_manager.py" line="259"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Βελτίωση υποεργασίας [{}]... (Προσπάθεια {}/{})</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="354"/>
+        <location filename="../orch_manager.py" line="355"/>
         <source>Start executing the subtask: </source>
         <translation>Έναρξη εκτέλεσης της υποεργασίας: </translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
+        <translation>[ΠΡΟΕΙΔΟΠΟΙΗΣΗ] Η εξάρτηση [{}] της υποεργασίας [{}] απέτυχε. Παράλειψη της τρέχουσας υποεργασίας.</translation>
     </message>
 </context>
 <context>
@@ -142,7 +147,12 @@
     <message>
         <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Regenerate](agent://repeat)</source>
-        <translation>Σας ήταν χρήσιμη αυτή η απάντηση; [Ναι](agent://feedback/5) | [Όχι](agent://feedback/1) | [Αναδημιουργία](agent://repeat)</translation>
+        <translation type="obsolete">Σας ήταν χρήσιμη αυτή η απάντηση; [Ναι](agent://feedback/5) | [Όχι](agent://feedback/1) | [Αναδημιουργία](agent://repeat)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="139"/>
+        <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2) | [Regenerate](agent://repeat)</source>
+        <translation>Ήταν χρήσιμη αυτή η απάντηση; [Ναι](agent://feedback/5) | [Όχι](agent://feedback/1) | [Σχόλια](agent://feedback/2) | [Επαναδημιουργία](agent://repeat)</translation>
     </message>
 </context>
 <context>
@@ -181,17 +191,17 @@
         <translation type="obsolete">Αίτηση</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="226"/>
+        <location filename="../setting_dialog.ui" line="362"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="236"/>
+        <location filename="../setting_dialog.ui" line="372"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="199"/>
+        <location filename="../setting_dialog.ui" line="335"/>
         <source>Get Help</source>
         <translation>Λήψη βοήθειας</translation>
     </message>
@@ -201,7 +211,7 @@
         <translation type="obsolete">Κανάλι υψηλής ταχύτητας</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="85"/>
+        <location filename="../setting_dialog.ui" line="91"/>
         <source>Multi-Turn Conversation</source>
         <translation>Συνομιλία πολλαπλών γύρων</translation>
     </message>
@@ -211,22 +221,22 @@
         <translation type="obsolete">Ο προεπιλεγμένος μέγιστος αριθμός γύρων συνομιλίας είναι 2. Οι πολύωρες συνομιλίες μπορεί να προκαλέσουν απώλεια εστίασης στο θέμα.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="96"/>
+        <location filename="../setting_dialog.ui" line="102"/>
         <source>Turn Limit：</source>
         <translation>Όριο γύρων:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="110"/>
+        <location filename="../setting_dialog.ui" line="116"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="115"/>
+        <location filename="../setting_dialog.ui" line="121"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="120"/>
+        <location filename="../setting_dialog.ui" line="126"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -266,22 +276,22 @@
         <translation type="obsolete">Συλλογισμός αλυσίδας σκέψης</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="125"/>
+        <location filename="../setting_dialog.ui" line="131"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="130"/>
+        <location filename="../setting_dialog.ui" line="136"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="140"/>
+        <location filename="../setting_dialog.ui" line="146"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>Το προεπιλεγμένο όριο είναι 3 γύροι συνομιλίας για να παραμείνει η συζήτηση στο θέμα.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="153"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary Folder</source>
         <translation>Προσωρινός Φάκελος</translation>
     </message>
@@ -291,17 +301,17 @@
         <translation type="obsolete">Οι προσωρινοί φάκελοι χρησιμοποιούνται για την αποθήκευση ενδιάμεσων αρχείων κατά τη διάρκεια της διαδικασίας λήψης ή ανάλυσης δεδομένων.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="270"/>
         <source>Path:</source>
         <translation>Διαδρομή:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="187"/>
+        <location filename="../setting_dialog.ui" line="294"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="20"/>
+        <location filename="../setting_dialog.ui" line="26"/>
         <source>Current Plan: Free</source>
         <translation>Τρέχον πακέτο: Δωρεάν</translation>
     </message>
@@ -321,7 +331,7 @@
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;Ε&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;πισκεφθείτε &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Λύσεις Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; για να μάθετε περισσότερα, ή εισαγάγετε το email σας και κάντε κλικ στο 'Υποβολή' για να ζητήσετε το Enterprise πλάνο μας—η ομάδα μας θα επικοινωνήσει μαζί σας εντός 24 ωρών.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="26"/>
+        <location filename="../setting_dialog.ui" line="32"/>
         <source>Credits Left: 0 (Resets in 0m).</source>
         <translation>Μονάδες που απομένουν: 0 (Επαναφορά σε 0 λεπτά).</translation>
     </message>
@@ -331,24 +341,44 @@
         <translation>Ρυθμίσεις Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="38"/>
+        <location filename="../setting_dialog.ui" line="44"/>
         <source>Email：</source>
         <translation>Email:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="48"/>
+        <location filename="../setting_dialog.ui" line="54"/>
         <source>Enter your purchase email (Optional)</source>
         <translation>Εισαγάγετε το email αγοράς σας (Προαιρετικό)</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="66"/>
+        <location filename="../setting_dialog.ui" line="72"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Επισκεφτείτε τον ιστότοπό μας για να εξερευνήσετε &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ευέλικτα πακέτα&lt;/span&gt;&lt;/a&gt; και να αυξήσετε το όριο πίστωσης ανά κύκλο επαναφοράς. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="159"/>
+        <location filename="../setting_dialog.ui" line="165"/>
         <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
         <translation>Ο προσωρινός φάκελος χρησιμοποιείται για την αποθήκευση ενδιάμεσων αρχείων κατά τη λήψη δεδομένων ή τη διαδικασία ανάλυσης.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="211"/>
+        <source>Export Workflow Audit Logs</source>
+        <translation>Εξαγωγή αρχείων καταγραφής ελέγχου ροής εργασίας</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="223"/>
+        <source>Time Range:</source>
+        <translation>Χρονικό διάστημα:</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="242"/>
+        <source>~</source>
+        <translation>~</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="325"/>
+        <source>Export</source>
+        <translation>Εξαγωγή</translation>
     </message>
 </context>
 <context>
@@ -387,6 +417,54 @@
         <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>Λεπτομέρειες ροής εργασίας:</translation>
+    </message>
+</context>
+<context>
+    <name>FeedbackDialog</name>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Warning</source>
+        <translation>Προειδοποίηση</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Please describe your issue before submitting.</source>
+        <translation>Περιγράψτε το πρόβλημά σας πριν την υποβολή.</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="14"/>
+        <source>Submit Feedback</source>
+        <translation>Υποβολή σχολίων</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="20"/>
+        <source>Please describe your issue:</source>
+        <translation>Περιγράψτε το πρόβλημά σας:</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="27"/>
+        <source>Tell us what went wrong, or how we can improve this answer...</source>
+        <translation>Πείτε μας τι πήγε στραβά ή πώς μπορούμε να βελτιώσουμε αυτή την απάντηση...</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="34"/>
+        <source>Contact Email (Optional):</source>
+        <translation>Email επικοινωνίας (προαιρετικό):</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="41"/>
+        <source>Enter your email if you&apos;d like a reply</source>
+        <translation>Εισαγάγετε το email σας αν θέλετε απάντηση</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="61"/>
+        <source>Submit</source>
+        <translation>Υποβολή</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="68"/>
+        <source>Cancel</source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -438,47 +516,47 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation>Όχι</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="513"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="526"/>
         <source>**Question:</source>
         <translation>**Ερώτηση:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="514"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="527"/>
         <source>**Answer:</source>
         <translation>**Απάντηση:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="600"/>
         <source>Stop</source>
         <translation>Διακοπή</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="629"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="642"/>
         <source>Send</source>
         <translation>Αποστολή</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Tip</source>
         <translation>Συμβουλή</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="229"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="242"/>
         <source>Thank you for your feedback.</source>
         <translation>Ευχαριστούμε για τα σχόλιά σας!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Error</source>
         <translation>Σφάλμα</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Αποτυχία υποβολής των σχολίων σας. Παρακαλούμε δοκιμάστε ξανά αργότερα.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="251"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Σφάλμα δικτύου: ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</translation>
     </message>
@@ -493,27 +571,27 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation type="obsolete">Η εκτέλεση κώδικα ξεκίνησε στο παρασκήνιο...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="273"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="286"/>
         <source>Success</source>
         <translation>Επιτυχία</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="281"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="294"/>
         <source>Auto-Fix</source>
         <translation>Αυτόματη διόρθωση</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="290"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="303"/>
         <source>Code Copied Successfully!</source>
         <translation>Ο κώδικας αντιγράφηκε με επιτυχία!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>RuntimeError</source>
         <translation>Σφάλμα χρόνου εκτέλεσης</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>Cannot find processing: </source>
         <translation>Δεν είναι δυνατή η εύρεση επεξεργασίας: </translation>
     </message>
@@ -704,17 +782,17 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 Επιπλέον, θα σας καθοδηγήσω σε βασικά εργαλεία όπως GDAL, GRASS και SAGA για να κάνω τη χωρική σας ανάλυση πιο αποδοτική και έξυπνη.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="334"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="347"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Μόνο η τρέχουσα υποεργασία μπορεί να συνεχιστεί.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Μόνο η τρέχουσα υποεργασία μπορεί να επαναληφθεί.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="419"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="432"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Βήμα-βήμα](agent://orch/substask/step) | [Αυτοματοποίηση όλων](agent://orch/substask/automate)</translation>
     </message>
@@ -724,7 +802,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <translation type="obsolete">[Συνέχεια](agent://orch/substask/continue/{subtask_id}) | [Επανάληψη](agent://orch/substask/repeat/{subtask_id}) | [Λεπτομέρεια](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="722"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -764,12 +842,12 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**Δημιουργία σχεδίου εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="425"/>
         <source>**Task plan:**</source>
         <translation>**Σχέδιο εργασιών:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="433"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="446"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Συνέχεια](agent://orch/substask/continue/{subtask_id}) | [Βελτίωση](agent://orch/substask/repeat/{subtask_id}) | [Λεπτομέρειες](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
@@ -779,12 +857,12 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**✨ Τι νέο υπάρχει:** Προστέθηκε πολυτροπική υποστήριξη για τον Αυτοματισμό Ροής Εργασίας.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Task added to favorites successfully.</source>
         <translation>Η εργασία προστέθηκε στα αγαπημένα.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
         <source>**✨ What's New:**</source>
         <translation>**✨ Τι νέο υπάρχει:**</translation>
     </message>
@@ -799,7 +877,7 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**Αγαπημένες Ροές Εργασίας:** Οργανώστε τις αγαπημένες σας ροές εργασίας με Τοπικά Αγαπημένα (αποθηκευμένα ιδιωτικά στη συσκευή σας) και Αγαπημένα Διακομιστή (ροές εργασίας αποθηκευμένες στο cloud, έτοιμες για λήψη στον τοπικό σας χώρο εργασίας ανά πάσα στιγμή).</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="735"/>
         <source>
 
 ———
@@ -831,14 +909,19 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="728"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**Workflow Favorites:** Διατηρήστε οργανωμένα τα αγαπημένα σας workflows με τα Τοπικά Αγαπημένα (αποθηκευμένα ιδιωτικά στη συσκευή σας) και Επίσημα Αγαπημένα (επιμελημένα workflows έτοιμα για λήψη στον τοπικό χώρο εργασίας σας ανά πάσα στιγμή). Τα Επίσημα Αγαπημένα περιλαμβάνουν πλέον έτοιμα workflows για αναζήτηση και φόρτωση δορυφορικών εικόνων κατά απαίτηση μέσω STAC APIs — υποστηρίζοντας τόσο το AWS Earth Search όσο και το Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat και άλλα) — ώστε τα δεδομένα τηλεπισκόπησης να ρέουν απευθείας στην ροή εργασίας σας χωρίς χειροκίνητες λήψεις.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="444"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Συνέχεια](agent://orch/substask/continue/{subtask_id}) | [Επανάληψη](agent://orch/substask/repeat/{subtask_id}) | [Λεπτομέρειες](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="730"/>
+        <source>**Workflow Audit:** Export your workflow audit logs by specific time ranges for better tracking and management.</source>
+        <translation>**Έλεγχος ροής εργασίας:** Εξάγετε τα αρχεία καταγραφής ελέγχου της ροής εργασίας ανά συγκεκριμένα χρονικά εύρη για καλύτερη παρακολούθηση και διαχείριση.</translation>
     </message>
 </context>
 <context>
@@ -1159,9 +1242,9 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="143"/>
+        <location filename="../setting_dialog.py" line="209"/>
         <source>Warning</source>
-        <translation type="obsolete">Προειδοποίηση</translation>
+        <translation>Προειδοποίηση</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
@@ -1184,9 +1267,9 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">Το αίτημά σας ελήφθη. Θα επικοινωνήσουμε μαζί σας μέσω email εντός 24 ωρών. Ελέγξτε τα εισερχόμενά σας αργότερα.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="170"/>
+        <location filename="../setting_dialog.py" line="251"/>
         <source>Error</source>
-        <translation type="obsolete">Σφάλμα</translation>
+        <translation>Σφάλμα</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
@@ -1199,7 +1282,7 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">Σφάλμα δικτύου: ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="140"/>
+        <location filename="../setting_dialog.py" line="144"/>
         <source>Select Temporary Folder</source>
         <translation>Επιλογή Προσωρινού Φακέλου</translation>
     </message>
@@ -1209,7 +1292,7 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">Ωριαία credits υπόλοιπα: -- (Επαναφορά σε --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="100"/>
         <source>Current Plan: Free</source>
         <translation>Τρέχον πακέτο: Δωρεάν</translation>
     </message>
@@ -1219,7 +1302,7 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">Τρέχον πακέτο: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="102"/>
+        <location filename="../setting_dialog.py" line="106"/>
         <source>Current Plan: --</source>
         <translation>Τρέχον πακέτο: --</translation>
     </message>
@@ -1229,29 +1312,64 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">Ωριαία credits υπόλοιπα: {credits} (Επαναφορά σε {minutes} λεπτά).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Missing required fields in response</source>
         <translation>Λείπουν απαιτούμενα πεδία στην απάντηση</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="70"/>
+        <location filename="../setting_dialog.py" line="74"/>
         <source>Credits Left: -- (Resets in --).</source>
         <translation>Μονάδες που απομένουν: -- (Επαναφορά σε --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="105"/>
+        <location filename="../setting_dialog.py" line="109"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Μονάδες που απομένουν: {credits} (Επαναφορά σε {minutes} λεπτά).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: Solo Engineer</source>
         <translation>Τρέχον πακέτο: Solo Engineer</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="104"/>
         <source>Current Plan: Studio</source>
         <translation>Τρέχον πακέτο: Studio</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>Select Audit Logs Export Path</source>
+        <translation>Επιλέξτε διαδρομή εξαγωγής αρχείων καταγραφής ελέγχου</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>ZIP files (*.zip)</source>
+        <translation>Αρχεία ZIP (*.zip)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="199"/>
+        <source>Please enter the email used to purchase the Plan before exporting.</source>
+        <translation>Εισαγάγετε το email που χρησιμοποιήθηκε για την αγορά του προγράμματος πριν από την εξαγωγή.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="209"/>
+        <source>Please select the export file path first.</source>
+        <translation>Επιλέξτε πρώτα τη διαδρομή του αρχείου εξαγωγής.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="251"/>
+        <source>Failed to export audit logs: {error}</source>
+        <translation>Αποτυχία εξαγωγής αρχείων καταγραφής ελέγχου: {error}</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Success</source>
+        <translation>Επιτυχία</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Audit logs exported successfully to {path}.</source>
+        <translation>Τα αρχεία καταγραφής ελέγχου εξήχθησαν με επιτυχία στο {path}.</translation>
     </message>
 </context>
 <context>

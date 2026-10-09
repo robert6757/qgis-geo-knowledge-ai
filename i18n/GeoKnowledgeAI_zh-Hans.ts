@@ -24,17 +24,17 @@
         <translation>**开始全自动执行任务计划：**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="280"/>
+        <location filename="../orch_manager.py" line="281"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[警告] 跳过未找到子任务 [{}]。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="287"/>
+        <location filename="../orch_manager.py" line="288"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[警告]子任务 [{1}] 所依赖的任务 [{0}] 未完成。请尝试继续执行。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="268"/>
+        <location filename="../orch_manager.py" line="269"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**开始单步执行任务计划：**</translation>
     </message>
@@ -44,27 +44,27 @@
         <translation type="obsolete">开始执行子任务：</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="385"/>
+        <location filename="../orch_manager.py" line="386"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[已完成] 子任务 [{}] 执行成功。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="398"/>
+        <location filename="../orch_manager.py" line="399"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[失败] 子任务 [{}] 的执行结果未达到预期。{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="404"/>
+        <location filename="../orch_manager.py" line="405"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[失败] 子任务 [{}] 执行失败：[{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="717"/>
+        <location filename="../orch_manager.py" line="669"/>
         <source>Error: No subtask execution result.</source>
         <translation>错误：未找到子任务执行结果。</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="673"/>
         <source>**Summary of tasks:**</source>
         <translation>**任务总结：**</translation>
     </message>
@@ -89,19 +89,24 @@
         <translation type="obsolete">[优化] 子任务 [{}] 需要进一步调整：{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="392"/>
+        <location filename="../orch_manager.py" line="393"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[待优化] 子任务 [{}] 需要进一步调整：{}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="258"/>
+        <location filename="../orch_manager.py" line="259"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>正在优化子任务 [{}]... (第 {}/{} 次尝试)</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="354"/>
+        <location filename="../orch_manager.py" line="355"/>
         <source>Start executing the subtask: </source>
         <translation>开始执行子任务：</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
+        <translation>[警告] 子任务 [{}] 所依赖的任务 [{}] 执行失败，跳过当前子任务。</translation>
     </message>
 </context>
 <context>
@@ -142,7 +147,12 @@
     <message>
         <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Regenerate](agent://repeat)</source>
-        <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat)</translation>
+        <translation type="obsolete">以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [重新生成](agent://repeat)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="139"/>
+        <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2) | [Regenerate](agent://repeat)</source>
+        <translation>以上回答对您有帮助吗：[有用](agent://feedback/5) | [没用](agent://feedback/1) | [反馈](agent://feedback/2) | [重新生成](agent://repeat)</translation>
     </message>
 </context>
 <context>
@@ -181,17 +191,17 @@
         <translation type="obsolete">申请</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="226"/>
+        <location filename="../setting_dialog.ui" line="362"/>
         <source>OK</source>
         <translation>确定</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="236"/>
+        <location filename="../setting_dialog.ui" line="372"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="199"/>
+        <location filename="../setting_dialog.ui" line="335"/>
         <source>Get Help</source>
         <translation>获得帮助</translation>
     </message>
@@ -201,7 +211,7 @@
         <translation type="obsolete">高速通道</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="85"/>
+        <location filename="../setting_dialog.ui" line="91"/>
         <source>Multi-Turn Conversation</source>
         <translation>多轮对话</translation>
     </message>
@@ -211,22 +221,22 @@
         <translation type="obsolete">默认最大对话轮数为2轮。过大的对话轮数会导致话题分散。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="96"/>
+        <location filename="../setting_dialog.ui" line="102"/>
         <source>Turn Limit：</source>
         <translation>对话轮数上限：</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="110"/>
+        <location filename="../setting_dialog.ui" line="116"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="115"/>
+        <location filename="../setting_dialog.ui" line="121"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="120"/>
+        <location filename="../setting_dialog.ui" line="126"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -266,22 +276,22 @@
         <translation type="obsolete">链式推理</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="125"/>
+        <location filename="../setting_dialog.ui" line="131"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="130"/>
+        <location filename="../setting_dialog.ui" line="136"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="140"/>
+        <location filename="../setting_dialog.ui" line="146"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>默认的最大对话轮数为 3。过多的对话轮数可能会导致话题偏离主题。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="153"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary Folder</source>
         <translation>临时文件夹</translation>
     </message>
@@ -291,17 +301,17 @@
         <translation type="obsolete">临时文件夹用于存放数据下载或分析过程中产生的中间文件。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="270"/>
         <source>Path:</source>
         <translation>路径：</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="187"/>
+        <location filename="../setting_dialog.ui" line="294"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="20"/>
+        <location filename="../setting_dialog.ui" line="26"/>
         <source>Current Plan: Free</source>
         <translation>当前套餐：免费</translation>
     </message>
@@ -321,7 +331,7 @@
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;访&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;问 &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;企业版解决方案&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; 了解详情，或输入您的电子邮箱并点击“提交”以申请我们的企业版套餐——我们的团队将在 24 小时内与您联系。&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="26"/>
+        <location filename="../setting_dialog.ui" line="32"/>
         <source>Credits Left: 0 (Resets in 0m).</source>
         <translation>剩余额度：0（0 分钟后重置）。</translation>
     </message>
@@ -331,24 +341,44 @@
         <translation>Geo Knowledge AI 设置</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="38"/>
+        <location filename="../setting_dialog.ui" line="44"/>
         <source>Email：</source>
         <translation>电子邮件：</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="48"/>
+        <location filename="../setting_dialog.ui" line="54"/>
         <source>Enter your purchase email (Optional)</source>
         <translation>请输入购买邮箱（可选）</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="66"/>
+        <location filename="../setting_dialog.ui" line="72"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;访问我们的网站了解 &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;订阅计划&lt;/span&gt;&lt;/a&gt;，以提高每个重置周期的额度上限。 &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="159"/>
+        <location filename="../setting_dialog.ui" line="165"/>
         <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
         <translation>临时文件夹用于存放数据下载或分析过程中产生的中间文件。</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="211"/>
+        <source>Export Workflow Audit Logs</source>
+        <translation>导出工作流审计日志</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="223"/>
+        <source>Time Range:</source>
+        <translation>时间范围：</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="242"/>
+        <source>~</source>
+        <translation>~</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="325"/>
+        <source>Export</source>
+        <translation>导出</translation>
     </message>
 </context>
 <context>
@@ -387,6 +417,54 @@
         <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>工作流详情：</translation>
+    </message>
+</context>
+<context>
+    <name>FeedbackDialog</name>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Please describe your issue before submitting.</source>
+        <translation>请先描述您遇到的问题再提交。</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="14"/>
+        <source>Submit Feedback</source>
+        <translation>提交反馈</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="20"/>
+        <source>Please describe your issue:</source>
+        <translation>请描述您遇到的问题：</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="27"/>
+        <source>Tell us what went wrong, or how we can improve this answer...</source>
+        <translation>请告诉我们出了什么问题，或我们如何改进此回答...</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="34"/>
+        <source>Contact Email (Optional):</source>
+        <translation>联系邮箱（选填）：</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="41"/>
+        <source>Enter your email if you&apos;d like a reply</source>
+        <translation>如需回复，请输入您的邮箱</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="61"/>
+        <source>Submit</source>
+        <translation>提交</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="68"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -438,47 +516,47 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation>否</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="513"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="526"/>
         <source>**Question:</source>
         <translation>**问题：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="514"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="527"/>
         <source>**Answer:</source>
         <translation>**回答：</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="600"/>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="629"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="642"/>
         <source>Send</source>
         <translation>发送</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Tip</source>
         <translation>提示</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="229"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="242"/>
         <source>Thank you for your feedback.</source>
         <translation>感谢您的反馈！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>您的反馈提交失败，请稍后再试。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="251"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
@@ -493,27 +571,27 @@ CAUTION: Despite our STRICT restrictions on LLMs, the generated code is not comp
         <translation type="obsolete">代码执行中...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="273"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="286"/>
         <source>Success</source>
         <translation>成功</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="281"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="294"/>
         <source>Auto-Fix</source>
         <translation>自动修复</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="290"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="303"/>
         <source>Code Copied Successfully!</source>
         <translation>代码复制成功！</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>RuntimeError</source>
         <translation>运行错误</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>Cannot find processing: </source>
         <translation>无法找到进程: </translation>
     </message>
@@ -711,17 +789,17 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="334"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="347"/>
         <source>Only the current subtask can be continued.</source>
         <translation>只能对当前子任务执行[继续]。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>只能对当前子任务执行[重试]。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="419"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="432"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[单步执行](agent://orch/substask/step) | [全自动执行](agent://orch/substask/automate)</translation>
     </message>
@@ -731,7 +809,7 @@ Additionally, I will guide you through essential tools like GDAL, GRASS, and SAG
         <translation type="obsolete">[继续](agent://orch/substask/continue/{subtask_id}) | [重做](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="722"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -773,12 +851,12 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**正在生成任务计划：**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="425"/>
         <source>**Task plan:**</source>
         <translation>**任务计划:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="433"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="446"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [优化](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
@@ -788,12 +866,12 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**✨ 更新内容：** 为自动化工作流添加了多模态支持。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Task added to favorites successfully.</source>
         <translation>任务已成功添加到收藏夹中。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
         <source>**✨ What's New:**</source>
         <translation>**✨ 新功能：**</translation>
     </message>
@@ -808,7 +886,7 @@ Tip: **Workflow Automation** can handle complex tasks either fully automatically
         <translation type="obsolete">**工作流收藏夹：** 将常用工作流存储于本地或下载服务器中的其他工作流。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="735"/>
         <source>
 
 ———
@@ -840,14 +918,19 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="728"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**工作流收藏夹：** 使用本地收藏夹（仅存储在您的设备上）和官方收藏夹（精选工作流，可随时下载到本地工作空间）来管理您使用的工作流。官方收藏夹现已内置现成的工作流，可通过 STAC API 按需搜索并加载卫星影像 —— 同时支持 AWS Earth Search 与 Microsoft Planetary Computer（Sentinel-1、Sentinel-2、Landsat 等），让遥感数据无需手动下载即可直接接入您的处理流程。</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="444"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[继续](agent://orch/substask/continue/{subtask_id}) | [重试](agent://orch/substask/repeat/{subtask_id}) | [详情](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="730"/>
+        <source>**Workflow Audit:** Export your workflow audit logs by specific time ranges for better tracking and management.</source>
+        <translation>**工作流审计：** 按特定时间范围导出工作流审计日志，以便更好地跟踪和管理。</translation>
     </message>
 </context>
 <context>
@@ -1168,9 +1251,9 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="143"/>
+        <location filename="../setting_dialog.py" line="209"/>
         <source>Warning</source>
-        <translation type="obsolete">警告</translation>
+        <translation>警告</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
@@ -1193,9 +1276,9 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">您的申请已送达，我们将会在24小时内回复您。请稍后查收。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="170"/>
+        <location filename="../setting_dialog.py" line="251"/>
         <source>Error</source>
-        <translation type="obsolete">错误</translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
@@ -1208,7 +1291,7 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">网络错误：请检查您的网络连接后，再次尝试。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="140"/>
+        <location filename="../setting_dialog.py" line="144"/>
         <source>Select Temporary Folder</source>
         <translation>选择临时文件夹</translation>
     </message>
@@ -1218,7 +1301,7 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">每小时剩余额度：--（-- 后重置）。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="100"/>
         <source>Current Plan: Free</source>
         <translation>当前套餐：免费</translation>
     </message>
@@ -1228,7 +1311,7 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">当前套餐：企业版</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="102"/>
+        <location filename="../setting_dialog.py" line="106"/>
         <source>Current Plan: --</source>
         <translation>当前套餐：--</translation>
     </message>
@@ -1238,29 +1321,64 @@ By asking a question, you acknowledge that you have read and agreed to the [Priv
         <translation type="obsolete">每小时剩余额度：{credits}（{minutes} 分钟后重置）。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Missing required fields in response</source>
         <translation>响应中缺少必填字段</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="70"/>
+        <location filename="../setting_dialog.py" line="74"/>
         <source>Credits Left: -- (Resets in --).</source>
         <translation>剩余额度：--（-- 后重置）。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="105"/>
+        <location filename="../setting_dialog.py" line="109"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>剩余额度：{credits}（{minutes} 分钟后重置）。</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: Solo Engineer</source>
         <translation>当前套餐：Solo Engineer</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="104"/>
         <source>Current Plan: Studio</source>
         <translation>当前套餐：Studio</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>Select Audit Logs Export Path</source>
+        <translation>选择审计日志导出路径</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>ZIP files (*.zip)</source>
+        <translation>ZIP 文件 (*.zip)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="199"/>
+        <source>Please enter the email used to purchase the Plan before exporting.</source>
+        <translation>导出前请输入购买套餐所用的邮箱。</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="209"/>
+        <source>Please select the export file path first.</source>
+        <translation>请先选择导出文件路径。</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="251"/>
+        <source>Failed to export audit logs: {error}</source>
+        <translation>导出审计日志失败：{error}</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Success</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Audit logs exported successfully to {path}.</source>
+        <translation>审计日志已成功导出到 {path}。</translation>
     </message>
 </context>
 <context>

@@ -24,17 +24,17 @@
         <translation>**Starta automatisk körning av uppgiftsplanen:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="280"/>
+        <location filename="../orch_manager.py" line="281"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[VARNING] Deluppgift [{}] hittades inte, hoppa över.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="287"/>
+        <location filename="../orch_manager.py" line="288"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[VARNING] Beroendet [{}] av deluppgift [{}] är ofullständigt. Försök fortsätta.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="268"/>
+        <location filename="../orch_manager.py" line="269"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Starta steg-för-steg-körning av uppgiftsplanen:**</translation>
     </message>
@@ -44,27 +44,27 @@
         <translation type="obsolete">Starta körning av deluppgiften:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="385"/>
+        <location filename="../orch_manager.py" line="386"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Slutförd] Deluppgift [{}] kördes framgångsrikt.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="398"/>
+        <location filename="../orch_manager.py" line="399"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Misslyckades] Resultatet av deluppgift [{}] motsvarade inte förväntningarna. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="404"/>
+        <location filename="../orch_manager.py" line="405"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Misslyckades] Deluppgift [{}] kunde inte köras: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="717"/>
+        <location filename="../orch_manager.py" line="669"/>
         <source>Error: No subtask execution result.</source>
         <translation>Fel: Inget körningsresultat för deluppgift.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="673"/>
         <source>**Summary of tasks:**</source>
         <translation>**Sammanfattning av uppgifter:**</translation>
     </message>
@@ -89,19 +89,24 @@
         <translation type="obsolete">[Förfinad] Deluppgift [{}] behöver ytterligare justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="392"/>
+        <location filename="../orch_manager.py" line="393"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Oförfinad] Deluppgift [{}] behöver ytterligare justering: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="258"/>
+        <location filename="../orch_manager.py" line="259"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Förfinar deluppgift [{}]... (Försök {}/{})</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="354"/>
+        <location filename="../orch_manager.py" line="355"/>
         <source>Start executing the subtask: </source>
         <translation>Starta körning av deluppgiften: </translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
+        <translation>[VARNING] Beroendet [{}] av deluppgift [{}] misslyckades. Hoppar över den aktuella deluppgiften.</translation>
     </message>
 </context>
 <context>
@@ -142,7 +147,12 @@
     <message>
         <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Regenerate](agent://repeat)</source>
-        <translation>Var detta svar användbart? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Regenerera](agent://repeat)</translation>
+        <translation type="obsolete">Var detta svar användbart? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Generera igen](agent://repeat)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="139"/>
+        <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2) | [Regenerate](agent://repeat)</source>
+        <translation>Var detta svar användbart? [Ja](agent://feedback/5) | [Nej](agent://feedback/1) | [Feedback](agent://feedback/2) | [Generera igen](agent://repeat)</translation>
     </message>
 </context>
 <context>
@@ -181,17 +191,17 @@
         <translation type="obsolete">Ansök</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="226"/>
+        <location filename="../setting_dialog.ui" line="362"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="236"/>
+        <location filename="../setting_dialog.ui" line="372"/>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="199"/>
+        <location filename="../setting_dialog.ui" line="335"/>
         <source>Get Help</source>
         <translation>Få hjälp</translation>
     </message>
@@ -201,7 +211,7 @@
         <translation type="obsolete">Höghastighetskanal</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="85"/>
+        <location filename="../setting_dialog.ui" line="91"/>
         <source>Multi-Turn Conversation</source>
         <translation>Konversation med flera turer</translation>
     </message>
@@ -211,22 +221,22 @@
         <translation type="obsolete">Standardmaxantalet konversationsturer är 2. Långa konversationer kan göra att ämnet blir mindre fokuserat.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="96"/>
+        <location filename="../setting_dialog.ui" line="102"/>
         <source>Turn Limit：</source>
         <translation>Turgräns:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="110"/>
+        <location filename="../setting_dialog.ui" line="116"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="115"/>
+        <location filename="../setting_dialog.ui" line="121"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="120"/>
+        <location filename="../setting_dialog.ui" line="126"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -266,22 +276,22 @@
         <translation type="obsolete">Tankekedjeresonemang</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="125"/>
+        <location filename="../setting_dialog.ui" line="131"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="130"/>
+        <location filename="../setting_dialog.ui" line="136"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="140"/>
+        <location filename="../setting_dialog.ui" line="146"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>Standardgränsen är 3 konversationsturer för att hålla diskussionen fokuserad på ämnet.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="153"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary Folder</source>
         <translation>Temporär mapp</translation>
     </message>
@@ -291,17 +301,17 @@
         <translation type="obsolete">Temporära mappar används för att lagra mellanfiler under datanedladdnings- eller analysprocessen.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="270"/>
         <source>Path:</source>
         <translation>Sökväg:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="187"/>
+        <location filename="../setting_dialog.ui" line="294"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="20"/>
+        <location filename="../setting_dialog.ui" line="26"/>
         <source>Current Plan: Free</source>
         <translation>Nuvarande plan: Gratis</translation>
     </message>
@@ -321,7 +331,7 @@
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;B&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;esök &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Enterprise-lösningar&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; för att lära dig mer, eller ange din e-post och klicka på 'Skicka' för att begära vår Enterprise-plan—vårt team kommer att kontakta dig inom 24 timmar.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="26"/>
+        <location filename="../setting_dialog.ui" line="32"/>
         <source>Credits Left: 0 (Resets in 0m).</source>
         <translation>Krediter kvar: 0 (Återställs om 0 min).</translation>
     </message>
@@ -331,24 +341,44 @@
         <translation>Geo Knowledge AI-inställningar</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="38"/>
+        <location filename="../setting_dialog.ui" line="44"/>
         <source>Email：</source>
         <translation>E-post:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="48"/>
+        <location filename="../setting_dialog.ui" line="54"/>
         <source>Enter your purchase email (Optional)</source>
         <translation>Ange e-postadress för köp (valfritt)</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="66"/>
+        <location filename="../setting_dialog.ui" line="72"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Besök vår webbplats för att utforska &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;flexibla abonnemang&lt;/span&gt;&lt;/a&gt; och öka din kreditgräns per återställningscykel. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="159"/>
+        <location filename="../setting_dialog.ui" line="165"/>
         <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
         <translation>Den temporära mappen används för att lagra mellanfiler under nedladdning eller analys av data.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="211"/>
+        <source>Export Workflow Audit Logs</source>
+        <translation>Exportera arbetsflödesgranskningsloggar</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="223"/>
+        <source>Time Range:</source>
+        <translation>Tidsintervall:</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="242"/>
+        <source>~</source>
+        <translation>~</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="325"/>
+        <source>Export</source>
+        <translation>Exportera</translation>
     </message>
 </context>
 <context>
@@ -387,6 +417,54 @@
         <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>Workflow-detaljer:</translation>
+    </message>
+</context>
+<context>
+    <name>FeedbackDialog</name>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Warning</source>
+        <translation>Varning</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Please describe your issue before submitting.</source>
+        <translation>Beskriv ditt problem innan du skickar.</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="14"/>
+        <source>Submit Feedback</source>
+        <translation>Skicka feedback</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="20"/>
+        <source>Please describe your issue:</source>
+        <translation>Beskriv ditt problem:</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="27"/>
+        <source>Tell us what went wrong, or how we can improve this answer...</source>
+        <translation>Berätta vad som gick fel eller hur vi kan förbättra detta svar...</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="34"/>
+        <source>Contact Email (Optional):</source>
+        <translation>Kontakt-e-post (valfritt):</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="41"/>
+        <source>Enter your email if you&apos;d like a reply</source>
+        <translation>Ange din e-post om du vill ha ett svar</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="61"/>
+        <source>Submit</source>
+        <translation>Skicka</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="68"/>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -438,47 +516,47 @@ FÖRSIKTIGHET: Trots våra STRENGA begränsningar för LLM är den genererade ko
         <translation>Nej</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="513"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="526"/>
         <source>**Question:</source>
         <translation>**Fråga:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="514"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="527"/>
         <source>**Answer:</source>
         <translation>**Svar:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="600"/>
         <source>Stop</source>
         <translation>Stoppa</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="629"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="642"/>
         <source>Send</source>
         <translation>Skicka</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Tip</source>
         <translation>Tips</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="229"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="242"/>
         <source>Thank you for your feedback.</source>
         <translation>Tack för din feedback!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Error</source>
         <translation>Fel</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Det gick inte att skicka din feedback. Försök igen senare.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="251"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Nätverksfel: kontrollera din anslutning och försök igen.</translation>
     </message>
@@ -493,27 +571,27 @@ FÖRSIKTIGHET: Trots våra STRENGA begränsningar för LLM är den genererade ko
         <translation type="obsolete">Kodkörning startad i bakgrunden...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="273"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="286"/>
         <source>Success</source>
         <translation>Framgång</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="281"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="294"/>
         <source>Auto-Fix</source>
         <translation>Automatisk korrigering</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="290"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="303"/>
         <source>Code Copied Successfully!</source>
         <translation>Kod kopierad framgångsrikt!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>RuntimeError</source>
         <translation>Körningsfel</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>Cannot find processing: </source>
         <translation>Kan inte hitta bearbetning: </translation>
     </message>
@@ -704,17 +782,17 @@ Jag är din GIS AI-assistent och erbjuder tre agenter: **kunskaps-F&amp;S-agent*
 Dessutom kommer jag att guida dig genom viktiga verktyg som GDAL, GRASS och SAGA för att göra din rumsliga analys mer effektiv och intelligent.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="334"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="347"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Endast den aktuella deluppgiften kan fortsättas.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Endast den aktuella deluppgiften kan upprepas.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="419"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="432"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Steg för steg](agent://orch/substask/step) | [Automatisera alla](agent://orch/substask/automate)</translation>
     </message>
@@ -724,7 +802,7 @@ Dessutom kommer jag att guida dig genom viktiga verktyg som GDAL, GRASS och SAGA
         <translation type="obsolete">[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Upprepa](agent://orch/substask/repeat/{subtask_id}) | [Detalj](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="722"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -764,12 +842,12 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
         <translation type="obsolete">**Genererar uppgiftsplan:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="425"/>
         <source>**Task plan:**</source>
         <translation>**Uppgiftsplan:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="433"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="446"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Förfina](agent://orch/substask/repeat/{subtask_id}) | [Detalj](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
@@ -779,12 +857,12 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
         <translation type="obsolete">**✨ Vad är nytt:** Lagt till multimodalt stöd för arbetsflödesautomatisering.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Task added to favorites successfully.</source>
         <translation>Uppgift tillagd i favoriter.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
         <source>**✨ What's New:**</source>
         <translation>**✨ Nyheter:**</translation>
     </message>
@@ -799,7 +877,7 @@ Tips: **Workflow-automatisering** kan hantera komplexa uppgifter antingen helt a
         <translation type="obsolete">**Arbetsflödesfavoriter:** Håll dina favoritarbetsflöden organiserade med Lokala favoriter (lagras privat på din enhet) och Serverfavoriter (arbetsflöden lagrade i molnet, redo att laddas ner till din lokala arbetsyta när som helst).</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="735"/>
         <source>
 
 ———
@@ -831,14 +909,19 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="728"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**Workflow-favoriter:** Håll dina favorit-workflows organiserade med lokala favoriter (lagrade privat på din enhet) och officiella favoriter (kurerade workflows redo att laddas ner till din lokala arbetsyta när som helst). Officiella favoriter inkluderar nu färdiga workflows för att söka efter och ladda satellitbilder på begäran via STAC API:er — med stöd för både AWS Earth Search och Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat med flera) — så att fjärranalysdata flödar direkt in i din pipeline utan manuella nedladdningar.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="444"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Fortsätt](agent://orch/substask/continue/{subtask_id}) | [Försök igen](agent://orch/substask/repeat/{subtask_id}) | [Detaljer](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="730"/>
+        <source>**Workflow Audit:** Export your workflow audit logs by specific time ranges for better tracking and management.</source>
+        <translation>**Arbetsflödesgranskning:** Exportera dina arbetsflödesgranskningsloggar efter specifika tidsintervall för bättre spårning och hantering.</translation>
     </message>
 </context>
 <context>
@@ -1159,9 +1242,9 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="143"/>
+        <location filename="../setting_dialog.py" line="209"/>
         <source>Warning</source>
-        <translation type="obsolete">Varning</translation>
+        <translation>Varning</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
@@ -1184,9 +1267,9 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
         <translation type="obsolete">Din begäran har tagits emot. Vi återkommer via e-post inom 24 timmar. Kontrollera din inkorg senare.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="170"/>
+        <location filename="../setting_dialog.py" line="251"/>
         <source>Error</source>
-        <translation type="obsolete">Fel</translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
@@ -1199,7 +1282,7 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
         <translation type="obsolete">Nätverksfel: kontrollera din anslutning och försök igen.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="140"/>
+        <location filename="../setting_dialog.py" line="144"/>
         <source>Select Temporary Folder</source>
         <translation>Välj temporär mapp</translation>
     </message>
@@ -1209,7 +1292,7 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
         <translation type="obsolete">Timvisa krediter kvar: -- (Återställs om --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="100"/>
         <source>Current Plan: Free</source>
         <translation>Nuvarande plan: Gratis</translation>
     </message>
@@ -1219,7 +1302,7 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
         <translation type="obsolete">Nuvarande plan: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="102"/>
+        <location filename="../setting_dialog.py" line="106"/>
         <source>Current Plan: --</source>
         <translation>Nuvarande plan: --</translation>
     </message>
@@ -1229,29 +1312,64 @@ Genom att ställa en fråga bekräftar du att du har läst och godkänt [Integri
         <translation type="obsolete">Timvisa krediter kvar: {credits} (Återställs om {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Missing required fields in response</source>
         <translation>Obligatoriska fält saknas i svar</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="70"/>
+        <location filename="../setting_dialog.py" line="74"/>
         <source>Credits Left: -- (Resets in --).</source>
         <translation>Krediter kvar: -- (Återställs om --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="105"/>
+        <location filename="../setting_dialog.py" line="109"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Krediter kvar: {credits} (Återställs om {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: Solo Engineer</source>
         <translation>Nuvarande plan: Solo Engineer</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="104"/>
         <source>Current Plan: Studio</source>
         <translation>Nuvarande plan: Studio</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>Select Audit Logs Export Path</source>
+        <translation>Välj exportplats för granskningsloggar</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>ZIP files (*.zip)</source>
+        <translation>ZIP-filer (*.zip)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="199"/>
+        <source>Please enter the email used to purchase the Plan before exporting.</source>
+        <translation>Ange e-postadressen som användes för att köpa planen innan du exporterar.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="209"/>
+        <source>Please select the export file path first.</source>
+        <translation>Välj exportfilens sökväg först.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="251"/>
+        <source>Failed to export audit logs: {error}</source>
+        <translation>Det gick inte att exportera granskningsloggar: {error}</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Success</source>
+        <translation>Framgång</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Audit logs exported successfully to {path}.</source>
+        <translation>Granskningsloggar exporterades till {path}.</translation>
     </message>
 </context>
 <context>

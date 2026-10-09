@@ -24,17 +24,17 @@
         <translation>**Rozpocznij automatyczne wykonanie planu zadań:**</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="280"/>
+        <location filename="../orch_manager.py" line="281"/>
         <source>[WARNING] Subtask [{}] not found, skip.</source>
         <translation>[OSTRZEŻENIE] Podzadanie [{}] nie znalezione, pomijanie.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="287"/>
+        <location filename="../orch_manager.py" line="288"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] is incomplete. Try to continue execution.</source>
         <translation>[OSTRZEŻENIE] Zależność [{}] podzadania [{}] jest niekompletna. Próba kontynuacji.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="268"/>
+        <location filename="../orch_manager.py" line="269"/>
         <source>**Start step-by-step execution of the task plan:**</source>
         <translation>**Rozpocznij wykonanie planu zadań krok po kroku:**</translation>
     </message>
@@ -44,27 +44,27 @@
         <translation type="obsolete">Rozpoczęcie wykonywania podzadania:</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="385"/>
+        <location filename="../orch_manager.py" line="386"/>
         <source>[Completed] Subtask [{}] executed successfully.</source>
         <translation>[Zakończono] Podzadanie [{}] wykonane pomyślnie.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="398"/>
+        <location filename="../orch_manager.py" line="399"/>
         <source>[Failure] The execution result of subtask [{}] did not meet expectations. {}</source>
         <translation>[Niepowodzenie] Wynik podzadania [{}] nie spełnił oczekiwań. {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="404"/>
+        <location filename="../orch_manager.py" line="405"/>
         <source>[Failure] Subtask [{}] failed to execute: [{}]</source>
         <translation>[Niepowodzenie] Wykonanie podzadania [{}] nie powiodło się: [{}]</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="717"/>
+        <location filename="../orch_manager.py" line="669"/>
         <source>Error: No subtask execution result.</source>
         <translation>Błąd: Brak wyniku wykonania podzadania.</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="721"/>
+        <location filename="../orch_manager.py" line="673"/>
         <source>**Summary of tasks:**</source>
         <translation>**Podsumowanie zadań:**</translation>
     </message>
@@ -89,19 +89,24 @@
         <translation type="obsolete">[Ulepszone] Podzadanie [{}] wymaga dalszej korekty: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="392"/>
+        <location filename="../orch_manager.py" line="393"/>
         <source>[Unrefined] Subtask [{}] needs further adjustment: {}</source>
         <translation>[Nieulepszone] Podzadanie [{}] wymaga dalszej korekty: {}</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="258"/>
+        <location filename="../orch_manager.py" line="259"/>
         <source>Refining sub-task [{}]... (Attempt {}/{})</source>
         <translation>Ulepszanie podzadania [{}]... (Próba {}/{})</translation>
     </message>
     <message>
-        <location filename="../orch_manager.py" line="354"/>
+        <location filename="../orch_manager.py" line="355"/>
         <source>Start executing the subtask: </source>
         <translation>Rozpoczęcie wykonywania podzadania: </translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
+        <translation>[OSTRZEŻENIE] Zależność [{}] podzadania [{}] nie powiodła się. Pomijanie bieżącego podzadania.</translation>
     </message>
 </context>
 <context>
@@ -142,7 +147,12 @@
     <message>
         <location filename="../chatbot_browser.py" line="139"/>
         <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Regenerate](agent://repeat)</source>
-        <translation>Czy ta odpowiedź była pomocna? [Tak](agent://feedback/5) | [Nie](agent://feedback/1) | [Wygeneruj ponownie](agent://repeat)</translation>
+        <translation type="obsolete">Czy ta odpowiedź była pomocna? [Tak](agent://feedback/5) | [Nie](agent://feedback/1) | [Wygeneruj ponownie](agent://repeat)</translation>
+    </message>
+    <message>
+        <location filename="../chatbot_browser.py" line="139"/>
+        <source>Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2) | [Regenerate](agent://repeat)</source>
+        <translation>Czy ta odpowiedź była pomocna? [Tak](agent://feedback/5) | [Nie](agent://feedback/1) | [Opinia](agent://feedback/2) | [Wygeneruj ponownie](agent://repeat)</translation>
     </message>
 </context>
 <context>
@@ -181,17 +191,17 @@
         <translation type="obsolete">Poproś</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="226"/>
+        <location filename="../setting_dialog.ui" line="362"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="236"/>
+        <location filename="../setting_dialog.ui" line="372"/>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="199"/>
+        <location filename="../setting_dialog.ui" line="335"/>
         <source>Get Help</source>
         <translation>Uzyskaj pomoc</translation>
     </message>
@@ -201,7 +211,7 @@
         <translation type="obsolete">Kanał szybkiej transmisji</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="85"/>
+        <location filename="../setting_dialog.ui" line="91"/>
         <source>Multi-Turn Conversation</source>
         <translation>Rozmowa wieloobrotowa</translation>
     </message>
@@ -211,22 +221,22 @@
         <translation type="obsolete">Domyślna maksymalna liczba tur rozmowy to 2. Długie rozmowy mogą spowodować utratę skupienia na temacie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="96"/>
+        <location filename="../setting_dialog.ui" line="102"/>
         <source>Turn Limit：</source>
         <translation>Limit tur:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="110"/>
+        <location filename="../setting_dialog.ui" line="116"/>
         <source>1</source>
         <translation>1</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="115"/>
+        <location filename="../setting_dialog.ui" line="121"/>
         <source>2</source>
         <translation>2</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="120"/>
+        <location filename="../setting_dialog.ui" line="126"/>
         <source>3</source>
         <translation>3</translation>
     </message>
@@ -266,22 +276,22 @@
         <translation type="obsolete">Rozumowanie łańcucha myśli</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="125"/>
+        <location filename="../setting_dialog.ui" line="131"/>
         <source>4</source>
         <translation>4</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="130"/>
+        <location filename="../setting_dialog.ui" line="136"/>
         <source>5</source>
         <translation>5</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="140"/>
+        <location filename="../setting_dialog.ui" line="146"/>
         <source>The default limit is 3 conversation turns to help keep the discussion on topic.</source>
         <translation>Domyślny limit to 3 tury rozmowy, aby utrzymać dyskusję na temacie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="153"/>
+        <location filename="../setting_dialog.ui" line="159"/>
         <source>Temporary Folder</source>
         <translation>Folder Tymczasowy</translation>
     </message>
@@ -291,17 +301,17 @@
         <translation type="obsolete">Foldery tymczasowe są wykorzystywane do przechowywania plików pośrednich podczas procesu pobierania lub analizy danych.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="171"/>
+        <location filename="../setting_dialog.ui" line="270"/>
         <source>Path:</source>
         <translation>Ścieżka:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="187"/>
+        <location filename="../setting_dialog.ui" line="294"/>
         <source>...</source>
         <translation>...</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="20"/>
+        <location filename="../setting_dialog.ui" line="26"/>
         <source>Current Plan: Free</source>
         <translation>Aktualny plan: Bezpłatny</translation>
     </message>
@@ -321,7 +331,7 @@
         <translation type="obsolete">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;O&lt;/span&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt;dwiedź &lt;/span&gt;&lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Rozwiązania Enterprise&lt;/span&gt;&lt;/a&gt;&lt;a name=&quot;model-response-message-contentr_af376c2a134f715d&quot;/&gt;&lt;span style=&quot; font-family:'Google Sans 58','sans-serif';&quot;&gt; aby dowiedzieć się więcej, lub wpisz swój e-mail i kliknij 'Prześlij', aby poprosić o nasz plan Enterprise—nasz zespół skontaktuje się z Tobą w ciągu 24 godzin.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="26"/>
+        <location filename="../setting_dialog.ui" line="32"/>
         <source>Credits Left: 0 (Resets in 0m).</source>
         <translation>Pozostałe kredyty: 0 (Reset za 0 min).</translation>
     </message>
@@ -331,24 +341,44 @@
         <translation>Ustawienia Geo Knowledge AI</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="38"/>
+        <location filename="../setting_dialog.ui" line="44"/>
         <source>Email：</source>
         <translation>E-mail:</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="48"/>
+        <location filename="../setting_dialog.ui" line="54"/>
         <source>Enter your purchase email (Optional)</source>
         <translation>Wprowadź e-mail zakupu (opcjonalnie)</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="66"/>
+        <location filename="../setting_dialog.ui" line="72"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Visit our website to explore &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Flexible Plans&lt;/span&gt;&lt;/a&gt; and increase your credit limit per reset cycle. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Odwiedź naszą stronę, aby poznać &lt;a href=&quot;https://www.geoknowledgeai.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;elastyczne plany&lt;/span&gt;&lt;/a&gt; i zwiększyć limit kredytów na cykl resetowania. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.ui" line="159"/>
+        <location filename="../setting_dialog.ui" line="165"/>
         <source>The temporary folder is used to store intermediate files during the data download or analysis process.</source>
         <translation>Folder tymczasowy służy do przechowywania plików pośrednich podczas pobierania danych lub procesu analizy.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="211"/>
+        <source>Export Workflow Audit Logs</source>
+        <translation>Eksportuj dzienniki audytu przepływu pracy</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="223"/>
+        <source>Time Range:</source>
+        <translation>Zakres czasu:</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="242"/>
+        <source>~</source>
+        <translation>~</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.ui" line="325"/>
+        <source>Export</source>
+        <translation>Eksportuj</translation>
     </message>
 </context>
 <context>
@@ -387,6 +417,54 @@
         <location filename="../orch_favorites_dialog.ui" line="123"/>
         <source>Workflow Detail:</source>
         <translation>Szczegóły przepływu pracy:</translation>
+    </message>
+</context>
+<context>
+    <name>FeedbackDialog</name>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Warning</source>
+        <translation>Ostrzeżenie</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.py" line="54"/>
+        <source>Please describe your issue before submitting.</source>
+        <translation>Opisz swój problem przed wysłaniem.</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="14"/>
+        <source>Submit Feedback</source>
+        <translation>Prześlij opinię</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="20"/>
+        <source>Please describe your issue:</source>
+        <translation>Opisz swój problem:</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="27"/>
+        <source>Tell us what went wrong, or how we can improve this answer...</source>
+        <translation>Powiedz nam, co poszło nie tak lub jak możemy ulepszyć tę odpowiedź...</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="34"/>
+        <source>Contact Email (Optional):</source>
+        <translation>E-mail kontaktowy (opcjonalnie):</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="41"/>
+        <source>Enter your email if you&apos;d like a reply</source>
+        <translation>Wpisz swój adres e-mail, jeśli chcesz otrzymać odpowiedź</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="61"/>
+        <source>Submit</source>
+        <translation>Prześlij</translation>
+    </message>
+    <message>
+        <location filename="../feedback_dialog.ui" line="68"/>
+        <source>Cancel</source>
+        <translation>Anuluj</translation>
     </message>
 </context>
 <context>
@@ -438,47 +516,47 @@ OSTROŻNIE: Pomimo naszych SUROWYCH ograniczeń wobec LLM, wygenerowany kod nie 
         <translation>Nie</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="513"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="526"/>
         <source>**Question:</source>
         <translation>**Pytanie:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="514"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="527"/>
         <source>**Answer:</source>
         <translation>**Odpowiedź:</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="587"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="600"/>
         <source>Stop</source>
         <translation>Zatrzymaj</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="629"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="642"/>
         <source>Send</source>
         <translation>Wyślij</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Tip</source>
         <translation>Wskazówka</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="229"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="242"/>
         <source>Thank you for your feedback.</source>
         <translation>Dziękujemy za opinię!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Error</source>
         <translation>Błąd</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="233"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="246"/>
         <source>Failed to submit your feedback. Please try again later.</source>
         <translation>Nie udało się przesłać opinii. Spróbuj ponownie później.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="238"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="251"/>
         <source>Network error. Please check your connection and try again.</source>
         <translation>Błąd sieci: sprawdź połączenie i spróbuj ponownie.</translation>
     </message>
@@ -493,27 +571,27 @@ OSTROŻNIE: Pomimo naszych SUROWYCH ograniczeń wobec LLM, wygenerowany kod nie 
         <translation type="obsolete">Wykonywanie kodu rozpoczęte w tle...</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="273"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="286"/>
         <source>Success</source>
         <translation>Sukces</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="281"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="294"/>
         <source>Auto-Fix</source>
         <translation>Automatyczna naprawa</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="290"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="303"/>
         <source>Code Copied Successfully!</source>
         <translation>Kod skopiowany pomyślnie!</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>RuntimeError</source>
         <translation>Błąd wykonania</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="314"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="327"/>
         <source>Cannot find processing: </source>
         <translation>Nie można znaleźć przetwarzania: </translation>
     </message>
@@ -704,17 +782,17 @@ Jestem Twoim asystentem GIS IA, oferującym trzy agenty: **agent P&amp;O wiedzy*
 Dodatkowo poprowadzę Cię przez podstawowe narzędzia takie jak GDAL, GRASS i SAGA, aby Twoja analiza przestrzenna była bardziej wydajna i inteligentna.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="334"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="347"/>
         <source>Only the current subtask can be continued.</source>
         <translation>Tylko bieżące podzadanie może być kontynuowane.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="345"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="358"/>
         <source>Only the current subtask can be repeated.</source>
         <translation>Tylko bieżące podzadanie może być powtórzone.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="419"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="432"/>
         <source>[Step-by-Step](agent://orch/substask/step) | [Automate All](agent://orch/substask/automate)</source>
         <translation>[Krok po kroku](agent://orch/substask/step) | [Automatyzuj wszystko](agent://orch/substask/automate)</translation>
     </message>
@@ -724,7 +802,7 @@ Dodatkowo poprowadzę Cię przez podstawowe narzędzia takie jak GDAL, GRASS i S
         <translation type="obsolete">[Kontynuuj](agent://orch/substask/continue/{subtask_id}) | [Powtórz](agent://orch/substask/repeat/{subtask_id}) | [Szczegóły](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="709"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="722"/>
         <source>### Welcome to the Geo Knowledge AI plugin!
 
 **Glad to meet you! 🌍**
@@ -764,12 +842,12 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
         <translation type="obsolete">**Generowanie planu zadań:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="412"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="425"/>
         <source>**Task plan:**</source>
         <translation>**Plan zadań:**</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="433"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="446"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Refine](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Kontynuuj](agent://orch/substask/continue/{subtask_id}) | [Ulepsz](agent://orch/substask/repeat/{subtask_id}) | [Szczegóły](agent://orch/substask/detail/{subtask_id})</translation>
     </message>
@@ -779,12 +857,12 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
         <translation type="obsolete">**✨ Co nowego:** Dodano wielomodalną obsługę automatyzacji przepływu pracy.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="377"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="390"/>
         <source>Task added to favorites successfully.</source>
         <translation>Zadanie dodano do ulubionych.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="713"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="726"/>
         <source>**✨ What's New:**</source>
         <translation>**✨ Nowości:**</translation>
     </message>
@@ -799,7 +877,7 @@ Wskazówka: **Automatyzacja przepływu pracy** może obsługiwać złożone zada
         <translation type="obsolete">**Ulubione przepływy pracy:** Organizuj swoje ulubione przepływy pracy za pomocą Ulubionych lokalnych (przechowywanych prywatnie na Twoim urządzeniu) i Ulubionych serwera (przepływy pracy przechowywane w chmurze, gotowe do pobrania do lokalnego obszaru roboczego w dowolnym momencie).</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="719"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="735"/>
         <source>
 
 ———
@@ -831,14 +909,19 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
 </translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="715"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="728"/>
         <source>**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.</source>
         <translation>**Ulubione workflowy:** Utrzymuj ulubione workflowy w porządku dzięki Ulubionym lokalnym (przechowywanym prywatnie na Twoim urządzeniu) i Oficjalnym ulubionym (wyselekcjonowanym workflowom gotowym do pobrania do lokalnej przestrzeni roboczej w dowolnym momencie). Oficjalne ulubione zawierają teraz gotowe workflowy do wyszukiwania i ładowania zdjęć satelitarnych na żądanie przez API STAC — obsługując zarówno AWS Earth Search, jak i Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat i inne) — dzięki czemu dane teledetekcyjne przepływają bezpośrednio do Twojego pipeline'u bez ręcznych pobrań.</translation>
     </message>
     <message>
-        <location filename="../geo_knowledge_ai_dockwidget.py" line="431"/>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="444"/>
         <source>[Continue](agent://orch/substask/continue/{subtask_id}) | [Retry](agent://orch/substask/repeat/{subtask_id}) | [Detail](agent://orch/substask/detail/{subtask_id})</source>
         <translation>[Kontynuuj](agent://orch/substask/continue/{subtask_id}) | [Ponów](agent://orch/substask/repeat/{subtask_id}) | [Szczegóły](agent://orch/substask/detail/{subtask_id})</translation>
+    </message>
+    <message>
+        <location filename="../geo_knowledge_ai_dockwidget.py" line="730"/>
+        <source>**Workflow Audit:** Export your workflow audit logs by specific time ranges for better tracking and management.</source>
+        <translation>**Audyt przepływu pracy:** Eksportuj dzienniki audytu przepływu pracy według określonych zakresów czasu w celu lepszego śledzenia i zarządzania.</translation>
     </message>
 </context>
 <context>
@@ -1159,9 +1242,9 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
 <context>
     <name>SettingDialog</name>
     <message>
-        <location filename="../setting_dialog.py" line="143"/>
+        <location filename="../setting_dialog.py" line="209"/>
         <source>Warning</source>
-        <translation type="obsolete">Ostrzeżenie</translation>
+        <translation>Ostrzeżenie</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="137"/>
@@ -1184,9 +1267,9 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Twoja prośba została otrzymana. Skontaktujemy się z Tobą e-mailem w ciągu 24 godzin. Sprawdź później swoją skrzynkę odbiorczą.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="170"/>
+        <location filename="../setting_dialog.py" line="251"/>
         <source>Error</source>
-        <translation type="obsolete">Błąd</translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <location filename="../setting_dialog.py" line="165"/>
@@ -1199,7 +1282,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Błąd sieci: sprawdź połączenie i spróbuj ponownie.</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="140"/>
+        <location filename="../setting_dialog.py" line="144"/>
         <source>Select Temporary Folder</source>
         <translation>Wybierz folder tymczasowy</translation>
     </message>
@@ -1209,7 +1292,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Pozostałe kredyty godzinowe: -- (Reset za --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="96"/>
+        <location filename="../setting_dialog.py" line="100"/>
         <source>Current Plan: Free</source>
         <translation>Aktualny plan: Bezpłatny</translation>
     </message>
@@ -1219,7 +1302,7 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Aktualny plan: Enterprise</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="102"/>
+        <location filename="../setting_dialog.py" line="106"/>
         <source>Current Plan: --</source>
         <translation>Aktualny plan: --</translation>
     </message>
@@ -1229,29 +1312,64 @@ Zadając pytanie, potwierdzasz, że przeczytałeś i akceptujesz [Politykę pryw
         <translation type="obsolete">Pozostałe kredyty godzinowe: {credits} (Reset za {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="93"/>
+        <location filename="../setting_dialog.py" line="97"/>
         <source>Missing required fields in response</source>
         <translation>Brak wymaganych pól w odpowiedzi</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="70"/>
+        <location filename="../setting_dialog.py" line="74"/>
         <source>Credits Left: -- (Resets in --).</source>
         <translation>Pozostałe kredyty: -- (Reset za --).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="105"/>
+        <location filename="../setting_dialog.py" line="109"/>
         <source>Credits Left: {credits} (Resets in {minutes}m).</source>
         <translation>Pozostałe kredyty: {credits} (Reset za {minutes} min).</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="98"/>
+        <location filename="../setting_dialog.py" line="102"/>
         <source>Current Plan: Solo Engineer</source>
         <translation>Aktualny plan: Solo Engineer</translation>
     </message>
     <message>
-        <location filename="../setting_dialog.py" line="100"/>
+        <location filename="../setting_dialog.py" line="104"/>
         <source>Current Plan: Studio</source>
         <translation>Aktualny plan: Studio</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>Select Audit Logs Export Path</source>
+        <translation>Wybierz ścieżkę eksportu dzienników audytu</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="170"/>
+        <source>ZIP files (*.zip)</source>
+        <translation>Pliki ZIP (*.zip)</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="199"/>
+        <source>Please enter the email used to purchase the Plan before exporting.</source>
+        <translation>Przed eksportem wprowadź adres e-mail użyty do zakupu planu.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="209"/>
+        <source>Please select the export file path first.</source>
+        <translation>Najpierw wybierz ścieżkę pliku eksportu.</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="251"/>
+        <source>Failed to export audit logs: {error}</source>
+        <translation>Nie udało się wyeksportować dzienników audytu: {error}</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Success</source>
+        <translation>Sukces</translation>
+    </message>
+    <message>
+        <location filename="../setting_dialog.py" line="244"/>
+        <source>Audit logs exported successfully to {path}.</source>
+        <translation>Dzienniki audytu pomyślnie wyeksportowano do {path}.</translation>
     </message>
 </context>
 <context>
