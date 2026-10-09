@@ -26,7 +26,8 @@ import requests
 import webbrowser
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QFileDialog
+from qgis.PyQt.QtCore import QDateTime
+from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox
 
 from qgis.core import QgsSettings
 
@@ -49,6 +50,8 @@ class SettingDialog(QDialog, FORM_CLASS):
         self.btnCancel.clicked.connect(self.handle_click_cancel)
         self.btnHelp.clicked.connect(self.handle_click_help)
         self.btnSelFolder.clicked.connect(self.handle_click_select_folder)
+        self.btnOutputAuditFilePath.clicked.connect(self.handle_click_select_audit_output_path)
+        self.btnExportAuditLogs.clicked.connect(self.handle_click_export_audit_logs)
         self.labelEnterprise.linkActivated.connect(self.handle_label_enterprise_link_clicked)
 
         gSetting = QgsSettings()
@@ -63,6 +66,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         multi_turn = gSetting.value(MULTI_TURN_TAG, "3")
         self.cbChatTurn.setCurrentText(multi_turn)
 
+        self._init_audit_logs_datetime()
         self._update_credits_label(email)
 
     def _update_credits_label(self, email):
@@ -145,3 +149,108 @@ class SettingDialog(QDialog, FORM_CLASS):
         if not temp_folder_path:
             return
         self.lineEditTempFolderPath.setText(temp_folder_path)
+
+    def _init_audit_logs_datetime(self):
+        """Initialize audit logs datetime range: from yesterday to now."""
+        now = QDateTime.currentDateTime()
+        one_day_ago = now.addDays(-1)
+        display_format = "yyyy-MM-dd HH:mm:ss"
+        self.dateTimeEditFromAuditLogs.setDisplayFormat(display_format)
+        self.dateTimeEditToAuditLogs.setDisplayFormat(display_format)
+        self.dateTimeEditFromAuditLogs.setDateTime(one_day_ago)
+        self.dateTimeEditToAuditLogs.setDateTime(now)
+
+    def _format_utc_qdatetime(self, qdt):
+        """Convert local QDateTime to UTC ISO-8601 string."""
+        return qdt.toUTC().toString("yyyy-MM-ddTHH:mm:ssZ")
+
+    def handle_click_select_audit_output_path(self):
+        """Choose a .zip file path to save exported audit logs."""
+        initial_path = self.lineEditAuditLogsFilePath.text()
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            self.tr("Select Audit Logs Export Path"),
+            initial_path,
+            self.tr("ZIP files (*.zip)")
+        )
+        if not file_path:
+            return
+        if not file_path.lower().endswith(".zip"):
+            file_path += ".zip"
+        self.lineEditAuditLogsFilePath.setText(file_path)
+
+    def _extract_server_error_message(self, response):
+        """Extract readable error message from server response."""
+        try:
+            data = response.json()
+            if isinstance(data, dict):
+                return (data.get("detail")
+                        or data.get("message")
+                        or data.get("error")
+                        or str(data))
+            return response.text
+        except Exception:
+            return response.text
+
+    def handle_click_export_audit_logs(self):
+        """Export workflow audit logs by time range via GET request."""
+        email = self.lineEdit.text().strip()
+        if not email:
+            QMessageBox.warning(
+                self,
+                self.tr("Warning"),
+                self.tr("Please enter the email used to purchase the Plan before exporting."),
+                QMessageBoxOK
+            )
+            return
+
+        output_path = self.lineEditAuditLogsFilePath.text().strip()
+        if not output_path:
+            QMessageBox.warning(
+                self,
+                self.tr("Warning"),
+                self.tr("Please select the export file path first."),
+                QMessageBoxOK
+            )
+            return
+
+        from_time = self._format_utc_qdatetime(self.dateTimeEditFromAuditLogs.dateTime())
+        to_time = self._format_utc_qdatetime(self.dateTimeEditToAuditLogs.dateTime())
+        user_id = QgsSettings().value(USER_ID_TAG, "").strip()
+
+        url = f"{AI_SERVER_DOMAIN}/ai/v1/audit/logs/export"
+        params = {
+            "email": email,
+            "user_id": user_id,
+            "from": from_time,
+            "to": to_time,
+        }
+
+        try:
+            response = requests.get(url, params=params, timeout=60)
+            if response.status_code != 200:
+                error_msg = self._extract_server_error_message(response)
+                QMessageBox.critical(
+                    self,
+                    self.tr("Error"),
+                    self.tr("Failed to export audit logs: {error}").format(error=error_msg),
+                    QMessageBoxOK
+                )
+                return
+
+            with open(output_path, "wb") as f:
+                f.write(response.content)
+
+            QMessageBox.information(
+                self,
+                self.tr("Success"),
+                self.tr("Audit logs exported successfully to {path}.").format(path=output_path),
+                QMessageBoxOK
+            )
+        except Exception as e:
+            QMessageBox.critical(
+                self,
+                self.tr("Error"),
+                self.tr("Failed to export audit logs: {error}").format(error=str(e)),
+                QMessageBoxOK
+            )
