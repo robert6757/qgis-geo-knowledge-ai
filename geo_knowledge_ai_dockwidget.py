@@ -726,6 +726,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         welcome_str += self.tr("**✨ What's New:**")
         welcome_str += "\n\n"
         welcome_str += self.tr("**Workflow Favorites:** Keep your favorite workflows organized with Local Favorites (stored privately on your device) and Official Favorites (curated workflows ready to download to your local workspace anytime). Official Favorites now include ready-made workflows for searching and loading satellite imagery on demand via STAC APIs — supporting both AWS Earth Search and Microsoft Planetary Computer (Sentinel-1, Sentinel-2, Landsat, and more) — so remote sensing data flows straight into your pipeline without manual downloads.")
+        welcome_str += "\n\n"
+        welcome_str += self.tr(
+            "**Workflow Audit:** Export your workflow audit logs by specific time ranges for better tracking and management.")
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
