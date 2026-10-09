@@ -243,7 +243,7 @@ class CTOrchManager(QThread):
             unmet_deps = [dep for dep in sub_task.dependencies if dep not in self.sub_task_results]
             if unmet_deps:
                 error_str = (self.tr(
-                    "[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.")
+                    "[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.")
                              .format(unmet_deps, sub_task.id))
                 self.warning_occurred.emit(error_str)
                 continue
