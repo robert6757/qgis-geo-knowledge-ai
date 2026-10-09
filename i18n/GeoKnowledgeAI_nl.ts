@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[WAARSCHUWING] De afhankelijkheid [{}] van subtaak [{}] is mislukt. Huidige subtaak overslaan.</translation>
+        <translation type="obsolete">[WAARSCHUWING] De afhankelijkheid [{}] van subtaak [{}] is mislukt. Huidige subtaak overslaan.</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[WAARSCHUWING] De afhankelijkheid [{0}] van subtaak [{1}] is mislukt. Huidige subtaak overslaan.</translation>
     </message>
 </context>
 <context>

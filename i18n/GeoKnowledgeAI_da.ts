@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[ADVARSEL] Afhængigheden [{}] af delopgave [{}] er mislykkedes. Springer den aktuelle delopgave over.</translation>
+        <translation type="obsolete">[ADVARSEL] Afhængigheden [{}] af delopgave [{}] er mislykkedes. Springer den aktuelle delopgave over.</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[ADVARSEL] Afhængigheden [{0}] af delopgave [{1}] er mislykkedes. Springer den aktuelle delopgave over.</translation>
     </message>
 </context>
 <context>

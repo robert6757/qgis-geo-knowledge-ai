@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[VARNING] Beroendet [{}] av deluppgift [{}] misslyckades. Hoppar över den aktuella deluppgiften.</translation>
+        <translation type="obsolete">[VARNING] Beroendet [{}] av deluppgift [{}] misslyckades. Hoppar över den aktuella deluppgiften.</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[VARNING] Beroendet [{0}] av deluppgift [{1}] misslyckades. Hoppar över den aktuella deluppgiften.</translation>
     </message>
 </context>
 <context>

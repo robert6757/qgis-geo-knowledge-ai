@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[OSTRZEŻENIE] Zależność [{}] podzadania [{}] nie powiodła się. Pomijanie bieżącego podzadania.</translation>
+        <translation type="obsolete">[OSTRZEŻENIE] Zależność [{}] podzadania [{}] nie powiodła się. Pomijanie bieżącego podzadania.</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[OSTRZEŻENIE] Zależność [{0}] podzadania [{1}] nie powiodła się. Pomijanie bieżącego podzadania.</translation>
     </message>
 </context>
 <context>

@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[AVISO] A dependência [{}] da subtarefa [{}] falhou. Ignorando a subtarefa atual.</translation>
+        <translation type="obsolete">[AVISO] A dependência [{}] da subtarefa [{}] falhou. Ignorando a subtarefa atual.</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[AVISO] A dependência [{0}] da subtarefa [{1}] falhou. Ignorando a subtarefa atual.</translation>
     </message>
 </context>
 <context>

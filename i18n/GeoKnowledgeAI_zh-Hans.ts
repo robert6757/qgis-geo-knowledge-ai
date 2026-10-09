@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[警告] 子任务 [{}] 所依赖的任务 [{}] 执行失败，跳过当前子任务。</translation>
+        <translation type="obsolete">[警告] 子任务 [{}] 所依赖的任务 [{}] 执行失败，跳过当前子任务。</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[警告] 子任务 [{1}] 所依赖的任务 [{0}] 执行失败，跳过当前子任务。</translation>
     </message>
 </context>
 <context>

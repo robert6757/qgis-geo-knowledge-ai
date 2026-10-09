@@ -106,7 +106,12 @@
     <message>
         <location filename="../orch_manager.py" line="245"/>
         <source>[WARNING] The dependency [{}] of subtask [{}] has failed. Skipping the current subtask.</source>
-        <translation>[WARNUNG] Die Abhängigkeit [{}] der Teilaufgabe [{}] ist fehlgeschlagen. Überspringe die aktuelle Teilaufgabe.</translation>
+        <translation type="obsolete">[WARNUNG] Die Abhängigkeit [{}] der Teilaufgabe [{}] ist fehlgeschlagen. Überspringe die aktuelle Teilaufgabe.</translation>
+    </message>
+    <message>
+        <location filename="../orch_manager.py" line="245"/>
+        <source>[WARNING] The dependency [{0}] of subtask [{1}] has failed. Skipping the current subtask.</source>
+        <translation>[WARNUNG] Die Abhängigkeit [{0}] der Teilaufgabe [{1}] ist fehlgeschlagen. Überspringe die aktuelle Teilaufgabe.</translation>
     </message>
 </context>
 <context>
