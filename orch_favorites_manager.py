@@ -169,6 +169,14 @@ class OrchFavoritesManager:
             if placeholder in st.description:
                 st.description = st.description.replace(placeholder, timestamp_str)
 
+        # Inject [QGIS_PKG_DATA_DIR] placeholder with QGIS package data path.
+        pkg_data_path = QgsApplication.pkgDataPath()
+        placeholder = "[QGIS_PKG_DATA_DIR]"
+        if pkg_data_path:
+            task_plan.original_task = task_plan.original_task.replace(placeholder, pkg_data_path)
+            for st in task_plan.sub_tasks:
+                st.description = st.description.replace(placeholder, pkg_data_path)
+
     def _fetch_remote_favorites(self):
         """fetch favorite names from the server and build favorite items.
 

@@ -291,12 +291,7 @@ class OrchToolExecutor(QObject):
 
             # Replace any [AUTH_TOKEN:xxx] / [USER_PARAM:xxx] placeholders in the code
             # with locally saved values.
-            gSetting = QgsSettings()
-            placeholder_pattern = re.compile(r"\[(AUTH_TOKEN|USER_PARAM):(.*?)\]")
-            for placeholder_type, param_name in placeholder_pattern.findall(code):
-                saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
-                if saved_value:
-                    code = code.replace(f"[{placeholder_type}:{param_name}]", saved_value)
+            code = self._resolve_placeholder(code)
 
             code_exec = CodeExecution(
                 code=code,
@@ -333,16 +328,10 @@ class OrchToolExecutor(QObject):
 
             # Replace any [AUTH_TOKEN:xxx] / [USER_PARAM:xxx] placeholders in parameter
             # values with locally saved values.
-            gSetting = QgsSettings()
-            placeholder_pattern = re.compile(r"\[(AUTH_TOKEN|USER_PARAM):(.*?)\]")
             for key, value in list(algo_parameters_obj.items()):
                 if not isinstance(value, str):
                     continue
-                for placeholder_type, param_name in placeholder_pattern.findall(value):
-                    saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
-                    if saved_value:
-                        value = value.replace(f"[{placeholder_type}:{param_name}]", saved_value)
-                algo_parameters_obj[key] = value
+                algo_parameters_obj[key] = self._resolve_placeholder(value)
 
             # use metadata of processing to find the real algorithm id.
             processing_metadata = QgsApplication.processingRegistry().algorithmById(algo_id)
@@ -879,16 +868,12 @@ class OrchToolExecutor(QObject):
             if isinstance(bbox, str):
                 bbox = json.loads(bbox)
             datetime_range = arguments.get("datetime_range")
-            gSetting = QgsSettings()
-            # Resolve any [USER_PARAM:xxx] placeholders before falling back
-            # to default values.
-            placeholder_pattern = re.compile(r"\[USER_PARAM:(.*?)\]")
+            # Resolve any [USER_PARAM:xxx] / [AUTH_TOKEN:xxx] placeholders before
+            # falling back to default values.
             if isinstance(datetime_range, str):
-                for param_name in placeholder_pattern.findall(datetime_range):
-                    saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
-                    if saved_value:
-                        datetime_range = datetime_range.replace(f"[USER_PARAM:{param_name}]", saved_value)
+                datetime_range = self._resolve_placeholder(datetime_range)
             if not datetime_range:
+                gSetting = QgsSettings()
                 datetime_range = (
                     gSetting.value(USER_PARAM_KEYS_TAG + "/STAC_StartDate", "") + "/" +
                     gSetting.value(USER_PARAM_KEYS_TAG + "/STAC_EndDate", "")
@@ -1133,6 +1118,8 @@ class OrchToolExecutor(QObject):
             if not name:
                 raise Exception({"error_msg": "No layout name provided"})
 
+            name = self._resolve_placeholder(name)
+
             project = QgsProject.instance()
             layout = QgsPrintLayout(project)
             layout.initializeDefaults()
@@ -1285,6 +1272,7 @@ class OrchToolExecutor(QObject):
                 raise Exception({"error_msg": "No export path provided"})
 
             layout = self._get_layout(layout_name)
+            path = self._resolve_placeholder(path)
             exporter = QgsLayoutExporter(layout)
 
             fmt_lower = fmt.lower()
@@ -1340,7 +1328,7 @@ class OrchToolExecutor(QObject):
 
             layout = self._get_layout(layout_name)
             label = QgsLayoutItemLabel(layout)
-            label.setText(text)
+            label.setText(self._resolve_placeholder(text))
             self._style_label(label, color, font_size)
             layout.addLayoutItem(label)
             label.attemptMove(QgsLayoutPoint(x, y))
@@ -1588,8 +1576,21 @@ class OrchToolExecutor(QObject):
                 "page": item.page()
             }, ensure_ascii=False)
 
+    def _resolve_placeholder(self, value: str) -> str:
+        """Resolve any [USER_PARAM:xxx] / [AUTH_TOKEN:xxx] placeholders in a string using QgsSettings."""
+        if not isinstance(value, str):
+            return value
+        gSetting = QgsSettings()
+        placeholder_pattern = re.compile(r"\[(USER_PARAM|AUTH_TOKEN):(.*?)\]")
+        for placeholder_type, param_name in placeholder_pattern.findall(value):
+            saved_value = gSetting.value(USER_PARAM_KEYS_TAG + f"/{param_name}", "")
+            if saved_value:
+                value = value.replace(f"[{placeholder_type}:{param_name}]", saved_value)
+        return value
+
     def _get_layout(self, layout_name):
         """Get a print layout by name or raise."""
+        layout_name = self._resolve_placeholder(layout_name)
         layout = QgsProject.instance().layoutManager().layoutByName(layout_name)
         if not layout:
             raise Exception({"error_msg": f"Layout not found: {layout_name}"})
