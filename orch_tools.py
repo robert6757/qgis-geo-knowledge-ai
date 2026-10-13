@@ -27,6 +27,7 @@ import json
 import uuid
 import requests
 import zipfile
+from datetime import datetime
 from typing import Optional
 from urllib.parse import urlparse, parse_qs
 from qgis.PyQt.QtCore import QObject, pyqtSignal, Qt, QCoreApplication, QVariant, QSize
@@ -234,7 +235,7 @@ class OrchToolExecutor(QObject):
             # Use a query statement to query vector layer features.
             layer_id = arguments.get("layer_id", "")
             statement = arguments.get("statement", "")
-            max_feature_count = arguments.get("max_feature_count", 0)
+            max_feature_count = arguments.get("max_feature_count", 5)
             if not layer_id:
                 raise Exception({"error_msg": "No layer id provided"})
 
@@ -250,8 +251,8 @@ class OrchToolExecutor(QObject):
                 request = QgsFeatureRequest()
                 if statement:
                     request.setFilterExpression(statement)
-                if max_feature_count > 0:
-                    request.setLimit(max_feature_count)
+                # Must constrain the maximum number of features to return.
+                request.setLimit(max_feature_count)
                 for i, feature in enumerate(layer.getFeatures(request)):
                     # Extract attributes
                     attrs = {}
@@ -664,9 +665,13 @@ class OrchToolExecutor(QObject):
             bbox = arguments.get("bbox")
             base_url = arguments.get("base_url", 'https://overpass-api.de/api/')
             
-            # Generate output file path
-            temp_dir = QStandardPaths.writableLocation(TempLocation)
-            output_path = os.path.join(temp_dir, "qgis-geo-knowledge-ai-osm-query.json")
+            # Generate output file path with timestamp
+            gSetting = QgsSettings()
+            temp_dir = gSetting.value(TEMP_FOLDER_TAG, "")
+            if not temp_dir:
+                temp_dir = QStandardPaths.writableLocation(TempLocation)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_path = os.path.join(temp_dir, f"osm-query-{timestamp}.osm")
             
             try:
                 self.overpass_tool.query_osm_objects(
@@ -679,7 +684,7 @@ class OrchToolExecutor(QObject):
                     output_path=output_path,
                     base_url=base_url
                 )
-                self.overpass_tool.load_osm_json_to_map(output_path, f"OSM_{key}_{value}")
+                self.overpass_tool.load_osm_to_map(output_path, f"OSM_{key}_{value}")
             except Exception as e:
                 raise Exception({"error_msg": str(e)})
             
@@ -696,8 +701,13 @@ class OrchToolExecutor(QObject):
             layer_name = arguments.get("layer_name", "Place Search Results")
             base_url = arguments.get("base_url", 'https://nominatim.openstreetmap.org/search')
 
-            temp_dir = QStandardPaths.writableLocation(TempLocation)
-            output_path = os.path.join(temp_dir, "qgis-geo-knowledge-ai-place-search.json")
+            # Generate output file path with timestamp
+            gSetting = QgsSettings()
+            temp_dir = gSetting.value(TEMP_FOLDER_TAG, "")
+            if not temp_dir:
+                temp_dir = QStandardPaths.writableLocation(TempLocation)
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_path = os.path.join(temp_dir, f"place-search-{timestamp}.json")
 
             try:
                 self.overpass_tool.search_place(
@@ -1658,19 +1668,9 @@ class OrchToolExecutor(QObject):
     #     tool_result = ""
     #     try:
     #         tool_result = self._execute_tool_impl(
-    #             "zip_files",
+    #             "qgis_search_and_show_place",
     #             {
-    #                 "source_path": r"D:\output\0625-1",
-    #                 "output_zip": r"D:\output\0625-1.zip"
-    #             }
-    #         )
-    #
-    #         tool_result = self._execute_tool_impl(
-    #             "unzip_files",
-    #             {
-    #                 "zip_path": r"D:\output\0625-1.zip",
-    #                 "output_dir": r"D:\output\0625-1-new",
-    #                 "overwrite": True
+    #                 "place_name": "台北市"
     #             }
     #         )
     #     except Exception as e:

@@ -21,12 +21,16 @@
 """
 
 import os
+import re
 import json
+import time
+import shutil
 from typing import List, Optional
 from qgis.PyQt.QtCore import QByteArray, QEventLoop, QUrl, QUrlQuery, QVariant
 from qgis.core import (
     Qgis, QgsFileDownloader, QgsVectorLayer, QgsField,
-    QgsFeature, QgsGeometry, QgsPoint, QgsPointXY, QgsProject, QgsWkbTypes, QgsRectangle
+    QgsFeature, QgsGeometry, QgsPoint, QgsPointXY, QgsProject, QgsFeatureRequest,
+    QgsVectorFileWriter
 )
 
 
@@ -34,8 +38,18 @@ class OverpassTool:
     """
     Provides a high-level interface to query OpenStreetMap data via Overpass API.
     Implemented as a standalone tool using PyQGIS standard libraries.
+
+    Workflow (same strategy as the QuickOSM plugin):
+      1. Overpass returns OSM XML, with all member ways/nodes of the matched objects
+         included (``(._;>;); out body;``).
+      2. The XML (.osm) file is opened through GDAL's OSM driver, which assembles
+         member ways into rings according to their roles and exposes the results as
+         the layers ``points``, ``lines``, ``multilinestrings`` and ``multipolygons``.
     """
 
+    # ------------------------------------------------------------------
+    # Query
+    # ------------------------------------------------------------------
     def query_osm_objects(
             self,
             key: str,
@@ -48,7 +62,8 @@ class OverpassTool:
             base_url: str = 'https://overpass-api.de/api/'
     ):
         """
-        Query OSM objects based on key/value and location.
+        Query OSM objects based on key/value and location. The result is saved as
+        OSM XML (use a '.osm' file extension for output_path).
 
         :param key: OSM key to filter by.
         :param value: OSM value to filter by (optional).
@@ -56,10 +71,13 @@ class OverpassTool:
         :param bbox: Bounding box for the query [xmin, ymin, xmax, ymax] (optional).
         :param osm_types: List of OSM types ('node', 'way', 'relation'). Defaults to all.
         :param around_distance: Distance in meters for 'around' queries (optional).
-        :param output_path: Path to save the query results.
+        :param output_path: Path to save the query results (OSM XML, '.osm').
         :param base_url: Base URL of the Overpass API.
         """
         try:
+            if not output_path:
+                raise ValueError("output_path must not be empty.")
+
             # 1. Generate the OQL Query
             oql = self._generate_oql(key, value, area, bbox, osm_types, around_distance)
 
@@ -69,9 +87,15 @@ class OverpassTool:
             url = QUrl(endpoint)
 
             url_query = QUrlQuery()
-            url_query.addQueryItem('target', 'json')  # Ensure JSON output
             url_query.addQueryItem('info', 'LLM_OverpassTool')
             url.setQuery(url_query)
+
+            # Make sure a stale result of a previous run can never be mistaken for a new one
+            out_dir = os.path.dirname(output_path)
+            if out_dir:
+                os.makedirs(out_dir, exist_ok=True)
+            if os.path.exists(output_path):
+                os.remove(output_path)
 
             # 3. Execute request using QgsFileDownloader (POST)
             downloader = QgsFileDownloader(
@@ -88,31 +112,31 @@ class OverpassTool:
             loop.exec()
 
             # 4. Validate the result
-            if os.path.exists(output_path):
-                with open(output_path, 'r', encoding='utf8') as f:
-                    content = f.read()
-                    # If file is empty or contains HTML error page, consider it failed
-                    if not content or '<html' in content.lower() or '<!doctype' in content.lower():
-                        raise RuntimeError("The downloaded OSM data is empty or contains an HTML error page.")
-            else:
+            if not os.path.exists(output_path):
                 raise FileNotFoundError("Query result file not found. This might be because the Overpass API timed out or the query is too large. Please try again or consider adjusting parameters such as osm_types or the search area.")
+            self._validate_osm_xml(output_path)
 
         except Exception as e:
             raise e
+
+    @staticmethod
+    def _esc(text) -> str:
+        """Escape a string for use inside a double-quoted Overpass QL literal."""
+        return str(text).replace('\\', '\\\\').replace('"', '\\"')
 
     def _generate_oql(self, key: str, value: Optional[str], area: Optional[str],
                        bbox: Optional[List[float]], osm_types: Optional[List[str]],
                        around_distance: Optional[int]) -> str:
         """Internal helper to generate a simple Overpass QL string."""
 
-        # Header: JSON output and timeout
-        query = '[out:json][timeout:60];\n'
+        # Header: XML output (read by GDAL's OSM driver) and timeout
+        query = '[out:xml][timeout:60];\n'
 
         # Handle Area
         area_id = None
         if area:
             # Simple name-based area query: find the area by name and assign to variable .a
-            query += f'area["name"="{area}"] -> .a;\n'
+            query += f'area["name"="{self._esc(area)}"] -> .a;\n'
             area_id = '.a'
 
         # Determine types to query
@@ -120,7 +144,7 @@ class OverpassTool:
 
         # Build the filters
         # Filter: [key="value"] or just [key]
-        filter_str = f'["{key}"="{value}"]' if value else f'["{key}"]'
+        filter_str = f'["{self._esc(key)}"="{self._esc(value)}"]' if value else f'["{self._esc(key)}"]'
 
         # Combine types into a union
         query += '(\n'
@@ -139,121 +163,166 @@ class OverpassTool:
             query += f'  {t}{filter_str}{spatial};\n'
         query += ');\n'
 
-        # Output body with geometry (essential for constructing ways from coordinates)
-        query += 'out geom;'
+        # Recurse down so that all member ways and their nodes are returned too.
+        # GDAL needs them to assemble relation geometries (rings of boundary relations).
+        # A single, type-sorted output (nodes -> ways -> relations) is required by GDAL.
+        query += '(._;>;);\n'
+        query += 'out body;'
 
         return query
 
-    def load_osm_json_to_map(self, json_path: str, layer_name: str = "OSM Results"):
-        """
-        Read OSM JSON results and display them as vector layers on the map.
-        Supports nodes (Point), ways (LineString), and relations (Multipolygon).
+    def _validate_osm_xml(self, path: str):
+        """Raise if the downloaded file is empty, an HTML error page, or an Overpass runtime error."""
+        size = os.path.getsize(path)
+        if size == 0:
+            raise RuntimeError("The downloaded OSM data is empty.")
 
-        :param json_path: Path to the JSON file containing Overpass results.
+        with open(path, 'rb') as f:
+            head = f.read(4096).decode('utf8', errors='ignore').lower()
+            f.seek(max(0, size - 4096))
+            tail = f.read().decode('utf8', errors='ignore')
+
+        if '<html' in head or '<!doctype html' in head:
+            raise RuntimeError("The downloaded OSM data contains an HTML error page (the Overpass server may be busy or rejected the query).")
+        if '<osm' not in head:
+            raise RuntimeError("The downloaded file is not valid OSM XML.")
+
+        # Overpass reports timeouts / memory problems as a <remark> element at the end of the XML
+        remark = re.search(r'<remark>(.*?)</remark>', tail, re.S)
+        if remark and 'error' in remark.group(1).lower():
+            raise RuntimeError(f"Overpass API returned an error: {remark.group(1).strip()}")
+
+    # ------------------------------------------------------------------
+    # Load
+    # ------------------------------------------------------------------
+    @staticmethod
+    def _ensure_osm_extension(path: str) -> str:
+        """GDAL's OSM driver is most reliable with a .osm/.pbf extension; copy if needed."""
+        if path.lower().endswith(('.osm', '.pbf')):
+            return path
+        new_path = path + '.osm'
+        if not os.path.exists(new_path) or os.path.getmtime(new_path) < os.path.getmtime(path):
+            shutil.copyfile(path, new_path)
+        return new_path
+
+    def load_osm_to_map(
+            self,
+            osm_path: str,
+            layer_name: str = "OSM Results",
+            osm_types: Optional[List[str]] = None
+    ):
+        """
+        Read an OSM XML file with GDAL's OSM driver and add the results to the map.
+        Geometry assembly (including multipolygon / boundary relations) is done by GDAL,
+        exactly as in the QuickOSM plugin.
+
+        Layers created (empty ones are skipped):
+          points -> Point, lines -> LineString,
+          multilinestrings -> MultiLineString, multipolygons -> MultiPolygon
+
+        :param osm_path: Path to the OSM XML file downloaded from Overpass.
         :param layer_name: Base name of the layers to be created.
+        :param osm_types: The same OSM types that were passed to query_osm_objects()
+                          ('node', 'way', 'relation'). Used to hide the member ways / nodes
+                          that were downloaded only to assemble relation geometries.
+                          If omitted, every layer found in the file is loaded.
         """
         try:
-            if not os.path.exists(json_path):
-                raise FileNotFoundError(f"OSM JSON file not found: {json_path}")
+            if not os.path.exists(osm_path):
+                raise FileNotFoundError(f"OSM file not found: {osm_path}")
 
-            with open(json_path, 'r', encoding='utf8') as f:
-                data = json.load(f)
+            types = set(osm_types) if osm_types else {'node', 'way', 'relation'}
 
-            elements = data.get('elements', [])
-            if not elements:
-                raise ValueError("No OSM elements found in the JSON file. This might be because the query result is empty. Please consider adjusting parameters such as osm_types, the search area, or the tag keys and values.")
+            ogr_path = self._ensure_osm_extension(osm_path)
 
-            # 1. Separate elements by type
-            nodes = [el for el in elements if el.get('type') == 'node']
-            ways = [el for el in elements if el.get('type') == 'way']
-            relations = [el for el in elements if el.get('type') == 'relation']
+            # (GDAL layer name, optional attribute filter), polygons first so that
+            # lines and points are drawn on top of them.
+            # In GDAL's multipolygons layer 'osm_id' is set for relations and
+            # 'osm_way_id' for closed ways, which lets us hide the member ways that
+            # were only fetched for geometry assembly.
+            plan = []
+            if 'way' in types and 'relation' in types:
+                plan.append(('multipolygons', ''))
+            elif 'relation' in types:
+                plan.append(('multipolygons', '"osm_id" IS NOT NULL'))
+            elif 'way' in types:
+                plan.append(('multipolygons', '"osm_way_id" IS NOT NULL'))
+            if 'relation' in types:
+                plan.append(('multilinestrings', ''))
+            if 'way' in types:
+                plan.append(('lines', ''))
+            if 'node' in types:
+                plan.append(('points', ''))
 
-            # 2. Determine all unique keys in tags for a common attribute set
-            all_tag_keys = set()
-            for el in elements:
-                all_tag_keys.update(el.get('tags', {}).keys())
-            sorted_keys = sorted(list(all_tag_keys))
+            # GDAL's OSM driver is a sequential reader: it knows neither the feature count
+            # nor the extent of a layer (Overpass XML has no <bounds> header), so QGIS layers
+            # opened directly on the .osm file cannot "zoom to layer". Like QuickOSM, we
+            # therefore convert each layer into a GeoPackage and load that instead.
+            gpkg_path = os.path.splitext(ogr_path)[0] + '.gpkg'
+            try:
+                if os.path.exists(gpkg_path):
+                    os.remove(gpkg_path)
+            except OSError:
+                # The old file is still locked (e.g. its layers are still in the project)
+                gpkg_path = f"{os.path.splitext(ogr_path)[0]}_{int(time.time())}.gpkg"
 
-            def create_layer(geom_type, element_list) -> bool:
-                if not element_list:
-                    return False
+            loaded = []
+            for ogr_layer, subset in plan:
+                src = QgsVectorLayer(
+                    f"{ogr_path}|layername={ogr_layer}",
+                    f"{layer_name} - {ogr_layer}",
+                    "ogr"
+                )
+                if not src.isValid():
+                    continue
+                if subset:
+                    # If the filter is rejected the layer simply stays unfiltered
+                    src.setSubsetString(subset)
+                # featureCount() is unknown for the OSM driver; just try to get the first feature.
+                if next(src.getFeatures(QgsFeatureRequest().setLimit(1)), None) is None:
+                    continue
 
-                layer = QgsVectorLayer(f"{geom_type}?crs=EPSG:4326", layer_name, "memory")
+                options = QgsVectorFileWriter.SaveVectorOptions()
+                options.driverName = 'GPKG'
+                options.layerName = ogr_layer
+                options.fileEncoding = 'UTF-8'
+                options.actionOnExistingFile = (
+                    QgsVectorFileWriter.CreateOrOverwriteLayer if os.path.exists(gpkg_path)
+                    else QgsVectorFileWriter.CreateOrOverwriteFile
+                )
+                result = QgsVectorFileWriter.writeAsVectorFormatV3(
+                    src, gpkg_path, QgsProject.instance().transformContext(), options
+                )
+                if result[0] != QgsVectorFileWriter.NoError:
+                    raise RuntimeError(f"Failed to convert OSM layer '{ogr_layer}' to GeoPackage: {result[1]}")
+
+                layer = QgsVectorLayer(
+                    f"{gpkg_path}|layername={ogr_layer}",
+                    f"{layer_name} - {ogr_layer}",
+                    "ogr"
+                )
                 if not layer.isValid():
-                    return False
-
-                provider = layer.dataProvider()
-                fields = [QgsField(key, QVariant.String) for key in sorted_keys]
-                provider.addAttributes(fields)
-                layer.updateFields()
-
-                features = []
-                for el in element_list:
-                    feat = QgsFeature()
-                    geom = None
-                    el_type = el.get('type')
-
-                    if el_type == 'node':
-                        lon, lat = el.get('lon'), el.get('lat')
-                        if lon is not None and lat is not None:
-                            geom = QgsGeometry.fromPointXY(QgsPointXY(lon, lat))
-
-                    elif el_type == 'way':
-                        geometry_data = el.get('geometry')
-                        if geometry_data and isinstance(geometry_data, list):
-                            points = [QgsPoint(p['lon'], p['lat']) for p in geometry_data if 'lon' in p and 'lat' in p]
-                            if points:
-                                geom = QgsGeometry.fromPolyline(points)
-
-                    elif el_type == 'relation':
-                        # For relations (multipolygons), build geometry from member ways using WKT
-                        members = el.get('members', [])
-                        rings_wkt = []
-                        for m in members:
-                            if m.get('type') == 'way':
-                                m_geom = m.get('geometry')
-                                if m_geom and isinstance(m_geom, list):
-                                    # Format points as 'lon lat'
-                                    pts = [f"{p['lon']} {p['lat']}" for p in m_geom if 'lon' in p and 'lat' in p]
-                                    if pts:
-                                        # Ensure the ring is closed for WKT Polygon
-                                        if pts[0] != pts[-1]:
-                                            pts.append(pts[0])
-                                        rings_wkt.append(f"({', '.join(pts)})")
-
-                        if rings_wkt:
-                            # Construct WKT: POLYGON((outer), (inner1), (inner2)...)
-                            wkt = f"POLYGON({', '.join(rings_wkt)})"
-                            geom = QgsGeometry.fromWkt(wkt)
-                    if geom:
-                        feat.setGeometry(geom)
-                    else:
-                        continue
-
-                    tags = el.get('tags', {})
-                    feat.setAttributes([tags.get(key, "") for key in sorted_keys])
-                    features.append(feat)
-
-                if not features:
-                    return False
-
-                # add layer to project.
-                provider.addFeatures(features)
-                layer.updateExtents()
+                    continue
                 QgsProject.instance().addMapLayer(layer)
-                return True
+                loaded.append(layer)
 
-            # Create the three layers
-            point_layer_success = create_layer("Point", nodes)
-            line_layer_success = create_layer("LineString", ways)
-            polygon_layer_success = create_layer("Multipolygon", relations)
-
-            if not (point_layer_success or line_layer_success or polygon_layer_success):
-                raise Exception("Failed to create any OSM layers: Point, LineString, and Multipolygon all failed.")
+            if not loaded:
+                raise ValueError("No OSM elements found in the OSM file. This might be because the query result is empty. Please consider adjusting parameters such as osm_types, the search area, or the tag keys and values.")
 
         except Exception as e:
             raise e
 
+    def load_osm_json_to_map(self, json_path: str, layer_name: str = "OSM Results"):
+        """
+        Backward-compatible wrapper of load_osm_to_map().
+        The file is now OSM XML, not JSON; the old name and signature are kept so existing
+        tool definitions keep working.
+        """
+        return self.load_osm_to_map(json_path, layer_name)
+
+    # ------------------------------------------------------------------
+    # Place search (unchanged)
+    # ------------------------------------------------------------------
     def search_place(
             self,
             place_name: str,

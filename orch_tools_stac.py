@@ -154,9 +154,7 @@ class StacTool:
     def list_stac_assets(self, stac_data: dict, data_only: bool = True) -> List[dict]:
         """
         Parse a STAC search response (GeoJSON FeatureCollection of Items)
-        into a flat list of downloadable assets with their metadata. This is
-        the equivalent of load_osm_json_to_map's parsing step, but STAC
-        results describe *assets to fetch* rather than geometry to render.
+        into a flat list of downloadable assets with their metadata.
 
         Items typically mix several asset roles: 'data' (the actual pixel
         data you want, e.g. 'vv'/'vh' GeoTIFFs for Sentinel-1), 'metadata'
