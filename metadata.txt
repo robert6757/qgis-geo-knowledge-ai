@@ -7,7 +7,7 @@ name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
-version=1.28
+version=1.29
 author=phoenix-gis
 email=info@geoknowledgeai.com
 
@@ -26,7 +26,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.28 2026-10-10
+changelog=Version 1.29 2026-10-14
+      * Bug fix: Resolved issues with OSM data parsing and vector layer feature queries.
+      Version 1.28 2026-10-10
       * New Feature: Added QGIS layout support and some basic toolsets.
       * New Feature: Added the ability to export workflow audit logs.
       * New Feature: Added feedback reporting functionality.
