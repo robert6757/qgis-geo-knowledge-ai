@@ -891,21 +891,26 @@ class OrchToolExecutor(QObject):
             query = arguments.get("query")
             if isinstance(query, str):
                 query = json.loads(query)
-            limit = arguments.get("limit", 1)
+            limit = arguments.get("limit", 3)
             base_url = arguments.get("base_url", 'https://planetarycomputer.microsoft.com/api/stac/v1')
+            target_coverage = arguments.get("target_coverage", 0.95)
+            # strategy: single_date, greedy
+            strategy = arguments.get("strategy", "single_date")
 
             # Determine if the selected STAC catalog requires special asset signing.
             signing_provider = ''
             if "planetarycomputer.microsoft.com" in base_url:
                 signing_provider = "planetary"
 
-            stac_data = self.stac_tool.search_stac_items(
+            stac_data = self.stac_tool.search_stac_items_with_coverage(
                 collections=collections,
                 bbox=bbox,
                 datetime_range=datetime_range,
                 query=query,
-                limit=limit,
-                base_url=base_url
+                base_url=base_url,
+                target_coverage=target_coverage,
+                strategy=strategy,
+                max_items=limit
             )
 
             assets = self.stac_tool.list_stac_assets(stac_data)
@@ -1668,10 +1673,12 @@ class OrchToolExecutor(QObject):
     #     tool_result = ""
     #     try:
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_search_and_show_place",
-    #             {
-    #                 "place_name": "台北市"
-    #             }
+    #             "qgis_search_stac_items",
+    #             {"base_url":"https://earth-search.aws.element84.com/v1",
+    #              "collections":["sentinel-2-l2a"],
+    #              "bbox":[118.3345905,31.2267477,119.2395068,32.615778],
+    #              "datetime_range":"2024-01-01/2024-12-31",
+    #              "limit":5}
     #         )
     #     except Exception as e:
     #         self.execution_error.emit(str(e))

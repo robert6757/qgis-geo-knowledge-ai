@@ -27,11 +27,15 @@
 
 import os
 import json
+from collections import defaultdict
 from urllib.parse import urlparse
 from typing import List, Optional, Dict
 from qgis.PyQt.QtCore import QByteArray, QUrl, QUrlQuery
 from qgis.PyQt.QtNetwork import QNetworkRequest
-from qgis.core import QgsVectorLayer, QgsRasterLayer, QgsProject, QgsBlockingNetworkRequest
+from qgis.core import (
+    QgsVectorLayer, QgsRasterLayer, QgsProject, QgsBlockingNetworkRequest,
+    QgsGeometry, QgsRectangle, QgsDistanceArea, QgsCoordinateReferenceSystem
+)
 
 class StacTool:
     """
@@ -50,45 +54,35 @@ class StacTool:
         Requester Pays buckets and need real AWS credentials configured via
         configure_aws_credentials(), read through /vsis3/ instead of
         /vsicurl/.
+
+    About spatial coverage:
+      The STAC API has NO "coverage ratio" parameter. The 'bbox' filter is a
+      plain "intersects" test, so an Item that only touches a corner of the
+      bbox is returned just like one that fully contains it. One Sentinel-2
+      Item is a single ~110x110 km MGRS tile, so any AOI larger than that
+      can never be covered by one Item. Coverage therefore has to be computed
+      client-side from each Item's footprint geometry:
+        - compute_coverage():            how much of the bbox a result set covers
+        - select_items_for_coverage():   pick the Items that reach a target coverage
+        - search_stac_items_with_coverage(): search + paginate + select in one call
     """
 
+    # ------------------------------------------------------------------
+    # Search helpers (the public entry point is search_stac_items_with_coverage)
+    # ------------------------------------------------------------------
 
-    def search_stac_items(
-            self,
-            collections: List[str],
-            bbox: Optional[List[float]] = None,
-            datetime_range: Optional[str] = None,
-            query: Optional[Dict] = None,
-            limit: int = 1,
-            base_url: str = 'https://planetarycomputer.microsoft.com/api/stac/v1'
-    ) -> dict:
-        """
-        Search a STAC API for items matching the given spatial/temporal/query filters.
-
-        :param collections: STAC collection ids to search, e.g. ['sentinel-2-l2a'].
-        :param bbox: Bounding box [xmin, ymin, xmax, ymax] in EPSG:4326 (optional).
-        :param datetime_range: ISO8601 instant or interval, e.g. '2024-01-01/2024-06-30' (optional).
-        :param query: STAC 'query' extension filters, e.g. {'eo:cloud_cover': {'lt': 20}} (optional).
-        :param limit: Max number of items to return.
-        :param base_url: Root URL of the STAC API.
-        :return: Parsed JSON response (GeoJSON FeatureCollection) from the STAC API.
-        """
-        # 1. Build the STAC search request body
-        body = self._generate_search_body(collections, bbox, datetime_range, query, limit)
-
-        # 2. Construct the endpoint URL
-        endpoint = base_url.rstrip('/') + '/search'
-        url = QUrl(endpoint)
-
-        # 3. Prepare the network request with required JSON headers
-        request = QNetworkRequest(url)
-        request.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
+    def _send_json_request(self, url: str, body: Optional[dict] = None) -> dict:
+        """Blocking GET (body is None) or JSON POST; returns the parsed JSON dict."""
+        request = QNetworkRequest(QUrl(url))
         request.setRawHeader(b"Accept", b"application/json")
-
-        # 4. Execute a blocking POST request
-        payload = QByteArray(json.dumps(body, ensure_ascii=False).encode('utf-8'))
         blocking_request = QgsBlockingNetworkRequest()
-        err = blocking_request.post(request, payload)
+
+        if body is None:
+            err = blocking_request.get(request)
+        else:
+            request.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
+            payload = QByteArray(json.dumps(body, ensure_ascii=False).encode('utf-8'))
+            err = blocking_request.post(request, payload)
 
         if err != QgsBlockingNetworkRequest.ErrorCode.NoError:
             raise RuntimeError(f"STAC search request failed: {blocking_request.errorMessage()}")
@@ -98,14 +92,18 @@ class StacTool:
         if not content:
             raise RuntimeError("The STAC search response is empty. "
                                "Check that the collection id and base_url are correct.")
-
         try:
-            data = json.loads(content)
+            return json.loads(content)
         except json.JSONDecodeError as exc:
             raise RuntimeError("The STAC search response is not valid JSON. "
                                "Check that the collection id and base_url are correct.") from exc
 
-        return data
+    @staticmethod
+    def _find_next_link(page: dict) -> Optional[dict]:
+        for link in page.get('links', []):
+            if link.get('rel') == 'next':
+                return link
+        return None
 
     @staticmethod
     def _to_rfc3339(date_str: str, end_of_day: bool = False) -> str:
@@ -150,6 +148,292 @@ class StacTool:
         if query:
             body['query'] = query
         return body
+
+    # ------------------------------------------------------------------
+    # Spatial coverage
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _geojson_to_geometry(geojson: Optional[dict]) -> QgsGeometry:
+        """Convert a GeoJSON Polygon/MultiPolygon dict into a valid QgsGeometry (EPSG:4326)."""
+        if not geojson:
+            return QgsGeometry()
+        gtype = geojson.get('type')
+        coords = geojson.get('coordinates')
+
+        def ring(r):
+            return '(' + ', '.join(f"{p[0]} {p[1]}" for p in r) + ')'
+
+        def poly(p):
+            return '(' + ', '.join(ring(r) for r in p) + ')'
+
+        if gtype == 'Polygon':
+            wkt = f"POLYGON{poly(coords)}"
+        elif gtype == 'MultiPolygon':
+            wkt = "MULTIPOLYGON(" + ', '.join(poly(p) for p in coords) + ")"
+        else:
+            return QgsGeometry()
+
+        geom = QgsGeometry.fromWkt(wkt)
+        if not geom.isNull() and not geom.isGeosValid():
+            geom = geom.makeValid()
+        return geom
+
+    @staticmethod
+    def _make_area_calculator() -> QgsDistanceArea:
+        """Ellipsoidal area calculator, so ratios are not distorted by degree-based planar area."""
+        da = QgsDistanceArea()
+        da.setSourceCrs(QgsCoordinateReferenceSystem('EPSG:4326'),
+                        QgsProject.instance().transformContext())
+        da.setEllipsoid('WGS84')
+        return da
+
+    @staticmethod
+    def _area(da: QgsDistanceArea, geom: Optional[QgsGeometry]) -> float:
+        if geom is None or geom.isNull() or geom.isEmpty():
+            return 0.0
+        return da.measureArea(geom)
+
+    def _clip_features(self, features: List[dict], bbox_geom: QgsGeometry) -> List[dict]:
+        """
+        For each Item, intersect its footprint with the bbox. Items that do
+        not actually overlap the bbox area (e.g. only touching its edge) are dropped.
+        """
+        entries = []
+        for feat in features:
+            geom = self._geojson_to_geometry(feat.get('geometry'))
+            if geom.isNull() or geom.isEmpty():
+                continue
+            clipped = geom.intersection(bbox_geom)
+            if clipped.isNull() or clipped.isEmpty():
+                continue
+            props = feat.get('properties', {}) or {}
+            cloud = props.get('eo:cloud_cover')
+            dt = props.get('datetime') or ''
+            entries.append({
+                'feat': feat,
+                'geom': clipped,
+                'cloud': float(cloud) if cloud is not None else 0.0,
+                'has_cloud': cloud is not None,
+                'date': dt[:10],
+                'datetime': dt,
+            })
+        return entries
+
+    def compute_coverage(self, stac_data: dict, bbox: List[float]) -> dict:
+        """
+        Compute how much of the bbox is covered by a STAC search result.
+
+        :param stac_data: STAC search response (FeatureCollection).
+        :param bbox: [xmin, ymin, xmax, ymax] in EPSG:4326.
+        :return: {
+            'bbox_area_km2': float,
+            'total_coverage': float,      # union of all footprints / bbox area, 0..1
+            'items': [{item_id, datetime, cloud_cover, coverage}, ...]  # per-Item share of bbox
+        }
+        """
+        bbox_geom = QgsGeometry.fromRect(QgsRectangle(*bbox))
+        da = self._make_area_calculator()
+        bbox_area = self._area(da, bbox_geom)
+        if bbox_area <= 0:
+            raise ValueError("Invalid bbox: area is zero.")
+
+        entries = self._clip_features(stac_data.get('features', []), bbox_geom)
+        union = QgsGeometry.unaryUnion([e['geom'] for e in entries]) if entries else QgsGeometry()
+        items = [{
+            'item_id': e['feat'].get('id'),
+            'datetime': e['datetime'],
+            'cloud_cover': e['cloud'] if e['has_cloud'] else None,
+            'coverage': min(self._area(da, e['geom']) / bbox_area, 1.0),
+        } for e in entries]
+
+        return {
+            'bbox_area_km2': bbox_area / 1e6,
+            'total_coverage': min(self._area(da, union) / bbox_area, 1.0),
+            'items': items,
+        }
+
+    def _greedy_cover(self, entries: List[dict], bbox_geom: QgsGeometry, bbox_area: float,
+                      da: QgsDistanceArea, target: float, min_gain: float):
+        """
+        Greedy set cover: repeatedly take the Item adding the most new area
+        (weighted by clearness = 1 - cloud/100) until 'target' is reached or
+        no remaining Item adds at least 'min_gain' (fraction of bbox).
+        Returns (chosen_entries, covered_ratio).
+        """
+        remaining = QgsGeometry(bbox_geom)
+        pool = list(entries)
+        chosen = []
+        covered = 0.0
+
+        while pool and covered < target:
+            best, best_score, best_gain = None, 0.0, 0.0
+            for e in pool:
+                gain = self._area(da, e['geom'].intersection(remaining)) / bbox_area
+                if gain < min_gain:
+                    continue
+                score = gain * max(1.0 - e['cloud'] / 100.0, 0.05)
+                if score > best_score:
+                    best, best_score, best_gain = e, score, gain
+            if best is None:
+                break
+            best['gain'] = best_gain
+            chosen.append(best)
+            pool.remove(best)
+            remaining = remaining.difference(best['geom'])
+            covered = 1.0 - self._area(da, remaining) / bbox_area
+
+        return chosen, max(0.0, min(covered, 1.0))
+
+    def select_items_for_coverage(
+            self,
+            stac_data: dict,
+            bbox: List[float],
+            target_coverage: float = 0.95,
+            strategy: str = 'single_date',
+            min_gain: float = 0.005
+    ) -> dict:
+        """
+        Pick the subset of Items that covers the bbox to the requested ratio.
+
+        Strategies:
+          - 'single_date' (default): group Items by acquisition date, pick the
+            date whose Items cover the bbox best (among dates reaching the
+            target: the one with the lowest mean cloud cover), then drop
+            redundant/duplicate Items inside that date. Gives a radiometrically
+            consistent mosaic from one overpass.
+          - 'greedy': ignore dates, choose Items across the whole time range
+            with greedy set cover (cloud-weighted). Reaches the target with the
+            fewest Items, but mixes acquisition dates.
+
+        If the target cannot be reached, the best achievable result is returned
+        and coverage['reached'] is False.
+
+        :param stac_data: STAC search response (FeatureCollection) containing
+            MANY Items, i.e. all pages of a search, not just the first page.
+        :param bbox: [xmin, ymin, xmax, ymax] in EPSG:4326.
+        :param target_coverage: Desired covered fraction of the bbox, 0..1.
+        :param strategy: 'single_date' or 'greedy'.
+        :param min_gain: Ignore Items adding less than this fraction of the bbox.
+        :return: FeatureCollection of the selected Items plus a 'coverage' summary dict.
+            Compatible with list_stac_assets().
+        """
+        if strategy not in ('single_date', 'greedy'):
+            raise ValueError("strategy must be 'single_date' or 'greedy'.")
+
+        bbox_geom = QgsGeometry.fromRect(QgsRectangle(*bbox))
+        da = self._make_area_calculator()
+        bbox_area = self._area(da, bbox_geom)
+        if bbox_area <= 0:
+            raise ValueError("Invalid bbox: area is zero.")
+
+        entries = self._clip_features(stac_data.get('features', []), bbox_geom)
+        if not entries:
+            raise ValueError("No STAC items overlap the bbox. Try widening the bbox, "
+                             "datetime range, or relaxing the cloud-cover filter.")
+
+        if strategy == 'single_date':
+            groups = defaultdict(list)
+            for e in entries:
+                groups[e['date']].append(e)
+
+            best_key, best_group = None, None
+            for date, group in groups.items():
+                union = QgsGeometry.unaryUnion([e['geom'] for e in group])
+                cov = self._area(da, union) / bbox_area
+                mean_cloud = sum(e['cloud'] for e in group) / len(group)
+                reached = cov >= target_coverage
+                # Reached target -> prefer clearer; otherwise -> prefer larger coverage.
+                key = (reached, -mean_cloud if reached else cov)
+                if best_key is None or key > best_key:
+                    best_key, best_group = key, group
+            candidates = best_group
+        else:
+            candidates = entries
+
+        chosen, covered = self._greedy_cover(candidates, bbox_geom, bbox_area, da,
+                                             target_coverage, min_gain)
+
+        return {
+            'type': 'FeatureCollection',
+            'features': [e['feat'] for e in chosen],
+            'truncated': stac_data.get('truncated', False),
+            'coverage': {
+                'strategy': strategy,
+                'target': target_coverage,
+                'achieved': covered,
+                'uncovered': 1.0 - covered,
+                'reached': covered >= target_coverage,
+                'bbox_area_km2': bbox_area / 1e6,
+                'items': [{
+                    'item_id': e['feat'].get('id'),
+                    'datetime': e['datetime'],
+                    'cloud_cover': e['cloud'] if e['has_cloud'] else None,
+                    'added_coverage': e.get('gain'),
+                } for e in chosen],
+            },
+        }
+
+    def search_stac_items_with_coverage(
+            self,
+            collections: List[str],
+            bbox: List[float],
+            datetime_range: Optional[str] = None,
+            query: Optional[Dict] = None,
+            base_url: str = 'https://planetarycomputer.microsoft.com/api/stac/v1',
+            target_coverage: float = 0.95,
+            strategy: str = 'single_date',
+            max_items: int = 5
+    ) -> dict:
+        """
+        One-call helper: fetch up to max_items matching Items in a SINGLE
+        request (no pagination), then select the ones that reach
+        target_coverage of the bbox.
+
+        Example:
+            tool.search_stac_items_with_coverage(
+                collections=['sentinel-2-l2a'],
+                bbox=[118.3345905, 31.2267477, 119.2395068, 32.615778],
+                datetime_range='2024-01-01/2024-12-31',
+                query={'eo:cloud_cover': {'lt': 20}},
+                base_url='https://earth-search.aws.element84.com/v1',
+                target_coverage=0.95)
+
+        Items come back newest-first (the server default), so only the most
+        recent max_items Items are evaluated. If more matches exist the result
+        carries 'truncated': True: the older part of the time range was NOT
+        evaluated -- raise max_items or narrow datetime_range / cloud cover.
+        Servers cap 'limit' (commonly at about 1000), so keep max_items below that.
+
+        :param max_items: Max Items to fetch (sent as the STAC 'limit').
+        :return: FeatureCollection of selected Items + 'coverage' summary
+            (see select_items_for_coverage()).
+        """
+        if not bbox:
+            raise ValueError("bbox is required to evaluate spatial coverage.")
+
+        # 1. Single request; 'limit' is the number of Items returned.
+        body = self._generate_search_body(collections, bbox, datetime_range, query, max_items)
+        endpoint = base_url.rstrip('/') + '/search'
+        page = self._send_json_request(endpoint, body)
+
+        stac_data = {
+            'type': 'FeatureCollection',
+            'features': page.get('features', []),
+            # A 'next' link means more matches exist beyond max_items.
+            'truncated': self._find_next_link(page) is not None
+        }
+
+        # 2. Evaluate footprints against the bbox and pick Items reaching the target.
+        if not stac_data['features']:
+            raise ValueError("No STAC items found. Try widening the bbox, datetime range, "
+                             "or double-check the collection id.")
+
+        return self.select_items_for_coverage(stac_data, bbox, target_coverage, strategy)
+
+    # ------------------------------------------------------------------
+    # Assets / auth / loading
+    # ------------------------------------------------------------------
 
     def list_stac_assets(self, stac_data: dict, data_only: bool = True) -> List[dict]:
         """
@@ -295,7 +579,7 @@ class StacTool:
         the data provider/collection, not something reliably inferable from
         the URL itself -- bucket names change and new providers appear
         faster than any hardcoded list could track. The caller (who chose
-        the collection/base_url in search_stac_items) is expected to know
+        the collection/base_url in search_stac_items_with_coverage) is expected to know
         this and pass requester_pays explicitly.
 
         :param href: Direct asset URL (already signed, if the provider requires it).
