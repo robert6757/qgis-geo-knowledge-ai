@@ -291,7 +291,8 @@ class StacTool:
             bbox: List[float],
             target_coverage: float = 0.95,
             strategy: str = 'single_date',
-            min_gain: float = 0.005
+            min_gain: float = 0.005,
+            max_items: Optional[int] = None
     ) -> dict:
         """
         Pick the subset of Items that covers the bbox to the requested ratio.
@@ -315,6 +316,7 @@ class StacTool:
         :param target_coverage: Desired covered fraction of the bbox, 0..1.
         :param strategy: 'single_date' or 'greedy'.
         :param min_gain: Ignore Items adding less than this fraction of the bbox.
+        :param max_items: If set, cap the number of returned selected Items.
         :return: FeatureCollection of the selected Items plus a 'coverage' summary dict.
             Compatible with list_stac_assets().
         """
@@ -351,27 +353,15 @@ class StacTool:
         else:
             candidates = entries
 
-        chosen, covered = self._greedy_cover(candidates, bbox_geom, bbox_area, da,
+        chosen, _ = self._greedy_cover(candidates, bbox_geom, bbox_area, da,
                                              target_coverage, min_gain)
+
+        if max_items is not None:
+            chosen = chosen[:max_items]
 
         return {
             'type': 'FeatureCollection',
-            'features': [e['feat'] for e in chosen],
-            'truncated': stac_data.get('truncated', False),
-            'coverage': {
-                'strategy': strategy,
-                'target': target_coverage,
-                'achieved': covered,
-                'uncovered': 1.0 - covered,
-                'reached': covered >= target_coverage,
-                'bbox_area_km2': bbox_area / 1e6,
-                'items': [{
-                    'item_id': e['feat'].get('id'),
-                    'datetime': e['datetime'],
-                    'cloud_cover': e['cloud'] if e['has_cloud'] else None,
-                    'added_coverage': e.get('gain'),
-                } for e in chosen],
-            },
+            'features': [e['feat'] for e in chosen]
         }
 
     def search_stac_items_with_coverage(
@@ -400,9 +390,7 @@ class StacTool:
                 target_coverage=0.95)
 
         Items come back newest-first (the server default), so only the most
-        recent max_items Items are evaluated. If more matches exist the result
-        carries 'truncated': True: the older part of the time range was NOT
-        evaluated -- raise max_items or narrow datetime_range / cloud cover.
+        recent max_items Items are evaluated.
         Servers cap 'limit' (commonly at about 1000), so keep max_items below that.
 
         :param max_items: Max Items to fetch (sent as the STAC 'limit').
@@ -413,15 +401,13 @@ class StacTool:
             raise ValueError("bbox is required to evaluate spatial coverage.")
 
         # 1. Single request; 'limit' is the number of Items returned.
-        body = self._generate_search_body(collections, bbox, datetime_range, query, max_items)
+        body = self._generate_search_body(collections, bbox, datetime_range, query, 20)
         endpoint = base_url.rstrip('/') + '/search'
         page = self._send_json_request(endpoint, body)
 
         stac_data = {
             'type': 'FeatureCollection',
-            'features': page.get('features', []),
-            # A 'next' link means more matches exist beyond max_items.
-            'truncated': self._find_next_link(page) is not None
+            'features': page.get('features', [])
         }
 
         # 2. Evaluate footprints against the bbox and pick Items reaching the target.
@@ -429,7 +415,7 @@ class StacTool:
             raise ValueError("No STAC items found. Try widening the bbox, datetime range, "
                              "or double-check the collection id.")
 
-        return self.select_items_for_coverage(stac_data, bbox, target_coverage, strategy)
+        return self.select_items_for_coverage(stac_data, bbox, target_coverage, strategy, max_items=max_items)
 
     # ------------------------------------------------------------------
     # Assets / auth / loading

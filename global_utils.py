@@ -19,9 +19,12 @@
  ***************************************************************************/
 """
 
+import datetime as dt
 import math
+from urllib.parse import quote
 
-from qgis.core import QgsProject, Qgis, QgsMapLayer, QgsApplication
+from qgis.PyQt.QtNetwork import QNetworkProxy
+from qgis.core import QgsProject, Qgis, QgsMapLayer, QgsApplication, QgsNetworkAccessManager
 
 def get_workspace_info(iface, include_processing_tools=True):
     """
@@ -35,6 +38,9 @@ def get_workspace_info(iface, include_processing_tools=True):
         A dictionary containing workspace information.
     """
     workspace_info = {}
+
+    # current system time
+    workspace_info["ClientTime"] = dt.datetime.now().isoformat()
 
     # qgis version
     workspace_info["version"] = Qgis.version()
@@ -170,3 +176,17 @@ def get_workspace_info(iface, include_processing_tools=True):
         workspace_info["ProcessingTools"] = processing_tools
 
     return workspace_info
+
+def get_qgis_proxies():
+    """
+    Converts the proxy settings from QGIS network configuration into a `proxies` parameter for `requests`;returns `None` if no proxy is configured.
+    """
+    p = QgsNetworkAccessManager.instance().fallbackProxy()
+    t = p.type()
+    if t == QNetworkProxy.HttpProxy:
+        scheme = "http"
+    else:
+        return None
+    auth = f"{quote(p.user())}:{quote(p.password())}@" if p.user() else ""
+    url = f"{scheme}://{auth}{p.hostName()}:{p.port()}"
+    return {"http": url, "https": url}

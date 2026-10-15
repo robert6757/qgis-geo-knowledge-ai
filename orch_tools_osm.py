@@ -25,13 +25,15 @@ import re
 import json
 import time
 import shutil
+import requests
 from typing import List, Optional
-from qgis.PyQt.QtCore import QByteArray, QEventLoop, QUrl, QUrlQuery, QVariant
+from qgis.PyQt.QtCore import QVariant
 from qgis.core import (
-    Qgis, QgsFileDownloader, QgsVectorLayer, QgsField,
-    QgsFeature, QgsGeometry, QgsPoint, QgsPointXY, QgsProject, QgsFeatureRequest,
+    QgsVectorLayer, QgsField,
+    QgsFeature, QgsGeometry, QgsPointXY, QgsProject, QgsFeatureRequest,
     QgsVectorFileWriter
 )
+from .global_utils import get_qgis_proxies
 
 
 class OverpassTool:
@@ -84,11 +86,6 @@ class OverpassTool:
             # 2. Construct the URL
             # Ensure base_url ends with / and append 'interpreter'
             endpoint = base_url.rstrip('/') + '/interpreter'
-            url = QUrl(endpoint)
-
-            url_query = QUrlQuery()
-            url_query.addQueryItem('info', 'LLM_OverpassTool')
-            url.setQuery(url_query)
 
             # Make sure a stale result of a previous run can never be mistaken for a new one
             out_dir = os.path.dirname(output_path)
@@ -97,19 +94,20 @@ class OverpassTool:
             if os.path.exists(output_path):
                 os.remove(output_path)
 
-            # 3. Execute request using QgsFileDownloader (POST)
-            downloader = QgsFileDownloader(
-                url,
-                output_path,
-                delayStart=True,
-                httpMethod=Qgis.HttpMethod.Post,
-                data=QByteArray(f"data={oql}".encode('utf-8'))
+            # 3. Execute request synchronously using requests (POST)
+            response = requests.post(
+                endpoint,
+                data={'data': oql},
+                headers={'User-Agent': 'GeoKnowledgeAI-QGIS/1.0'},
+                proxies=get_qgis_proxies(),
+                timeout=(5, 30)
             )
+            if not response.ok:
+                raise RuntimeError(f"HTTP {response.status_code} from {endpoint}\n"
+                                   f"Response: {response.text[:500]}\nOQL:\n{oql}")
 
-            loop = QEventLoop()
-            downloader.downloadExited.connect(loop.quit)
-            downloader.startDownload()
-            loop.exec()
+            with open(output_path, 'wb') as f:
+                f.write(response.content)
 
             # 4. Validate the result
             if not os.path.exists(output_path):
@@ -130,7 +128,7 @@ class OverpassTool:
         """Internal helper to generate a simple Overpass QL string."""
 
         # Header: XML output (read by GDAL's OSM driver) and timeout
-        query = '[out:xml][timeout:60];\n'
+        query = '[out:xml][timeout:30];\n'
 
         # Handle Area
         area_id = None
@@ -340,28 +338,26 @@ class OverpassTool:
         :param base_url: Base URL of the Nominatim API.
         """
         try:
-            # 1. Construct the URL and Parameters
-            url = QUrl(base_url)
-            url_query = QUrlQuery()
-            url_query.addQueryItem('q', place_name)
-            url_query.addQueryItem('format', 'json')
-            url_query.addQueryItem('limit', str(limit))
-            url.setQuery(url_query)
-
-            # 2. Execute request using QgsFileDownloader (GET)
-            downloader = QgsFileDownloader(
-                url,
-                output_path,
-                delayStart=True,
-                httpMethod=Qgis.HttpMethod.Get
+            # 1. Execute request synchronously using requests (GET)
+            response = requests.get(
+                base_url,
+                params={
+                    'q': place_name,
+                    'format': 'json',
+                    'limit': limit
+                },
+                headers={'User-Agent': 'GeoKnowledgeAI-QGIS/1.0'},
+                proxies=get_qgis_proxies(),
+                timeout=(5, 15)
             )
+            if not response.ok:
+                raise RuntimeError(f"HTTP {response.status_code} from {base_url}\n"
+                                   f"Response: {response.text[:500]}\nq:\n{place_name}")
 
-            loop = QEventLoop()
-            downloader.downloadExited.connect(loop.quit)
-            downloader.startDownload()
-            loop.exec()
+            with open(output_path, 'w', encoding='utf-8') as f:
+                f.write(response.text)
 
-            # 3. Validate the result
+            # 2. Validate the result
             if os.path.exists(output_path):
                 with open(output_path, 'r', encoding='utf8') as f:
                     content = f.read()

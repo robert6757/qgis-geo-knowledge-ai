@@ -419,7 +419,7 @@ class CTOrchManager(QThread):
 
             tool_response = ""
             all_tool_results = []
-            max_tool_iterations = 12
+            max_tool_iterations = 20
             try:
                 tool_call_results = []
                 for iteration in range(max_tool_iterations):

@@ -33,6 +33,7 @@ from qgis.core import QgsSettings
 
 from .global_defs import *
 from .compat import *
+from .global_utils import get_qgis_proxies
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'setting_dialog.ui'))
@@ -83,6 +84,7 @@ class SettingDialog(QDialog, FORM_CLASS):
                 url += f"&email={email}"
             response = requests.get(
                 url,
+                proxies=get_qgis_proxies(),
                 timeout=10
             )
             if response.status_code != 200:
@@ -227,7 +229,7 @@ class SettingDialog(QDialog, FORM_CLASS):
         }
 
         try:
-            response = requests.get(url, params=params, timeout=60)
+            response = requests.get(url, params=params, proxies=get_qgis_proxies(), timeout=60)
             if response.status_code != 200:
                 error_msg = self._extract_server_error_message(response)
                 QMessageBox.critical(

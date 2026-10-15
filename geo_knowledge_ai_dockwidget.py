@@ -44,7 +44,7 @@ from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
 from .compat import *
 from .code_exec_utils import ensure_code_execution
-from .global_utils import get_workspace_info
+from .global_utils import get_workspace_info, get_qgis_proxies
 from .feedback_dialog import FeedbackDialog
 
 from .subtask_dialog import SubtaskDialog
@@ -234,6 +234,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             response = requests.post(
                 AI_SERVER_DOMAIN + "/ai/v1/feedback",
                 json={"chat_id": self.chat_id, "star": star, "email": email, "issue": issue},
+                proxies=get_qgis_proxies(),
                 timeout=5
             )
 
@@ -690,6 +691,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                 params=params,
                 data=image_data,
                 headers=headers,
+                proxies=get_qgis_proxies(),
                 timeout=10
             )
 

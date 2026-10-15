@@ -64,6 +64,7 @@ from .orch_tools_osm import OverpassTool
 from .orch_tools_qml import QmlStyleTool
 from .orch_tools_stac import StacTool
 from .global_defs import *
+from .global_utils import get_qgis_proxies
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
@@ -891,7 +892,7 @@ class OrchToolExecutor(QObject):
             query = arguments.get("query")
             if isinstance(query, str):
                 query = json.loads(query)
-            limit = arguments.get("limit", 3)
+            limit = arguments.get("limit", 5)
             base_url = arguments.get("base_url", 'https://planetarycomputer.microsoft.com/api/stac/v1')
             target_coverage = arguments.get("target_coverage", 0.95)
             # strategy: single_date, greedy
@@ -980,6 +981,7 @@ class OrchToolExecutor(QObject):
                     params=params,
                     data=image_data,
                     headers=headers,
+                    proxies=get_qgis_proxies(),
                     timeout=10
                 )
 
@@ -1211,6 +1213,7 @@ class OrchToolExecutor(QObject):
                     params={"image_name": image_name},
                     data=image_data,
                     headers={"Content-Type": "image/png"},
+                    proxies=get_qgis_proxies(),
                     timeout=10
                 )
                 if response.status_code != 200:
@@ -1673,12 +1676,8 @@ class OrchToolExecutor(QObject):
     #     tool_result = ""
     #     try:
     #         tool_result = self._execute_tool_impl(
-    #             "qgis_search_stac_items",
-    #             {"base_url":"https://earth-search.aws.element84.com/v1",
-    #              "collections":["sentinel-2-l2a"],
-    #              "bbox":[118.3345905,31.2267477,119.2395068,32.615778],
-    #              "datetime_range":"2024-01-01/2024-12-31",
-    #              "limit":5}
+    #             "qgis_search_and_show_place",
+    #             {"place_name":"台北"}
     #         )
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
