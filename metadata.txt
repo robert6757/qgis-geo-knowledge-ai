@@ -26,8 +26,8 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.29 2026-10-14
-      * Bug fix: Resolved issues with OSM data parsing and vector layer feature queries.
+changelog=Version 1.29 2026-10-15
+      * Bug fix: Resolved issues with OSM data parsing, handling of STAC and vector layer feature queries.
       Version 1.28 2026-10-10
       * New Feature: Added QGIS layout support and some basic toolsets.
       * New Feature: Added the ability to export workflow audit logs.
