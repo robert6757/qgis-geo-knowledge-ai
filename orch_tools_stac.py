@@ -33,9 +33,10 @@ from typing import List, Optional, Dict
 from qgis.PyQt.QtCore import QByteArray, QUrl, QUrlQuery
 from qgis.PyQt.QtNetwork import QNetworkRequest
 from qgis.core import (
-    QgsVectorLayer, QgsRasterLayer, QgsProject, QgsBlockingNetworkRequest,
+    QgsVectorLayer, QgsRasterLayer, QgsProject, QgsNetworkAccessManager,
     QgsGeometry, QgsRectangle, QgsDistanceArea, QgsCoordinateReferenceSystem
 )
+from qgis.PyQt.QtNetwork import QNetworkReply
 
 class StacTool:
     """
@@ -75,19 +76,19 @@ class StacTool:
         """Blocking GET (body is None) or JSON POST; returns the parsed JSON dict."""
         request = QNetworkRequest(QUrl(url))
         request.setRawHeader(b"Accept", b"application/json")
-        blocking_request = QgsBlockingNetworkRequest()
+
+        network_manager = QgsNetworkAccessManager.instance()
 
         if body is None:
-            err = blocking_request.get(request)
+            reply = network_manager.blockingGet(request)
         else:
             request.setHeader(QNetworkRequest.KnownHeaders.ContentTypeHeader, "application/json")
             payload = QByteArray(json.dumps(body, ensure_ascii=False).encode('utf-8'))
-            err = blocking_request.post(request, payload)
+            reply = network_manager.blockingPost(request, payload)
 
-        if err != QgsBlockingNetworkRequest.ErrorCode.NoError:
-            raise RuntimeError(f"STAC search request failed: {blocking_request.errorMessage()}")
+        if reply.error() != QNetworkReply.NetworkError.NoError:
+            raise RuntimeError(f"STAC search request failed: {reply.errorString()}")
 
-        reply = blocking_request.reply()
         content = bytes(reply.content()).decode('utf-8')
         if not content:
             raise RuntimeError("The STAC search response is empty. "
@@ -532,13 +533,12 @@ class StacTool:
             sign_url.setQuery(url_query)
 
             request = QNetworkRequest(sign_url)
-            blocking_request = QgsBlockingNetworkRequest()
-            err = blocking_request.get(request)
+            network_manager = QgsNetworkAccessManager.instance()
+            reply = network_manager.blockingGet(request)
 
-            if err != QgsBlockingNetworkRequest.ErrorCode.NoError:
-                raise RuntimeError(f"Failed to sign STAC asset URL: {blocking_request.errorMessage()}")
+            if reply.error() != QNetworkReply.NetworkError.NoError:
+                raise RuntimeError(f"Failed to sign STAC asset URL: {reply.errorString()}")
 
-            reply = blocking_request.reply()
             content = bytes(reply.content()).decode('utf-8')
             signed = json.loads(content)
             return signed.get('href', href)

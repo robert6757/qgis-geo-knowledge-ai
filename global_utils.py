@@ -183,7 +183,7 @@ def get_qgis_proxies():
     """
     p = QgsNetworkAccessManager.instance().fallbackProxy()
     t = p.type()
-    if t == QNetworkProxy.HttpProxy:
+    if t == QNetworkProxy.ProxyType.HttpProxy:
         scheme = "http"
     else:
         return None

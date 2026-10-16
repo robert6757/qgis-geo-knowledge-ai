@@ -21,7 +21,6 @@
 """
 
 import os
-import requests
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtWidgets import QMessageBox

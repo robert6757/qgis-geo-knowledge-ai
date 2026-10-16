@@ -22,9 +22,9 @@
 import os
 import sys
 
-from qgis.core import QgsBlockingNetworkRequest
+from qgis.core import QgsNetworkAccessManager
 from qgis.PyQt.QtCore import QCoreApplication, QUrl
-from qgis.PyQt.QtNetwork import QNetworkRequest
+from qgis.PyQt.QtNetwork import QNetworkReply, QNetworkRequest
 from qgis.PyQt.QtWidgets import QMessageBox, QWidget
 from global_defs import *
 
@@ -78,15 +78,16 @@ def ensure_code_execution(parent_widget: QWidget = None):
 
     try:
         q_request = QNetworkRequest(QUrl(url))
-        q_nw = QgsBlockingNetworkRequest()
-        err_code = q_nw.get(q_request)
-        q_reply = q_nw.reply()
-        if err_code == QgsBlockingNetworkRequest.ErrorCode.NoError and q_reply:
-            content = q_reply.content()
+        network_manager = QgsNetworkAccessManager.instance()
+        reply = network_manager.blockingGet(q_request)
+        if reply.error() == QNetworkReply.NetworkError.NoError:
             with open(target_path, 'wb') as f:
-                f.write(content.data())
+                f.write(reply.content())
         else:
-            raise Exception(f"QgsBlockingNetworkRequest failed with error code: {err_code}")
+            raise Exception(
+                f"Failed to download from {url}: "
+                f"error code {reply.error()}, message: {reply.errorString()}"
+            )
 
         # Clear any cached import of this module
         for mod_name in list(sys.modules.keys()):

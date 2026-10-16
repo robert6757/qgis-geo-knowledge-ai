@@ -100,7 +100,7 @@ class OverpassTool:
                 data={'data': oql},
                 headers={'User-Agent': 'GeoKnowledgeAI-QGIS/1.0'},
                 proxies=get_qgis_proxies(),
-                timeout=(5, 30)
+                timeout=(5, 90)
             )
             if not response.ok:
                 raise RuntimeError(f"HTTP {response.status_code} from {endpoint}\n"
@@ -128,7 +128,7 @@ class OverpassTool:
         """Internal helper to generate a simple Overpass QL string."""
 
         # Header: XML output (read by GDAL's OSM driver) and timeout
-        query = '[out:xml][timeout:30];\n'
+        query = '[out:xml][timeout:60];\n'
 
         # Handle Area
         area_id = None
@@ -285,13 +285,13 @@ class OverpassTool:
                 options.layerName = ogr_layer
                 options.fileEncoding = 'UTF-8'
                 options.actionOnExistingFile = (
-                    QgsVectorFileWriter.CreateOrOverwriteLayer if os.path.exists(gpkg_path)
-                    else QgsVectorFileWriter.CreateOrOverwriteFile
+                    QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteLayer if os.path.exists(gpkg_path)
+                    else QgsVectorFileWriter.ActionOnExistingFile.CreateOrOverwriteFile
                 )
                 result = QgsVectorFileWriter.writeAsVectorFormatV3(
                     src, gpkg_path, QgsProject.instance().transformContext(), options
                 )
-                if result[0] != QgsVectorFileWriter.NoError:
+                if result[0] != QgsVectorFileWriter.WriterError.NoError:
                     raise RuntimeError(f"Failed to convert OSM layer '{ogr_layer}' to GeoPackage: {result[1]}")
 
                 layer = QgsVectorLayer(
