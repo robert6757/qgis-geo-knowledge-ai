@@ -204,6 +204,32 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self._begin_chat(favorite_orch_task_plan)
 
     def handle_click_user_db_btn(self):
+        gSetting = QgsSettings()
+        user_id = gSetting.value(USER_ID_TAG, "")
+        email = gSetting.value(USER_EMAIL_TAG, "")
+        if user_id:
+            try:
+                url = f"{AI_SERVER_DOMAIN}/ai/v1/userinfo?user_id={user_id}"
+                if email:
+                    url += f"&email={email}"
+                response = requests.get(
+                    url,
+                    proxies=get_qgis_proxies(),
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    data = response.json()
+                    plan = data.get("plan")
+                    if plan == 0:
+                        QMessageBox.information(
+                            self,
+                            self.tr("Tip"),
+                            self.tr("You need to activate a subscription plan before using Private Knowledge Base."),
+                            QMessageBoxOK
+                        )
+            except Exception:
+                pass
+
         dlg = UserKnowledgeDialog(parent=self)
         dlg.setModal(True)
         dlg.show()
