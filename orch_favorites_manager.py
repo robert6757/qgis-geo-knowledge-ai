@@ -28,9 +28,10 @@ import uuid
 import requests
 from dataclasses import asdict
 from datetime import datetime
+
 from .compat import *
 from .orch_manager import TaskPlan, SubTask
-from .global_utils import get_qgis_proxies
+from .global_utils import get_qgis_proxies, get_auth_headers
 from qgis.core import QgsApplication, QgsSettings
 from qgis.PyQt.QtCore import QStandardPaths
 
@@ -189,7 +190,7 @@ class OrchFavoritesManager:
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_ENUM_URL
 
         try:
-            response = requests.get(url, proxies=get_qgis_proxies(), timeout=10)
+            response = requests.get(url, proxies=get_qgis_proxies(), headers=get_auth_headers(), timeout=10)
             if response.status_code != 200:
                 print(f"Failed to fetch remote favorites: {response.status_code}")
                 return []
@@ -234,7 +235,7 @@ class OrchFavoritesManager:
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL
 
         try:
-            response = requests.get(url, params={'name': name}, proxies=get_qgis_proxies(), timeout=10)
+            response = requests.get(url, params={'name': name}, headers=get_auth_headers(), proxies=get_qgis_proxies(), timeout=10)
             if response.status_code != 200:
                 print(f"Failed to fetch remote favorite '{name}': {response.status_code}")
                 return None

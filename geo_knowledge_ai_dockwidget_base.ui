@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>424</width>
-    <height>495</height>
+    <width>469</width>
+    <height>543</height>
    </rect>
   </property>
   <property name="font">
@@ -35,64 +35,43 @@
     <property name="spacing">
      <number>3</number>
     </property>
-    <item row="1" column="1">
-     <widget class="QToolButton" name="btnHistory">
-      <property name="toolTip">
-       <string>History List</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/list.svg</normaloff>:/plugins/geo_knowledge_ai/image/list.svg</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QToolButton" name="btnScreenCapture">
-      <property name="toolTip">
-       <string>Capture QGIS main window to start chat.</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/screencapture2.svg</normaloff>:/plugins/geo_knowledge_ai/image/screencapture2.svg</iconset>
-      </property>
-      <property name="checkable">
-       <bool>true</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="4" colspan="2">
-     <spacer name="horizontalSpacer">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>84</width>
-        <height>20</height>
-       </size>
-      </property>
-     </spacer>
-    </item>
-    <item row="0" column="0" colspan="9">
+    <item row="0" column="0" colspan="8">
      <widget class="QSplitter" name="splitter">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
       </property>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="btnUserDB">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="toolTip">
+           <string>Your private knowledge base for enhancing AI responses</string>
+          </property>
+          <property name="text">
+           <string>My Knowledge Base</string>
+          </property>
+          <property name="icon">
+           <iconset resource="resources.qrc">
+            <normaloff>:/plugins/geo_knowledge_ai/image/database.svg</normaloff>:/plugins/geo_knowledge_ai/image/database.svg</iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
          <widget class="QLabel" name="label">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -102,7 +81,7 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="3" column="0" colspan="2">
          <widget class="QWidget" name="widgetChatbotParent" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -116,6 +95,12 @@
       </widget>
       <widget class="QWidget" name="layoutWidget">
        <layout class="QGridLayout" name="gridLayout_2">
+        <property name="topMargin">
+         <number>3</number>
+        </property>
+        <property name="spacing">
+         <number>3</number>
+        </property>
         <item row="0" column="0">
          <widget class="QLabel" name="label_2">
           <property name="sizePolicy">
@@ -175,27 +160,74 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="7">
-     <widget class="QPushButton" name="btnSendOrTerminate">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
+    <item row="1" column="1">
+     <widget class="QToolButton" name="btnHistory">
       <property name="toolTip">
-       <string/>
+       <string>History List</string>
       </property>
       <property name="text">
-       <string>Send</string>
+       <string/>
       </property>
       <property name="icon">
        <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/send.svg</normaloff>:/plugins/geo_knowledge_ai/image/send.svg</iconset>
+        <normaloff>:/plugins/geo_knowledge_ai/image/list.svg</normaloff>:/plugins/geo_knowledge_ai/image/list.svg</iconset>
       </property>
      </widget>
     </item>
-    <item row="1" column="6">
+    <item row="1" column="2">
+     <widget class="QToolButton" name="btnScreenCapture">
+      <property name="toolTip">
+       <string>Capture QGIS main window to start chat.</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/screencapture2.svg</normaloff>:/plugins/geo_knowledge_ai/image/screencapture2.svg</iconset>
+      </property>
+      <property name="checkable">
+       <bool>true</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QToolButton" name="btnFavorites">
+      <property name="toolTip">
+       <string>Workflow Favorites.</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/favorite.svg</normaloff>:/plugins/geo_knowledge_ai/image/favorite.svg</iconset>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
+      </property>
+      <property name="checked">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="4">
+     <spacer name="horizontalSpacer">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>84</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="1" column="5">
      <widget class="QComboBox" name="cbSwitchMode">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -228,7 +260,27 @@
       </item>
      </widget>
     </item>
-    <item row="1" column="8">
+    <item row="1" column="6">
+     <widget class="QPushButton" name="btnSendOrTerminate">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="toolTip">
+       <string/>
+      </property>
+      <property name="text">
+       <string>Send</string>
+      </property>
+      <property name="icon">
+       <iconset resource="resources.qrc">
+        <normaloff>:/plugins/geo_knowledge_ai/image/send.svg</normaloff>:/plugins/geo_knowledge_ai/image/send.svg</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="7">
      <widget class="QPushButton" name="btnClear">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -245,26 +297,6 @@
       <property name="icon">
        <iconset resource="resources.qrc">
         <normaloff>:/plugins/geo_knowledge_ai/image/clear.svg</normaloff>:/plugins/geo_knowledge_ai/image/clear.svg</iconset>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QToolButton" name="btnFavorites">
-      <property name="toolTip">
-       <string>Workflow Favorites.</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="resources.qrc">
-        <normaloff>:/plugins/geo_knowledge_ai/image/favorite.svg</normaloff>:/plugins/geo_knowledge_ai/image/favorite.svg</iconset>
-      </property>
-      <property name="checkable">
-       <bool>false</bool>
-      </property>
-      <property name="checked">
-       <bool>false</bool>
       </property>
      </widget>
     </item>

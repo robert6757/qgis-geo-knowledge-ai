@@ -35,6 +35,7 @@ from qgis import processing
 
 from .orch_favorites_manager import OrchFavoritesManager
 from .orch_favorites_dialog import OrchFavoritesDialog
+from .user_knowledge_dialog import UserKnowledgeDialog
 from .orch_manager import CTOrchManager, TaskPlan, SubTask, TaskStatus
 from .stream_chat_worker import StreamChatWorker
 from .chatbot_browser import ChatbotBrowser
@@ -44,7 +45,7 @@ from .history_manager import HistoryManager
 from .history_dialog import HistoryDialog
 from .compat import *
 from .code_exec_utils import ensure_code_execution
-from .global_utils import get_workspace_info, get_qgis_proxies
+from .global_utils import get_workspace_info, get_qgis_proxies, get_auth_headers
 from .feedback_dialog import FeedbackDialog
 
 from .subtask_dialog import SubtaskDialog
@@ -90,6 +91,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
         self.cbSwitchMode.currentIndexChanged.connect(self.handle_update_chat_mode)
         self.btnFavorites.clicked.connect(self.handle_click_favorites_btn)
+        self.btnUserDB.clicked.connect(self.handle_click_user_db_btn)
 
         # update chat mode combobox
         gSetting = QgsSettings()
@@ -201,6 +203,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.plainTextEdit.setPlainText(favorite_orch_task_plan.original_task)
         self._begin_chat(favorite_orch_task_plan)
 
+    def handle_click_user_db_btn(self):
+        dlg = UserKnowledgeDialog(parent=self)
+        dlg.setModal(True)
+        dlg.show()
+        dlg.exec()
+
     def handle_update_chat_mode(self, index):
         # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Workflow Automation
         chat_mode = index + 1
@@ -234,6 +242,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             response = requests.post(
                 AI_SERVER_DOMAIN + "/ai/v1/feedback",
                 json={"chat_id": self.chat_id, "star": star, "email": email, "issue": issue},
+                headers=get_auth_headers(),
                 proxies=get_qgis_proxies(),
                 timeout=5
             )
@@ -686,6 +695,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             headers = {
                 "Content-Type": "image/png"
             }
+            headers.update(get_auth_headers())
+
             response = requests.post(
                 upload_url,
                 params=params,

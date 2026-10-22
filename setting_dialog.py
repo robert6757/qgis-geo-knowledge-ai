@@ -38,7 +38,7 @@ from qgis.core import QgsSettings
 
 from .global_defs import *
 from .compat import *
-from .global_utils import get_qgis_proxies
+from .global_utils import get_qgis_proxies, get_auth_headers
 from .verify_dialog import VerifyDialog
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
@@ -357,18 +357,22 @@ class SettingDialog(QDialog, FORM_CLASS):
 
         from_time = self._format_utc_qdatetime(self.dateTimeEditFromAuditLogs.dateTime())
         to_time = self._format_utc_qdatetime(self.dateTimeEditToAuditLogs.dateTime())
-        user_id = QgsSettings().value(USER_ID_TAG, "").strip()
 
         url = f"{AI_SERVER_DOMAIN}/ai/v1/audit/logs/export"
         params = {
             "email": email,
-            "user_id": user_id,
             "from": from_time,
             "to": to_time,
         }
 
         try:
-            response = requests.get(url, params=params, proxies=get_qgis_proxies(), timeout=60)
+            response = requests.get(
+                url,
+                params=params,
+                headers=get_auth_headers(),
+                proxies=get_qgis_proxies(),
+                timeout=60
+            )
             if response.status_code != 200:
                 error_msg = self._extract_server_error_message(response)
                 QMessageBox.critical(

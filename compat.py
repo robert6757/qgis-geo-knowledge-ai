@@ -24,7 +24,7 @@
 
 from qgis.PyQt.QtCore import Qt, QT_VERSION_STR, QStandardPaths
 from qgis.PyQt.QtNetwork import QNetworkReply, QNetworkRequest
-from qgis.PyQt.QtWidgets import QDialog, QMessageBox
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox, QAbstractItemView
 from qgis.PyQt.QtGui import QTextDocument
 
 QT_MAJOR_VERSION = int(QT_VERSION_STR.split(".")[0])
@@ -56,3 +56,6 @@ QMessageBoxQuestion = QMessageBox.Icon.Question
 QMessageBoxYesRole = QMessageBox.ButtonRole.YesRole
 QMessageBoxNoRole = QMessageBox.ButtonRole.NoRole
 HttpStatusCodeAttribute = QNetworkRequest.Attribute.HttpStatusCodeAttribute
+AbstractItemViewSelectRows = QAbstractItemView.SelectionBehavior.SelectRows
+AbstractItemViewSingleSelection = QAbstractItemView.SelectionMode.SingleSelection
+ItemIsEditable = Qt.ItemFlag.ItemIsEditable

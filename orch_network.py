@@ -26,6 +26,7 @@ from qgis.PyQt.QtNetwork import QNetworkAccessManager, QNetworkRequest
 
 from .global_defs import *
 from .compat import *
+from .global_utils import get_auth_headers
 
 class CTOrchNetwork(QThread):
 
@@ -73,6 +74,10 @@ class CTOrchNetwork(QThread):
             request = QNetworkRequest(QUrl(url))
             request.setHeader(ContentTypeHeader, "application/json")
             request.setRawHeader(b"Accept", b"text/event-stream")
+
+            # Add authorization headers if a client token is configured.
+            for key, value in get_auth_headers().items():
+                request.setRawHeader(key.encode('utf-8'), value.encode('utf-8'))
 
             # send post reqeust.
             json_data = json.dumps(self.request_data, ensure_ascii=False).encode('utf-8')

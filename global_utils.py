@@ -24,7 +24,24 @@ import math
 from urllib.parse import quote
 
 from qgis.PyQt.QtNetwork import QNetworkProxy
-from qgis.core import QgsProject, Qgis, QgsMapLayer, QgsApplication, QgsNetworkAccessManager
+from qgis.core import QgsProject, Qgis, QgsMapLayer, QgsApplication, QgsNetworkAccessManager, QgsSettings
+
+from .global_defs import CLIENT_TOKEN_TAG
+
+
+def get_auth_headers():
+    """
+    Return an Authorization header with the stored client token if available.
+
+    Returns:
+        A dict containing ``Authorization: bearer <token>`` when a token is
+        configured; otherwise an empty dict.
+    """
+    token = QgsSettings().value(CLIENT_TOKEN_TAG, "")
+    if token:
+        return {"Authorization": f"bearer {token}"}
+    return {}
+
 
 def get_workspace_info(iface, include_processing_tools=True):
     """

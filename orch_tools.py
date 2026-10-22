@@ -64,7 +64,7 @@ from .orch_tools_osm import OverpassTool
 from .orch_tools_qml import QmlStyleTool
 from .orch_tools_stac import StacTool
 from .global_defs import *
-from .global_utils import get_qgis_proxies
+from .global_utils import get_qgis_proxies, get_auth_headers
 
 SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_layers", "qgis_zoom_to_layer",
                    "qgis_remove_layer", "qgis_query_features_from_vector_layer", "qgis_execute_code",
@@ -976,6 +976,8 @@ class OrchToolExecutor(QObject):
                 headers = {
                     "Content-Type": "image/png"
                 }
+                headers.update(get_auth_headers())
+
                 response = requests.post(
                     upload_url,
                     params=params,
@@ -1208,11 +1210,14 @@ class OrchToolExecutor(QObject):
                 with open(screenshot_path, 'rb') as f:
                     image_data = f.read()
 
+                headers = {"Content-Type": "image/png"}
+                headers.update(get_auth_headers())
+
                 response = requests.post(
                     upload_url,
                     params={"image_name": image_name},
                     data=image_data,
-                    headers={"Content-Type": "image/png"},
+                    headers=headers,
                     proxies=get_qgis_proxies(),
                     timeout=10
                 )
