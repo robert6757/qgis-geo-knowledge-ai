@@ -27,7 +27,7 @@ import requests
 
 from qgis.PyQt import uic
 from qgis.PyQt.QtCore import QCoreApplication, QThread, pyqtSignal
-from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox, QTableWidgetItem
+from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox, QHeaderView, QTableWidgetItem
 from qgis.core import QgsSettings
 
 from .compat import *
@@ -262,7 +262,11 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         ])
         self.tableWidgetKnowledge.setSelectionBehavior(AbstractItemViewSelectRows)
         self.tableWidgetKnowledge.setSelectionMode(AbstractItemViewSingleSelection)
-        self.tableWidgetKnowledge.horizontalHeader().setStretchLastSection(True)
+        self.tableWidgetKnowledge.setColumnWidth(0, max(400, self.tableWidgetKnowledge.columnWidth(0)))
+        header = self.tableWidgetKnowledge.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.Interactive)
+        header.setSectionResizeMode(1, QHeaderView.Interactive)
+        header.setMinimumSectionSize(50)
 
         # Wire up buttons.
         self.btnAddKnowledge.clicked.connect(self.handle_add_knowledge)
@@ -327,19 +331,28 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         task_status = status_json.get("status")
         file_statuses = status_json.get("files") or {}
 
-        for idx, item in enumerate(self.knowledge_files):
-            name = item["name"]
-            file_status = (file_statuses.get(name) or {}).get("status")
-            status_text = _translate_status(file_status, item.get("status", self.tr("Built")))
-            item["status"] = status_text
-            status_item = self.tableWidgetKnowledge.item(idx, 1)
-            if status_item is None:
-                status_item = QTableWidgetItem()
-                status_item.setFlags(status_item.flags() & ~ItemIsEditable)
-                self.tableWidgetKnowledge.setItem(idx, 1, status_item)
-            status_item.setText(status_text)
+        existing_names = {item["name"]: idx for idx, item in enumerate(self.knowledge_files)}
 
-        self.tableWidgetKnowledge.resizeColumnsToContents()
+        for name, status_info in file_statuses.items():
+            file_status = (status_info or {}).get("status")
+            status_text = _translate_status(file_status, self.tr("Building..."))
+
+            if name in existing_names:
+                idx = existing_names[name]
+                self.knowledge_files[idx]["status"] = status_text
+                status_item = self.tableWidgetKnowledge.item(idx, 1)
+                if status_item is None:
+                    status_item = QTableWidgetItem()
+                    status_item.setFlags(status_item.flags() & ~ItemIsEditable)
+                    self.tableWidgetKnowledge.setItem(idx, 1, status_item)
+                status_item.setText(status_text)
+            else:
+                self.knowledge_files.append({
+                    "name": name,
+                    "status": status_text,
+                })
+
+        self._refresh_table()
 
         if task_status in ("completed", "failed"):
             QgsSettings().remove(USER_KNOWLEDGE_TASK_ID_TAG)
@@ -402,8 +415,6 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
 
             self.tableWidgetKnowledge.setItem(row, 0, name_item)
             self.tableWidgetKnowledge.setItem(row, 1, status_item)
-
-        self.tableWidgetKnowledge.resizeColumnsToContents()
 
     def _get_user_email(self):
         """Return the configured user email from QGIS settings."""
