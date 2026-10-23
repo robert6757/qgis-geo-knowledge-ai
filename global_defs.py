@@ -22,7 +22,8 @@
 
 VERSION = "1.29"
 
-AI_SERVER_DOMAIN = "https://s1.geoknowledgeai.com"
+# AI_SERVER_DOMAIN = "https://s1.geoknowledgeai.com"
+AI_SERVER_DOMAIN = "http://127.0.0.1:8000"
 
 USER_ID_TAG = "geo-knowledge-ai/uid"
 USER_EMAIL_TAG = "geo-knowledge-ai/email"
@@ -33,3 +34,4 @@ PRIVACY_AGREEMENT_TAG = "geo-knowledge-ai/privacy_agreement"
 TEMP_FOLDER_TAG = "geo-knowledge-ai/temp_folder"
 USER_PARAM_KEYS_TAG = "geo-knowledge-ai/param_keys"
 CLIENT_TOKEN_TAG = "geo-knowledge-ai/token"
+USER_KNOWLEDGE_TASK_ID_TAG = "geo-knowledge-ai/user_knowledge_task_id"

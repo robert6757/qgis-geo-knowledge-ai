@@ -26,16 +26,30 @@ import time
 import requests
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtCore import QThread, pyqtSignal
+from qgis.PyQt.QtCore import QCoreApplication, QThread, pyqtSignal
 from qgis.PyQt.QtWidgets import QFileDialog, QMessageBox, QTableWidgetItem
 from qgis.core import QgsSettings
 
 from .compat import *
-from .global_defs import AI_SERVER_DOMAIN, USER_EMAIL_TAG
+from .global_defs import AI_SERVER_DOMAIN, USER_EMAIL_TAG, USER_KNOWLEDGE_TASK_ID_TAG
 from .global_utils import get_auth_headers, get_qgis_proxies
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'user_knowledge_dialog.ui'))
+
+
+def _translate_status(value, default_text):
+    """Translate a server-side knowledge build status value to local text."""
+    if value == "completed":
+        return QCoreApplication.translate("UserKnowledgeDialog", "Built")
+    if value == "failed":
+        return QCoreApplication.translate("UserKnowledgeDialog", "Failed")
+    if value == "pending":
+        return QCoreApplication.translate("UserKnowledgeDialog", "Pending")
+    if value == "running":
+        return QCoreApplication.translate("UserKnowledgeDialog", "Building...")
+    return default_text
+
 
 class KnowledgeBuildWorker(QThread):
     """Background worker that uploads files and polls the build task status."""
@@ -127,6 +141,8 @@ class KnowledgeBuildWorker(QThread):
             )
             return
 
+        QgsSettings().setValue(USER_KNOWLEDGE_TASK_ID_TAG, task_id)
+
         for entry in self.file_entries:
             self.status_updated.emit(entry["name"], self.tr("Building..."))
 
@@ -162,17 +178,6 @@ class KnowledgeBuildWorker(QThread):
                 progress = status_json.get("progress", 0) or 0
                 total = status_json.get("total", 0) or 0
                 file_statuses = status_json.get("files") or {}
-
-                def _translate_status(value, default_text):
-                    if value == "completed":
-                        return self.tr("Built")
-                    if value == "failed":
-                        return self.tr("Failed")
-                    if value == "pending":
-                        return self.tr("Pending")
-                    if value == "running":
-                        return self.tr("Building...")
-                    return default_text
 
                 if status == "completed":
                     final_status = "completed"
@@ -268,6 +273,76 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
 
         # Load the already built knowledge bases from the server.
         self._load_remote_knowledge_list()
+
+        # Restore status of any previously unfinished knowledge build task.
+        self._restore_historical_task_status()
+
+    def _restore_historical_task_status(self):
+        """Query the stored historical task status and update the table.
+
+        If a previous build task id is saved in QSettings, this method fetches
+        its current state and reflects each file status in ``tableWidgetKnowledge``.
+        The stored task id is cleared once the task is no longer running.
+        """
+        task_id = QgsSettings().value(USER_KNOWLEDGE_TASK_ID_TAG, "")
+        if not task_id:
+            return
+
+        email = self._get_user_email()
+        if not email:
+            return
+
+        status_url = f"{AI_SERVER_DOMAIN}/ai/v1/user/knowledge/build/status/{task_id}"
+        proxies = get_qgis_proxies()
+        headers = get_auth_headers()
+
+        try:
+            response = requests.get(
+                status_url,
+                headers=headers,
+                proxies=proxies,
+                timeout=10,
+            )
+            if response.status_code != 200:
+                print(
+                    f"[UserKnowledgeDialog] historical task status failed: HTTP "
+                    f"{response.status_code} {response.text[:200]}"
+                )
+                QgsSettings().remove(USER_KNOWLEDGE_TASK_ID_TAG)
+                return
+
+            status_json = response.json()
+        except Exception as e:
+            print(f"[UserKnowledgeDialog] historical task status failed: {e}")
+            QgsSettings().remove(USER_KNOWLEDGE_TASK_ID_TAG)
+            return
+
+        code = status_json.get("code")
+        if code != 0:
+            message = status_json.get("message", "unknown error")
+            print(f"[UserKnowledgeDialog] historical task status failed: {message}")
+            QgsSettings().remove(USER_KNOWLEDGE_TASK_ID_TAG)
+            return
+
+        task_status = status_json.get("status")
+        file_statuses = status_json.get("files") or {}
+
+        for idx, item in enumerate(self.knowledge_files):
+            name = item["name"]
+            file_status = (file_statuses.get(name) or {}).get("status")
+            status_text = _translate_status(file_status, item.get("status", self.tr("Built")))
+            item["status"] = status_text
+            status_item = self.tableWidgetKnowledge.item(idx, 1)
+            if status_item is None:
+                status_item = QTableWidgetItem()
+                status_item.setFlags(status_item.flags() & ~ItemIsEditable)
+                self.tableWidgetKnowledge.setItem(idx, 1, status_item)
+            status_item.setText(status_text)
+
+        self.tableWidgetKnowledge.resizeColumnsToContents()
+
+        if task_status in ("completed", "failed"):
+            QgsSettings().remove(USER_KNOWLEDGE_TASK_ID_TAG)
 
     def _load_remote_knowledge_list(self):
         """Fetch the user's built knowledge bases synchronously."""
@@ -410,7 +485,17 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         self._build_worker.start()
 
     def handle_remove_knowledge(self):
-        """Remove the currently selected knowledge base file from the list."""
+        """Remove the currently selected knowledge base file from the list and server."""
+        email = self._get_user_email()
+        if not email:
+            QMessageBox.warning(
+                self,
+                self.tr("Warning"),
+                self.tr("Please set your email in settings before removing knowledge files."),
+                QMessageBoxOK,
+            )
+            return
+
         selected_rows = self.tableWidgetKnowledge.selectionModel().selectedRows()
         if not selected_rows:
             QMessageBox.information(
@@ -421,11 +506,67 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
             )
             return
 
-        # Remove from bottom to top to keep indices valid.
+        reply = QMessageBox.question(
+            self,
+            self.tr("Confirm Delete"),
+            self.tr("Are you sure you want to delete the selected knowledge file?"),
+            QMessageBoxYes | QMessageBoxNo,
+            QMessageBoxNo,
+        )
+        if reply != QMessageBoxYes:
+            return
+
+        clear_url = f"{AI_SERVER_DOMAIN}/ai/v1/user/knowledge/clear"
+        proxies = get_qgis_proxies()
+        headers = get_auth_headers()
+
+        rows_to_remove = []
+        failed_names = []
+
         for model_index in sorted(selected_rows, reverse=True):
             row = model_index.row()
-            if 0 <= row < len(self.knowledge_files):
-                del self.knowledge_files[row]
+            if not (0 <= row < len(self.knowledge_files)):
+                continue
+
+            item = self.knowledge_files[row]
+            kb_name = item.get("name", "")
+
+            try:
+                response = requests.post(
+                    clear_url,
+                    json={"email": email, "kb_name": kb_name},
+                    headers=headers,
+                    proxies=proxies,
+                    timeout=30,
+                )
+                if response.status_code == 200:
+                    resp_json = response.json()
+                    if resp_json.get("code") == 0 and resp_json.get("cleared"):
+                        rows_to_remove.append(row)
+                    else:
+                        failed_names.append(kb_name)
+                elif response.status_code == 404:
+                    # Knowledge base already absent on the server; safe to remove locally.
+                    rows_to_remove.append(row)
+                else:
+                    failed_names.append(kb_name)
+            except Exception as e:
+                print(f"[UserKnowledgeDialog] remove knowledge failed for {kb_name}: {e}")
+                failed_names.append(kb_name)
+
+        # Remove from bottom to top to keep indices valid.
+        for row in sorted(rows_to_remove, reverse=True):
+            del self.knowledge_files[row]
+
+        if failed_names:
+            QMessageBox.warning(
+                self,
+                self.tr("Delete Failed"),
+                self.tr("Failed to delete the following knowledge base(s):\n{names}").format(
+                    names="\n".join(failed_names)
+                ),
+                QMessageBoxOK,
+            )
 
         self._refresh_table()
 
