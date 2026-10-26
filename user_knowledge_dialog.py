@@ -399,100 +399,47 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
                 except Exception as e:
                     print("Error closing file handle: %s" % e)
 
-        if response is None or response.status_code != 200:
-            code = response.status_code if response else 0
-            server_message = ""
-            text = ""
-            if response is not None:
-                try:
-                    resp_json = response.json()
-                    server_message = resp_json.get("message", "")
-                except Exception:
-                    text = response.text[:200]
-
-            failed_status = _translate_status("failed", self.tr("Failed"))
-            for entry in file_entries:
-                for item in self.knowledge_files:
-                    if item["name"] == entry["name"] and item.get("status") not in (
-                        self.tr("Built"),
-                        self.tr("Failed"),
-                    ):
-                        item["status"] = failed_status
-                        break
-            self._refresh_table()
-
-            if server_message:
-                QMessageBox.warning(
-                    self,
-                    self.tr("Geo Knowledge AI"),
-                    self.tr("Failed to start knowledge build: {message}").format(
-                        message=server_message
-                    ),
-                    QMessageBoxOK,
-                )
-            else:
-                QMessageBox.warning(
-                    self,
-                    self.tr("Geo Knowledge AI"),
-                    self.tr("Failed to start knowledge build: {text}").format(
-                        text=text
-                    ),
-                    QMessageBoxOK,
-                )
-            return
-
-        try:
+        if response and response.status_code == 200:
+            # Successful return
             resp_json = response.json()
-        except Exception:
-            QMessageBox.warning(
-                self,
-                self.tr("Geo Knowledge AI"),
-                self.tr("Failed to parse build response: {text}").format(
-                    text=response.text[:200]
-                ),
-                QMessageBoxOK,
-            )
+            task_id = resp_json.get("task_id")
+            QgsSettings().setValue(USER_KNOWLEDGE_TASK_ID_TAG, task_id)
+            for entry in file_entries:
+                # update status to Pending
+                self._on_status_updated(entry["name"], "pending", _translate_status("pending", ""))
+
+            self._start_status_worker(task_id)
             return
 
-        code = resp_json.get("code")
-        if code != 0:
-            message = resp_json.get("message", "unknown error")
+        if response is None:
+            server_error_msg = self.tr("Failed to start knowledge build.")
+        else:
+            # get error message from response.
+            try:
+                resp_json = response.json()
+                server_error_msg = resp_json.get("message", "")
+            except Exception:
+                server_error_msg = response.text[:200]
 
-            failed_status = _translate_status("failed", self.tr("Failed"))
+            # show Failed status on table.
             for entry in file_entries:
                 for item in self.knowledge_files:
                     if item["name"] == entry["name"] and item.get("status") not in (
-                        self.tr("Built"),
-                        self.tr("Failed"),
+                            self.tr("Built"),
+                            self.tr("Failed"),
                     ):
-                        item["status"] = failed_status
+                        item["status"] = _translate_status("failed", self.tr("Failed"))
                         break
             self._refresh_table()
 
-            QMessageBox.warning(
-                self,
-                self.tr("Geo Knowledge AI"),
-                self.tr("Failed to start knowledge build: {message}").format(message=message),
-                QMessageBoxOK,
-            )
-            return
-
-        task_id = resp_json.get("task_id")
-        if not task_id:
-            QMessageBox.warning(
-                self,
-                self.tr("Geo Knowledge AI"),
-                self.tr("No task_id returned from knowledge build endpoint."),
-                QMessageBoxOK,
-            )
-            return
-
-        QgsSettings().setValue(USER_KNOWLEDGE_TASK_ID_TAG, task_id)
-
-        for entry in file_entries:
-            self._on_status_updated(entry["name"], "pending", _translate_status("pending", ""))
-
-        self._start_status_worker(task_id)
+        QMessageBox.warning(
+            self,
+            self.tr("Geo Knowledge AI"),
+            self.tr("Failed to start knowledge build: {message}").format(
+                message=server_error_msg
+            ),
+            QMessageBoxOK,
+        )
 
     def _on_status_updated(self, file_name, file_staus, status_text):
         """Slot to update a single file status from the worker thread."""
@@ -551,6 +498,24 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
             self.file_filter
         )
         if not file_paths:
+            return
+
+        existing_names = {item["name"] for item in self.knowledge_files}
+        duplicate_names = []
+        for path in file_paths:
+            file_name = os.path.basename(path)
+            if file_name in existing_names:
+                duplicate_names.append(file_name)
+
+        if duplicate_names:
+            QMessageBox.warning(
+                self,
+                self.tr("Warning"),
+                self.tr("Files with the same name are not allowed to be uploaded:\n{names}").format(
+                    names="\n".join(duplicate_names)
+                ),
+                QMessageBoxOK,
+            )
             return
 
         new_entries = []
