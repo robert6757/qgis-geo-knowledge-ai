@@ -187,8 +187,8 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         self.tableWidgetKnowledge.setSelectionMode(AbstractItemViewSingleSelection)
         self.tableWidgetKnowledge.setColumnWidth(0, max(400, self.tableWidgetKnowledge.columnWidth(0)))
         header = self.tableWidgetKnowledge.horizontalHeader()
-        header.setSectionResizeMode(0, QHeaderView.Interactive)
-        header.setSectionResizeMode(1, QHeaderView.Interactive)
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.Interactive)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.Interactive)
         header.setMinimumSectionSize(50)
 
         # Wire up buttons.

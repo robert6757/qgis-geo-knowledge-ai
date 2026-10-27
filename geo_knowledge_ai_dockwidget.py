@@ -348,18 +348,18 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         processing_metadata = QgsApplication.processingRegistry().algorithmById(processing_id)
 
         # try to find C++(native) and Python(qgis) processing.
-        if not processing_metadata and processing_id.startswith("native:"):
+        if processing_metadata is None and processing_id.startswith("native:"):
             _processing_id = processing_id.replace("native:", "qgis:")
             processing_metadata = QgsApplication.processingRegistry().algorithmById(_processing_id)
-        if not processing_metadata and processing_id.startswith("qgis:"):
+        if processing_metadata is None and processing_id.startswith("qgis:"):
             _processing_id = processing_id.replace("qgis:", "native:")
             processing_metadata = QgsApplication.processingRegistry().algorithmById(_processing_id)
-        if not processing_metadata and processing_id.startswith("saga:"):
+        if processing_metadata is None and processing_id.startswith("saga:"):
             _processing_id = processing_id.replace("saga:", "sagang:")
             processing_metadata = QgsApplication.processingRegistry().algorithmById(_processing_id)
 
         # Fail to find any processing.
-        if not processing_metadata:
+        if processing_metadata is None:
             self.handle_exec_code_error(self.tr("RuntimeError"), self.tr("Cannot find processing: ") + processing_id)
             return
 

@@ -340,7 +340,7 @@ class ChatbotBrowser(QTextBrowser):
         try:
             # Check if clicked on an image
             cursor = self.cursorForPosition(event.pos())
-            if cursor:
+            if cursor is not None:
                 char_format = cursor.charFormat()
                 if char_format.isValid():
                     image_format = char_format.toImageFormat()
@@ -362,14 +362,14 @@ class ChatbotBrowser(QTextBrowser):
         # check hyperlink first.
         anchor = self.anchorAt(event.pos())
 
-        if anchor:
+        if anchor is not None:
             # use hand cursor on hyperlink text.
             self.viewport().setCursor(PointingHandCursor)
         else:
             # whether moving on image.
             try:
                 cursor = self.cursorForPosition(event.pos())
-                if cursor:
+                if cursor is not None:
                     char_format = cursor.charFormat()
                     if char_format.isValid():
                         image_format = char_format.toImageFormat()

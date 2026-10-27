@@ -262,7 +262,7 @@ class SettingDialog(QDialog, FORM_CLASS):
             return
 
         verify_dlg = VerifyDialog(email, self)
-        if verify_dlg.exec_() == Accepted:
+        if verify_dlg.exec() == Accepted:
             # use the stripped email
             self.lineEdit.setText(email)
             self.labelVerificationStatus.setPixmap(

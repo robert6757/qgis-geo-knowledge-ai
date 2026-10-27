@@ -68,7 +68,7 @@
    <item row="5" column="0" colspan="3">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>4.Supported formats: TXT, Markdown and PDF, under 5 MB per file.</string>
+      <string>4.Supported formats: TXT, Markdown and PDF, under 10 MB per file.</string>
      </property>
     </widget>
    </item>

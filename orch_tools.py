@@ -183,7 +183,7 @@ class OrchToolExecutor(QObject):
                     "id": layer_id,
                     "name": layer.name(),
                     "type": self._get_layer_type(layer),
-                    "visible": layer_tree_node.isVisible() if layer_tree_node else False
+                    "visible": layer_tree_node.isVisible() if layer_tree_node is not None else False
                 }
 
                 # Add type-specific information
@@ -339,18 +339,18 @@ class OrchToolExecutor(QObject):
             processing_metadata = QgsApplication.processingRegistry().algorithmById(algo_id)
 
             # try to find C++(native) and Python(qgis) processing.
-            if not processing_metadata and algo_id.startswith("native:"):
+            if processing_metadata is None and algo_id.startswith("native:"):
                 _algo_id = algo_id.replace("native:", "qgis:")
                 processing_metadata = QgsApplication.processingRegistry().algorithmById(_algo_id)
-            if not processing_metadata and algo_id.startswith("qgis:"):
+            if processing_metadata is None and algo_id.startswith("qgis:"):
                 _algo_id = algo_id.replace("qgis:", "native:")
                 processing_metadata = QgsApplication.processingRegistry().algorithmById(_algo_id)
-            if not processing_metadata and algo_id.startswith("saga:"):
+            if processing_metadata is None and algo_id.startswith("saga:"):
                 _algo_id = algo_id.replace("saga:", "sagang:")
                 processing_metadata = QgsApplication.processingRegistry().algorithmById(_algo_id)
 
             # Fail to find any processing.
-            if not processing_metadata:
+            if processing_metadata is None:
                 raise Exception({"error_msg": f"Cannot find algorithm: {algo_id}"})
 
             feedback = QgsProcessingFeedback()
@@ -763,7 +763,7 @@ class OrchToolExecutor(QObject):
             skipped_ids = []
             for layer_id in layer_ids:
                 node = root.findLayer(layer_id)
-                if node:
+                if node is not None:
                     nodes_to_move.append((node, node.clone()))
                 else:
                     skipped_ids.append(layer_id)
@@ -818,7 +818,7 @@ class OrchToolExecutor(QObject):
 
             for layer_id in layer_ids:
                 node = root.findLayer(layer_id)
-                if node:
+                if node is not None:
                     node.setItemVisibilityChecked(bool(visible))
                     updated_count += 1
                 else:
@@ -1405,7 +1405,7 @@ class OrchToolExecutor(QObject):
             legend.setTitle(title)
 
             map_item = self._find_layout_map(layout, map_item_id)
-            if map_item:
+            if map_item is not None:
                 legend.setLinkedMap(map_item)
             elif map_item_id:
                 # Explicitly notify if a specified map item is not found, rather than silently ignoring it.
@@ -1421,7 +1421,7 @@ class OrchToolExecutor(QObject):
                 for lyr in layers:
                     root.addLayer(lyr)
 
-            if filter_by_map and map_item:
+            if filter_by_map and map_item is not None:
                 legend.setLegendFilterByMapEnabled(True)
 
             layout.addLayoutItem(legend)
@@ -1458,7 +1458,7 @@ class OrchToolExecutor(QObject):
             bar = QgsLayoutItemScaleBar(layout)
             bar.setStyle(style)
             map_item = self._find_layout_map(layout, map_item_id)
-            if map_item:
+            if map_item is not None:
                 bar.setLinkedMap(map_item)
             bar.applyDefaultSize()
             layout.addLayoutItem(bar)
@@ -1615,7 +1615,7 @@ class OrchToolExecutor(QObject):
         """Get a print layout by name or raise."""
         layout_name = self._resolve_placeholder(layout_name)
         layout = QgsProject.instance().layoutManager().layoutByName(layout_name)
-        if not layout:
+        if layout is None:
             raise Exception({"error_msg": f"Layout not found: {layout_name}"})
         return layout
 

@@ -91,7 +91,7 @@ def get_workspace_info(iface, include_processing_tools=True):
     layers = project.mapLayers().values()
     for layer in layers:
         node = layer_tree_root.findLayer(layer.id())
-        visible = node.isVisible() if node else False
+        visible = node.isVisible() if node is not None else False
 
         layer_info = {}
         layer_info["name"] = f"{layer.name()}"
@@ -119,7 +119,7 @@ def get_workspace_info(iface, include_processing_tools=True):
         elif layer.type() == QgsMapLayer.LayerType.RasterLayer:
             bands_info = []
             provider = layer.dataProvider()
-            if provider:
+            if provider is not None:
                 layer_info["raster_width"] = provider.xSize()
                 layer_info["raster_height"] = provider.ySize()
 
@@ -164,7 +164,7 @@ def get_workspace_info(iface, include_processing_tools=True):
 
                     customSampleSize = int(max(provider.xSize(), provider.ySize()) / 256)
                     stats = provider.bandStatistics(band, sampleSize=customSampleSize)
-                    if stats:
+                    if stats is not None:
                         band_info["minimum"] = stats.minimumValue
                         band_info["maximum"] = stats.maximumValue
                         band_info["mean"] = stats.mean
