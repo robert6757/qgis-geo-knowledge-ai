@@ -95,7 +95,7 @@ class StreamChatWorker(QThread):
 
     def on_ready_read_stream(self):
         """deal with raw content"""
-        if not self.reply or not self.reply.isOpen():
+        if self.reply is None or not self.reply.isOpen():
             return
 
         try:
@@ -148,18 +148,18 @@ class StreamChatWorker(QThread):
 
     def on_finished(self):
         """request finished"""
-        if self.reply:
+        if self.reply is not None:
             self.reply.finished.disconnect()
             self.reply.deleteLater()
             self.reply = None
-        if self.network_manager:
+        if self.network_manager is not None:
             self.network_manager.deleteLater()
             self.network_manager = None
         self.quit()
 
     def on_error(self, error):
         """report error"""
-        if self.reply:
+        if self.reply is not None:
             self.reply.readyRead.disconnect()
             self.reply.finished.disconnect()
             self.reply.errorOccurred.disconnect()
@@ -173,7 +173,7 @@ class StreamChatWorker(QThread):
 
     def abort(self):
         """Securely abort network requests and exit the event loop."""
-        if self.reply and self.reply.isRunning():
+        if self.reply is not None and self.reply.isRunning():
             self.reply.abort()
         else:
             self.quit()

@@ -102,12 +102,12 @@ class CTOrchNetwork(QThread):
 
     def _do_abort(self):
         """Abort the current network request and quit the event loop."""
-        if self.reply.isRunning():
+        if self.reply is not None and self.reply.isRunning():
             self.reply.abort()
 
     def on_ready_read(self):
         """deal with raw content - parse SSE events in real-time."""
-        if not self.reply or not self.reply.isOpen():
+        if self.reply is None or not self.reply.isOpen():
             return
 
         try:
@@ -160,7 +160,7 @@ class CTOrchNetwork(QThread):
     def on_finished(self):
         """request finished - The final analysis will be provided here."""
         http_status = None
-        if self.reply:
+        if self.reply is not None:
             http_status = self.reply.attribute(HttpStatusCodeAttribute)
 
         is_error_status = isinstance(http_status, int) and http_status >= 400
@@ -187,11 +187,11 @@ class CTOrchNetwork(QThread):
         elif is_error_status:
             self.error_occurred.emit(f"HTTP {http_status}: request failed.")
 
-        if self.reply:
+        if self.reply is not None:
             self.reply.finished.disconnect()
             self.reply.deleteLater()
             self.reply = None
-        if self.network_manager:
+        if self.network_manager is not None:
             self.network_manager.deleteLater()
             self.network_manager = None
         self.quit()

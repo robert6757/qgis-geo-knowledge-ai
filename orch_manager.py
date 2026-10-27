@@ -125,7 +125,7 @@ class CTOrchManager(QThread):
 
     def run(self):
         # 1. construct task plan.
-        if not self.task_plan:
+        if self.task_plan is None:
             # decompose task and generate task plan.
             self.report_decompose_stream.emit(self.tr("**Thinking...**"))
 
@@ -138,7 +138,7 @@ class CTOrchManager(QThread):
             self._current_subthread = None
 
             task_plan = self.__parse_task_plan(decompose_subthread.get_raw_response())
-            if not task_plan:
+            if task_plan is None:
                 self.error_occurred.emit("\n\n" + self.tr("Invalid Task plan!"))
                 self._stop_flag = True
                 return
@@ -234,7 +234,7 @@ class CTOrchManager(QThread):
 
             # find next subtask.
             sub_task = next((st for st in task_plan.sub_tasks if st.id == task_id), None)
-            if not sub_task:
+            if sub_task is None:
                 error_str = self.tr("[WARNING] Subtask [{}] not found, skip.").format(task_id)
                 self.warning_occurred.emit(error_str)
                 continue
@@ -277,7 +277,7 @@ class CTOrchManager(QThread):
 
             # find next subtask.
             sub_task = next((st for st in task_plan.sub_tasks if st.id == sub_task_id), None)
-            if not sub_task:
+            if sub_task is None:
                 error_str = self.tr("[WARNING] Subtask [{}] not found, skip.").format(sub_task_id)
                 self.warning_occurred.emit(error_str)
                 continue

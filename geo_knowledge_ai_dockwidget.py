@@ -366,20 +366,20 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         processing.execAlgorithmDialog(processing_metadata.id())
 
     def handle_click_exec_subtask_automate(self):
-        if not self.orch_manager:
+        if self.orch_manager is None:
             return
         self.orch_manager.automate_task_plan()
 
     def handle_click_exec_subtask_step(self):
-        if not self.orch_manager:
+        if self.orch_manager is None:
             return
         self.orch_manager.step_task_plan()
 
     def handle_click_exec_subtask_continue(self, subtask_id):
-        if not self.orch_manager:
+        if self.orch_manager is None:
             return
 
-        if self.orch_current_subtask and subtask_id != self.orch_current_subtask.id:
+        if self.orch_current_subtask is not None and subtask_id != self.orch_current_subtask.id:
             QMessageBox.warning(self, self.tr("Error"),
                                 self.tr("Only the current subtask can be continued."),
                                 QMessageBoxOK)
@@ -388,9 +388,9 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.orch_manager.next_sub_task()
 
     def handle_click_exec_subtask_repeat(self, subtask_id):
-        if not self.orch_manager:
+        if self.orch_manager is None:
             return
-        if self.orch_current_subtask and subtask_id != self.orch_current_subtask.id:
+        if self.orch_current_subtask is not None and subtask_id != self.orch_current_subtask.id:
             QMessageBox.warning(self, self.tr("Error"),
                                 self.tr("Only the current subtask can be repeated."),
                                 QMessageBoxOK)
@@ -399,12 +399,12 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.orch_manager.repeat_sub_task()
 
     def handle_click_exec_subtask_detail(self, subtask_id):
-        if not self.orch_manager or not self.orch_task_plan:
+        if self.orch_manager is None or self.orch_task_plan is None:
             return
 
         # Find subtask.
         sub_task = next((st for st in self.orch_task_plan.sub_tasks if st.id == subtask_id), None)
-        if not sub_task:
+        if sub_task is None:
             return
 
         # show Subtask Detail Dialog.
@@ -418,7 +418,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         sub_task.description = dlg.get_modified_prompt()
 
     def handle_click_exec_favorite_plan(self):
-        if not self.orch_task_plan or not self.chat_id:
+        if self.orch_task_plan is None or not self.chat_id:
             return
 
         self.orch_favorites_manager.put_favorite(self.chat_id, self.orch_task_plan)
@@ -428,7 +428,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                                 QMessageBoxOK)
 
     def handle_ensure_code_execution(self):
-        if not self.orch_manager or not self.orch_task_plan:
+        if self.orch_manager is None or self.orch_task_plan is None:
             return
         code_execution = ensure_code_execution(parent_widget=self)
         self.orch_manager.finish_ensure_code_execution(code_execution)
@@ -640,7 +640,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.btnFavorites.setEnabled(False)
 
     def _stop_chat(self):
-        if self.chat_worker:
+        if self.chat_worker is not None:
             self.btnSendOrTerminate.setEnabled(False)
             self.chat_worker.chunks_info_received.disconnect(self.on_chunks_info_received)
             self.chat_worker.content_received.disconnect(self.on_content_received)
@@ -653,7 +653,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
             self.chat_worker.deleteLater()
             self.chat_worker = None
 
-        if self.orch_manager:
+        if self.orch_manager is not None:
             self.btnSendOrTerminate.setEnabled(False)
             self.orch_manager.report_decompose_stream.disconnect(self.recv_orch_content_stream)
             self.orch_manager.orch_decompose_finished.disconnect(self.on_orch_decompose_received)
