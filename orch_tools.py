@@ -1174,7 +1174,7 @@ class OrchToolExecutor(QObject):
                 else:
                     # Prioritize the currently open layout designer
                     designers = self.iface.openLayoutDesigners()
-                    if designers:
+                    if designers is not None and len(designers) > 0:
                         layout = designers[-1].layout()
                     else:
                         layouts = QgsProject.instance().layoutManager().printLayouts()
@@ -1393,7 +1393,7 @@ class OrchToolExecutor(QObject):
                     missing.append(lid)
 
             # The user explicitly specified layers, but none were found -> Throw an error to avoid generating an empty legend.
-            if layer_ids and not layers:
+            if (layer_ids is not None and len(layer_ids) > 0) and (layers is None or len(layers) == 0):
                 return json.dumps({
                     "status": "error",
                     "message": "None of the specified layers were found",
@@ -1646,7 +1646,7 @@ class OrchToolExecutor(QObject):
 
     def _get_vector_layer(self, layer_id):
         """Get a vector layer by id or raise."""
-        if not layer_id:
+        if layer_id is None or layer_id == "":
             raise Exception({"error_msg": "No layer id provided"})
         project = QgsProject.instance()
         if layer_id not in project.mapLayers():

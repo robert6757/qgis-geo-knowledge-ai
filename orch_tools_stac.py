@@ -142,7 +142,7 @@ class StacTool:
             'collections': collections,
             'limit': limit
         }
-        if bbox:
+        if bbox is not None and bbox != "":
             body['bbox'] = bbox
         if datetime_range:
             body['datetime'] = self._normalize_datetime_range(datetime_range)
