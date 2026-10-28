@@ -126,6 +126,8 @@ class ChatbotBrowser(QTextBrowser):
         self.drawing_consumer.data_received.connect(self._do_append_markdown)
         self.drawing_consumer.finished.connect(self._on_consumer_finished)
 
+        self.verticalScrollBar().rangeChanged.connect(self._on_scroll_range_changed)
+
         # Use a dictionary to cache downloaded images to prevent multiple downloads
         self.image_cache = {}
 
@@ -267,9 +269,8 @@ class ChatbotBrowser(QTextBrowser):
         self.drawing_consumer.wait()
 
     def scroll_to_bottom(self):
-        cursor = self.textCursor()
-        cursor.movePosition(QTextCursor.MoveOperation.End)
-        self.setTextCursor(cursor)
+        scrollbar = self.verticalScrollBar()
+        scrollbar.setValue(scrollbar.maximum())
 
     def wheelEvent(self, event):
         # forbid auto scroll to bottom
@@ -361,9 +362,9 @@ class ChatbotBrowser(QTextBrowser):
 
     def mouseMoveEvent(self, event: QMouseEvent):
         # check hyperlink first.
-        anchor = self.anchorAt(event.pos())
+        anchor_url = self.anchorAt(event.pos())
 
-        if anchor is not None:
+        if anchor_url and len(anchor_url) > 0:
             # use hand cursor on hyperlink text.
             self.viewport().setCursor(PointingHandCursor)
         else:
@@ -626,3 +627,9 @@ class ChatbotBrowser(QTextBrowser):
             text = text[:end_pos - len(matched_string)] + exec_block + text[end_pos:]
 
         return ret_string_list, text
+
+    def _on_scroll_range_changed(self, min_value, max_value):
+        if self.auto_scroll_to_bottom:
+            self.verticalScrollBar().setValue(max_value)
+
+
