@@ -75,8 +75,15 @@ class KnowledgeTaskStatusWorker(QThread):
 
         final_status = None
         final_message = None
+        tick = 0
 
         while self._is_running:
+            tick += 1
+            # Ensure initial execution
+            if tick > 1 and tick % 15 != 0:
+                time.sleep(1)
+                continue
+
             try:
                 status_resp = requests.get(
                     status_url,
@@ -146,7 +153,7 @@ class KnowledgeTaskStatusWorker(QThread):
                 final_message = self.tr("Error querying task status: {error}").format(error=str(e))
                 break
 
-            time.sleep(2)
+            time.sleep(1)
 
         if final_status == "completed":
             self.finished_with_message.emit(

@@ -26,7 +26,7 @@ import threading
 import time
 
 from qgis.PyQt.QtCore import QUrl, pyqtSignal, QTimer, QThread
-from qgis.PyQt.QtGui import QImage, QMouseEvent
+from qgis.PyQt.QtGui import QImage, QMouseEvent, QTextCursor
 from qgis.PyQt.QtNetwork import QNetworkAccessManager
 from qgis.PyQt.QtWidgets import QTextBrowser
 from .compat import *
@@ -267,8 +267,9 @@ class ChatbotBrowser(QTextBrowser):
         self.drawing_consumer.wait()
 
     def scroll_to_bottom(self):
-        scrollbar = self.verticalScrollBar()
-        scrollbar.setValue(scrollbar.maximum())
+        cursor = self.textCursor()
+        cursor.movePosition(QTextCursor.MoveOperation.End)
+        self.setTextCursor(cursor)
 
     def wheelEvent(self, event):
         # forbid auto scroll to bottom
