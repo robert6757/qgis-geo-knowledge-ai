@@ -20,10 +20,9 @@
  ***************************************************************************/
 """
 
-VERSION = "1.29"
+VERSION = "2.0"
 
-# AI_SERVER_DOMAIN = "https://s1.geoknowledgeai.com"
-AI_SERVER_DOMAIN = "http://127.0.0.1:8000"
+AI_SERVER_DOMAIN = "https://s1.geoknowledgeai.com"
 
 USER_ID_TAG = "geo-knowledge-ai/uid"
 USER_EMAIL_TAG = "geo-knowledge-ai/email"

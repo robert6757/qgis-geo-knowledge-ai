@@ -7,11 +7,13 @@ name=Geo Knowledge AI
 qgisMinimumVersion=3.0
 qgisMaximumVersion=4.99
 description=Expert AI agents for global data discovery, geoscientific analysis, PyQGIS code generation, and workflow automation.
-version=1.29
+version=2.0
 author=phoenix-gis
 email=info@geoknowledgeai.com
 
 about=This plugin integrates four specialized AI agents for Knowledge Q&A, Data Search, Code Generation, and Workflow Automation. Its extensive knowledge base encompasses global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing, and PyQGIS documentation. Additionally, it provides expert guidance on essential tools like GDAL, GRASS, and SAGA, streamlining your spatial analysis for maximum efficiency.
+
+ Provides a personal knowledge base to enhance customized AI capabilities.
 
  Multimodal Workflow Automation:
  Workflow Automation now incorporates multimodal processing and image recognition to deliver enhanced geospatial analysis and cartographic outputs. It also supports direct integration with OSM vector data and Google Maps tiles, and accesses satellite imagery via STAC APIs (AWS Earth Search & Microsoft Planetary Computer)—streamlining basemap overlays, remote sensing data access, and automated mapping pipelines.
@@ -26,7 +28,11 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 1.29 2026-10-15
+changelog=Version 2.0 2026-10-29
+      * New Feature: Added My Knowledge Base, a personal knowledge base for improving AI responses.
+      * Improvement: Strengthened the authentication mechanism.
+      * Improvement: Enhanced server performance and access security.
+      Version 1.29 2026-10-15
       * Bug fix: Resolved issues with OSM data parsing, handling of STAC and vector layer feature queries.
       Version 1.28 2026-10-10
       * New Feature: Added QGIS layout support and some basic toolsets.
