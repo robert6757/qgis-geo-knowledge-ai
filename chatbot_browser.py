@@ -127,6 +127,7 @@ class ChatbotBrowser(QTextBrowser):
         self.drawing_consumer.finished.connect(self._on_consumer_finished)
 
         self.verticalScrollBar().rangeChanged.connect(self._on_scroll_range_changed)
+        self.verticalScrollBar().sliderPressed.connect(self._on_slider_pressed)
 
         # Use a dictionary to cache downloaded images to prevent multiple downloads
         self.image_cache = {}
@@ -276,6 +277,10 @@ class ChatbotBrowser(QTextBrowser):
         # forbid auto scroll to bottom
         self.auto_scroll_to_bottom = False
         super().wheelEvent(event)
+
+    def _on_slider_pressed(self):
+        # forbid auto scroll to bottom when user interacts with scroll bar
+        self.auto_scroll_to_bottom = False
 
     def handle_click_chatbot_anchor(self, link: QUrl):
         path = link.path()

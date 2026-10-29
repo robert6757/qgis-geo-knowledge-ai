@@ -45,7 +45,7 @@ class VerifyDialog(QDialog):
     def __init__(self, email, parent=None):
         super(VerifyDialog, self).__init__(parent)
         self.email = email
-        self.setWindowTitle(self.tr("Email Verification"))
+        self.setWindowTitle(self.tr("Geo Knowledge AI Email Verification"))
         self.resize(360, 100)
 
         layout = QVBoxLayout(self)
@@ -64,7 +64,7 @@ class VerifyDialog(QDialog):
         self.code_edit.setValidator(QRegularExpressionValidator(six_digit_regex, self))
         code_layout.addWidget(self.code_edit)
 
-        self.btn_verify = QPushButton(self.tr("Verify"))
+        self.btn_verify = QPushButton(self.tr("OK"))
         code_layout.addWidget(self.btn_verify)
 
         layout.addLayout(tip_layout)

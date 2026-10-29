@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>660</width>
+    <width>678</width>
     <height>416</height>
    </rect>
   </property>
@@ -37,14 +37,14 @@
    <item row="4" column="0" colspan="3">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>3. Your files are stored in an isolated folder on our server and are accessible only to you.</string>
+      <string>3. Your files are stored in an isolated folder on the server and are accessible only to you.</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0" colspan="3">
     <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>2. Only users with a verified email and an active paid plan can create and access a personal knowledge base.</string>
+      <string>2. Only users with a verified email and an active paid plan can create and access the personal knowledge base.</string>
      </property>
     </widget>
    </item>
@@ -74,6 +74,11 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>btnAddKnowledge</tabstop>
+  <tabstop>btnRemove</tabstop>
+  <tabstop>tableWidgetKnowledge</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -215,6 +215,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                 response = requests.get(
                     url,
                     proxies=get_qgis_proxies(),
+                    headers=get_auth_headers(),
                     timeout=10
                 )
                 if response.status_code == 200:
@@ -227,8 +228,8 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                             self.tr("You need to activate a subscription plan before using Private Knowledge Base."),
                             QMessageBoxOK
                         )
-            except Exception:
-                pass
+            except Exception as e:
+                print("Failed to check subscription plan:", str(e))
 
         dlg = UserKnowledgeDialog(parent=self)
         dlg.setModal(True)

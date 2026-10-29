@@ -300,21 +300,37 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
                 timeout=30,
             )
             if response.status_code != 200:
-                print(
-                    f"[UserKnowledgeDialog] remote list failed: HTTP "
-                    f"{response.status_code} {response.text[:200]}"
+                QMessageBox.warning(
+                    self,
+                    self.tr("Geo Knowledge AI"),
+                    self.tr(
+                        "Failed to load knowledge list: {message}"
+                    ).format(
+                        message=response.text[:200],
+                    ),
+                    QMessageBoxOK,
                 )
                 return
 
             resp_json = response.json()
         except Exception as e:
-            print(f"[UserKnowledgeDialog] remote list failed: {e}")
+            QMessageBox.warning(
+                self,
+                self.tr("Geo Knowledge AI"),
+                self.tr("Failed to load knowledge list: {error}").format(error=str(e)),
+                QMessageBoxOK,
+            )
             return
 
         code = resp_json.get("code")
         if code != 0:
             message = resp_json.get("message", "unknown error")
-            print(f"[UserKnowledgeDialog] remote list failed: {message}")
+            QMessageBox.warning(
+                self,
+                self.tr("Geo Knowledge AI"),
+                self.tr("Failed to load knowledge list: {message}").format(message=message),
+                QMessageBoxOK,
+            )
             return
 
         file_names = resp_json.get("files") or []
@@ -498,42 +514,35 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
             )
             return
 
-        file_paths, _ = QFileDialog.getOpenFileNames(
+        file_path, _ = QFileDialog.getOpenFileName(
             self,
-            self.tr("Select Knowledge Base Files"),
+            self.tr("Select Knowledge Base File"),
             "",
             self.file_filter
         )
-        if not file_paths:
+        if not file_path:
             return
 
-        existing_names = {item["name"] for item in self.knowledge_files}
-        duplicate_names = []
-        for path in file_paths:
-            file_name = os.path.basename(path)
-            if file_name in existing_names:
-                duplicate_names.append(file_name)
+        file_name = os.path.basename(file_path)
 
-        if duplicate_names:
+        existing_names = {item["name"] for item in self.knowledge_files}
+        if file_name in existing_names:
             QMessageBox.warning(
                 self,
                 self.tr("Warning"),
-                self.tr("Files with the same name are not allowed to be uploaded:\n{names}").format(
-                    names="\n".join(duplicate_names)
+                self.tr("A file with the same name is not allowed to be uploaded:\n{name}").format(
+                    name=file_name
                 ),
                 QMessageBoxOK,
             )
             return
 
         new_entries = []
-        for path in file_paths:
-            if not os.path.isfile(path):
-                continue
-            file_name = os.path.basename(path)
+        if os.path.isfile(file_path):
             entry = {
                 "name": file_name,
-                "path": path,
-                "size": os.path.getsize(path),
+                "path": file_path,
+                "size": os.path.getsize(file_path),
                 "status": self.tr("Pending"),
             }
             self.knowledge_files.append(entry)

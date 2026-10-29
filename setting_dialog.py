@@ -116,6 +116,7 @@ class SettingDialog(QDialog, FORM_CLASS):
             response = requests.get(
                 url,
                 proxies=get_qgis_proxies(),
+                headers=get_auth_headers(),
                 timeout=10
             )
             if response.status_code != 200:
@@ -176,44 +177,44 @@ class SettingDialog(QDialog, FORM_CLASS):
             QPixmap(":/plugins/geo_knowledge_ai/image/unverified.svg")
         )
         self.labelVerificationStatus.setToolTip(self.tr("Email not verified."))
+        self._update_credits_label(email=None)
 
-        if not token:
-            return
-
-        url = f"{AI_SERVER_DOMAIN}/ai/v1/verify/client/token/clear"
-        payload = {"token": token}
-        try:
-            response = requests.post(
-                url,
-                json=payload,
-                proxies=get_qgis_proxies(),
-                timeout=10
-            )
-            if response.status_code == 200:
-                data = response.json()
-                if not (isinstance(data, dict) and data.get("code") == 0 and data.get("cleared")):
+        # synchronize with server token.
+        if token:
+            url = f"{AI_SERVER_DOMAIN}/ai/v1/verify/client/token/clear"
+            payload = {"token": token}
+            try:
+                response = requests.post(
+                    url,
+                    json=payload,
+                    proxies=get_qgis_proxies(),
+                    timeout=10
+                )
+                if response.status_code == 200:
+                    data = response.json()
+                    if not (isinstance(data, dict) and data.get("code") == 0 and data.get("cleared")):
+                        error_msg = self._extract_server_error_message(response)
+                        QMessageBox.warning(
+                            self,
+                            self.tr("Error"),
+                            self.tr("Server returned: {error}").format(error=error_msg),
+                            QMessageBoxOK
+                        )
+                else:
                     error_msg = self._extract_server_error_message(response)
-                    QMessageBox.warning(
+                    QMessageBox.critical(
                         self,
                         self.tr("Error"),
                         self.tr("Server returned: {error}").format(error=error_msg),
                         QMessageBoxOK
                     )
-            else:
-                error_msg = self._extract_server_error_message(response)
+            except Exception as e:
                 QMessageBox.critical(
                     self,
                     self.tr("Error"),
-                    self.tr("Server returned: {error}").format(error=error_msg),
+                    self.tr("Server returned: {error}").format(error=str(e)),
                     QMessageBoxOK
                 )
-        except Exception as e:
-            QMessageBox.critical(
-                self,
-                self.tr("Error"),
-                self.tr("Server returned: {error}").format(error=str(e)),
-                QMessageBoxOK
-            )
 
     def handle_click_send_code(self):
         """Send verification code and open confirmation dialog on success."""
@@ -270,6 +271,12 @@ class SettingDialog(QDialog, FORM_CLASS):
             )
             self.labelVerificationStatus.setToolTip(self.tr("Email has been verified."))
 
+            # update email setting.
+            gSetting = QgsSettings()
+            gSetting.setValue(USER_EMAIL_TAG, email)
+
+            # update plan label.
+            self._update_credits_label(email)
 
     def handle_click_help(self):
         url = "https://www.geoknowledgeai.com"
