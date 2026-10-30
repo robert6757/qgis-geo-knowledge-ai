@@ -14,6 +14,37 @@
    <string>My Knowledge Base</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0" colspan="3">
+    <widget class="QTableWidget" name="tableWidgetKnowledge"/>
+   </item>
+   <item row="6" column="0" colspan="3">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>5. Supported formats: TXT, Markdown, PDF and Image, under 10 MB per file.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>3. Your files are stored in an isolated folder on the server and are accessible only to you.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>2. Only users with a verified email and an active paid plan can create and access the personal knowledge base.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="btnRemove">
+     <property name="text">
+      <string>Remove</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0" colspan="3">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -34,30 +65,6 @@
      </property>
     </spacer>
    </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>3. Your files are stored in an isolated folder on the server and are accessible only to you.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0" colspan="3">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>2. Only users with a verified email and an active paid plan can create and access the personal knowledge base.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0" colspan="3">
-    <widget class="QTableWidget" name="tableWidgetKnowledge"/>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="btnRemove">
-     <property name="text">
-      <string>Remove</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QPushButton" name="btnAddKnowledge">
      <property name="text">
@@ -66,9 +73,9 @@
     </widget>
    </item>
    <item row="5" column="0" colspan="3">
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>4. Supported formats: TXT, Markdown and PDF, under 10 MB per file.</string>
+      <string>4. Depending on the complexity of the knowledge, the parsing process will consume your credits.</string>
      </property>
     </widget>
    </item>
