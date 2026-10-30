@@ -179,7 +179,7 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         self.setupUi(self)
 
         # Supported knowledge base file filters.
-        self.file_filter = self.tr("Text, Markdown and PDF files (*.txt *.md *.markdown *.pdf)")
+        self.file_filter = self.tr("Text, Markdown, PDF and Image files (*.txt *.md *.markdown *.pdf *.png *.jpg *.jpeg)")
 
         # Store knowledge base file metadata as list of dicts.
         self.knowledge_files = []
