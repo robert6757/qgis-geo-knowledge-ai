@@ -28,8 +28,9 @@ repository=https://github.com/robert6757/qgis-geo-knowledge-ai
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=Version 2.0 2026-10-29
+changelog=Version 2.0 2026-11-03
       * New Feature: Added My Knowledge Base, a personal knowledge base for improving AI responses.
+      * New Feature: Added Undo to restore the QGIS project to its state before the last task execution.
       * Improvement: Strengthened the authentication mechanism.
       * Improvement: Enhanced server performance and access security.
       Version 1.29 2026-10-15
