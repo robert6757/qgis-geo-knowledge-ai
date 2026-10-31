@@ -108,6 +108,7 @@ class ChatbotBrowser(QTextBrowser):
     trigger_orch_subtask_repeat = pyqtSignal(str)
     trigger_orch_subtask_detail = pyqtSignal(str)
     trigger_orch_favorite_plan = pyqtSignal()
+    trigger_orch_undo = pyqtSignal()
 
     def __init__(self, iface, parent=None):
         super().__init__(parent)
@@ -140,8 +141,10 @@ class ChatbotBrowser(QTextBrowser):
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
         self.feedback_text = self.tr(
-            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2) | [Regenerate](agent://repeat)")
+            "Was this answer helpful? [Yes](agent://feedback/5) | [No](agent://feedback/1) | [Feedback](agent://feedback/2)")
+        self.regenerate_text = self.tr("[Regenerate](agent://repeat)")
         self.favorite_text = self.tr("[Favorite](agent://orch/favorite/plan)")
+        self.undo_text = self.tr("[Undo: Restore project to pre-execution state.](agent://orch/undo)")
         self.exec_code_text = "\n\n" + self.tr(
             "[Execute Code](agent://execute/code/{index}) | [Copy Code](agent://execute/copycode/{index})") + "\n\n"
         self.exec_processing_text = "[{processing_id}](agent://execute/processing/{processing_id})"
@@ -328,6 +331,8 @@ class ChatbotBrowser(QTextBrowser):
                     self.trigger_orch_subtask_detail.emit(subtask_id)
                 elif path.startswith("/favorite/plan"):
                     self.trigger_orch_favorite_plan.emit()
+                elif path.startswith("/undo"):
+                    self.trigger_orch_undo.emit()
             return
 
         # open web browser
@@ -494,10 +499,10 @@ class ChatbotBrowser(QTextBrowser):
 
         # add feedback
         if self.show_feedback:
-            self.markdown_content += "\n\n" + self.feedback_text
+            self.markdown_content += "\n\n"
             if self.chat_mode == 4:
-                # Favorites only in orchestration.
-                self.markdown_content += " | " + self.favorite_text
+                self.markdown_content += f"{self.undo_text}\n\n"
+            self.markdown_content += f"{self.feedback_text} | {self.regenerate_text} | {self.favorite_text}"
 
         # add execute button after the python code block.
         self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(

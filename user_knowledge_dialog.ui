@@ -27,7 +27,7 @@
    <item row="4" column="0" colspan="3">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>3. Your files are stored in an isolated folder on the server and are accessible only to you.</string>
+      <string>3. Your files are stored on the server and are accessible only to you.</string>
      </property>
     </widget>
    </item>

@@ -87,6 +87,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.chatbot_browser.trigger_orch_subtask_repeat.connect(self.handle_click_exec_subtask_repeat)
         self.chatbot_browser.trigger_orch_subtask_detail.connect(self.handle_click_exec_subtask_detail)
         self.chatbot_browser.trigger_orch_favorite_plan.connect(self.handle_click_exec_favorite_plan)
+        self.chatbot_browser.trigger_orch_undo.connect(self.handle_click_exec_undo_subtask)
         self.btnHistory.clicked.connect(self.handle_click_history_btn)
         self.btnScreenCapture.clicked.connect(self.handle_click_screen_capture)
         self.cbSwitchMode.currentIndexChanged.connect(self.handle_update_chat_mode)
@@ -123,6 +124,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.orch_manager = None
         self.orch_task_plan = None
         self.orch_current_subtask = None
+        self.orch_undo_project_file = None
 
         # show welcome text
         self.show_welcome_content()
@@ -428,6 +430,44 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                                 self.tr("Task added to favorites successfully."),
                                 QMessageBoxOK)
 
+    def handle_click_exec_undo_subtask(self):
+        if not self.orch_undo_project_file:
+            return
+
+        if not os.path.exists(self.orch_undo_project_file):
+            self.orch_undo_project_file = None
+            return
+
+        # User Confirm
+        reply = QMessageBox.question(
+            self,
+            self.tr("Confirm Undo"),
+            self.tr("This will restore the QGIS project to its state before the Agent "
+                    "was executed, undoing the project-level changes made by the Agent.\n\n "
+                    "Please note:\n"
+                    "• Data files on disk will NOT be rolled back. If the Agent modified "
+                    "or created data files, those changes will remain.\n"
+                    "• Any changes you made after the Agent finished will be lost, "
+                    "including unsaved edits in layers that are in editing mode, "
+                    "temporary (memory) layers and their data, and manual project "
+                    "or layer changes.\n\n"
+                    "If you want to keep any of them, please save your edits and "
+                    "export temporary layers to files first.\n\n"
+                    "Are you sure you want to continue?"),
+            QMessageBoxYes | QMessageBoxNo,
+            QMessageBoxNo
+        )
+        if reply != QMessageBoxYes:
+            return
+
+        ori_proj_file_name = QgsProject.instance().fileName()
+        if not QgsProject.instance().read(self.orch_undo_project_file):
+            QMessageBox.warning(self, self.tr("Undo Failed"),
+                                self.tr("Failed to load the project file."))
+            return
+        QgsProject.instance().setFileName(ori_proj_file_name)
+        self.orch_undo_project_file = None
+
     def handle_ensure_code_execution(self):
         if self.orch_manager is None or self.orch_task_plan is None:
             return
@@ -610,6 +650,20 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         # return
 
         if chat_mode == 4:
+            # Save project before executing.
+            ori_proj_file_name = QgsProject.instance().fileName()
+
+            profile_dir = QgsApplication.qgisSettingsDirPath()
+            plugin_dir = os.path.join(profile_dir, "qgis-geo-knowledge-ai")
+            os.makedirs(plugin_dir, exist_ok=True)
+            bk_proj_file_path = os.path.join(plugin_dir, "proj_bk.qgz")
+
+            QgsProject.instance().setFileName(bk_proj_file_path)
+            QgsProject.instance().write()
+            QgsProject.instance().setFileName(ori_proj_file_name)
+
+            self.orch_undo_project_file = bk_proj_file_path
+
             self.orch_current_subtask = None
             self.orch_task_plan = None
             self.orch_manager = CTOrchManager(self.iface, request_data, task_plan=task_plan)
