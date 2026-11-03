@@ -76,7 +76,8 @@ SUPPORTED_TOOLS = ["qgis_add_vector_layer", "qgis_add_raster_layer", "qgis_get_l
                    "create_folder", "zip_files", "unzip_files", "qgis_list_layouts", "qgis_create_layout",
                    "qgis_capture_layout_screenshot", "qgis_remove_layout", "qgis_get_layout_info",
                    "qgis_export_layout", "qgis_add_layout_map", "qgis_add_layout_label", "qgis_add_layout_legend",
-                   "qgis_add_layout_scalebar", "qgis_add_layout_picture", "qgis_add_layout_table", "qgis_move_layout_item"]
+                   "qgis_add_layout_scalebar", "qgis_add_layout_picture", "qgis_add_layout_table", "qgis_move_layout_item",
+                   "qgis_download_file"]
 
 class OrchToolExecutor(QObject):
     """The tool executor uses a signal-slot mechanism to execute tools in the GUI thread."""
@@ -1599,6 +1600,72 @@ class OrchToolExecutor(QObject):
                 "page": item.page()
             }, ensure_ascii=False)
 
+        elif tool_name == "qgis_download_file":
+            # Download a file from a URL and save it locally.
+            url = arguments.get("url", "")
+            output_path = arguments.get("output_path", "")
+            method = str(arguments.get("method", "GET")).upper()
+            data = arguments.get("data")
+            headers = arguments.get("headers")
+            connect_timeout = arguments.get("connect_timeout", 5)
+            read_timeout = arguments.get("read_timeout", 90)
+            overwrite = arguments.get("overwrite", True)
+
+            timeout = (connect_timeout, read_timeout)
+
+            if not url:
+                raise Exception({"error_msg": "No url provided"})
+            if not output_path:
+                raise Exception({"error_msg": "No output_path provided"})
+
+            # Prepare output directory and remove stale file.
+            out_dir = os.path.dirname(output_path)
+            if out_dir:
+                os.makedirs(out_dir, exist_ok=True)
+            if overwrite and os.path.exists(output_path):
+                os.remove(output_path)
+
+            # Build headers with default User-Agent.
+            request_headers = {"User-Agent": "GeoKnowledgeAI-QGIS/1.0"}
+            if isinstance(headers, dict):
+                request_headers.update(headers)
+
+            # Execute request using requests.
+            try:
+                if method == "POST":
+                    response = requests.post(
+                        url,
+                        data=data,
+                        headers=request_headers,
+                        proxies=get_qgis_proxies(),
+                        timeout=timeout
+                    )
+                else:
+                    response = requests.get(
+                        url,
+                        headers=request_headers,
+                        proxies=get_qgis_proxies(),
+                        timeout=timeout
+                    )
+            except Exception as e:
+                raise Exception({"error_msg": f"Request failed: {str(e)}"})
+
+            if not response.ok:
+                raise RuntimeError(f"HTTP {response.status_code} from {url}\n"
+                                   f"Response: {response.text[:500]}")
+
+            with open(output_path, 'wb') as f:
+                f.write(response.content)
+
+            if not os.path.exists(output_path):
+                raise FileNotFoundError("Downloaded file not found. The server may have returned an empty response.")
+
+            return json.dumps({
+                "status": "success",
+                "path": output_path,
+                "size": os.path.getsize(output_path)
+            }, ensure_ascii=False)
+
     def _resolve_placeholder(self, value: str) -> str:
         """Resolve any [USER_PARAM:xxx] / [AUTH_TOKEN:xxx] placeholders in a string using QgsSettings."""
         if not isinstance(value, str):
@@ -1680,10 +1747,7 @@ class OrchToolExecutor(QObject):
     # def test_tool(self):
     #     tool_result = ""
     #     try:
-    #         tool_result = self._execute_tool_impl(
-    #             "qgis_search_and_show_place",
-    #             {"place_name":"台北"}
-    #         )
+    #         tool_result = self._execute_tool_impl()
     #     except Exception as e:
     #         self.execution_error.emit(str(e))
     #     return tool_result
