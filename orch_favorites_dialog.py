@@ -28,7 +28,7 @@ from qgis.PyQt.QtWidgets import QListWidgetItem, QMenu, QAction, QFileDialog, QM
 from qgis.core import QgsSettings
 from .compat import *
 from .global_defs import USER_PARAM_KEYS_TAG
-from .orch_favorites_manager import OrchFavoritesManager
+from .orch_favorites_manager import OrchFavoritesManager, OrchFavoritesError
 
 FORM_CLASS, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'orch_favorites_dialog.ui'))
@@ -106,6 +106,15 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             QMessageBoxOK
         )
 
+    def _show_retrieve_favorite_error(self, error):
+        """Show a critical message box when retrieving a favorite fails on the server."""
+        QMessageBox.information(
+            self,
+            self.tr("Tip"),
+            str(error),
+            QMessageBoxOK
+        )
+
     def _clear_param_input_widgets(self):
         """Remove any previously created parameter input rows."""
         for widgets in self.param_input_widgets:
@@ -136,7 +145,14 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             return
 
         chat_id = list_item.data(UserRole)
-        favorite = self.manager.retrieve_favorite(chat_id, inject_variables=False)
+        try:
+            favorite = self.manager.retrieve_favorite(chat_id, inject_variables=False)
+        except OrchFavoritesError as e:
+            self._show_retrieve_favorite_error(e)
+            self.textEditDetail.setPlainText("")
+            self._clear_param_input_widgets()
+            return
+
         if favorite is None or favorite.get("task_plan") is None:
             self.textEditDetail.setPlainText("")
             self._clear_param_input_widgets()
@@ -216,7 +232,7 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
             )
         else:
             self.labelTip.setText(
-                self.tr("Tip: Select a workflow and click OK to load it in Workflow Automation mode.")
+                self.tr("Tip: Select a workflow and click OK to load it in Workflow mode.")
             )
 
     def handle_list_item_dclicked(self, list_item):
@@ -279,7 +295,12 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
     def export_favorite_item(self, list_item):
         """Export a favorite task plan to a JSON file."""
         chat_id = list_item.data(UserRole)
-        favorite = self.manager.retrieve_favorite(chat_id, inject_variables=False)
+        try:
+            favorite = self.manager.retrieve_favorite(chat_id, inject_variables=False)
+        except OrchFavoritesError as e:
+            self._show_retrieve_favorite_error(e)
+            return
+
         if favorite is None or favorite.get("task_plan") is None:
             return
 
@@ -323,7 +344,12 @@ class OrchFavoritesDialog(QDialog, FORM_CLASS):
                               QMessageBoxOK)
             return
 
-        favorite = self.manager.retrieve_favorite(new_chat_id, inject_variables=False)
+        try:
+            favorite = self.manager.retrieve_favorite(new_chat_id, inject_variables=False)
+        except OrchFavoritesError as e:
+            self._show_retrieve_favorite_error(e)
+            return
+
         if favorite is None or favorite.get("task_plan") is None:
             return
 

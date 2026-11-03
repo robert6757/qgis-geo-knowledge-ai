@@ -28,7 +28,7 @@ import traceback
 import io
 
 from qgis.PyQt import uic
-from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QApplication, QMessageBox
+from qgis.PyQt.QtWidgets import QDockWidget, QGridLayout, QApplication, QMessageBox, QSizePolicy
 from qgis.PyQt.QtCore import pyqtSignal
 from qgis.core import QgsSettings, QgsProject, Qgis, QgsMapLayer, QgsApplication
 from qgis import processing
@@ -64,13 +64,19 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         self.setupUi(self)
 
         self.chatbot_browser = ChatbotBrowser(iface)
+        self.chatbot_browser.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Expanding
+        )
         self.history_manager = HistoryManager()
         self.orch_favorites_manager = OrchFavoritesManager()
 
-        chatbot_layout = QGridLayout()
+        chatbot_layout = QGridLayout(self.widgetChatbotParent)
         chatbot_layout.setContentsMargins(0, 0, 0, 0)
         chatbot_layout.addWidget(self.chatbot_browser)
-        self.widgetChatbotParent.setLayout(chatbot_layout)
+
+        self.splitter.setStretchFactor(0, 1)
+        self.splitter.setStretchFactor(1, 0)
 
         self.btnSendOrTerminate.clicked.connect(self.handle_click_send_or_terminate_btn)
         self.btnClear.clicked.connect(self.handle_click_clear_btn)
@@ -191,7 +197,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         if dlg.exec() != Accepted:
             return
 
-        # switch mode to Workflow Automation
+        # switch mode to Workflow
         if self.cbSwitchMode.currentIndex() != 3:
             self.cbSwitchMode.setCurrentIndex(3)
 
@@ -239,7 +245,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         dlg.exec()
 
     def handle_update_chat_mode(self, index):
-        # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Workflow Automation
+        # chat mode: 1:Q&A 2:Search 3:Generating Code 4:Workflow
         chat_mode = index + 1
 
         gSetting = QgsSettings()
@@ -813,20 +819,49 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
         return None
 
     def show_welcome_content(self):
-        welcome_str = self.tr("""### Welcome to the Geo Knowledge AI plugin!\n\n**Glad to meet you! 🌍**\n\nI am your GIS AI assistant, providing four agents: **Knowledge Q&A**, **Data Search**, **Code Generation**, and **Workflow Automation**.\n\n Our knowledge base covers global geodata discovery, geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation.\n\nAdditionally, I can guide you through essential tools like GDAL, GRASS, and SAGA to make your spatial analysis more efficient and intelligent.\n\nTip: **Workflow Automation** can handle complex tasks either fully automatically or step-by-step. We suggest backing up your data and QGIS projects before running a workflow.""")
+        welcome_str = self.tr("""### Welcome to the Geo Knowledge AI plugin! 🌍
+        
+**Glad to meet you!**
+
+I am your GIS AI assistant, offering four specialized agents to support your spatial analysis:
+
+**Knowledge Q&A**
+
+Ask me about geoscientific concepts and methods. My knowledge base covers geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation. I can also guide you through essential tools like GDAL, GRASS, and SAGA.
+
+**Data Search**
+
+Looking for data? I can help you discover and locate global geodata that fits your study area and research needs.
+
+**Code Generation**
+
+Describe what you want to do, and I'll write PyQGIS code for you, so you can automate repetitive operations and speed up your analysis.
+
+**Workflow**
+
+Hand over complex, multi-step tasks. I can run them either fully automatically or step-by-step, so you stay in control of every stage.""")
 
         # add news.
         welcome_str += "\n\n"
         welcome_str += self.tr("**✨ What's New:**")
         welcome_str += "\n\n"
-        welcome_str += self.tr(
-            "**My Knowledge Base:** Build your own knowledge base for more accurate AI responses.")
+        welcome_str += self.tr("**My Knowledge Base:** Build your own knowledge base for more accurate AI responses.")
+        welcome_str += "\n\n"
+        welcome_str += self.tr("**Workflow Undo:** Made a change you don't like? Undo it to roll your project back to its previous state.")
         welcome_str += "\n\n"
 
         gSetting = QgsSettings()
         if gSetting.value(PRIVACY_AGREEMENT_TAG, 'false').lower() != "true":
-            welcome_str += self.tr("""\n\n———\n\n **First-Time Use**\n\nPlease enter your question in the input box below and click the **Send** button to start the conversation.\n\nTo get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.\n\n\nBy asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).\n\n""")
+            welcome_str += self.tr("""\n\n———
 
-        self.chatbot_browser.append_markdown(welcome_str, True, in_gui_thread=True)
+**First-Time Use**
 
+Please enter your question in the input box below and click the **Send** button to start the conversation.
 
+To get a more comprehensive understanding of your question, enable the screenshots ![Screenshot](qtres://plugins/geo_knowledge_ai/image/screencapture2.svg) switch.
+
+We recommend [verifying your email](agent://applyvip) before use. It secures your data access and lets you sync your data across devices.
+
+By asking a question, you acknowledge that you have read and agreed to the [Privacy Notice](https://www.geoknowledgeai.com/#/privacy) and [Terms of Service](https://www.geoknowledgeai.com/#/terms).\n\n""")
+
+        self.chatbot_browser.append_markdown(welcome_str, False, in_gui_thread=True)

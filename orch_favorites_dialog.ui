@@ -44,7 +44,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="labelTip">
      <property name="text">
-      <string>Tip: Select a workflow and click OK to load it in Workflow Automation mode.</string>
+      <string>Tip: Select a workflow and click OK to load it in Workflow mode.</string>
      </property>
     </widget>
    </item>

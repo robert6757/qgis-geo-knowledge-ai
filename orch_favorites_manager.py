@@ -35,7 +35,16 @@ from .global_utils import get_qgis_proxies, get_auth_headers
 from qgis.core import QgsApplication, QgsSettings
 from qgis.PyQt.QtCore import QStandardPaths
 
-from .global_defs import AI_SERVER_DOMAIN, TEMP_FOLDER_TAG
+from .global_defs import AI_SERVER_DOMAIN, TEMP_FOLDER_TAG, USER_EMAIL_TAG
+
+
+class OrchFavoritesError(Exception):
+    """Raised when the remote favorites service returns a non-success response.
+
+    The message should contain the human-readable error detail from the server.
+    """
+    pass
+
 
 class OrchFavoritesManager:
 
@@ -233,12 +242,21 @@ class OrchFavoritesManager:
         preserved in the returned favorite item.
         """
         url = AI_SERVER_DOMAIN.rstrip('/') + self.FAVORITES_GET_URL
+        email = QgsSettings().value(USER_EMAIL_TAG, "")
 
         try:
-            response = requests.get(url, params={'name': name}, headers=get_auth_headers(), proxies=get_qgis_proxies(), timeout=10)
+            response = requests.get(url, params={'name': name, 'email': email}, headers=get_auth_headers(), proxies=get_qgis_proxies(), timeout=10)
             if response.status_code != 200:
-                print(f"Failed to fetch remote favorite '{name}': {response.status_code}")
-                return None
+                detail = ""
+                try:
+                    payload = response.json()
+                    if isinstance(payload, dict):
+                        detail = payload.get("detail", "")
+                except (json.JSONDecodeError, TypeError):
+                    detail = response.text
+                if not detail:
+                    detail = f"Failed to fetch remote favorite '{name}': {response.status_code}"
+                raise OrchFavoritesError(detail)
 
             data = response.json()
             if not isinstance(data, dict):

@@ -117,7 +117,7 @@
         <item row="1" column="0">
          <widget class="QPlainTextEdit" name="plainTextEdit">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -255,7 +255,7 @@
       </item>
       <item>
        <property name="text">
-        <string>Workflow Automation</string>
+        <string>Workflow</string>
        </property>
       </item>
      </widget>
