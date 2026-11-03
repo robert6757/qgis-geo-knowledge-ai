@@ -15,13 +15,18 @@ about=This plugin brings four specialized AI agents into QGIS to support your sp
  - Knowledge Q&A: Answers questions on geoscientific concepts and methods. Its knowledge base covers geoscientific modeling, hydrological and terrain analysis, remote sensing processing, and PyQGIS documentation, with guidance on essential tools like GDAL, GRASS, and SAGA.
  - Data Search: Discovers and locates global geodata that fits your study area and research needs.
  - Code Generation: Writes PyQGIS code from your descriptions, so you can automate repetitive operations and speed up your analysis.
- - Workflow: Handles complex, multi-step tasks, running either fully automatically or step-by-step so you stay in control of every stage.
+ - Workflow: Handles complex, multi-step tasks, running either fully automatically or step-by-step so you stay in control of every stage. Supports multimodal processing, OSM vector data, Google Maps tiles, and satellite imagery via STAC APIs.
 
  What's New:
  - My Knowledge Base: Build your own knowledge base for more accurate, customized AI responses.
  - Workflow Undo: Roll your project back to its previous state if you don't like a change.
 
  Fully supporting multiple languages—including English, français, italiano, Deutsch, español, 中文, русский, svenska, Nederlands, português, čeština, eesti, Indonesia, norsk bokmål, slovenščina, українська, polski, română, 日本語, العربية, Türkçe, magyar, 한국어.
+
+ Server Location: United States
+ AI Models: The server uses models fine-tuned from Qwen3.5, Kimi K2.6, Gemma4, and SAM2.
+ Terms of Service: https://www.geoknowledgeai.com/#/terms
+ Privacy Policy: https://www.geoknowledgeai.com/#/privacy
 
 tracker=https://github.com/robert6757/qgis-geo-knowledge-ai
 repository=https://github.com/robert6757/qgis-geo-knowledge-ai
