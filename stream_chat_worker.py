@@ -21,9 +21,8 @@
 """
 
 import json
-from qgis.core import Qgis
+from qgis.core import Qgis, QgsNetworkAccessManager
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl
-from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .global_defs import *
 from .compat import *
@@ -56,7 +55,7 @@ class StreamChatWorker(QThread):
     def run(self):
         """execute request"""
 
-        self.network_manager = QNetworkAccessManager()
+        self.network_manager = QgsNetworkAccessManager.instance()
 
         try:
             url = AI_SERVER_DOMAIN
@@ -149,12 +148,14 @@ class StreamChatWorker(QThread):
     def on_finished(self):
         """request finished"""
         if self.reply is not None:
+            self.reply.readyRead.disconnect()
             self.reply.finished.disconnect()
+            self.reply.errorOccurred.disconnect()
             self.reply.deleteLater()
             self.reply = None
-        if self.network_manager is not None:
-            self.network_manager.deleteLater()
-            self.network_manager = None
+        # Do not delete QgsNetworkAccessManager.instance(): it is a global
+        # singleton owned by QGIS. Calling deleteLater() on it crashes QGIS.
+        self.network_manager = None
         self.quit()
 
     def on_error(self, error):
