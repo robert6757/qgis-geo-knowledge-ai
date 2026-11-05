@@ -23,7 +23,6 @@
 import json
 from qgis.core import QgsNetworkAccessManager
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QUrl
-from qgis.PyQt.QtNetwork import QNetworkAccessManager, QNetworkRequest
 
 from .global_defs import *
 from .compat import *

@@ -32,7 +32,6 @@ from dataclasses import dataclass, field
 from .global_utils import get_workspace_info
 
 from qgis.PyQt.QtCore import QThread, pyqtSignal, QCoreApplication, QSemaphore, QEventLoop
-from qgis.PyQt.QtNetwork import QNetworkAccessManager
 
 from .compat import *
 from .orch_tools import SUPPORTED_TOOLS, OrchToolExecutor
@@ -108,8 +107,6 @@ class CTOrchManager(QThread):
         self.code_execution = None
         # TaskPlan from favorites.
         self.task_plan = task_plan
-
-        self.network_manager = QNetworkAccessManager()
 
         # Tool Executor.
         self.request["tools"] = SUPPORTED_TOOLS

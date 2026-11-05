@@ -25,9 +25,9 @@ import queue
 import threading
 import time
 
+from qgis.core import QgsNetworkAccessManager
 from qgis.PyQt.QtCore import QUrl, pyqtSignal, QTimer, QThread
 from qgis.PyQt.QtGui import QImage, QMouseEvent, QTextCursor
-from qgis.PyQt.QtNetwork import QNetworkAccessManager
 from qgis.PyQt.QtWidgets import QTextBrowser
 from .compat import *
 
@@ -135,8 +135,7 @@ class ChatbotBrowser(QTextBrowser):
 
         # pending loading parameters.
         self.pending_images = set()
-        self.img_loading_network = QNetworkAccessManager(self)
-        self.img_loading_network.finished.connect(self._on_image_downloaded)
+        self.img_loading_network = QgsNetworkAccessManager.instance()
 
         self.anchorClicked.connect(self.handle_click_chatbot_anchor)
 
@@ -439,10 +438,15 @@ class ChatbotBrowser(QTextBrowser):
 
         request = QNetworkRequest(QUrl(url_string))
         request.setTransferTimeout(3000)
-        self.img_loading_network.get(request)
+        reply = self.img_loading_network.get(request)
+        reply.finished.connect(self._on_image_downloaded)
 
-    def _on_image_downloaded(self, reply):
+    def _on_image_downloaded(self):
         """deal with downloaded image."""
+        reply = self.sender()
+        if reply is None:
+            return
+
         url_string = reply.url().toString()
 
         # remove from pending list.
@@ -502,7 +506,9 @@ class ChatbotBrowser(QTextBrowser):
             self.markdown_content += "\n\n"
             if self.chat_mode == 4:
                 self.markdown_content += f"{self.undo_text}\n\n"
-            self.markdown_content += f"{self.feedback_text} | {self.regenerate_text} | {self.favorite_text}"
+                self.markdown_content += f"{self.feedback_text} | {self.regenerate_text} | {self.favorite_text}"
+            else:
+                self.markdown_content += f"{self.feedback_text} | {self.regenerate_text}"
 
         # add execute button after the python code block.
         self.python_code_block_list, self.markdown_content = self._extract_code_and_add_execute_tag_after(

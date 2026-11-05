@@ -60,16 +60,18 @@ class KnowledgeTaskStatusWorker(QThread):
     # Emitted when the whole batch finished, succeeded or failed.
     finished_with_message = pyqtSignal(str)
 
-    def __init__(self, task_id, parent=None):
+    def __init__(self, task_id, email, parent=None):
         """
         :param task_id: Server-side task id to poll.
         """
         super().__init__(parent)
         self.task_id = task_id
+        self.email = email
         self._is_running = True
 
     def run(self):
-        status_url = f"{AI_SERVER_DOMAIN}/ai/v1/user/knowledge/build/status/{self.task_id}"
+
+        status_url = f"{AI_SERVER_DOMAIN}/ai/v1/user/knowledge/build/status/{self.task_id}?email={self.email}"
         proxies = get_qgis_proxies()
         headers = get_auth_headers()
 
@@ -227,7 +229,7 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         if not email:
             return
 
-        status_url = f"{AI_SERVER_DOMAIN}/ai/v1/user/knowledge/build/status/{task_id}"
+        status_url = f"{AI_SERVER_DOMAIN}/ai/v1/user/knowledge/build/status/{task_id}?email={email}"
         proxies = get_qgis_proxies()
         headers = get_auth_headers()
 
@@ -277,7 +279,7 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         self._refresh_table()
 
         if task_status in ("pending", "running"):
-            self._start_status_worker(task_id)
+            self._start_status_worker(task_id, email)
         elif task_status in ("completed", "failed"):
             QgsSettings().remove(USER_KNOWLEDGE_TASK_ID_TAG)
 
@@ -365,12 +367,12 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
         self.btnRemove.setEnabled(state)
         self.btnAddKnowledge.setEnabled(state)
 
-    def _start_status_worker(self, task_id):
+    def _start_status_worker(self, task_id, email):
         """Start a background worker to poll the status of the given task."""
         if self._status_worker and self._status_worker.isRunning():
             self._status_worker.stop()
 
-        self._status_worker = KnowledgeTaskStatusWorker(task_id, self)
+        self._status_worker = KnowledgeTaskStatusWorker(task_id, email, self)
         self._status_worker.status_updated.connect(self._on_status_updated)
         self._status_worker.finished_with_message.connect(self._on_build_finished)
         self._status_worker.start()
@@ -431,7 +433,7 @@ class UserKnowledgeDialog(QDialog, FORM_CLASS):
                 # update status to Pending
                 self._on_status_updated(entry["name"], "pending", _translate_status("pending", ""))
 
-            self._start_status_worker(task_id)
+            self._start_status_worker(task_id, email)
             return
 
         if response is None:
