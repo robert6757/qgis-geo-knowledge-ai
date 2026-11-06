@@ -533,7 +533,7 @@
     </message>
     <message>
         <location filename="../feedback_dialog.ui" line="34"/>
-        <source>(Optional) Leave your email to get a reply and a chance to receive a 14-day Plan subscription. Your email is used only for this purpose.</source>
+        <source>(Optional) Leave your email to get a reply and a chance to receive a 14-day subscription. Your email is used only for this purpose.</source>
         <translation>(Προαιρετικό) Αφήστε το email σας για να λάβετε απάντηση και την ευκαιρία να λάβετε συνδρομή 14 ημερών. Το email σας χρησιμοποιείται μόνο για αυτόν τον σκοπό.</translation>
     </message>
     <message>

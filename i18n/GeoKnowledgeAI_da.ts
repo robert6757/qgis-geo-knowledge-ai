@@ -533,7 +533,7 @@
     </message>
     <message>
         <location filename="../feedback_dialog.ui" line="34"/>
-        <source>(Optional) Leave your email to get a reply and a chance to receive a 14-day Plan subscription. Your email is used only for this purpose.</source>
+        <source>(Optional) Leave your email to get a reply and a chance to receive a 14-day subscription. Your email is used only for this purpose.</source>
         <translation>(Valgfrit) Efterlad din e-mail for at få et svar og en chance for at modtage et 14-dages abonnementsplan. Din e-mail bruges kun til dette formål.</translation>
     </message>
     <message>
