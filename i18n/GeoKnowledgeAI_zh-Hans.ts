@@ -1096,12 +1096,12 @@ Hand over complex, multi-step tasks. I can run them either fully automatically o
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="848"/>
         <source>**My Knowledge Base:** Build your own knowledge base for more accurate AI responses.</source>
-        <translation type="unfinished">**我的知识库：** 构建您自己的知识库，获得更准确的 AI 回答。</translation>
+        <translation>**我的知识库：** 构建您自己的知识库，获得更准确的 AI 回答。</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="850"/>
         <source>**Workflow Undo:** Made a change you don&apos;t like? Undo it to roll your project back to its previous state.</source>
-        <translation type="unfinished">**撤销工作流：** 做了不满意的更改？撤销它，将项目回滚到之前的状态。</translation>
+        <translation>**撤销工作流：** 做了不满意的更改？撤销它，将项目回滚到之前的状态。</translation>
     </message>
     <message>
         <location filename="../geo_knowledge_ai_dockwidget.py" line="855"/>
