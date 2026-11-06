@@ -226,16 +226,22 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                     headers=get_auth_headers(),
                     timeout=10
                 )
-                if response.status_code == 200:
+                show_tip = False
+                if response.status_code != 200:
+                    show_tip = True
+                else:
                     data = response.json()
                     plan = data.get("plan")
                     if plan == 0:
-                        QMessageBox.information(
-                            self,
-                            self.tr("Tip"),
-                            self.tr("You need to activate a subscription plan before using My Knowledge Base."),
-                            QMessageBoxOK
-                        )
+                        show_tip = True
+
+                if show_tip:
+                    QMessageBox.information(
+                        self,
+                        self.tr("Tip"),
+                        self.tr("You need to activate a subscription plan before using My Knowledge Base."),
+                        QMessageBoxOK
+                    )
             except Exception as e:
                 print("Failed to check subscription plan:", str(e))
 
