@@ -99,7 +99,7 @@ class SettingDialog(QDialog, FORM_CLASS):
                     self.labelVerificationStatus.setPixmap(QPixmap(":/plugins/geo_knowledge_ai/image/verified.svg"))
                     self.labelVerificationStatus.setToolTip(self.tr("Email has been verified."))
         except Exception:
-            pass
+            pass # nosec B110
 
     def _update_credits_label(self, email):
         """Fetch user info and update the credits label."""

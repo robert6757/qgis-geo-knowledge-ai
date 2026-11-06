@@ -32,5 +32,5 @@ CAPTURE_SCREEN_TAG = "geo-knowledge-ai/capture_screen"
 PRIVACY_AGREEMENT_TAG = "geo-knowledge-ai/privacy_agreement"
 TEMP_FOLDER_TAG = "geo-knowledge-ai/temp_folder"
 USER_PARAM_KEYS_TAG = "geo-knowledge-ai/param_keys"
-CLIENT_TOKEN_TAG = "geo-knowledge-ai/token"
+CLIENT_TOKEN_TAG = "geo-knowledge-ai/token" # nosec B105
 USER_KNOWLEDGE_TASK_ID_TAG = "geo-knowledge-ai/user_knowledge_task_id"
