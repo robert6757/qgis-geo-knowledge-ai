@@ -233,7 +233,7 @@ class GeoKnowledgeAIDockWidget(QDockWidget, FORM_CLASS):
                         QMessageBox.information(
                             self,
                             self.tr("Tip"),
-                            self.tr("You need to activate a subscription plan before using Private Knowledge Base."),
+                            self.tr("You need to activate a subscription plan before using My Knowledge Base."),
                             QMessageBoxOK
                         )
             except Exception as e:
